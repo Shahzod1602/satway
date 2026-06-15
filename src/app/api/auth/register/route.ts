@@ -1,34 +1,31 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { z } from "zod";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { sendMail, verificationEmail } from "@/lib/mail";
-import { generateCode, hashCode, verifyCodeHash, OTP_TTL_MS, OTP_RESEND_COOLDOWN_MS } from "@/lib/otp";
+import { generateCode, hashCode, OTP_TTL_MS } from "@/lib/otp";
+import { parseJson, emailSchema, passwordSchema } from "@/lib/validation";
+import { jsonError, tooManyRequests, withErrorHandling } from "@/lib/apiError";
+import { rateLimit, clientIp } from "@/lib/rateLimit";
 
-export async function POST(req: NextRequest) {
-  let body: { email?: string; password?: string; name?: string; referralCode?: string };
-  try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
-  }
+const bodySchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100),
+  email: emailSchema,
+  password: passwordSchema,
+  referralCode: z.string().trim().max(40).optional(),
+});
 
-  const { email, password, name, referralCode } = body;
+export const POST = withErrorHandling(async (req: NextRequest) => {
+  const rl = rateLimit(`register:${clientIp(req)}`, 5, 60 * 60 * 1000); // 5/hour/IP
+  if (!rl.ok) return tooManyRequests(rl.retryAfterSec);
 
-  if (!email || !password || !name) {
-    return NextResponse.json({ error: "Name, email and password are required" }, { status: 400 });
-  }
-  if (password.length < 6) {
-    return NextResponse.json({ error: "Password must be at least 6 characters" }, { status: 400 });
-  }
+  const { name, email, password, referralCode } = await parseJson(req, bodySchema);
 
-  const normalizedEmail = email.toLowerCase().trim();
-
-  const existing = await prisma.user.findUnique({ where: { email: normalizedEmail } });
+  const existing = await prisma.user.findUnique({ where: { email } });
   if (existing) {
-    return NextResponse.json({ error: "An account with this email already exists" }, { status: 409 });
+    return jsonError("An account with this email already exists", 409);
   }
 
-  // Find referrer if referral code provided
   let referredById: string | undefined;
   if (referralCode) {
     const referrer = await prisma.user.findUnique({ where: { referralCode } });
@@ -41,29 +38,21 @@ export async function POST(req: NextRequest) {
 
   await prisma.$transaction(async (tx) => {
     await tx.user.create({
-      data: {
-        name,
-        email: normalizedEmail,
-        password: hashedPassword,
-        role: "STUDENT",
-        referredById,
-      },
+      data: { name, email, password: hashedPassword, role: "STUDENT", referredById },
     });
-
     await tx.emailOtp.upsert({
-      where: { email: normalizedEmail },
+      where: { email },
       update: { codeHash, expiresAt: new Date(Date.now() + OTP_TTL_MS), attempts: 0 },
-      create: { email: normalizedEmail, codeHash, expiresAt: new Date(Date.now() + OTP_TTL_MS) },
+      create: { email, codeHash, expiresAt: new Date(Date.now() + OTP_TTL_MS) },
     });
   });
 
-  // Send verification email
   try {
     const mail = verificationEmail(verificationCode);
-    await sendMail({ to: normalizedEmail, ...mail });
+    await sendMail({ to: email, ...mail });
   } catch (e) {
     console.error("[register] mail error:", e);
   }
 
-  return NextResponse.json({ ok: true });
-}
+  return Response.json({ ok: true });
+});

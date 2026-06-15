@@ -1,33 +1,27 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { z } from "zod";
 import { requireAdmin } from "@/lib/adminGuard";
 import { generateQuestionsFromPassage } from "@/lib/vertexai";
+import { parseJson } from "@/lib/validation";
+import { jsonError, withErrorHandling } from "@/lib/apiError";
 
-export async function POST(req: NextRequest) {
-  const isAdmin = await requireAdmin();
-  if (!isAdmin) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-  }
+const bodySchema = z.object({
+  passage: z.string().trim().min(1, "passage is required").max(20000),
+  skill: z.enum(["READING_WRITING", "MATH"]),
+  count: z.number().int().min(1).max(20).optional(),
+});
 
-  let body: { passage?: unknown; skill?: unknown; count?: unknown };
-  try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
-  }
+export const POST = withErrorHandling(async (req: NextRequest) => {
+  if (!(await requireAdmin())) return jsonError("Unauthorized", 403);
 
-  if (typeof body.passage !== "string" || !body.passage.trim()) {
-    return NextResponse.json({ error: "passage is required" }, { status: 400 });
-  }
-  if (typeof body.skill !== "string" || !["READING_WRITING", "MATH"].includes(body.skill)) {
-    return NextResponse.json({ error: "skill must be READING_WRITING or MATH" }, { status: 400 });
-  }
-
-  const count = typeof body.count === "number" && body.count > 0 && body.count <= 20 ? body.count : 5;
+  const { passage, skill, count } = await parseJson(req, bodySchema);
 
   try {
-    const questions = await generateQuestionsFromPassage(body.passage.trim(), body.skill, count);
-    return NextResponse.json({ questions });
+    const questions = await generateQuestionsFromPassage(passage, skill, count ?? 5);
+    return Response.json({ questions });
   } catch (e) {
-    return NextResponse.json({ error: (e as Error).message }, { status: 500 });
+    // Surface a clean message; log details server-side.
+    console.error("[generate-test] AI error:", e);
+    return jsonError("Failed to generate questions. Check AI configuration and try again.", 502);
   }
-}
+});

@@ -1,24 +1,23 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { sendMail, verificationEmail } from "@/lib/mail";
 import { generateCode, hashCode, OTP_TTL_MS, OTP_RESEND_COOLDOWN_MS } from "@/lib/otp";
+import { parseJson, emailSchema } from "@/lib/validation";
+import { jsonError, tooManyRequests, withErrorHandling } from "@/lib/apiError";
+import { rateLimit, clientIp } from "@/lib/rateLimit";
 
-export async function POST(req: NextRequest) {
-  let body: { email?: string };
-  try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
-  }
+const bodySchema = z.object({ email: emailSchema });
 
-  const email = body.email?.toLowerCase().trim();
-  if (!email) {
-    return NextResponse.json({ error: "Email is required" }, { status: 400 });
-  }
+export const POST = withErrorHandling(async (req: NextRequest) => {
+  const rl = rateLimit(`send-code:${clientIp(req)}`, 10, 60 * 60 * 1000); // 10/hour/IP
+  if (!rl.ok) return tooManyRequests(rl.retryAfterSec);
+
+  const { email } = await parseJson(req, bodySchema);
 
   const existing = await prisma.emailOtp.findUnique({ where: { email } });
   if (existing && existing.lastSentAt.getTime() > Date.now() - OTP_RESEND_COOLDOWN_MS) {
-    return NextResponse.json({ error: "Please wait before requesting another code" }, { status: 429 });
+    return jsonError("Please wait before requesting another code", 429);
   }
 
   const code = generateCode();
@@ -33,5 +32,5 @@ export async function POST(req: NextRequest) {
   const mail = verificationEmail(code);
   await sendMail({ to: email, ...mail });
 
-  return NextResponse.json({ ok: true });
-}
+  return Response.json({ ok: true });
+});

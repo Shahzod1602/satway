@@ -8,29 +8,41 @@ import { X, CheckCircle2 } from "lucide-react";
 
 export default function PaymentForm({
   plan,
-  referralCode,
+  cardNumber,
+  cardHolder,
   onClose,
 }: {
   plan: PremiumPlan;
   referralCode: string;
+  cardNumber: string;
+  cardHolder: string;
   onClose: () => void;
 }) {
   const router = useRouter();
-  const [step, setStep] = useState<"info" | "confirm">("info");
   const [loading, setLoading] = useState(false);
-
-  const cardNumber = process.env.NEXT_PUBLIC_PAYMENT_CARD_NUMBER || "";
-  const cardHolder = process.env.NEXT_PUBLIC_PAYMENT_CARD_HOLDER || "";
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const submitPayment = async () => {
     setLoading(true);
-    await fetch("/api/profile/upgrade", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ planId: plan.id }),
-    });
+    setError(null);
+    try {
+      const res = await fetch("/api/profile/upgrade", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ planId: plan.id }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setError(data.error || "Could not submit payment. Please try again.");
+        setLoading(false);
+        return;
+      }
+      setSubmitted(true);
+    } catch {
+      setError("Network error. Please try again.");
+    }
     setLoading(false);
-    router.push("/dashboard");
   };
 
   return (
@@ -40,6 +52,23 @@ export default function PaymentForm({
           <X className="h-5 w-5" />
         </button>
 
+        {submitted ? (
+          <div className="py-6 text-center">
+            <CheckCircle2 className="mx-auto h-12 w-12 text-emerald-500" />
+            <h3 className="mt-3 font-bold text-lg text-slate-900">Payment submitted</h3>
+            <p className="mt-2 text-sm text-slate-600">
+              Thanks! Our admin will verify your transfer and activate Premium shortly.
+              You&apos;ll see it reflected on your dashboard once approved.
+            </p>
+            <button
+              onClick={() => router.push("/dashboard")}
+              className="mt-5 px-5 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium hover:bg-brand-700"
+            >
+              Go to dashboard
+            </button>
+          </div>
+        ) : (
+        <>
         <h3 className="font-bold text-lg text-slate-900">Complete payment</h3>
         <p className="mt-2 text-sm text-slate-600">
           {plan.label} plan — <strong>{fmtUZS(plan.total)} UZS</strong>
@@ -73,6 +102,8 @@ export default function PaymentForm({
           <span>After transferring, click &quot;I&apos;ve paid&quot; — our admin will verify and activate your Premium access.</span>
         </div>
 
+        {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+
         <div className="mt-5 flex gap-3 justify-end">
           <button
             onClick={onClose}
@@ -88,6 +119,8 @@ export default function PaymentForm({
             {loading ? "Submitting…" : "I've paid"}
           </button>
         </div>
+        </>
+        )}
       </div>
     </div>
   );

@@ -1,34 +1,51 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { requireAdmin } from "@/lib/adminGuard";
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
+import { jsonError, withErrorHandling } from "@/lib/apiError";
 
-export async function POST(req: NextRequest) {
-  const isAdmin = await requireAdmin();
-  if (!isAdmin) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-  }
+// Allowlist of accepted upload types → canonical extension.
+const ALLOWED: Record<string, string> = {
+  "application/pdf": ".pdf",
+  "image/png": ".png",
+  "image/jpeg": ".jpg",
+  "image/webp": ".webp",
+};
+const MAX_BYTES = 20 * 1024 * 1024; // 20 MB
+
+function uploadDir() {
+  return process.env.UPLOAD_DIR || path.join(process.cwd(), "public", "uploads");
+}
+
+export const POST = withErrorHandling(async (req: NextRequest) => {
+  if (!(await requireAdmin())) return jsonError("Unauthorized", 403);
 
   const formData = await req.formData();
-  const file = formData.get("file") as File | null;
+  const file = formData.get("file");
 
-  if (!file) {
-    return NextResponse.json({ error: "No file provided" }, { status: 400 });
+  if (!(file instanceof File)) {
+    return jsonError("No file provided", 400);
   }
 
-  const bytes = await file.arrayBuffer();
-  const buffer = Buffer.from(bytes);
+  const ext = ALLOWED[file.type];
+  if (!ext) {
+    return jsonError("Unsupported file type. Allowed: PDF, PNG, JPEG, WebP.", 415);
+  }
+  if (file.size > MAX_BYTES) {
+    return jsonError("File too large (max 20 MB).", 413);
+  }
 
-  const uploadsDir = path.join(process.cwd(), "public", "uploads");
-  await mkdir(uploadsDir, { recursive: true });
+  const buffer = Buffer.from(await file.arrayBuffer());
 
-  const ext = path.extname(file.name) || ".bin";
+  const dir = uploadDir();
+  await mkdir(dir, { recursive: true });
+
+  // Generated name only — never trust the client-supplied filename.
   const uniqueName = `${Date.now()}-${Math.random().toString(36).slice(2, 9)}${ext}`;
-  const filePath = path.join(uploadsDir, uniqueName);
+  await writeFile(path.join(dir, uniqueName), buffer);
 
-  await writeFile(filePath, buffer);
-
+  // Files written outside public/ are served via a dedicated handler; the
+  // default location stays under /uploads.
   const url = `/uploads/${uniqueName}`;
-
-  return NextResponse.json({ url }, { status: 201 });
-}
+  return Response.json({ url }, { status: 201 });
+});

@@ -1,12 +1,15 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { currentUser } from "@/lib/session";
+import { parseJson } from "@/lib/validation";
+import { jsonError, tooManyRequests, withErrorHandling } from "@/lib/apiError";
+import { rateLimit, clientIp } from "@/lib/rateLimit";
+import { notifyAdminSupport } from "@/lib/telegram";
 
-export async function GET() {
+export const GET = withErrorHandling(async () => {
   const user = await currentUser();
-  if (!user) {
-    return NextResponse.json({ error: "Authorization required" }, { status: 401 });
-  }
+  if (!user) return jsonError("Authorization required", 401);
 
   const messages = await prisma.supportMessage.findMany({
     where: { userId: user.id },
@@ -18,32 +21,25 @@ export async function GET() {
     data: { readByUser: true },
   });
 
-  return NextResponse.json({ messages });
-}
+  return Response.json({ messages });
+});
 
-export async function POST(req: NextRequest) {
+const bodySchema = z.object({ body: z.string().trim().min(1, "Message is empty").max(2000) });
+
+export const POST = withErrorHandling(async (req: NextRequest) => {
   const user = await currentUser();
-  if (!user) {
-    return NextResponse.json({ error: "Authorization required" }, { status: 401 });
-  }
+  if (!user) return jsonError("Authorization required", 401);
 
-  let body: { body?: unknown };
-  try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
-  }
-  const text = String(body.body ?? "").trim();
-  if (!text) {
-    return NextResponse.json({ error: "Message is empty" }, { status: 400 });
-  }
-  if (text.length > 2000) {
-    return NextResponse.json({ error: "Message is too long" }, { status: 400 });
-  }
+  const rl = rateLimit(`support:${user.id}:${clientIp(req)}`, 20, 10 * 60 * 1000); // 20/10min
+  if (!rl.ok) return tooManyRequests(rl.retryAfterSec);
+
+  const { body: text } = await parseJson(req, bodySchema);
 
   const message = await prisma.supportMessage.create({
     data: { userId: user.id, body: text, fromAdmin: false, readByUser: true },
   });
 
-  return NextResponse.json({ ok: true, message });
-}
+  notifyAdminSupport(user.name ?? user.email ?? "A user", text);
+
+  return Response.json({ ok: true, message });
+});

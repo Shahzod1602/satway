@@ -1,43 +1,35 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { verifyCodeHash, OTP_MAX_ATTEMPTS } from "@/lib/otp";
+import { parseJson, emailSchema, otpCodeSchema } from "@/lib/validation";
+import { jsonError, tooManyRequests, withErrorHandling } from "@/lib/apiError";
+import { rateLimit, clientIp } from "@/lib/rateLimit";
 
-export async function POST(req: NextRequest) {
-  let body: { email?: string; code?: string };
-  try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
-  }
+const bodySchema = z.object({ email: emailSchema, code: otpCodeSchema });
 
-  const email = body.email?.toLowerCase().trim();
-  const code = body.code;
-  if (!email || !code) {
-    return NextResponse.json({ error: "Email and code are required" }, { status: 400 });
-  }
+export const POST = withErrorHandling(async (req: NextRequest) => {
+  const rl = rateLimit(`verify-code:${clientIp(req)}`, 20, 10 * 60 * 1000); // 20/10min/IP
+  if (!rl.ok) return tooManyRequests(rl.retryAfterSec);
+
+  const { email, code } = await parseJson(req, bodySchema);
 
   const otp = await prisma.emailOtp.findUnique({ where: { email } });
-  if (!otp) {
-    return NextResponse.json({ error: "No verification code found" }, { status: 404 });
-  }
-  if (otp.expiresAt < new Date()) {
-    return NextResponse.json({ error: "Code has expired" }, { status: 410 });
-  }
+  if (!otp) return jsonError("No verification code found", 404);
+  if (otp.expiresAt < new Date()) return jsonError("Code has expired", 410);
   if (otp.attempts >= OTP_MAX_ATTEMPTS) {
-    return NextResponse.json({ error: "Too many attempts. Request a new code." }, { status: 429 });
+    return jsonError("Too many attempts. Request a new code.", 429);
   }
 
   await prisma.emailOtp.update({ where: { email }, data: { attempts: otp.attempts + 1 } });
 
   const valid = await verifyCodeHash(code, otp.codeHash);
-  if (!valid) {
-    return NextResponse.json({ error: "Invalid code" }, { status: 400 });
-  }
+  if (!valid) return jsonError("Invalid code", 400);
 
   await prisma.$transaction([
     prisma.user.update({ where: { email }, data: { emailVerified: true } }),
     prisma.emailOtp.delete({ where: { email } }),
   ]);
 
-  return NextResponse.json({ ok: true });
-}
+  return Response.json({ ok: true });
+});

@@ -1,17 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { PREMIUM_PLANS, type PremiumPlan, getPlan, fmtUZS } from "@/lib/plans";
+import { PREMIUM_PLANS, getPlan, fmtUZS } from "@/lib/plans";
 import PaymentForm from "./PaymentForm";
 import { Crown, CheckCircle2 } from "lucide-react";
 
 export default function PricingSelector({
   currentPlan,
   referralCode,
+  cardNumber,
+  cardHolder,
 }: {
   currentPlan: string;
   referralCode: string;
+  cardNumber: string;
+  cardHolder: string;
 }) {
   const [selected, setSelected] = useState<string>("1m");
   const [showPayment, setShowPayment] = useState(false);
@@ -64,7 +67,13 @@ export default function PricingSelector({
       )}
 
       {showPayment && plan && (
-        <PaymentForm plan={plan} referralCode={referralCode} onClose={() => setShowPayment(false)} />
+        <PaymentForm
+          plan={plan}
+          referralCode={referralCode}
+          cardNumber={cardNumber}
+          cardHolder={cardHolder}
+          onClose={() => setShowPayment(false)}
+        />
       )}
     </>
   );

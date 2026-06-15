@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Users, LifeBuoy, FilePlus, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import { Users, LifeBuoy, FilePlus, Loader2, CheckCircle2, AlertCircle, CreditCard } from "lucide-react";
 
 export default function AdminPanel() {
   const [json, setJson] = useState("");
@@ -37,7 +37,18 @@ export default function AdminPanel() {
       <h1 className="text-2xl font-bold text-slate-900">Admin Panel</h1>
       <p className="mt-1 text-sm text-slate-500">Manage users, support tickets, and tests.</p>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-3">
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Link
+          href="/admin/payments"
+          className="rounded-2xl border border-[#EAEAEA] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
+        >
+          <div className="grid h-10 w-10 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
+            <CreditCard className="h-5 w-5" />
+          </div>
+          <h3 className="mt-4 text-lg font-semibold text-slate-900">Payments</h3>
+          <p className="mt-1 text-sm text-slate-500">Approve Premium payments</p>
+        </Link>
+
         <Link
           href="/admin/users"
           className="rounded-2xl border border-[#EAEAEA] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"

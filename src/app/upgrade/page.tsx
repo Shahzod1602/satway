@@ -43,7 +43,12 @@ export default async function UpgradePage() {
               })}
             </p>
           )}
-          <PricingSelector currentPlan={plan} referralCode={referralCode} />
+          <PricingSelector
+            currentPlan={plan}
+            referralCode={referralCode}
+            cardNumber={process.env.PAYMENT_CARD_NUMBER || ""}
+            cardHolder={process.env.PAYMENT_CARD_HOLDER || ""}
+          />
         </main>
       </div>
     </div>
