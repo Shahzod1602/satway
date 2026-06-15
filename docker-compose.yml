@@ -1,0 +1,63 @@
+# Production / parity stack: app + Postgres.
+# Local dev can instead use a host Postgres and `npm run dev`.
+#
+#   docker compose up -d
+#
+# Provide secrets via a `.env` file next to this compose file.
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-satway}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-satway}
+    volumes:
+      - satway_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-satway} -d ${POSTGRES_DB:-satway}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    # Not published to the host in production; only the app talks to it.
+    expose:
+      - "5432"
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      NEXTAUTH_URL: ${NEXTAUTH_URL}
+      GOOGLE_CLOUD_PROJECT: ${GOOGLE_CLOUD_PROJECT}
+      GOOGLE_CLOUD_LOCATION: ${GOOGLE_CLOUD_LOCATION}
+      GOOGLE_APPLICATION_CREDENTIALS: /run/secrets/gcp-key.json
+      GEMINI_MODEL: ${GEMINI_MODEL}
+      GMAIL_USER: ${GMAIL_USER}
+      GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD}
+      MAIL_FROM: ${MAIL_FROM}
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      RESEND_FROM: ${RESEND_FROM}
+      PAYMENT_CARD_NUMBER: ${PAYMENT_CARD_NUMBER}
+      PAYMENT_CARD_HOLDER: ${PAYMENT_CARD_HOLDER}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      PAYMENT_TELEGRAM: ${PAYMENT_TELEGRAM}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      TELEGRAM_ADMIN_CHAT_ID: ${TELEGRAM_ADMIN_CHAT_ID}
+      UPLOAD_DIR: /data/uploads
+    volumes:
+      # Persist admin uploads across container restarts.
+      - satway_uploads:/data/uploads
+      # Mount the Vertex AI service-account key read-only.
+      - ${GCP_KEY_FILE:-./gemini-key.json}:/run/secrets/gcp-key.json:ro
+    ports:
+      - "3000:3000"
+
+volumes:
+  satway_db:
+  satway_uploads:

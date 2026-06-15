@@ -1,0 +1,243 @@
+// SAT Platform — Prisma schema
+// MVP: Reading & Writing + Math (auto-graded).
+// SAT has 2 sections: Reading & Writing (Module 1 + 2), Math (Module 1 + 2).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─────────────────────────────────────────────────────────────
+// Users & auth
+// ─────────────────────────────────────────────────────────────
+
+model User {
+  id                String    @id @default(cuid())
+  name              String
+  email             String    @unique
+  password          String
+  role              Role      @default(STUDENT)
+  emailVerified     Boolean   @default(false)
+  verifyToken       String?
+  verifyTokenExpiry DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  avatarUrl          String?
+  country            String?
+  nativeLanguage     String?
+  phone              String?
+  targetScore        Int? // goal score, e.g. 1400
+  targetMathScore    Int? // 200-800
+  targetRWScore      Int? // 200-800
+  examDate           DateTime?
+  defaultType        TestType  @default(DIGITAL)
+  emailNotifications Boolean   @default(true)
+  plan               Plan      @default(FREE)
+  premiumUntil       DateTime?
+
+  referralCode     String?  @unique
+  referredById     String?
+  referredBy       User?    @relation("Referrals", fields: [referredById], references: [id])
+  referrals        User[]   @relation("Referrals")
+  referralRewarded Boolean  @default(false)
+
+  attempts        TestAttempt[]
+  supportMessages SupportMessage[]
+  payments        Payment[]
+}
+
+// ─────────────────────────────────────────────────────────────
+// Manual payments — user submits, admin approves to grant Premium
+// ─────────────────────────────────────────────────────────────
+
+model Payment {
+  id         String        @id @default(cuid())
+  userId     String
+  planLabel  String // "1m" | "3m" | "6m"
+  months     Int
+  amount     Int           @default(0)
+  status     PaymentStatus @default(PENDING)
+  note       String? // user-supplied note / payment reference
+  proofUrl   String? // optional uploaded receipt
+  reviewedAt DateTime?
+  reviewedBy String? // admin user id
+  createdAt  DateTime      @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+}
+
+enum PaymentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model SupportMessage {
+  id          String   @id @default(cuid())
+  userId      String
+  body        String
+  fromAdmin   Boolean  @default(false)
+  readByUser  Boolean  @default(false)
+  readByAdmin Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+enum Plan {
+  FREE
+  PREMIUM
+}
+
+model EmailOtp {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  codeHash  String
+  expiresAt DateTime
+  attempts  Int      @default(0)
+  lastSentAt DateTime @default(now())
+  createdAt DateTime @default(now())
+}
+
+enum Role {
+  STUDENT
+  ADMIN
+}
+
+// ─────────────────────────────────────────────────────────────
+// Tests → Sections (Modules) → Questions
+// ─────────────────────────────────────────────────────────────
+
+model Test {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  skill       SatSkill
+  type        TestType @default(DIGITAL)
+  description String?
+  durationSec Int      @default(3900) // R&W 64min, Math 70min
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  sections Section[]
+  attempts TestAttempt[]
+}
+
+enum SatSkill {
+  READING_WRITING
+  MATH
+}
+
+enum TestType {
+  DIGITAL
+  PAPER
+}
+
+model Section {
+  id           String  @id @default(cuid())
+  testId       String
+  order        Int // 1 = Module 1, 2 = Module 2
+  title        String? // "Module 1 (Easy)" / "Module 2 (Adaptive)"
+  instructions String?
+  passageText  String? // Reading passage (HTML)
+  imageUrl     String? // Math diagram / graph
+  formulaSheet Boolean  @default(false) // show SAT formula reference for Math
+
+  test      Test       @relation(fields: [testId], references: [id], onDelete: Cascade)
+  questions Question[]
+
+  @@index([testId])
+}
+
+model Question {
+  id             String       @id @default(cuid())
+  sectionId      String
+  order          Int
+  type           SatQuestionType
+  groupTitle     String? // shared passage heading e.g. "Questions 1–5 refer to the following passage."
+  prompt         String? // the question stem
+  options        Json? // choices: ["A) ...", "B) ..."]
+  correctAnswers Json // acceptable answers, e.g. ["B"] or ["12.5","25/2"]
+  points         Int          @default(1)
+  meta           Json? // { omitCalculator: true, passageRef, etc. }
+
+  section Section         @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  answers AttemptAnswer[]
+
+  @@index([sectionId])
+}
+
+enum SatQuestionType {
+  MCQ_SINGLE
+  STUDENT_PRODUCED_RESPONSE // Math grid-in: integer or fraction
+  PARAGRAPH_REFERENCE // "Which choice best describes..."
+  CROSS_TEXT_CONNECTIONS
+  TEXTUAL_EVIDENCE
+  INFERENCE
+  CENTRAL_IDEAS
+  WORDS_IN_CONTEXT
+  TEXT_STRUCTURE
+  RHETORICAL_SYNTHESIS // R&W: synthesis notes
+  TRANSITIONS
+  BOUNDARIES // grammar
+  FORM_STRUCTURE // poetry/play analysis
+  DATA_ANALYSIS // graph/table interpretation
+  ALGEBRA
+  ADVANCED_MATH
+  PROBLEM_SOLVING
+  GEOMETRY
+}
+
+// ─────────────────────────────────────────────────────────────
+// Attempts & answers
+// ─────────────────────────────────────────────────────────────
+
+model TestAttempt {
+  id             String        @id @default(cuid())
+  userId         String
+  testId         String
+  status         AttemptStatus @default(IN_PROGRESS)
+  startedAt      DateTime      @default(now())
+  submittedAt    DateTime?
+  rawScore       Int? // number correct
+  totalQuestions Int?
+  scaledScore    Int? // 200-800 for full section, null for module-only practice
+  module         Int? // 1 or 2 for single-module practice; null = full test
+
+  user    User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  test    Test            @relation(fields: [testId], references: [id], onDelete: Cascade)
+  answers AttemptAnswer[]
+
+  @@index([userId])
+  @@index([testId])
+}
+
+enum AttemptStatus {
+  IN_PROGRESS
+  SUBMITTED
+}
+
+model AttemptAnswer {
+  id         String  @id @default(cuid())
+  attemptId  String
+  questionId String
+  response   Json
+  isCorrect  Boolean @default(false)
+
+  attempt  TestAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  question Question    @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([attemptId, questionId])
+  @@index([attemptId])
+}
