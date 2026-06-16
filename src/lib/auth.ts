@@ -45,6 +45,11 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Incorrect password");
         }
 
+        // Enforce email verification — the OTP flow at signup must be completed.
+        if (!user.emailVerified) {
+          throw new Error("Please verify your email before signing in.");
+        }
+
         return {
           id: user.id,
           email: user.email,
