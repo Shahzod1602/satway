@@ -172,6 +172,8 @@ export const SectionScalarFieldEnum = {
   id: 'id',
   testId: 'testId',
   order: 'order',
+  module: 'module',
+  difficulty: 'difficulty',
   title: 'title',
   instructions: 'instructions',
   passageText: 'passageText',
@@ -188,6 +190,8 @@ export const QuestionScalarFieldEnum = {
   order: 'order',
   type: 'type',
   groupTitle: 'groupTitle',
+  stimulus: 'stimulus',
+  imageUrl: 'imageUrl',
   prompt: 'prompt',
   options: 'options',
   correctAnswers: 'correctAnswers',
@@ -208,7 +212,9 @@ export const TestAttemptScalarFieldEnum = {
   rawScore: 'rawScore',
   totalQuestions: 'totalQuestions',
   scaledScore: 'scaledScore',
-  module: 'module'
+  module: 'module',
+  module1Raw: 'module1Raw',
+  module2Difficulty: 'module2Difficulty'
 } as const
 
 export type TestAttemptScalarFieldEnum = (typeof TestAttemptScalarFieldEnum)[keyof typeof TestAttemptScalarFieldEnum]

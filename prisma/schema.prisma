@@ -145,19 +145,30 @@ enum TestType {
 }
 
 model Section {
-  id           String  @id @default(cuid())
+  id           String            @id @default(cuid())
   testId       String
-  order        Int // 1 = Module 1, 2 = Module 2
-  title        String? // "Module 1 (Easy)" / "Module 2 (Adaptive)"
+  order        Int // display order
+  module       Int               @default(1) // 1 = Module 1, 2 = Module 2
+  difficulty   SectionDifficulty @default(STANDARD) // M1 = STANDARD; M2 = EASY | HARD (adaptive)
+  title        String? // "Module 1" / "Module 2 (Harder)"
   instructions String?
-  passageText  String? // Reading passage (HTML)
-  imageUrl     String? // Math diagram / graph
-  formulaSheet Boolean  @default(false) // show SAT formula reference for Math
+  passageText  String? // legacy shared passage (HTML); per-question stimulus preferred
+  imageUrl     String? // Math diagram / graph (section-wide)
+  formulaSheet Boolean           @default(false) // show SAT formula reference for Math
 
   test      Test       @relation(fields: [testId], references: [id], onDelete: Cascade)
   questions Question[]
 
   @@index([testId])
+  @@index([testId, module, difficulty])
+}
+
+// Adaptive difficulty of a section. Module 1 is always STANDARD; Module 2 is
+// served as EASY or HARD depending on Module 1 performance.
+enum SectionDifficulty {
+  STANDARD
+  EASY
+  HARD
 }
 
 model Question {
@@ -166,6 +177,8 @@ model Question {
   order          Int
   type           SatQuestionType
   groupTitle     String? // shared passage heading e.g. "Questions 1–5 refer to the following passage."
+  stimulus       String? // per-question passage / text (R&W digital split-screen, HTML)
+  imageUrl       String? // per-question figure / graph
   prompt         String? // the question stem
   options        Json? // choices: ["A) ...", "B) ..."]
   correctAnswers Json // acceptable answers, e.g. ["B"] or ["12.5","25/2"]
@@ -214,6 +227,10 @@ model TestAttempt {
   totalQuestions Int?
   scaledScore    Int? // 200-800 for full section, null for module-only practice
   module         Int? // 1 or 2 for single-module practice; null = full test
+
+  // Adaptive full-test state
+  module1Raw        Int? // raw correct in Module 1 (drives Module 2 routing)
+  module2Difficulty SectionDifficulty? // EASY | HARD variant served for Module 2
 
   user    User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   test    Test            @relation(fields: [testId], references: [id], onDelete: Cascade)

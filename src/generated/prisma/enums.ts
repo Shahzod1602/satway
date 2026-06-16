@@ -50,6 +50,15 @@ export const TestType = {
 export type TestType = (typeof TestType)[keyof typeof TestType]
 
 
+export const SectionDifficulty = {
+  STANDARD: 'STANDARD',
+  EASY: 'EASY',
+  HARD: 'HARD'
+} as const
+
+export type SectionDifficulty = (typeof SectionDifficulty)[keyof typeof SectionDifficulty]
+
+
 export const SatQuestionType = {
   MCQ_SINGLE: 'MCQ_SINGLE',
   STUDENT_PRODUCED_RESPONSE: 'STUDENT_PRODUCED_RESPONSE',

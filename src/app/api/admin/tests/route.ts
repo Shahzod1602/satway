@@ -111,6 +111,9 @@ export async function POST(req: NextRequest) {
       sections: {
         create: sections.map((s: Record<string, unknown>) => ({
           order: s.order as number,
+          module: s.module === 2 ? 2 : 1,
+          difficulty:
+            s.difficulty === "EASY" || s.difficulty === "HARD" ? s.difficulty : "STANDARD",
           title: typeof s.title === "string" ? s.title : null,
           instructions: typeof s.instructions === "string" ? s.instructions : null,
           passageText: typeof s.passageText === "string" ? s.passageText : null,
@@ -121,6 +124,8 @@ export async function POST(req: NextRequest) {
               order: q.order as number,
               type: q.type as SatQuestionType,
               groupTitle: typeof q.groupTitle === "string" ? q.groupTitle : null,
+              stimulus: typeof q.stimulus === "string" ? q.stimulus : null,
+              imageUrl: typeof q.imageUrl === "string" ? q.imageUrl : null,
               prompt: typeof q.prompt === "string" ? q.prompt : null,
               options: Array.isArray(q.options) ? q.options : undefined,
               correctAnswers: q.correctAnswers as Prisma.InputJsonValue,

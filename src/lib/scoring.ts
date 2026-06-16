@@ -141,3 +141,45 @@ export function rawToScaled(
 export function totalScore(rwScore: number, mathScore: number): number {
   return rwScore + mathScore;
 }
+
+// ─────────────────────────────────────────────────────────────
+// Adaptive (two-module) scoring
+// ─────────────────────────────────────────────────────────────
+
+export type Module2Difficulty = "EASY" | "HARD";
+
+/**
+ * Fraction of Module 1 a test-taker must answer correctly to be routed to the
+ * harder Module 2. Mirrors the College Board adaptive design (roughly the top
+ * performers see the harder second module).
+ */
+export const HARD_MODULE_THRESHOLD = 0.6;
+
+/** Decide which Module 2 variant to serve from Module 1 performance. */
+export function pickModule2Difficulty(
+  module1Raw: number,
+  module1Total: number,
+): Module2Difficulty {
+  if (module1Total <= 0) return "EASY";
+  return module1Raw / module1Total >= HARD_MODULE_THRESHOLD ? "HARD" : "EASY";
+}
+
+// On the easy second-module path the attainable score is capped; on the hard
+// path it is floored. These approximate the real digital SAT band limits.
+const EASY_PATH_CAP = 600;
+const HARD_PATH_FLOOR = 510;
+
+/**
+ * Convert a full two-module raw score to a scaled score, accounting for which
+ * Module 2 variant was served. Approximate — the real exam uses IRT.
+ */
+export function rawToScaledAdaptive(
+  raw: number,
+  skill: SatSkill,
+  total: number,
+  difficulty: Module2Difficulty,
+): number {
+  const base = rawToScaled(raw, skill, total);
+  if (difficulty === "EASY") return Math.min(base, EASY_PATH_CAP);
+  return Math.max(base, HARD_PATH_FLOOR);
+}

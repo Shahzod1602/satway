@@ -28,16 +28,20 @@ export type AggregateSection = {
 
 export type SectionAvgAggregateOutputType = {
   order: number | null
+  module: number | null
 }
 
 export type SectionSumAggregateOutputType = {
   order: number | null
+  module: number | null
 }
 
 export type SectionMinAggregateOutputType = {
   id: string | null
   testId: string | null
   order: number | null
+  module: number | null
+  difficulty: $Enums.SectionDifficulty | null
   title: string | null
   instructions: string | null
   passageText: string | null
@@ -49,6 +53,8 @@ export type SectionMaxAggregateOutputType = {
   id: string | null
   testId: string | null
   order: number | null
+  module: number | null
+  difficulty: $Enums.SectionDifficulty | null
   title: string | null
   instructions: string | null
   passageText: string | null
@@ -60,6 +66,8 @@ export type SectionCountAggregateOutputType = {
   id: number
   testId: number
   order: number
+  module: number
+  difficulty: number
   title: number
   instructions: number
   passageText: number
@@ -71,16 +79,20 @@ export type SectionCountAggregateOutputType = {
 
 export type SectionAvgAggregateInputType = {
   order?: true
+  module?: true
 }
 
 export type SectionSumAggregateInputType = {
   order?: true
+  module?: true
 }
 
 export type SectionMinAggregateInputType = {
   id?: true
   testId?: true
   order?: true
+  module?: true
+  difficulty?: true
   title?: true
   instructions?: true
   passageText?: true
@@ -92,6 +104,8 @@ export type SectionMaxAggregateInputType = {
   id?: true
   testId?: true
   order?: true
+  module?: true
+  difficulty?: true
   title?: true
   instructions?: true
   passageText?: true
@@ -103,6 +117,8 @@ export type SectionCountAggregateInputType = {
   id?: true
   testId?: true
   order?: true
+  module?: true
+  difficulty?: true
   title?: true
   instructions?: true
   passageText?: true
@@ -201,6 +217,8 @@ export type SectionGroupByOutputType = {
   id: string
   testId: string
   order: number
+  module: number
+  difficulty: $Enums.SectionDifficulty
   title: string | null
   instructions: string | null
   passageText: string | null
@@ -235,6 +253,8 @@ export type SectionWhereInput = {
   id?: Prisma.StringFilter<"Section"> | string
   testId?: Prisma.StringFilter<"Section"> | string
   order?: Prisma.IntFilter<"Section"> | number
+  module?: Prisma.IntFilter<"Section"> | number
+  difficulty?: Prisma.EnumSectionDifficultyFilter<"Section"> | $Enums.SectionDifficulty
   title?: Prisma.StringNullableFilter<"Section"> | string | null
   instructions?: Prisma.StringNullableFilter<"Section"> | string | null
   passageText?: Prisma.StringNullableFilter<"Section"> | string | null
@@ -248,6 +268,8 @@ export type SectionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   testId?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  module?: Prisma.SortOrder
+  difficulty?: Prisma.SortOrder
   title?: Prisma.SortOrderInput | Prisma.SortOrder
   instructions?: Prisma.SortOrderInput | Prisma.SortOrder
   passageText?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -264,6 +286,8 @@ export type SectionWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.SectionWhereInput | Prisma.SectionWhereInput[]
   testId?: Prisma.StringFilter<"Section"> | string
   order?: Prisma.IntFilter<"Section"> | number
+  module?: Prisma.IntFilter<"Section"> | number
+  difficulty?: Prisma.EnumSectionDifficultyFilter<"Section"> | $Enums.SectionDifficulty
   title?: Prisma.StringNullableFilter<"Section"> | string | null
   instructions?: Prisma.StringNullableFilter<"Section"> | string | null
   passageText?: Prisma.StringNullableFilter<"Section"> | string | null
@@ -277,6 +301,8 @@ export type SectionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   testId?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  module?: Prisma.SortOrder
+  difficulty?: Prisma.SortOrder
   title?: Prisma.SortOrderInput | Prisma.SortOrder
   instructions?: Prisma.SortOrderInput | Prisma.SortOrder
   passageText?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -296,6 +322,8 @@ export type SectionScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Section"> | string
   testId?: Prisma.StringWithAggregatesFilter<"Section"> | string
   order?: Prisma.IntWithAggregatesFilter<"Section"> | number
+  module?: Prisma.IntWithAggregatesFilter<"Section"> | number
+  difficulty?: Prisma.EnumSectionDifficultyWithAggregatesFilter<"Section"> | $Enums.SectionDifficulty
   title?: Prisma.StringNullableWithAggregatesFilter<"Section"> | string | null
   instructions?: Prisma.StringNullableWithAggregatesFilter<"Section"> | string | null
   passageText?: Prisma.StringNullableWithAggregatesFilter<"Section"> | string | null
@@ -306,6 +334,8 @@ export type SectionScalarWhereWithAggregatesInput = {
 export type SectionCreateInput = {
   id?: string
   order: number
+  module?: number
+  difficulty?: $Enums.SectionDifficulty
   title?: string | null
   instructions?: string | null
   passageText?: string | null
@@ -319,6 +349,8 @@ export type SectionUncheckedCreateInput = {
   id?: string
   testId: string
   order: number
+  module?: number
+  difficulty?: $Enums.SectionDifficulty
   title?: string | null
   instructions?: string | null
   passageText?: string | null
@@ -330,6 +362,8 @@ export type SectionUncheckedCreateInput = {
 export type SectionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  module?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.EnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passageText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -343,6 +377,8 @@ export type SectionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   testId?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  module?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.EnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passageText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -355,6 +391,8 @@ export type SectionCreateManyInput = {
   id?: string
   testId: string
   order: number
+  module?: number
+  difficulty?: $Enums.SectionDifficulty
   title?: string | null
   instructions?: string | null
   passageText?: string | null
@@ -365,6 +403,8 @@ export type SectionCreateManyInput = {
 export type SectionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  module?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.EnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passageText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -376,6 +416,8 @@ export type SectionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   testId?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  module?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.EnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passageText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -397,6 +439,8 @@ export type SectionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   testId?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  module?: Prisma.SortOrder
+  difficulty?: Prisma.SortOrder
   title?: Prisma.SortOrder
   instructions?: Prisma.SortOrder
   passageText?: Prisma.SortOrder
@@ -406,12 +450,15 @@ export type SectionCountOrderByAggregateInput = {
 
 export type SectionAvgOrderByAggregateInput = {
   order?: Prisma.SortOrder
+  module?: Prisma.SortOrder
 }
 
 export type SectionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   testId?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  module?: Prisma.SortOrder
+  difficulty?: Prisma.SortOrder
   title?: Prisma.SortOrder
   instructions?: Prisma.SortOrder
   passageText?: Prisma.SortOrder
@@ -423,6 +470,8 @@ export type SectionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   testId?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  module?: Prisma.SortOrder
+  difficulty?: Prisma.SortOrder
   title?: Prisma.SortOrder
   instructions?: Prisma.SortOrder
   passageText?: Prisma.SortOrder
@@ -432,6 +481,7 @@ export type SectionMinOrderByAggregateInput = {
 
 export type SectionSumOrderByAggregateInput = {
   order?: Prisma.SortOrder
+  module?: Prisma.SortOrder
 }
 
 export type SectionScalarRelationFilter = {
@@ -481,6 +531,10 @@ export type SectionUncheckedUpdateManyWithoutTestNestedInput = {
   deleteMany?: Prisma.SectionScalarWhereInput | Prisma.SectionScalarWhereInput[]
 }
 
+export type EnumSectionDifficultyFieldUpdateOperationsInput = {
+  set?: $Enums.SectionDifficulty
+}
+
 export type SectionCreateNestedOneWithoutQuestionsInput = {
   create?: Prisma.XOR<Prisma.SectionCreateWithoutQuestionsInput, Prisma.SectionUncheckedCreateWithoutQuestionsInput>
   connectOrCreate?: Prisma.SectionCreateOrConnectWithoutQuestionsInput
@@ -498,6 +552,8 @@ export type SectionUpdateOneRequiredWithoutQuestionsNestedInput = {
 export type SectionCreateWithoutTestInput = {
   id?: string
   order: number
+  module?: number
+  difficulty?: $Enums.SectionDifficulty
   title?: string | null
   instructions?: string | null
   passageText?: string | null
@@ -509,6 +565,8 @@ export type SectionCreateWithoutTestInput = {
 export type SectionUncheckedCreateWithoutTestInput = {
   id?: string
   order: number
+  module?: number
+  difficulty?: $Enums.SectionDifficulty
   title?: string | null
   instructions?: string | null
   passageText?: string | null
@@ -550,6 +608,8 @@ export type SectionScalarWhereInput = {
   id?: Prisma.StringFilter<"Section"> | string
   testId?: Prisma.StringFilter<"Section"> | string
   order?: Prisma.IntFilter<"Section"> | number
+  module?: Prisma.IntFilter<"Section"> | number
+  difficulty?: Prisma.EnumSectionDifficultyFilter<"Section"> | $Enums.SectionDifficulty
   title?: Prisma.StringNullableFilter<"Section"> | string | null
   instructions?: Prisma.StringNullableFilter<"Section"> | string | null
   passageText?: Prisma.StringNullableFilter<"Section"> | string | null
@@ -560,6 +620,8 @@ export type SectionScalarWhereInput = {
 export type SectionCreateWithoutQuestionsInput = {
   id?: string
   order: number
+  module?: number
+  difficulty?: $Enums.SectionDifficulty
   title?: string | null
   instructions?: string | null
   passageText?: string | null
@@ -572,6 +634,8 @@ export type SectionUncheckedCreateWithoutQuestionsInput = {
   id?: string
   testId: string
   order: number
+  module?: number
+  difficulty?: $Enums.SectionDifficulty
   title?: string | null
   instructions?: string | null
   passageText?: string | null
@@ -598,6 +662,8 @@ export type SectionUpdateToOneWithWhereWithoutQuestionsInput = {
 export type SectionUpdateWithoutQuestionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  module?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.EnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passageText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -610,6 +676,8 @@ export type SectionUncheckedUpdateWithoutQuestionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   testId?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  module?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.EnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passageText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -620,6 +688,8 @@ export type SectionUncheckedUpdateWithoutQuestionsInput = {
 export type SectionCreateManyTestInput = {
   id?: string
   order: number
+  module?: number
+  difficulty?: $Enums.SectionDifficulty
   title?: string | null
   instructions?: string | null
   passageText?: string | null
@@ -630,6 +700,8 @@ export type SectionCreateManyTestInput = {
 export type SectionUpdateWithoutTestInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  module?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.EnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passageText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -641,6 +713,8 @@ export type SectionUpdateWithoutTestInput = {
 export type SectionUncheckedUpdateWithoutTestInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  module?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.EnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passageText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -652,6 +726,8 @@ export type SectionUncheckedUpdateWithoutTestInput = {
 export type SectionUncheckedUpdateManyWithoutTestInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  module?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.EnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passageText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -694,6 +770,8 @@ export type SectionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id?: boolean
   testId?: boolean
   order?: boolean
+  module?: boolean
+  difficulty?: boolean
   title?: boolean
   instructions?: boolean
   passageText?: boolean
@@ -708,6 +786,8 @@ export type SectionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   testId?: boolean
   order?: boolean
+  module?: boolean
+  difficulty?: boolean
   title?: boolean
   instructions?: boolean
   passageText?: boolean
@@ -720,6 +800,8 @@ export type SectionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   testId?: boolean
   order?: boolean
+  module?: boolean
+  difficulty?: boolean
   title?: boolean
   instructions?: boolean
   passageText?: boolean
@@ -732,6 +814,8 @@ export type SectionSelectScalar = {
   id?: boolean
   testId?: boolean
   order?: boolean
+  module?: boolean
+  difficulty?: boolean
   title?: boolean
   instructions?: boolean
   passageText?: boolean
@@ -739,7 +823,7 @@ export type SectionSelectScalar = {
   formulaSheet?: boolean
 }
 
-export type SectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "testId" | "order" | "title" | "instructions" | "passageText" | "imageUrl" | "formulaSheet", ExtArgs["result"]["section"]>
+export type SectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "testId" | "order" | "module" | "difficulty" | "title" | "instructions" | "passageText" | "imageUrl" | "formulaSheet", ExtArgs["result"]["section"]>
 export type SectionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   test?: boolean | Prisma.TestDefaultArgs<ExtArgs>
   questions?: boolean | Prisma.Section$questionsArgs<ExtArgs>
@@ -762,6 +846,8 @@ export type $SectionPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: string
     testId: string
     order: number
+    module: number
+    difficulty: $Enums.SectionDifficulty
     title: string | null
     instructions: string | null
     passageText: string | null
@@ -1195,6 +1281,8 @@ export interface SectionFieldRefs {
   readonly id: Prisma.FieldRef<"Section", 'String'>
   readonly testId: Prisma.FieldRef<"Section", 'String'>
   readonly order: Prisma.FieldRef<"Section", 'Int'>
+  readonly module: Prisma.FieldRef<"Section", 'Int'>
+  readonly difficulty: Prisma.FieldRef<"Section", 'SectionDifficulty'>
   readonly title: Prisma.FieldRef<"Section", 'String'>
   readonly instructions: Prisma.FieldRef<"Section", 'String'>
   readonly passageText: Prisma.FieldRef<"Section", 'String'>

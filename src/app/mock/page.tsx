@@ -2,53 +2,24 @@ import { redirect } from "next/navigation";
 import { currentUser } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 import MockRunner from "@/components/exam/MockRunner";
-import type { ClientTest } from "@/lib/types";
-import type { SatQuestionType } from "@/lib/grading";
+import type { ClientExamMeta } from "@/lib/types";
 import { canAccessMock, effectivePlan } from "@/lib/access";
 
 export const dynamic = "force-dynamic";
 
-type FetchedTest = NonNullable<Awaited<ReturnType<typeof loadTest>>>;
-
-async function loadTest(slug: string | undefined) {
+async function loadMeta(slug: string | undefined): Promise<ClientExamMeta | null> {
   if (!slug) return null;
-  return prisma.test.findFirst({
+  const test = await prisma.test.findFirst({
     where: { slug, published: true },
-    include: {
-      sections: {
-        orderBy: { order: "asc" },
-        include: { questions: { orderBy: { order: "asc" } } },
-      },
-    },
+    select: { id: true, title: true, slug: true, skill: true, type: true },
   });
-}
-
-function toClientTest(test: FetchedTest): ClientTest {
+  if (!test) return null;
   return {
     id: test.id,
     title: test.title,
     slug: test.slug,
-    skill: test.skill as ClientTest["skill"],
-    type: test.type as ClientTest["type"],
-    durationSec: test.durationSec,
-    sections: test.sections.map((s) => ({
-      id: s.id,
-      order: s.order,
-      title: s.title,
-      instructions: s.instructions,
-      passageText: s.passageText,
-      imageUrl: s.imageUrl,
-      formulaSheet: s.formulaSheet,
-      questions: s.questions.map((q) => ({
-        id: q.id,
-        order: q.order,
-        type: q.type as SatQuestionType,
-        groupTitle: q.groupTitle,
-        prompt: q.prompt,
-        options: (q.options as string[] | null) ?? null,
-        meta: (q.meta as Record<string, unknown> | null) ?? null,
-      })),
-    })),
+    skill: test.skill as ClientExamMeta["skill"],
+    type: test.type as ClientExamMeta["type"],
   };
 }
 
@@ -72,8 +43,8 @@ export default async function MockPage({
   const pick = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
 
   const [readingWriting, math] = await Promise.all([
-    loadTest(pick(sp.rw)),
-    loadTest(pick(sp.m)),
+    loadMeta(pick(sp.rw)),
+    loadMeta(pick(sp.m)),
   ]);
 
   if (
@@ -83,7 +54,5 @@ export default async function MockPage({
     redirect("/dashboard");
   }
 
-  const tests = [toClientTest(readingWriting), toClientTest(math)];
-
-  return <MockRunner tests={tests} userName={user.name ?? ""} />;
+  return <MockRunner tests={[readingWriting, math]} userName={user.name ?? ""} />;
 }

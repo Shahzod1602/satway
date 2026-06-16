@@ -22,6 +22,7 @@ interface TestData {
 
 type Tab = "READING_WRITING" | "MATH" | "MOCK";
 const TABS: Tab[] = ["READING_WRITING", "MATH", "MOCK"];
+const PAGE_SIZE = 24;
 
 const SKILL_LABELS: Record<string, string> = {
   READING_WRITING: "Reading & Writing",
@@ -45,6 +46,8 @@ export default function DashboardClient({
     TABS.includes(initialTab as Tab) ? (initialTab as Tab) : "READING_WRITING",
   );
   const [category, setCategory] = useState("All");
+  const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
 
   const SKILL_PARTS: Record<string, { label: string; count: number }> = {
     READING_WRITING: { label: "Module", count: 2 },
@@ -62,7 +65,14 @@ export default function DashboardClient({
 
   useEffect(() => {
     setCategory("All");
+    setQuery("");
+    setPage(1);
   }, [activeTab]);
+
+  // Reset to the first page whenever the visible set changes.
+  useEffect(() => {
+    setPage(1);
+  }, [category, query]);
 
   const startRandomMock = () => {
     if (!isPremium) {
@@ -86,6 +96,7 @@ export default function DashboardClient({
   };
 
   const filteredTests = useMemo(() => {
+    const q = query.trim().toLowerCase();
     const list = tests.filter((t) => {
       if (t.skill !== activeTab) return false;
       if (category === "Full test" && t._count.sections < 2) return false;
@@ -93,12 +104,17 @@ export default function DashboardClient({
         const n = parseInt(category.replace(/\D/g, ""), 10);
         if (t._count.sections < n) return false;
       }
+      if (q && !t.title.toLowerCase().includes(q)) return false;
       return true;
     });
     const accessRank = (t: TestData) => (canAccessTest(plan, t.slug) ? 0 : 1);
     list.sort((a, b) => accessRank(a) - accessRank(b));
     return list;
-  }, [tests, activeTab, category, plan]);
+  }, [tests, activeTab, category, plan, query]);
+
+  const pageCount = Math.max(1, Math.ceil(filteredTests.length / PAGE_SIZE));
+  const safePage = Math.min(page, pageCount);
+  const pagedTests = filteredTests.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
 
   return (
     <div className="flex min-h-screen bg-[#FFFDFB]">
@@ -221,9 +237,21 @@ export default function DashboardClient({
                   ))}
                 </div>
 
-                <h2 className="mt-8 text-lg font-semibold text-slate-900">
-                  {SKILL_LABELS[activeTab] ?? activeTab} tests
-                </h2>
+                <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
+                  <h2 className="text-lg font-semibold text-slate-900">
+                    {SKILL_LABELS[activeTab] ?? activeTab} tests
+                    <span className="ml-2 text-sm font-normal text-slate-400">
+                      {filteredTests.length}
+                    </span>
+                  </h2>
+                  <input
+                    type="search"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search tests…"
+                    className="w-full max-w-xs rounded-lg border border-[#EAEAEA] px-3.5 py-2 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
+                  />
+                </div>
 
                 {filteredTests.length === 0 ? (
                   <div className="mt-6 rounded-xl border border-dashed border-[#EAEAEA] bg-slate-50 p-12 text-center">
@@ -231,7 +259,7 @@ export default function DashboardClient({
                   </div>
                 ) : (
                   <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                    {filteredTests.map((t) => {
+                    {pagedTests.map((t) => {
                       const locked = !canAccessTest(plan, t.slug);
                       const href = locked
                         ? "/upgrade"
@@ -271,6 +299,28 @@ export default function DashboardClient({
                         </Link>
                       );
                     })}
+                  </div>
+                )}
+
+                {pageCount > 1 && (
+                  <div className="mt-6 flex items-center justify-center gap-3">
+                    <button
+                      onClick={() => setPage((p) => Math.max(1, p - 1))}
+                      disabled={safePage <= 1}
+                      className="rounded-lg border border-[#EAEAEA] px-4 py-2 text-sm font-medium text-slate-600 disabled:opacity-40 hover:bg-slate-50"
+                    >
+                      Previous
+                    </button>
+                    <span className="text-sm text-slate-500">
+                      Page {safePage} of {pageCount}
+                    </span>
+                    <button
+                      onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
+                      disabled={safePage >= pageCount}
+                      className="rounded-lg border border-[#EAEAEA] px-4 py-2 text-sm font-medium text-slate-600 disabled:opacity-40 hover:bg-slate-50"
+                    >
+                      Next
+                    </button>
                   </div>
                 )}
               </>

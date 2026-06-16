@@ -2,8 +2,7 @@ import { redirect, notFound } from "next/navigation";
 import { currentUser } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 import ExamRunner from "@/components/exam/ExamRunner";
-import type { ClientTest } from "@/lib/types";
-import type { SatQuestionType } from "@/lib/grading";
+import type { ClientExamMeta } from "@/lib/types";
 import { canAccessTest, effectivePlan } from "@/lib/access";
 
 export const dynamic = "force-dynamic";
@@ -18,20 +17,21 @@ export default async function TestPage({
   const { slug } = await params;
   const sp = await searchParams;
   const moduleRaw = Array.isArray(sp.module) ? sp.module[0] : sp.module;
-  const initialModule = moduleRaw ? parseInt(moduleRaw, 10) : undefined;
+  const parsedModule = moduleRaw ? parseInt(moduleRaw, 10) : NaN;
+  const practiceModule =
+    Number.isFinite(parsedModule) && parsedModule >= 1 && parsedModule <= 2
+      ? parsedModule
+      : undefined;
+
   const user = await currentUser();
   if (!user) redirect("/login");
 
+  // Only metadata is loaded here; questions are fetched (and Module 2 is served
+  // adaptively) via the attempts API so answers never reach the browser.
   const test = await prisma.test.findFirst({
     where: { slug, published: true },
-    include: {
-      sections: {
-        orderBy: { order: "asc" },
-        include: { questions: { orderBy: { order: "asc" } } },
-      },
-    },
+    select: { id: true, title: true, slug: true, skill: true, type: true },
   });
-
   if (!test) notFound();
 
   const dbUser = await prisma.user.findUnique({
@@ -42,38 +42,20 @@ export default async function TestPage({
     redirect("/upgrade");
   }
 
-  const clientTest: ClientTest = {
+  const meta: ClientExamMeta = {
     id: test.id,
     title: test.title,
     slug: test.slug,
-    skill: test.skill as ClientTest["skill"],
-    type: test.type as ClientTest["type"],
-    durationSec: test.durationSec,
-    sections: test.sections.map((s) => ({
-      id: s.id,
-      order: s.order,
-      title: s.title,
-      instructions: s.instructions,
-      passageText: s.passageText,
-      imageUrl: s.imageUrl,
-      formulaSheet: s.formulaSheet,
-      questions: s.questions.map((q) => ({
-        id: q.id,
-        order: q.order,
-        type: q.type as SatQuestionType,
-        groupTitle: q.groupTitle,
-        prompt: q.prompt,
-        options: (q.options as string[] | null) ?? null,
-        meta: (q.meta as Record<string, unknown> | null) ?? null,
-      })),
-    })),
+    skill: test.skill as ClientExamMeta["skill"],
+    type: test.type as ClientExamMeta["type"],
   };
 
   return (
     <ExamRunner
-      test={clientTest}
+      test={meta}
       userName={user.name ?? ""}
-      initialModule={Number.isFinite(initialModule) ? initialModule : undefined}
+      mode={practiceModule ? "module" : "full"}
+      practiceModule={practiceModule}
     />
   );
 }
