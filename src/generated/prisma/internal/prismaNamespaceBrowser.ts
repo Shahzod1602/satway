@@ -145,6 +145,7 @@ export const EmailOtpScalarFieldEnum = {
   codeHash: 'codeHash',
   expiresAt: 'expiresAt',
   attempts: 'attempts',
+  verified: 'verified',
   lastSentAt: 'lastSentAt',
   createdAt: 'createdAt'
 } as const

@@ -26,10 +26,9 @@ export const POST = withErrorHandling(async (req: NextRequest) => {
   const valid = await verifyCodeHash(code, otp.codeHash);
   if (!valid) return jsonError("Invalid code", 400);
 
-  await prisma.$transaction([
-    prisma.user.update({ where: { email }, data: { emailVerified: true } }),
-    prisma.emailOtp.delete({ where: { email } }),
-  ]);
+  // Mark the email as proven. The account itself is created in the final
+  // register step (email-first signup), so we keep the OTP record around.
+  await prisma.emailOtp.update({ where: { email }, data: { verified: true } });
 
   return Response.json({ ok: true });
 });

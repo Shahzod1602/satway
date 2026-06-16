@@ -40,6 +40,7 @@ export type EmailOtpMinAggregateOutputType = {
   codeHash: string | null
   expiresAt: Date | null
   attempts: number | null
+  verified: boolean | null
   lastSentAt: Date | null
   createdAt: Date | null
 }
@@ -50,6 +51,7 @@ export type EmailOtpMaxAggregateOutputType = {
   codeHash: string | null
   expiresAt: Date | null
   attempts: number | null
+  verified: boolean | null
   lastSentAt: Date | null
   createdAt: Date | null
 }
@@ -60,6 +62,7 @@ export type EmailOtpCountAggregateOutputType = {
   codeHash: number
   expiresAt: number
   attempts: number
+  verified: number
   lastSentAt: number
   createdAt: number
   _all: number
@@ -80,6 +83,7 @@ export type EmailOtpMinAggregateInputType = {
   codeHash?: true
   expiresAt?: true
   attempts?: true
+  verified?: true
   lastSentAt?: true
   createdAt?: true
 }
@@ -90,6 +94,7 @@ export type EmailOtpMaxAggregateInputType = {
   codeHash?: true
   expiresAt?: true
   attempts?: true
+  verified?: true
   lastSentAt?: true
   createdAt?: true
 }
@@ -100,6 +105,7 @@ export type EmailOtpCountAggregateInputType = {
   codeHash?: true
   expiresAt?: true
   attempts?: true
+  verified?: true
   lastSentAt?: true
   createdAt?: true
   _all?: true
@@ -197,6 +203,7 @@ export type EmailOtpGroupByOutputType = {
   codeHash: string
   expiresAt: Date
   attempts: number
+  verified: boolean
   lastSentAt: Date
   createdAt: Date
   _count: EmailOtpCountAggregateOutputType | null
@@ -230,6 +237,7 @@ export type EmailOtpWhereInput = {
   codeHash?: Prisma.StringFilter<"EmailOtp"> | string
   expiresAt?: Prisma.DateTimeFilter<"EmailOtp"> | Date | string
   attempts?: Prisma.IntFilter<"EmailOtp"> | number
+  verified?: Prisma.BoolFilter<"EmailOtp"> | boolean
   lastSentAt?: Prisma.DateTimeFilter<"EmailOtp"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"EmailOtp"> | Date | string
 }
@@ -240,6 +248,7 @@ export type EmailOtpOrderByWithRelationInput = {
   codeHash?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   attempts?: Prisma.SortOrder
+  verified?: Prisma.SortOrder
   lastSentAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -253,6 +262,7 @@ export type EmailOtpWhereUniqueInput = Prisma.AtLeast<{
   codeHash?: Prisma.StringFilter<"EmailOtp"> | string
   expiresAt?: Prisma.DateTimeFilter<"EmailOtp"> | Date | string
   attempts?: Prisma.IntFilter<"EmailOtp"> | number
+  verified?: Prisma.BoolFilter<"EmailOtp"> | boolean
   lastSentAt?: Prisma.DateTimeFilter<"EmailOtp"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"EmailOtp"> | Date | string
 }, "id" | "email">
@@ -263,6 +273,7 @@ export type EmailOtpOrderByWithAggregationInput = {
   codeHash?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   attempts?: Prisma.SortOrder
+  verified?: Prisma.SortOrder
   lastSentAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.EmailOtpCountOrderByAggregateInput
@@ -281,6 +292,7 @@ export type EmailOtpScalarWhereWithAggregatesInput = {
   codeHash?: Prisma.StringWithAggregatesFilter<"EmailOtp"> | string
   expiresAt?: Prisma.DateTimeWithAggregatesFilter<"EmailOtp"> | Date | string
   attempts?: Prisma.IntWithAggregatesFilter<"EmailOtp"> | number
+  verified?: Prisma.BoolWithAggregatesFilter<"EmailOtp"> | boolean
   lastSentAt?: Prisma.DateTimeWithAggregatesFilter<"EmailOtp"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"EmailOtp"> | Date | string
 }
@@ -291,6 +303,7 @@ export type EmailOtpCreateInput = {
   codeHash: string
   expiresAt: Date | string
   attempts?: number
+  verified?: boolean
   lastSentAt?: Date | string
   createdAt?: Date | string
 }
@@ -301,6 +314,7 @@ export type EmailOtpUncheckedCreateInput = {
   codeHash: string
   expiresAt: Date | string
   attempts?: number
+  verified?: boolean
   lastSentAt?: Date | string
   createdAt?: Date | string
 }
@@ -311,6 +325,7 @@ export type EmailOtpUpdateInput = {
   codeHash?: Prisma.StringFieldUpdateOperationsInput | string
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attempts?: Prisma.IntFieldUpdateOperationsInput | number
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastSentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -321,6 +336,7 @@ export type EmailOtpUncheckedUpdateInput = {
   codeHash?: Prisma.StringFieldUpdateOperationsInput | string
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attempts?: Prisma.IntFieldUpdateOperationsInput | number
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastSentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -331,6 +347,7 @@ export type EmailOtpCreateManyInput = {
   codeHash: string
   expiresAt: Date | string
   attempts?: number
+  verified?: boolean
   lastSentAt?: Date | string
   createdAt?: Date | string
 }
@@ -341,6 +358,7 @@ export type EmailOtpUpdateManyMutationInput = {
   codeHash?: Prisma.StringFieldUpdateOperationsInput | string
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attempts?: Prisma.IntFieldUpdateOperationsInput | number
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastSentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -351,6 +369,7 @@ export type EmailOtpUncheckedUpdateManyInput = {
   codeHash?: Prisma.StringFieldUpdateOperationsInput | string
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attempts?: Prisma.IntFieldUpdateOperationsInput | number
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastSentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -361,6 +380,7 @@ export type EmailOtpCountOrderByAggregateInput = {
   codeHash?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   attempts?: Prisma.SortOrder
+  verified?: Prisma.SortOrder
   lastSentAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -375,6 +395,7 @@ export type EmailOtpMaxOrderByAggregateInput = {
   codeHash?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   attempts?: Prisma.SortOrder
+  verified?: Prisma.SortOrder
   lastSentAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -385,6 +406,7 @@ export type EmailOtpMinOrderByAggregateInput = {
   codeHash?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   attempts?: Prisma.SortOrder
+  verified?: Prisma.SortOrder
   lastSentAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -401,6 +423,7 @@ export type EmailOtpSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   codeHash?: boolean
   expiresAt?: boolean
   attempts?: boolean
+  verified?: boolean
   lastSentAt?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["emailOtp"]>
@@ -411,6 +434,7 @@ export type EmailOtpSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   codeHash?: boolean
   expiresAt?: boolean
   attempts?: boolean
+  verified?: boolean
   lastSentAt?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["emailOtp"]>
@@ -421,6 +445,7 @@ export type EmailOtpSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   codeHash?: boolean
   expiresAt?: boolean
   attempts?: boolean
+  verified?: boolean
   lastSentAt?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["emailOtp"]>
@@ -431,11 +456,12 @@ export type EmailOtpSelectScalar = {
   codeHash?: boolean
   expiresAt?: boolean
   attempts?: boolean
+  verified?: boolean
   lastSentAt?: boolean
   createdAt?: boolean
 }
 
-export type EmailOtpOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "codeHash" | "expiresAt" | "attempts" | "lastSentAt" | "createdAt", ExtArgs["result"]["emailOtp"]>
+export type EmailOtpOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "codeHash" | "expiresAt" | "attempts" | "verified" | "lastSentAt" | "createdAt", ExtArgs["result"]["emailOtp"]>
 
 export type $EmailOtpPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "EmailOtp"
@@ -446,6 +472,7 @@ export type $EmailOtpPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     codeHash: string
     expiresAt: Date
     attempts: number
+    verified: boolean
     lastSentAt: Date
     createdAt: Date
   }, ExtArgs["result"]["emailOtp"]>
@@ -876,6 +903,7 @@ export interface EmailOtpFieldRefs {
   readonly codeHash: Prisma.FieldRef<"EmailOtp", 'String'>
   readonly expiresAt: Prisma.FieldRef<"EmailOtp", 'DateTime'>
   readonly attempts: Prisma.FieldRef<"EmailOtp", 'Int'>
+  readonly verified: Prisma.FieldRef<"EmailOtp", 'Boolean'>
   readonly lastSentAt: Prisma.FieldRef<"EmailOtp", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"EmailOtp", 'DateTime'>
 }

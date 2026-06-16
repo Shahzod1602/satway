@@ -100,13 +100,14 @@ enum Plan {
 }
 
 model EmailOtp {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  codeHash  String
-  expiresAt DateTime
-  attempts  Int      @default(0)
+  id         String   @id @default(cuid())
+  email      String   @unique
+  codeHash   String
+  expiresAt  DateTime
+  attempts   Int      @default(0)
+  verified   Boolean  @default(false) // code confirmed; account may now be created
   lastSentAt DateTime @default(now())
-  createdAt DateTime @default(now())
+  createdAt  DateTime @default(now())
 }
 
 enum Role {

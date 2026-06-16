@@ -15,6 +15,13 @@ export const POST = withErrorHandling(async (req: NextRequest) => {
 
   const { email } = await parseJson(req, bodySchema);
 
+  // Email-first signup: the account doesn't exist yet, so block only emails
+  // that are already registered.
+  const account = await prisma.user.findUnique({ where: { email }, select: { id: true } });
+  if (account) {
+    return jsonError("An account with this email already exists. Please sign in.", 409);
+  }
+
   const existing = await prisma.emailOtp.findUnique({ where: { email } });
   if (existing && existing.lastSentAt.getTime() > Date.now() - OTP_RESEND_COOLDOWN_MS) {
     return jsonError("Please wait before requesting another code", 429);
@@ -25,7 +32,7 @@ export const POST = withErrorHandling(async (req: NextRequest) => {
 
   await prisma.emailOtp.upsert({
     where: { email },
-    update: { codeHash, expiresAt: new Date(Date.now() + OTP_TTL_MS), attempts: 0, lastSentAt: new Date() },
+    update: { codeHash, expiresAt: new Date(Date.now() + OTP_TTL_MS), attempts: 0, verified: false, lastSentAt: new Date() },
     create: { email, codeHash, expiresAt: new Date(Date.now() + OTP_TTL_MS) },
   });
 
