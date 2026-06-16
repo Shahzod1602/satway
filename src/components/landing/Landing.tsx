@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { motion, useReducedMotion, type Variants } from "motion/react";
 import {
   ArrowRight, BookOpen, Calculator, Highlighter, BarChart3, Brain, Timer,
   Flag, Check, GraduationCap, Sparkles, Target, ChevronRight, Layers,
@@ -24,6 +27,20 @@ const FEATURES = [
 ];
 
 export default function Landing() {
+  const reduce = useReducedMotion();
+
+  const EASE = [0.16, 1, 0.3, 1] as const;
+  const container: Variants = {
+    hidden: {},
+    show: { transition: { staggerChildren: 0.08, delayChildren: 0.04 } },
+  };
+  const item: Variants = {
+    hidden: { opacity: 0, y: reduce ? 0 : 26 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: EASE } },
+  };
+  const inView = { initial: "hidden", whileInView: "show", viewport: { once: true, amount: 0.2 } } as const;
+  const hover = reduce ? {} : { whileHover: { y: -5 }, transition: { type: "spring" as const, stiffness: 300, damping: 22 } };
+
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[#FBFAF7] text-slate-900">
       {/* atmosphere */}
@@ -34,7 +51,12 @@ export default function Landing() {
       </div>
 
       {/* ───────── Nav ───────── */}
-      <header className="sticky top-0 z-40 border-b border-slate-200/60 bg-[#FBFAF7]/80 backdrop-blur-md">
+      <motion.header
+        initial={{ y: reduce ? 0 : -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: EASE }}
+        className="sticky top-0 z-40 border-b border-slate-200/60 bg-[#FBFAF7]/80 backdrop-blur-md"
+      >
         <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
           <Link href="/"><Wordmark className="text-xl text-slate-900" /></Link>
           <div className="hidden items-center gap-8 text-sm font-medium text-slate-600 md:flex">
@@ -53,23 +75,23 @@ export default function Landing() {
             </Link>
           </div>
         </nav>
-      </header>
+      </motion.header>
 
       {/* ───────── Hero ───────── */}
       <section className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 pb-20 pt-16 lg:grid-cols-[1.05fr_0.95fr] lg:pt-24">
-        <div>
-          <p className="rise inline-flex items-center gap-2 rounded-full border border-slate-300/70 bg-white/60 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-slate-500" style={{ animationDelay: "0ms" }}>
+        <motion.div variants={container} initial="hidden" animate="show">
+          <motion.p variants={item} className="inline-flex items-center gap-2 rounded-full border border-slate-300/70 bg-white/60 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-slate-500">
             <Sparkles className="h-3.5 w-3.5 text-accent-600" /> Digital SAT · Bluebook-style
-          </p>
-          <h1 className="rise mt-6 font-display text-5xl font-semibold leading-[1.04] tracking-tight text-slate-900 sm:text-6xl" style={{ animationDelay: "80ms" }}>
+          </motion.p>
+          <motion.h1 variants={item} className="mt-6 font-display text-5xl font-semibold leading-[1.04] tracking-tight text-slate-900 sm:text-6xl">
             Practice the SAT the way it&rsquo;s{" "}
             <span className="hl-word">actually taken.</span>
-          </h1>
-          <p className="rise mt-6 max-w-xl text-lg leading-relaxed text-slate-600" style={{ animationDelay: "160ms" }}>
+          </motion.h1>
+          <motion.p variants={item} className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600">
             Full adaptive mock exams, an authentic test-day interface, and instant 200–800 scoring.
             Over <span className="font-semibold text-slate-900">1,000 practice tests</span> across Reading &amp; Writing and Math.
-          </p>
-          <div className="rise mt-8 flex flex-wrap items-center gap-3" style={{ animationDelay: "240ms" }}>
+          </motion.p>
+          <motion.div variants={item} className="mt-8 flex flex-wrap items-center gap-3">
             <Link href="/register" className="group inline-flex items-center gap-2 rounded-xl bg-brand-600 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-brand-600/20 hover:bg-brand-700">
               Start practicing free
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -77,16 +99,21 @@ export default function Landing() {
             <a href="#exam" className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white/70 px-6 py-3.5 text-sm font-semibold text-slate-700 hover:border-slate-400">
               See the interface
             </a>
-          </div>
-          <div className="rise mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-wider text-slate-400" style={{ animationDelay: "320ms" }}>
+          </motion.div>
+          <motion.div variants={item} className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-wider text-slate-400">
             <span className="flex items-center gap-1.5"><Check className="h-3.5 w-3.5 text-brand-600" /> Free Test 1</span>
             <span className="flex items-center gap-1.5"><Check className="h-3.5 w-3.5 text-brand-600" /> No card required</span>
             <span className="flex items-center gap-1.5"><Check className="h-3.5 w-3.5 text-brand-600" /> Made for Uzbekistan</span>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* gauge + floating exam card */}
-        <div className="rise relative" style={{ animationDelay: "200ms" }}>
+        <motion.div
+          className="relative"
+          initial={{ opacity: 0, scale: reduce ? 1 : 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: EASE, delay: 0.15 }}
+        >
           <div className="relative mx-auto grid max-w-sm place-items-center rounded-3xl border border-slate-200 bg-white/70 p-8 shadow-xl shadow-slate-900/5 backdrop-blur">
             <ScoreGauge target={1520} />
             <div className="mt-2 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-slate-400">
@@ -95,8 +122,12 @@ export default function Landing() {
             </div>
           </div>
 
-          {/* floating mini question card */}
-          <div className="floaty absolute -left-6 -bottom-8 hidden w-64 rounded-2xl border border-slate-200 bg-white p-4 shadow-xl sm:block" style={{ ["--r" as string]: "-4deg" }}>
+          <motion.div
+            className="absolute -left-6 -bottom-8 hidden w-64 rounded-2xl border border-slate-200 bg-white p-4 shadow-xl sm:block"
+            initial={{ opacity: 0, y: reduce ? 0 : 30, rotate: reduce ? 0 : -8 }}
+            animate={{ opacity: 1, y: 0, rotate: -4 }}
+            transition={{ duration: 0.7, ease: EASE, delay: 0.5 }}
+          >
             <div className="flex items-center justify-between">
               <span className="grid h-6 w-6 place-items-center rounded bg-slate-900 text-[11px] font-bold text-white">7</span>
               <span className="inline-flex items-center gap-1 text-[11px] font-medium text-amber-600">
@@ -108,13 +139,17 @@ export default function Landing() {
               <div className="rounded-md border border-brand-500 bg-brand-50 px-2 py-1 text-[11px] font-medium text-brand-700">B&nbsp; seminal</div>
               <div className="rounded-md border border-slate-200 px-2 py-1 text-[11px] text-slate-400 line-through">A&nbsp; trivial</div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* floating module pill */}
-          <div className="floaty absolute -right-2 -top-4 hidden items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-semibold text-slate-700 shadow-lg sm:flex" style={{ animationDelay: "-3s", ["--r" as string]: "3deg" }}>
+          <motion.div
+            className="absolute -right-2 -top-4 hidden items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-semibold text-slate-700 shadow-lg sm:flex"
+            initial={{ opacity: 0, y: reduce ? 0 : -20, rotate: reduce ? 0 : 8 }}
+            animate={{ opacity: 1, y: 0, rotate: 3 }}
+            transition={{ duration: 0.7, ease: EASE, delay: 0.65 }}
+          >
             <Layers className="h-3.5 w-3.5 text-brand-600" /> Module 2 · Harder
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* ───────── Stats ticker ───────── */}
@@ -141,48 +176,57 @@ export default function Landing() {
 
       {/* ───────── Features ───────── */}
       <section id="features" className="mx-auto max-w-6xl px-5 py-24">
-        <div className="max-w-2xl">
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-brand-600">Why SATway</p>
-          <h2 className="mt-3 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
+        <motion.div className="max-w-2xl" {...inView} variants={container}>
+          <motion.p variants={item} className="font-mono text-[11px] uppercase tracking-[0.2em] text-brand-600">Why SATway</motion.p>
+          <motion.h2 variants={item} className="mt-3 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
             Everything from test day — minus the test day.
-          </h2>
-        </div>
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {FEATURES.map((f, i) => (
-            <div key={f.title} className="reveal lift rounded-2xl border border-slate-200 bg-white/70 p-6 hover:border-brand-300 hover:shadow-lg hover:shadow-slate-900/5" style={{ animationDelay: `${i * 40}ms` }}>
+          </motion.h2>
+        </motion.div>
+        <motion.div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" {...inView} variants={container}>
+          {FEATURES.map((f) => (
+            <motion.div
+              key={f.title}
+              variants={item}
+              {...hover}
+              className="rounded-2xl border border-slate-200 bg-white/70 p-6 hover:border-brand-300 hover:shadow-lg hover:shadow-slate-900/5"
+            >
               <div className="grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-600">
                 <f.icon className="h-5 w-5" />
               </div>
               <h3 className="mt-4 text-lg font-semibold text-slate-900">{f.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-600">{f.body}</p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* ───────── Exam interface showcase ───────── */}
       <section id="exam" className="relative mx-auto max-w-6xl px-5 py-20">
         <div className="grid items-center gap-12 lg:grid-cols-2">
-          <div className="reveal">
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-brand-600">The real interface</p>
-            <h2 className="mt-3 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
+          <motion.div {...inView} variants={container}>
+            <motion.p variants={item} className="font-mono text-[11px] uppercase tracking-[0.2em] text-brand-600">The real interface</motion.p>
+            <motion.h2 variants={item} className="mt-3 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
               A split-screen built for focus.
-            </h2>
-            <p className="mt-5 max-w-md text-base leading-relaxed text-slate-600">
+            </motion.h2>
+            <motion.p variants={item} className="mt-5 max-w-md text-base leading-relaxed text-slate-600">
               Passage on the left, question on the right. Cross out wrong answers, flag tricky
               ones, and navigate with the question map — every interaction mirrors Bluebook.
-            </p>
-            <ul className="mt-7 space-y-3 text-sm text-slate-700">
+            </motion.p>
+            <motion.ul variants={item} className="mt-7 space-y-3 text-sm text-slate-700">
               {["One question per screen with Back / Next", "Per-module countdown timer", "Question navigator with answered & marked states", "End-of-module review before you submit"].map((t) => (
                 <li key={t} className="flex items-start gap-2.5">
                   <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-brand-600" /> {t}
                 </li>
               ))}
-            </ul>
-          </div>
+            </motion.ul>
+          </motion.div>
 
-          {/* stylized exam window */}
-          <div className="reveal lift overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-900/10">
+          <motion.div
+            {...inView}
+            variants={{ hidden: { opacity: 0, y: reduce ? 0 : 40 }, show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE } } }}
+            {...hover}
+            className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-900/10"
+          >
             <div className="flex items-center justify-between border-b border-slate-200 px-4 py-2.5">
               <Wordmark className="text-sm" />
               <span className="inline-flex items-center gap-1.5 rounded-md bg-slate-100 px-2 py-1 font-mono text-[11px] font-semibold text-slate-700">
@@ -214,13 +258,13 @@ export default function Landing() {
               </div>
               <span className="rounded-md bg-brand-600 px-3 py-1 text-[11px] font-semibold text-white">Next</span>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ───────── Adaptive explainer ───────── */}
       <section id="adaptive" className="mx-auto max-w-6xl px-5 py-20">
-        <div className="reveal rounded-3xl border border-slate-200 bg-gradient-to-br from-white to-brand-50/40 p-8 sm:p-12">
+        <motion.div {...inView} variants={{ hidden: { opacity: 0, y: reduce ? 0 : 30 }, show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } } }} className="rounded-3xl border border-slate-200 bg-gradient-to-br from-white to-brand-50/40 p-8 sm:p-12">
           <div className="max-w-2xl">
             <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-brand-600">Adaptive by design</p>
             <h2 className="mt-3 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
@@ -251,23 +295,28 @@ export default function Landing() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ───────── Pricing ───────── */}
       <section id="pricing" className="mx-auto max-w-6xl px-5 py-20">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-brand-600">Pricing</p>
-          <h2 className="mt-3 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
+        <motion.div className="mx-auto max-w-2xl text-center" {...inView} variants={container}>
+          <motion.p variants={item} className="font-mono text-[11px] uppercase tracking-[0.2em] text-brand-600">Pricing</motion.p>
+          <motion.h2 variants={item} className="mt-3 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
             Start free. Go Premium when you&rsquo;re ready.
-          </h2>
-          <p className="mt-4 text-base text-slate-600">Test 1 is free forever. Premium unlocks every test and full adaptive mocks.</p>
-        </div>
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
+          </motion.h2>
+          <motion.p variants={item} className="mt-4 text-base text-slate-600">Test 1 is free forever. Premium unlocks every test and full adaptive mocks.</motion.p>
+        </motion.div>
+        <motion.div className="mt-12 grid gap-5 md:grid-cols-3" {...inView} variants={container}>
           {PREMIUM_PLANS.map((p) => {
             const original = BASE_MONTHLY * p.months;
             return (
-              <div key={p.id} className={`lift relative flex flex-col rounded-3xl border bg-white p-7 ${p.popular ? "border-brand-600 shadow-xl shadow-brand-600/10 ring-1 ring-brand-600" : "border-slate-200"}`}>
+              <motion.div
+                key={p.id}
+                variants={item}
+                {...hover}
+                className={`relative flex flex-col rounded-3xl border bg-white p-7 ${p.popular ? "border-brand-600 shadow-xl shadow-brand-600/10 ring-1 ring-brand-600" : "border-slate-200"}`}
+              >
                 {p.popular && (
                   <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand-600 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white">Most popular</span>
                 )}
@@ -288,15 +337,19 @@ export default function Landing() {
                 <Link href="/register" className={`mt-7 inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold ${p.popular ? "bg-brand-600 text-white hover:bg-brand-700" : "border border-slate-300 text-slate-800 hover:border-slate-400"}`}>
                   Choose {p.label} <ArrowRight className="h-4 w-4" />
                 </Link>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </section>
 
       {/* ───────── Final CTA ───────── */}
       <section className="mx-auto max-w-6xl px-5 pb-24">
-        <div className="reveal relative overflow-hidden rounded-[2rem] bg-slate-900 px-8 py-16 text-center sm:px-16">
+        <motion.div
+          {...inView}
+          variants={{ hidden: { opacity: 0, scale: reduce ? 1 : 0.96 }, show: { opacity: 1, scale: 1, transition: { duration: 0.8, ease: EASE } } }}
+          className="relative overflow-hidden rounded-[2rem] bg-slate-900 px-8 py-16 text-center sm:px-16"
+        >
           <div aria-hidden className="pointer-events-none absolute inset-0 bg-ruled opacity-30" />
           <div aria-hidden className="drift absolute -right-20 -top-20 h-72 w-72 rounded-full bg-brand-500/30 blur-[100px]" />
           <div aria-hidden className="drift absolute -left-20 -bottom-24 h-72 w-72 rounded-full bg-accent-500/20 blur-[100px]" style={{ animationDelay: "-7s" }} />
@@ -313,7 +366,7 @@ export default function Landing() {
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ───────── Footer ───────── */}
