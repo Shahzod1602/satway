@@ -34,12 +34,11 @@ COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 # Prisma generated client + engines (ensure available at runtime)
 COPY --from=builder /app/src/generated/prisma ./src/generated/prisma
-# Prisma CLI + schema + migrations so the entrypoint can run `migrate deploy`
-COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
-COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
-COPY --from=builder /app/node_modules/.bin/prisma ./node_modules/.bin/prisma
-# prisma.config.ts does `import "dotenv/config"`, so dotenv must exist at runtime.
-COPY --from=builder /app/node_modules/dotenv ./node_modules/dotenv
+# Full node_modules: the Prisma 7 CLI pulls in many transitive deps (effect,
+# @prisma/config, dotenv, …) needed for `migrate deploy` at startup. This
+# overrides the slim standalone node_modules with the complete set.
+COPY --from=builder /app/node_modules ./node_modules
+# Schema + migrations + config for `migrate deploy`.
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/prisma.config.ts ./prisma.config.ts
 COPY docker-entrypoint.sh ./docker-entrypoint.sh
