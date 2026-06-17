@@ -2,7 +2,7 @@
 
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import AuthShell from "@/components/AuthShell";
@@ -16,8 +16,15 @@ export default function RegisterPage() {
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [referralCode, setReferralCode] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Capture an invite code from ?ref=CODE
+  useEffect(() => {
+    const ref = new URLSearchParams(window.location.search).get("ref");
+    if (ref) setReferralCode(ref.trim());
+  }, []);
 
   // Step 1 — email → send code
   const sendCode = async (e: React.FormEvent) => {
@@ -68,7 +75,7 @@ export default function RegisterPage() {
     const res = await fetch("/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({ name, email, password, ...(referralCode ? { referralCode } : {}) }),
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {

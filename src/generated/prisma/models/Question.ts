@@ -45,6 +45,7 @@ export type QuestionMinAggregateOutputType = {
   stimulus: string | null
   imageUrl: string | null
   prompt: string | null
+  explanation: string | null
   points: number | null
 }
 
@@ -57,6 +58,7 @@ export type QuestionMaxAggregateOutputType = {
   stimulus: string | null
   imageUrl: string | null
   prompt: string | null
+  explanation: string | null
   points: number | null
 }
 
@@ -69,6 +71,7 @@ export type QuestionCountAggregateOutputType = {
   stimulus: number
   imageUrl: number
   prompt: number
+  explanation: number
   options: number
   correctAnswers: number
   points: number
@@ -96,6 +99,7 @@ export type QuestionMinAggregateInputType = {
   stimulus?: true
   imageUrl?: true
   prompt?: true
+  explanation?: true
   points?: true
 }
 
@@ -108,6 +112,7 @@ export type QuestionMaxAggregateInputType = {
   stimulus?: true
   imageUrl?: true
   prompt?: true
+  explanation?: true
   points?: true
 }
 
@@ -120,6 +125,7 @@ export type QuestionCountAggregateInputType = {
   stimulus?: true
   imageUrl?: true
   prompt?: true
+  explanation?: true
   options?: true
   correctAnswers?: true
   points?: true
@@ -222,6 +228,7 @@ export type QuestionGroupByOutputType = {
   stimulus: string | null
   imageUrl: string | null
   prompt: string | null
+  explanation: string | null
   options: runtime.JsonValue | null
   correctAnswers: runtime.JsonValue
   points: number
@@ -260,6 +267,7 @@ export type QuestionWhereInput = {
   stimulus?: Prisma.StringNullableFilter<"Question"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"Question"> | string | null
   prompt?: Prisma.StringNullableFilter<"Question"> | string | null
+  explanation?: Prisma.StringNullableFilter<"Question"> | string | null
   options?: Prisma.JsonNullableFilter<"Question">
   correctAnswers?: Prisma.JsonFilter<"Question">
   points?: Prisma.IntFilter<"Question"> | number
@@ -277,6 +285,7 @@ export type QuestionOrderByWithRelationInput = {
   stimulus?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   prompt?: Prisma.SortOrderInput | Prisma.SortOrder
+  explanation?: Prisma.SortOrderInput | Prisma.SortOrder
   options?: Prisma.SortOrderInput | Prisma.SortOrder
   correctAnswers?: Prisma.SortOrder
   points?: Prisma.SortOrder
@@ -297,6 +306,7 @@ export type QuestionWhereUniqueInput = Prisma.AtLeast<{
   stimulus?: Prisma.StringNullableFilter<"Question"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"Question"> | string | null
   prompt?: Prisma.StringNullableFilter<"Question"> | string | null
+  explanation?: Prisma.StringNullableFilter<"Question"> | string | null
   options?: Prisma.JsonNullableFilter<"Question">
   correctAnswers?: Prisma.JsonFilter<"Question">
   points?: Prisma.IntFilter<"Question"> | number
@@ -314,6 +324,7 @@ export type QuestionOrderByWithAggregationInput = {
   stimulus?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   prompt?: Prisma.SortOrderInput | Prisma.SortOrder
+  explanation?: Prisma.SortOrderInput | Prisma.SortOrder
   options?: Prisma.SortOrderInput | Prisma.SortOrder
   correctAnswers?: Prisma.SortOrder
   points?: Prisma.SortOrder
@@ -337,6 +348,7 @@ export type QuestionScalarWhereWithAggregatesInput = {
   stimulus?: Prisma.StringNullableWithAggregatesFilter<"Question"> | string | null
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Question"> | string | null
   prompt?: Prisma.StringNullableWithAggregatesFilter<"Question"> | string | null
+  explanation?: Prisma.StringNullableWithAggregatesFilter<"Question"> | string | null
   options?: Prisma.JsonNullableWithAggregatesFilter<"Question">
   correctAnswers?: Prisma.JsonWithAggregatesFilter<"Question">
   points?: Prisma.IntWithAggregatesFilter<"Question"> | number
@@ -351,6 +363,7 @@ export type QuestionCreateInput = {
   stimulus?: string | null
   imageUrl?: string | null
   prompt?: string | null
+  explanation?: string | null
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: number
@@ -368,6 +381,7 @@ export type QuestionUncheckedCreateInput = {
   stimulus?: string | null
   imageUrl?: string | null
   prompt?: string | null
+  explanation?: string | null
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: number
@@ -383,6 +397,7 @@ export type QuestionUpdateInput = {
   stimulus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: Prisma.IntFieldUpdateOperationsInput | number
@@ -400,6 +415,7 @@ export type QuestionUncheckedUpdateInput = {
   stimulus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: Prisma.IntFieldUpdateOperationsInput | number
@@ -416,6 +432,7 @@ export type QuestionCreateManyInput = {
   stimulus?: string | null
   imageUrl?: string | null
   prompt?: string | null
+  explanation?: string | null
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: number
@@ -430,6 +447,7 @@ export type QuestionUpdateManyMutationInput = {
   stimulus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: Prisma.IntFieldUpdateOperationsInput | number
@@ -445,6 +463,7 @@ export type QuestionUncheckedUpdateManyInput = {
   stimulus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: Prisma.IntFieldUpdateOperationsInput | number
@@ -470,6 +489,7 @@ export type QuestionCountOrderByAggregateInput = {
   stimulus?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   prompt?: Prisma.SortOrder
+  explanation?: Prisma.SortOrder
   options?: Prisma.SortOrder
   correctAnswers?: Prisma.SortOrder
   points?: Prisma.SortOrder
@@ -490,6 +510,7 @@ export type QuestionMaxOrderByAggregateInput = {
   stimulus?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   prompt?: Prisma.SortOrder
+  explanation?: Prisma.SortOrder
   points?: Prisma.SortOrder
 }
 
@@ -502,6 +523,7 @@ export type QuestionMinOrderByAggregateInput = {
   stimulus?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   prompt?: Prisma.SortOrder
+  explanation?: Prisma.SortOrder
   points?: Prisma.SortOrder
 }
 
@@ -583,6 +605,7 @@ export type QuestionCreateWithoutSectionInput = {
   stimulus?: string | null
   imageUrl?: string | null
   prompt?: string | null
+  explanation?: string | null
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: number
@@ -598,6 +621,7 @@ export type QuestionUncheckedCreateWithoutSectionInput = {
   stimulus?: string | null
   imageUrl?: string | null
   prompt?: string | null
+  explanation?: string | null
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: number
@@ -643,6 +667,7 @@ export type QuestionScalarWhereInput = {
   stimulus?: Prisma.StringNullableFilter<"Question"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"Question"> | string | null
   prompt?: Prisma.StringNullableFilter<"Question"> | string | null
+  explanation?: Prisma.StringNullableFilter<"Question"> | string | null
   options?: Prisma.JsonNullableFilter<"Question">
   correctAnswers?: Prisma.JsonFilter<"Question">
   points?: Prisma.IntFilter<"Question"> | number
@@ -657,6 +682,7 @@ export type QuestionCreateWithoutAnswersInput = {
   stimulus?: string | null
   imageUrl?: string | null
   prompt?: string | null
+  explanation?: string | null
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: number
@@ -673,6 +699,7 @@ export type QuestionUncheckedCreateWithoutAnswersInput = {
   stimulus?: string | null
   imageUrl?: string | null
   prompt?: string | null
+  explanation?: string | null
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: number
@@ -703,6 +730,7 @@ export type QuestionUpdateWithoutAnswersInput = {
   stimulus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: Prisma.IntFieldUpdateOperationsInput | number
@@ -719,6 +747,7 @@ export type QuestionUncheckedUpdateWithoutAnswersInput = {
   stimulus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: Prisma.IntFieldUpdateOperationsInput | number
@@ -733,6 +762,7 @@ export type QuestionCreateManySectionInput = {
   stimulus?: string | null
   imageUrl?: string | null
   prompt?: string | null
+  explanation?: string | null
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: number
@@ -747,6 +777,7 @@ export type QuestionUpdateWithoutSectionInput = {
   stimulus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: Prisma.IntFieldUpdateOperationsInput | number
@@ -762,6 +793,7 @@ export type QuestionUncheckedUpdateWithoutSectionInput = {
   stimulus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: Prisma.IntFieldUpdateOperationsInput | number
@@ -777,6 +809,7 @@ export type QuestionUncheckedUpdateManyWithoutSectionInput = {
   stimulus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: Prisma.IntFieldUpdateOperationsInput | number
@@ -823,6 +856,7 @@ export type QuestionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   stimulus?: boolean
   imageUrl?: boolean
   prompt?: boolean
+  explanation?: boolean
   options?: boolean
   correctAnswers?: boolean
   points?: boolean
@@ -841,6 +875,7 @@ export type QuestionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   stimulus?: boolean
   imageUrl?: boolean
   prompt?: boolean
+  explanation?: boolean
   options?: boolean
   correctAnswers?: boolean
   points?: boolean
@@ -857,6 +892,7 @@ export type QuestionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   stimulus?: boolean
   imageUrl?: boolean
   prompt?: boolean
+  explanation?: boolean
   options?: boolean
   correctAnswers?: boolean
   points?: boolean
@@ -873,13 +909,14 @@ export type QuestionSelectScalar = {
   stimulus?: boolean
   imageUrl?: boolean
   prompt?: boolean
+  explanation?: boolean
   options?: boolean
   correctAnswers?: boolean
   points?: boolean
   meta?: boolean
 }
 
-export type QuestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sectionId" | "order" | "type" | "groupTitle" | "stimulus" | "imageUrl" | "prompt" | "options" | "correctAnswers" | "points" | "meta", ExtArgs["result"]["question"]>
+export type QuestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sectionId" | "order" | "type" | "groupTitle" | "stimulus" | "imageUrl" | "prompt" | "explanation" | "options" | "correctAnswers" | "points" | "meta", ExtArgs["result"]["question"]>
 export type QuestionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
   answers?: boolean | Prisma.Question$answersArgs<ExtArgs>
@@ -907,6 +944,7 @@ export type $QuestionPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     stimulus: string | null
     imageUrl: string | null
     prompt: string | null
+    explanation: string | null
     options: runtime.JsonValue | null
     correctAnswers: runtime.JsonValue
     points: number
@@ -1344,6 +1382,7 @@ export interface QuestionFieldRefs {
   readonly stimulus: Prisma.FieldRef<"Question", 'String'>
   readonly imageUrl: Prisma.FieldRef<"Question", 'String'>
   readonly prompt: Prisma.FieldRef<"Question", 'String'>
+  readonly explanation: Prisma.FieldRef<"Question", 'String'>
   readonly options: Prisma.FieldRef<"Question", 'Json'>
   readonly correctAnswers: Prisma.FieldRef<"Question", 'Json'>
   readonly points: Prisma.FieldRef<"Question", 'Int'>

@@ -18,14 +18,33 @@ export default async function DashboardPage({
   const tabRaw = Array.isArray(sp.tab) ? sp.tab[0] : sp.tab;
   const initialTab = (tabRaw ?? "").toUpperCase();
 
-  const [tests, dbUser] = await Promise.all([
+  const [tests, dbUser, attemptDays] = await Promise.all([
     prisma.test.findMany({
       where: { published: true },
       orderBy: { createdAt: "asc" },
       include: { _count: { select: { sections: true } } },
     }),
     prisma.user.findUnique({ where: { id: user.id }, select: { plan: true, premiumUntil: true } }),
+    prisma.testAttempt.findMany({
+      where: { userId: user.id, status: "SUBMITTED" },
+      select: { submittedAt: true },
+      orderBy: { submittedAt: "desc" },
+      take: 400,
+    }),
   ]);
+
+  // Current daily-practice streak (consecutive days ending today or yesterday).
+  const dayKeys = new Set(
+    attemptDays.map((a) => (a.submittedAt ?? new Date(0)).toISOString().slice(0, 10)),
+  );
+  let streak = 0;
+  const cur = new Date();
+  const key = (d: Date) => d.toISOString().slice(0, 10);
+  if (!dayKeys.has(key(cur))) cur.setUTCDate(cur.getUTCDate() - 1);
+  while (dayKeys.has(key(cur))) {
+    streak += 1;
+    cur.setUTCDate(cur.getUTCDate() - 1);
+  }
 
   return (
     <DashboardClient
@@ -33,6 +52,7 @@ export default async function DashboardPage({
       tests={JSON.parse(JSON.stringify(tests))}
       plan={effectivePlan(dbUser?.plan, dbUser?.premiumUntil)}
       initialTab={initialTab}
+      streak={streak}
     />
   );
 }

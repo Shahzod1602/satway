@@ -54,6 +54,29 @@ export function normalizeMath(value: unknown): string {
   return s;
 }
 
+/**
+ * Parse a numeric grid-in answer to a number, accepting integers, decimals
+ * (incl. leading ".5"), fractions ("3/2", "-1/4"), and a trailing %.
+ * Returns null for non-numeric / symbolic answers (e.g. "16π").
+ */
+export function parseNumeric(value: unknown): number | null {
+  if (value == null) return null;
+  const s = String(value).trim().replace(/\s+/g, "").replace(/%$/, "");
+  if (!s) return null;
+  const frac = s.match(/^(-?\d*\.?\d+)\/(-?\d*\.?\d+)$/);
+  if (frac) {
+    const num = Number(frac[1]);
+    const den = Number(frac[2]);
+    if (!den || !Number.isFinite(num) || !Number.isFinite(den)) return null;
+    return num / den;
+  }
+  if (/^-?\d*\.?\d+$/.test(s)) {
+    const n = Number(s);
+    return Number.isFinite(n) ? n : null;
+  }
+  return null;
+}
+
 /** A multi-select answer is correct iff the chosen set equals the correct set. */
 function gradeMulti(response: unknown, correct: unknown[]): boolean {
   const chosen = Array.isArray(response) ? response : [];
@@ -74,8 +97,17 @@ export function gradeAnswer(
   if (response == null || response === "") return false;
   const correct = Array.isArray(correctAnswers) ? correctAnswers : [correctAnswers];
 
-  // Math student-produced response: accept equivalent forms
+  // Math student-produced response: accept equivalent forms.
   if (type === "STUDENT_PRODUCED_RESPONSE") {
+    // Numeric equivalence first (0.5 == 1/2 == 2/4), with a tiny tolerance.
+    const rNum = parseNumeric(response);
+    if (rNum != null) {
+      for (const c of correct) {
+        const cNum = parseNumeric(c);
+        if (cNum != null && Math.abs(cNum - rNum) < 1e-6) return true;
+      }
+    }
+    // Fall back to normalized-string match (covers symbolic answers like "16π").
     const norm = normalizeMath(response);
     return correct.some((c) => normalizeMath(c) === norm);
   }

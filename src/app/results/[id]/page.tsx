@@ -161,6 +161,16 @@ export default async function ResultsPage({
                         </span>
                       )}
                     </div>
+                    {r.question.explanation && (
+                      <div className="mt-3 rounded-lg border border-slate-200 bg-white/70 p-3">
+                        <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                          Explanation
+                        </p>
+                        <p className="mt-1 text-sm leading-relaxed text-slate-700">
+                          {r.question.explanation}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

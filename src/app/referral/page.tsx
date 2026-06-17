@@ -30,7 +30,7 @@ export default async function ReferralPage() {
         <main className="mx-auto max-w-xl px-6 pt-6 pb-10">
           <h1 className="text-2xl font-bold text-slate-900">Invite friends</h1>
           <p className="mt-1 text-sm text-slate-500">
-            Share your referral code — both get <strong>+1 week Premium</strong> when they pay.
+            Share your link — you get <strong>+1 week Premium</strong> when a friend you invite upgrades.
           </p>
           <div className="mt-6">
             <ReferralCard referralCode={code} />

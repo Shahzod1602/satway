@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowRight, BookOpen, Calculator, Trophy, Shuffle, Lock, Crown } from "lucide-react";
+import { ArrowRight, BookOpen, Calculator, Trophy, Shuffle, Lock, Crown, Flame } from "lucide-react";
 import Sidebar from "@/components/Sidebar";
 import { canAccessTest } from "@/lib/access";
 
@@ -34,11 +34,13 @@ export default function DashboardClient({
   tests,
   plan = "FREE",
   initialTab,
+  streak = 0,
 }: {
   user: { name: string; role: string };
   tests: TestData[];
   plan?: string;
   initialTab?: string;
+  streak?: number;
 }) {
   const router = useRouter();
   const isPremium = plan === "PREMIUM";
@@ -122,6 +124,12 @@ export default function DashboardClient({
 
       <div className="min-w-0 flex-1">
         <main className="px-6 pt-6 pb-10">
+          {streak > 0 && (
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3.5 py-1.5 text-sm font-semibold text-amber-700">
+              <Flame className="h-4 w-4 fill-amber-400 text-amber-500" />
+              {streak}-day streak — keep it going!
+            </div>
+          )}
           {!isPremium && (
             <Link
               href="/upgrade"

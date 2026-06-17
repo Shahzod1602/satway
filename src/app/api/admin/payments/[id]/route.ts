@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/adminGuard";
 import { currentUser } from "@/lib/session";
 import { nextPremiumUntil } from "@/lib/premium";
+import { rewardReferrerIfNeeded } from "@/lib/referral";
 import { parseJson } from "@/lib/validation";
 import { jsonError, withErrorHandling } from "@/lib/apiError";
 
@@ -51,6 +52,9 @@ export const POST = withErrorHandling(
         data: { status: "APPROVED", reviewedAt: new Date(), reviewedBy: admin.id },
       }),
     ]);
+
+    // If this buyer was referred, grant the referrer their +1 week reward.
+    await rewardReferrerIfNeeded(payment.userId);
 
     return Response.json({ ok: true, status: "APPROVED", premiumUntil });
   },

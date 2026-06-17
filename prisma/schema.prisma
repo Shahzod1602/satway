@@ -181,6 +181,7 @@ model Question {
   stimulus       String? // per-question passage / text (R&W digital split-screen, HTML)
   imageUrl       String? // per-question figure / graph
   prompt         String? // the question stem
+  explanation    String? // shown on the results page after submission
   options        Json? // choices: ["A) ...", "B) ..."]
   correctAnswers Json // acceptable answers, e.g. ["B"] or ["12.5","25/2"]
   points         Int          @default(1)

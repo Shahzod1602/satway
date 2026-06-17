@@ -14,14 +14,23 @@ interface AttemptData {
   test: { title: string; skill: string };
 }
 
+interface TopicStat {
+  topic: string;
+  correct: number;
+  total: number;
+  pct: number;
+}
+
 export default function ProgressClient({
   user,
   attempts,
+  topics = [],
   goals,
   plan,
 }: {
   user: { name: string; role: string };
   attempts: AttemptData[];
+  topics?: TopicStat[];
   goals: { targetScore: number | null; examDate: string | null };
   plan?: string;
 }) {
@@ -177,6 +186,34 @@ export default function ProgressClient({
                 <h2 className="mb-3 text-sm font-semibold text-slate-900">Score history</h2>
                 <BandChart data={chartData} />
               </div>
+
+              {topics.length > 0 && (
+                <div className="mt-4 rounded-2xl border border-[#EAEAEA] bg-white p-5">
+                  <h2 className="text-sm font-semibold text-slate-900">Strengths &amp; weaknesses</h2>
+                  <p className="mt-0.5 text-xs text-slate-400">Accuracy by topic — focus on the lowest first.</p>
+                  <div className="mt-4 space-y-3">
+                    {topics.map((t) => {
+                      const tone =
+                        t.pct >= 80 ? "from-emerald-500 to-emerald-400"
+                        : t.pct >= 55 ? "from-brand-500 to-brand-400"
+                        : "from-amber-500 to-red-400";
+                      return (
+                        <div key={t.topic}>
+                          <div className="mb-1 flex items-center justify-between text-sm">
+                            <span className="font-medium text-slate-700">{t.topic}</span>
+                            <span className="tabular-nums text-slate-500">
+                              {t.pct}% <span className="text-slate-300">·</span> {t.correct}/{t.total}
+                            </span>
+                          </div>
+                          <div className="h-2 overflow-hidden rounded-full bg-slate-100">
+                            <div className={`h-full rounded-full bg-gradient-to-r ${tone}`} style={{ width: `${t.pct}%` }} />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
 
               <h2 className="mt-10 text-lg font-semibold text-slate-900">Recent attempts</h2>
               <div className="mt-4 overflow-hidden rounded-2xl border border-[#EAEAEA] bg-white">

@@ -37,7 +37,7 @@ export default function ReferralCard({ referralCode }: { referralCode: string })
         <div>
           <h2 className="font-semibold text-slate-900">Invite friends</h2>
           <p className="text-xs text-slate-500">
-            Share your code — both get <strong>+1 week Premium</strong> when they pay.
+            You get <strong>+1 week Premium</strong> when a friend you invite upgrades.
           </p>
         </div>
       </div>

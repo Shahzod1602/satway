@@ -127,6 +127,7 @@ export async function POST(req: NextRequest) {
               stimulus: typeof q.stimulus === "string" ? q.stimulus : null,
               imageUrl: typeof q.imageUrl === "string" ? q.imageUrl : null,
               prompt: typeof q.prompt === "string" ? q.prompt : null,
+              explanation: typeof q.explanation === "string" ? q.explanation : null,
               options: Array.isArray(q.options) ? q.options : undefined,
               correctAnswers: q.correctAnswers as Prisma.InputJsonValue,
               meta: q.meta ? (q.meta as Prisma.InputJsonValue) : undefined,

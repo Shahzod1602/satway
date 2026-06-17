@@ -1233,6 +1233,7 @@ export const QuestionScalarFieldEnum = {
   stimulus: 'stimulus',
   imageUrl: 'imageUrl',
   prompt: 'prompt',
+  explanation: 'explanation',
   options: 'options',
   correctAnswers: 'correctAnswers',
   points: 'points',

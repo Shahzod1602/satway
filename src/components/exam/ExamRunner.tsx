@@ -69,6 +69,33 @@ export default function ExamRunner({
   const startedRef = useRef(false);
   const submittingRef = useRef(false);
 
+  // ───────── Resume (localStorage) ─────────
+  // Practice/full attempts survive a refresh or dropped connection. Mock runs
+  // are sequenced by MockRunner and intentionally not persisted here.
+  const persist = !mockMode;
+  const STORAGE_KEY = `satway:exam:v1:${test.id}:${mode}:${practiceModule ?? "full"}`;
+  const MAX_AGE_MS = 24 * 60 * 60 * 1000;
+
+  const clearSession = useCallback(() => {
+    try { localStorage.removeItem(STORAGE_KEY); } catch { /* ignore */ }
+  }, [STORAGE_KEY]);
+
+  const saveSnapshot = useCallback(
+    (snap: {
+      attemptId: string;
+      module: ClientModule;
+      qi: number;
+      timeLeft: number;
+      answers: AnswerMap;
+      marked: string[];
+      crossed: Record<string, string[]>;
+    }) => {
+      if (!persist) return;
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...snap, savedAt: Date.now() })); } catch { /* ignore */ }
+    },
+    [persist, STORAGE_KEY],
+  );
+
   const questions = mod?.questions ?? [];
   const q = questions[qi];
   const answeredCount = questions.filter((x) => {
@@ -76,10 +103,32 @@ export default function ExamRunner({
     return Array.isArray(v) ? v.length > 0 : !!v?.trim();
   }).length;
 
-  // ───────── Start the attempt ─────────
+  // ───────── Start the attempt (or resume a saved one) ─────────
   useEffect(() => {
     if (startedRef.current) return;
     startedRef.current = true;
+
+    // Try to resume an unfinished session first.
+    if (persist) {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const s = JSON.parse(raw);
+          if (s?.attemptId && s?.module?.questions?.length && Date.now() - (s.savedAt ?? 0) < MAX_AGE_MS) {
+            setAttemptId(s.attemptId);
+            setMod(s.module);
+            setQi(Math.min(s.qi ?? 0, s.module.questions.length - 1));
+            setTimeLeft(s.timeLeft ?? s.module.durationSec);
+            setAnswers(s.answers ?? {});
+            setMarked(new Set<string>(s.marked ?? []));
+            setCrossed(s.crossed ?? {});
+            setStage("active");
+            return;
+          }
+        }
+      } catch { /* fall through to a fresh start */ }
+    }
+
     (async () => {
       try {
         const res = await fetch("/api/attempts/start", {
@@ -93,6 +142,7 @@ export default function ExamRunner({
         setMod(data.firstModule);
         setTimeLeft(data.firstModule.durationSec);
         setStage("active");
+        saveSnapshot({ attemptId: data.attemptId, module: data.firstModule, qi: 0, timeLeft: data.firstModule.durationSec, answers: {}, marked: [], crossed: {} });
       } catch (e) {
         setErrorMsg((e as Error).message);
         setStage("error");
@@ -120,10 +170,14 @@ export default function ExamRunner({
       if (!res.ok) throw new Error(data.error || "Failed to submit");
 
       if (data.stage === "module2") {
+        // Overwrite the saved session with Module 2 so a refresh during the
+        // transition resumes Module 2 (never re-submits Module 1).
+        saveSnapshot({ attemptId, module: data.module, qi: 0, timeLeft: data.module.durationSec, answers: {}, marked: [], crossed: {} });
         setNextMod(data.module);
         setStage("transition");
         submittingRef.current = false;
       } else {
+        clearSession();
         if (mockMode && onSubmitted) {
           onSubmitted({
             skill: test.skill,
@@ -141,7 +195,14 @@ export default function ExamRunner({
       setStage("review");
       alert((e as Error).message);
     }
-  }, [attemptId, mod, answers, mockMode, onSubmitted, router, test.skill]);
+  }, [attemptId, mod, answers, mockMode, onSubmitted, router, test.skill, saveSnapshot, clearSession]);
+
+  // Autosave the live session so a refresh / disconnect can resume.
+  useEffect(() => {
+    if (!attemptId || !mod) return;
+    if (stage !== "active" && stage !== "review") return;
+    saveSnapshot({ attemptId, module: mod, qi, timeLeft, answers, marked: [...marked], crossed });
+  }, [attemptId, mod, qi, timeLeft, answers, marked, crossed, stage, saveSnapshot]);
 
   // ───────── Continue to Module 2 ─────────
   const beginNextModule = () => {
