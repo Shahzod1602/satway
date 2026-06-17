@@ -68,7 +68,12 @@ export default function Sidebar({
       icon: Gift,
       match: (p) => p.startsWith("/referral"),
     },
-    { label: "Vocabulary", href: "#", icon: BookText, soon: true },
+    {
+      label: "Vocabulary",
+      href: "/vocabulary",
+      icon: BookText,
+      match: (p) => p.startsWith("/vocabulary"),
+    },
   ];
 
   return (
