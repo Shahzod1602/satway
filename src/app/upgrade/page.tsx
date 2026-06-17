@@ -48,6 +48,7 @@ export default async function UpgradePage() {
             referralCode={referralCode}
             cardNumber={process.env.PAYMENT_CARD_NUMBER || ""}
             cardHolder={process.env.PAYMENT_CARD_HOLDER || ""}
+            paymentTelegram={process.env.PAYMENT_TELEGRAM || ""}
           />
         </main>
       </div>

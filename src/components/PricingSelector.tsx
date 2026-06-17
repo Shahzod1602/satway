@@ -10,11 +10,13 @@ export default function PricingSelector({
   referralCode,
   cardNumber,
   cardHolder,
+  paymentTelegram,
 }: {
   currentPlan: string;
   referralCode: string;
   cardNumber: string;
   cardHolder: string;
+  paymentTelegram: string;
 }) {
   const [selected, setSelected] = useState<string>("1m");
   const [showPayment, setShowPayment] = useState(false);
@@ -72,6 +74,7 @@ export default function PricingSelector({
           referralCode={referralCode}
           cardNumber={cardNumber}
           cardHolder={cardHolder}
+          paymentTelegram={paymentTelegram}
           onClose={() => setShowPayment(false)}
         />
       )}

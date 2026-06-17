@@ -4,20 +4,26 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { PremiumPlan } from "@/lib/plans";
 import { fmtUZS } from "@/lib/plans";
-import { X, CheckCircle2 } from "lucide-react";
+import { X, CheckCircle2, Send } from "lucide-react";
 
 export default function PaymentForm({
   plan,
   cardNumber,
   cardHolder,
+  paymentTelegram,
   onClose,
 }: {
   plan: PremiumPlan;
   referralCode: string;
   cardNumber: string;
   cardHolder: string;
+  paymentTelegram: string;
   onClose: () => void;
 }) {
+  // e.g. "https://t.me/identify_admin" → "@identify_admin"
+  const tgHandle = paymentTelegram
+    ? "@" + paymentTelegram.replace(/\/+$/, "").split("/").pop()
+    : "";
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -57,8 +63,10 @@ export default function PaymentForm({
             <CheckCircle2 className="mx-auto h-12 w-12 text-emerald-500" />
             <h3 className="mt-3 font-bold text-lg text-slate-900">Payment submitted</h3>
             <p className="mt-2 text-sm text-slate-600">
-              Thanks! Our admin will verify your transfer and activate Premium shortly.
-              You&apos;ll see it reflected on your dashboard once approved.
+              Thanks! Make sure you&apos;ve sent the payment receipt
+              {tgHandle ? ` to ${tgHandle} on Telegram` : ""}. Our admin will verify your
+              transfer and activate Premium shortly. You&apos;ll see it reflected on your
+              dashboard once approved.
             </p>
             <button
               onClick={() => router.push("/dashboard")}
@@ -97,9 +105,28 @@ export default function PaymentForm({
           <p className="text-sm text-slate-500">{cardHolder}</p>
         </div>
 
+        {tgHandle && (
+          <div className="mt-4 rounded-xl border border-brand-200 bg-brand-50 p-4 text-sm">
+            <p className="flex items-center gap-2 font-semibold text-brand-700">
+              <Send className="h-4 w-4 shrink-0" /> Send your payment receipt
+            </p>
+            <p className="mt-1 text-slate-600">
+              After transferring, send the check (screenshot) to our admin on Telegram:
+            </p>
+            <a
+              href={paymentTelegram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-brand-700"
+            >
+              <Send className="h-3.5 w-3.5" /> {tgHandle}
+            </a>
+          </div>
+        )}
+
         <div className="mt-4 rounded-xl bg-amber-50 p-3 flex gap-2 text-sm text-amber-700">
           <CheckCircle2 className="h-4 w-4 shrink-0 mt-0.5" />
-          <span>After transferring, click &quot;I&apos;ve paid&quot; — our admin will verify and activate your Premium access.</span>
+          <span>After sending the receipt, click &quot;I&apos;ve paid&quot; — our admin will verify and activate your Premium access.</span>
         </div>
 
         {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
