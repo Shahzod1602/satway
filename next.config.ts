@@ -14,7 +14,10 @@ const TG_FRAME = "https://oauth.telegram.org";
 const TG_IMG = "https://t.me";
 const csp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline' ${DESMOS} ${TG_SCRIPT}` + (isProd ? "" : " 'unsafe-eval'"),
+  // 'unsafe-eval' is required by Telegram's widget script (it evals internally)
+  // and by Next's dev runtime. Acceptable here since 'unsafe-inline' is already
+  // allowed for scripts, so eval doesn't materially change the posture.
+  `script-src 'self' 'unsafe-inline' 'unsafe-eval' ${DESMOS} ${TG_SCRIPT}`,
   "style-src 'self' 'unsafe-inline'",
   `img-src 'self' data: blob: ${DESMOS} ${TG_IMG}`,
   "font-src 'self' data:",
