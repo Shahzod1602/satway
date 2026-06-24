@@ -1,6 +1,15 @@
 // Freemium access rules for SAT platform.
 // Free tier: Test 1 only (all skills). Everything else needs Premium.
 
+// Welcome gift: every brand-new account (email signup or Telegram) starts with
+// a short free Premium trial.
+export const WELCOME_PREMIUM_DAYS = 1;
+
+/** Expiry date for the welcome Premium trial, measured from now. */
+export function welcomePremiumUntil(): Date {
+  return new Date(Date.now() + WELCOME_PREMIUM_DAYS * 24 * 60 * 60 * 1000);
+}
+
 export function testSlugMeta(slug: string): {
   testNum: number | null;
 } {

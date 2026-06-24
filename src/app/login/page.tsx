@@ -6,6 +6,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import AuthShell from "@/components/AuthShell";
+import TelegramLoginButton from "@/components/TelegramLoginButton";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -50,7 +51,12 @@ export default function LoginPage() {
           />
         </label>
         <label className="block text-sm font-medium text-slate-700">
-          Password
+          <span className="flex items-center justify-between">
+            Password
+            <Link href="/forgot-password" className="text-xs font-medium text-brand-600 hover:underline">
+              Forgot password?
+            </Link>
+          </span>
           <input
             type="password"
             value={password}
@@ -74,6 +80,14 @@ export default function LoginPage() {
           </Link>
         </p>
       </form>
+
+      <div className="my-5 flex items-center gap-3 text-xs text-slate-400">
+        <span className="h-px flex-1 bg-slate-200" /> or <span className="h-px flex-1 bg-slate-200" />
+      </div>
+      <TelegramLoginButton
+        onStart={() => { setError(""); setLoading(true); }}
+        onError={(m) => { setError(m); setLoading(false); }}
+      />
     </AuthShell>
   );
 }

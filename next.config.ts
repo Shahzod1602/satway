@@ -7,13 +7,19 @@ const isProd = process.env.NODE_ENV === "production";
 // Desmos powers the in-exam Math calculator and pulls scripts/assets/data from
 // its own domains, so those are allow-listed here.
 const DESMOS = "https://www.desmos.com https://*.desmos.com";
+// Telegram Login Widget: loads its script from telegram.org and embeds an
+// oauth.telegram.org iframe; user avatars are served from t.me.
+const TG_SCRIPT = "https://telegram.org";
+const TG_FRAME = "https://oauth.telegram.org";
+const TG_IMG = "https://t.me";
 const csp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline' ${DESMOS}` + (isProd ? "" : " 'unsafe-eval'"),
+  `script-src 'self' 'unsafe-inline' ${DESMOS} ${TG_SCRIPT}` + (isProd ? "" : " 'unsafe-eval'"),
   "style-src 'self' 'unsafe-inline'",
-  `img-src 'self' data: blob: ${DESMOS}`,
+  `img-src 'self' data: blob: ${DESMOS} ${TG_IMG}`,
   "font-src 'self' data:",
-  `connect-src 'self' ${DESMOS}`,
+  `connect-src 'self' ${DESMOS} ${TG_FRAME}`,
+  `frame-src 'self' ${TG_FRAME}`,
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",

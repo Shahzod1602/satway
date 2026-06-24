@@ -113,3 +113,26 @@ export function verificationEmail(code: string): { subject: string; html: string
   </div>`,
   };
 }
+
+export function passwordResetEmail(code: string): { subject: string; html: string; text: string } {
+  return {
+    subject: `${code} is your satway password reset code`,
+    text: `Your satway password reset code is ${code}. It expires in 10 minutes. If you didn't request a reset, you can ignore this email.`,
+    html: `
+  <div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:480px;margin:0 auto;padding:24px">
+    <div style="font-size:22px;font-weight:800;color:#0f172a;margin-bottom:24px">
+      SAT<span style="background:#2563eb;color:#fff;border-radius:6px;padding:2px 6px">way</span>
+    </div>
+    <h1 style="font-size:18px;color:#0f172a;margin:0 0 8px">Reset your password</h1>
+    <p style="font-size:14px;color:#475569;margin:0 0 20px">
+      Use the code below to set a new password for your satway account.
+    </p>
+    <div style="font-size:34px;font-weight:800;letter-spacing:10px;color:#2563eb;background:#eff6ff;border-radius:12px;padding:18px;text-align:center">
+      ${code}
+    </div>
+    <p style="font-size:13px;color:#94a3b8;margin:20px 0 0">
+      This code expires in 10 minutes. If you didn't request a password reset, you can safely ignore this email — your password won't change.
+    </p>
+  </div>`,
+  };
+}

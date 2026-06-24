@@ -3,6 +3,12 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { prisma } from "./prisma";
 import { rateLimit } from "./rateLimit";
+import {
+  verifyTelegramAuth,
+  isAuthFresh,
+  findOrCreateTelegramUser,
+  type TelegramAuthData,
+} from "./telegramAuth";
 
 const ROLES = ["STUDENT", "ADMIN"] as const;
 function normalizeRole(role: unknown): string {
@@ -49,6 +55,58 @@ export const authOptions: NextAuthOptions = {
         if (!user.emailVerified) {
           throw new Error("Please verify your email before signing in.");
         }
+
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: normalizeRole(user.role),
+        };
+      },
+    }),
+    // Sign in / sign up with the Telegram Login Widget. The widget posts a
+    // signed payload; we verify the HMAC server-side and find-or-create the
+    // linked account.
+    CredentialsProvider({
+      id: "telegram",
+      name: "Telegram",
+      credentials: {
+        data: { label: "Telegram data", type: "text" },
+        referralCode: { label: "Referral code", type: "text" },
+      },
+      async authorize(credentials) {
+        if (!credentials?.data) {
+          throw new Error("Missing Telegram authorization data");
+        }
+
+        let tg: TelegramAuthData;
+        try {
+          tg = JSON.parse(credentials.data);
+        } catch {
+          throw new Error("Invalid Telegram authorization data");
+        }
+
+        const token = process.env.TELEGRAM_LOGIN_BOT_TOKEN;
+        if (!token) {
+          throw new Error("Telegram sign-in is not configured");
+        }
+        if (!verifyTelegramAuth(tg, token)) {
+          throw new Error("Telegram verification failed");
+        }
+        if (!isAuthFresh(tg.auth_date)) {
+          throw new Error("Telegram login expired. Please try again.");
+        }
+
+        // Throttle account creation/login per Telegram id.
+        const rl = rateLimit(`tg-login:${tg.id}`, 20, 15 * 60 * 1000);
+        if (!rl.ok) {
+          throw new Error("Too many attempts. Please try again later.");
+        }
+
+        const user = await findOrCreateTelegramUser(
+          tg,
+          credentials.referralCode?.trim() || undefined,
+        );
 
         return {
           id: user.id,

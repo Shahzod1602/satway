@@ -5,9 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { parseJson, emailSchema, passwordSchema } from "@/lib/validation";
 import { jsonError, tooManyRequests, withErrorHandling } from "@/lib/apiError";
 import { rateLimit, clientIp } from "@/lib/rateLimit";
-
-// New accounts get a free Premium trial for this many days.
-const WELCOME_PREMIUM_DAYS = 14;
+import { welcomePremiumUntil } from "@/lib/access";
 
 const bodySchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
@@ -44,8 +42,8 @@ export const POST = withErrorHandling(async (req: NextRequest) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  // Welcome gift: every new account starts with a 14-day Premium trial.
-  const premiumUntil = new Date(Date.now() + WELCOME_PREMIUM_DAYS * 24 * 60 * 60 * 1000);
+  // Welcome gift: every new account starts with a short free Premium trial.
+  const premiumUntil = welcomePremiumUntil();
 
   await prisma.$transaction(async (tx) => {
     await tx.user.create({

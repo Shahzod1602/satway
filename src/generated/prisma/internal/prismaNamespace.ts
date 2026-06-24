@@ -1126,6 +1126,8 @@ export const UserScalarFieldEnum = {
   emailVerified: 'emailVerified',
   verifyToken: 'verifyToken',
   verifyTokenExpiry: 'verifyTokenExpiry',
+  telegramId: 'telegramId',
+  telegramUsername: 'telegramUsername',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   avatarUrl: 'avatarUrl',
