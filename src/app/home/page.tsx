@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { currentUser } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
+import PremiumExpiredBanner from "@/components/PremiumExpiredBanner";
 import { effectivePlan } from "@/lib/access";
 import Sidebar from "@/components/Sidebar";
 
@@ -78,6 +79,9 @@ export default async function HomePage() {
     plan === "PREMIUM" && dbUser?.premiumUntil
       ? Math.max(0, Math.ceil((new Date(dbUser.premiumUntil).getTime() - now) / DAY))
       : null;
+  // Premium that lapsed (incl. an ended trial) → show the win-back banner.
+  const premiumExpired =
+    dbUser?.plan === "PREMIUM" && !!dbUser?.premiumUntil && new Date(dbUser.premiumUntil).getTime() <= now;
 
   // Streak: consecutive UTC days with a submitted attempt, ending today or yesterday.
   const dayKeys = new Set(
@@ -167,6 +171,8 @@ export default async function HomePage() {
                 Manage
               </Link>
             </div>
+          ) : premiumExpired ? (
+            <PremiumExpiredBanner className="mt-6" />
           ) : (
             <div className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-brand-600/30 bg-brand-50 p-5">
               <div className="flex items-center gap-3">

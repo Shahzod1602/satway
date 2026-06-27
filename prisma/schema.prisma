@@ -42,6 +42,9 @@ model User {
   emailNotifications Boolean   @default(true)
   plan               Plan      @default(FREE)
   premiumUntil       DateTime?
+  // Win-back: when we last sent the "your Premium expired" message for the
+  // current expiry. Re-armed on renewal because premiumUntil moves past it.
+  winbackSentAt      DateTime?
 
   referralCode     String?  @unique
   referredById     String?

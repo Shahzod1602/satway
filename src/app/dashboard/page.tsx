@@ -46,11 +46,18 @@ export default async function DashboardPage({
     cur.setUTCDate(cur.getUTCDate() - 1);
   }
 
+  // Premium that lapsed (incl. an ended trial) → show the win-back banner.
+  const premiumExpired =
+    dbUser?.plan === "PREMIUM" &&
+    !!dbUser?.premiumUntil &&
+    new Date(dbUser.premiumUntil).getTime() <= Date.now();
+
   return (
     <DashboardClient
       user={JSON.parse(JSON.stringify(user))}
       tests={JSON.parse(JSON.stringify(tests))}
       plan={effectivePlan(dbUser?.plan, dbUser?.premiumUntil)}
+      premiumExpired={premiumExpired}
       initialTab={initialTab}
       streak={streak}
     />

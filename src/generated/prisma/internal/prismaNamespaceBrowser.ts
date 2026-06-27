@@ -103,6 +103,7 @@ export const UserScalarFieldEnum = {
   emailNotifications: 'emailNotifications',
   plan: 'plan',
   premiumUntil: 'premiumUntil',
+  winbackSentAt: 'winbackSentAt',
   referralCode: 'referralCode',
   referredById: 'referredById',
   referralRewarded: 'referralRewarded'

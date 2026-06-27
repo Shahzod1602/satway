@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight, BookOpen, Calculator, Trophy, Shuffle, Lock, Crown, Flame } from "lucide-react";
 import Sidebar from "@/components/Sidebar";
+import PremiumExpiredBanner from "@/components/PremiumExpiredBanner";
 import { canAccessTest } from "@/lib/access";
 
 interface TestData {
@@ -33,12 +34,14 @@ export default function DashboardClient({
   user,
   tests,
   plan = "FREE",
+  premiumExpired = false,
   initialTab,
   streak = 0,
 }: {
   user: { name: string; role: string };
   tests: TestData[];
   plan?: string;
+  premiumExpired?: boolean;
   initialTab?: string;
   streak?: number;
 }) {
@@ -130,24 +133,27 @@ export default function DashboardClient({
               {streak}-day streak — keep it going!
             </div>
           )}
-          {!isPremium && (
-            <Link
-              href="/upgrade"
-              className="mb-4 flex items-center justify-between gap-3 rounded-2xl border border-amber-200 bg-gradient-to-r from-amber-50 to-white px-5 py-4 transition-colors hover:border-amber-300"
-            >
-              <span className="flex items-center gap-3">
-                <span className="grid h-9 w-9 place-items-center rounded-lg bg-amber-100 text-amber-600">
-                  <Crown className="h-5 w-5" />
+          {!isPremium &&
+            (premiumExpired ? (
+              <PremiumExpiredBanner className="mb-4" />
+            ) : (
+              <Link
+                href="/upgrade"
+                className="mb-4 flex items-center justify-between gap-3 rounded-2xl border border-amber-200 bg-gradient-to-r from-amber-50 to-white px-5 py-4 transition-colors hover:border-amber-300"
+              >
+                <span className="flex items-center gap-3">
+                  <span className="grid h-9 w-9 place-items-center rounded-lg bg-amber-100 text-amber-600">
+                    <Crown className="h-5 w-5" />
+                  </span>
+                  <span className="text-sm text-slate-700">
+                    <strong className="font-semibold text-slate-900">Get Premium</strong> — unlock all SAT practice tests and full mock exams.
+                  </span>
                 </span>
-                <span className="text-sm text-slate-700">
-                  <strong className="font-semibold text-slate-900">Get Premium</strong> — unlock all SAT practice tests and full mock exams.
+                <span className="shrink-0 rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white">
+                  Get Premium
                 </span>
-              </span>
-              <span className="shrink-0 rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white">
-                Get Premium
-              </span>
-            </Link>
-          )}
+              </Link>
+            ))}
           <div className="rounded-3xl border border-[#EAEAEA] bg-white p-6 sm:p-8">
             {/* Tabs */}
             <div className="flex items-center gap-1 border-b border-[#EAEAEA]">
