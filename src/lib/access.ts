@@ -40,8 +40,16 @@ export function effectivePlan(
   return isPremiumActive(plan, premiumUntil) ? "PREMIUM" : "FREE";
 }
 
-export function canAccessTest(plan: string | null | undefined, slug: string): boolean {
-  return plan === "PREMIUM" || isTestFree(slug);
+// Prefer the explicit Test.isPremium flag; fall back to the slug heuristic when
+// only a slug is available (UI hints) or the flag is absent (older callers).
+export function canAccessTest(
+  plan: string | null | undefined,
+  testOrSlug: string | { slug: string; isPremium?: boolean },
+): boolean {
+  if (plan === "PREMIUM") return true;
+  if (typeof testOrSlug === "string") return isTestFree(testOrSlug);
+  if (typeof testOrSlug.isPremium === "boolean") return !testOrSlug.isPremium;
+  return isTestFree(testOrSlug.slug);
 }
 
 export function canAccessMock(plan: string | null | undefined): boolean {

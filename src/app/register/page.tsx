@@ -19,6 +19,7 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [referralCode, setReferralCode] = useState("");
   const [error, setError] = useState("");
+  const [info, setInfo] = useState("");
   const [loading, setLoading] = useState(false);
 
   // Capture an invite code from ?ref=CODE
@@ -32,15 +33,20 @@ export default function RegisterPage() {
     e.preventDefault();
     setError("");
     setLoading(true);
-    const res = await fetch("/api/auth/send-code", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    });
-    const data = await res.json().catch(() => ({}));
-    setLoading(false);
-    if (!res.ok) setError(data.error || "Could not send the code");
-    else setStep("verify");
+    try {
+      const res = await fetch("/api/auth/send-code", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) setError(data.error || "Could not send the code");
+      else setStep("verify");
+    } catch {
+      setError("Network error. Please check your connection and try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   // Step 2 — verify code
@@ -48,24 +54,35 @@ export default function RegisterPage() {
     e.preventDefault();
     setError("");
     setLoading(true);
-    const res = await fetch("/api/auth/verify-code", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, code }),
-    });
-    const data = await res.json().catch(() => ({}));
-    setLoading(false);
-    if (!res.ok) setError(data.error || "Verification failed");
-    else setStep("details");
+    try {
+      const res = await fetch("/api/auth/verify-code", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, code }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) setError(data.error || "Verification failed");
+      else setStep("details");
+    } catch {
+      setError("Network error. Please check your connection and try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const resendCode = async () => {
     setError("");
-    await fetch("/api/auth/send-code", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    });
+    setInfo("");
+    try {
+      await fetch("/api/auth/send-code", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      setInfo("A new code has been sent.");
+    } catch {
+      setError("Could not resend the code. Please try again.");
+    }
   };
 
   // Step 3 — name + password → create account → auto sign-in
@@ -73,21 +90,25 @@ export default function RegisterPage() {
     e.preventDefault();
     setError("");
     setLoading(true);
-    const res = await fetch("/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password, ...(referralCode ? { referralCode } : {}) }),
-    });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) {
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password, ...(referralCode ? { referralCode } : {}) }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setError(data.error || "Registration failed");
+        return;
+      }
+      const signInRes = await signIn("credentials", { email, password, redirect: false });
+      if (signInRes?.error) router.push("/login");
+      else router.push("/dashboard");
+    } catch {
+      setError("Network error. Please try again.");
+    } finally {
       setLoading(false);
-      setError(data.error || "Registration failed");
-      return;
     }
-    const signInRes = await signIn("credentials", { email, password, redirect: false });
-    setLoading(false);
-    if (signInRes?.error) router.push("/login");
-    else router.push("/dashboard");
   };
 
   const Stepper = () => (
@@ -158,6 +179,7 @@ export default function RegisterPage() {
             We sent a 6-digit code to <strong>{email}</strong>.
           </p>
           {error && <div className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
+          {info && <div className="rounded-lg bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{info}</div>}
           <label className="block text-sm font-medium text-slate-700">
             Verification code
             <input

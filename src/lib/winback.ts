@@ -160,15 +160,29 @@ type Candidate = {
  * re-arms by itself on renewal (premiumUntil moves past winbackSentAt).
  * Pass { dry: true } to count + preview WITHOUT sending or stamping.
  */
+const DEFAULT_LIMIT = 300; // per-run cap so the daily cron never blows past maxDuration
+const CONCURRENCY = 4; // bounded parallel sends (Gmail pool = 3 conns; Telegram is fine)
+
 export async function processWinback(
   prisma: PrismaClient,
   opts?: { dry?: boolean; limit?: number },
 ): Promise<WinbackSummary> {
   const dry = !!opts?.dry;
   const now = new Date();
+  const limit = opts?.limit ?? DEFAULT_LIMIT;
 
-  const candidates = (await prisma.user.findMany({
-    where: { plan: "PREMIUM", premiumUntil: { not: null, lte: now } },
+  // Push the whole "due & not yet notified for THIS expiry" predicate into the DB
+  // (field reference compares winbackSentAt to the row's own premiumUntil) so `take`
+  // returns real targets — no loading the whole table, no JS post-filter starvation.
+  const list = (await prisma.user.findMany({
+    where: {
+      plan: "PREMIUM",
+      premiumUntil: { not: null, lte: now },
+      OR: [
+        { winbackSentAt: null },
+        { winbackSentAt: { lt: prisma.user.fields.premiumUntil } },
+      ],
+    },
     select: {
       id: true,
       name: true,
@@ -178,15 +192,9 @@ export async function processWinback(
       premiumUntil: true,
       winbackSentAt: true,
     },
-    orderBy: { premiumUntil: "asc" },
+    orderBy: { premiumUntil: "asc" }, // oldest expiries first; covered batch-by-batch
+    take: limit,
   })) as Candidate[];
-
-  const targets = candidates.filter(
-    (u) =>
-      !u.winbackSentAt ||
-      (u.premiumUntil && u.winbackSentAt.getTime() < u.premiumUntil.getTime()),
-  );
-  const list = opts?.limit ? targets.slice(0, opts.limit) : targets;
 
   const s: WinbackSummary = {
     dry,
@@ -201,61 +209,70 @@ export async function processWinback(
     sample: list.slice(0, 5).map((u) => u.email || u.id),
   };
 
-  for (const u of list) {
+  const processOne = async (u: Candidate) => {
     const canEmail = !!u.email && !isSyntheticEmail(u.email);
-    const hasTelegram = !!u.telegramId;
-    let attempted = false;
-    let anySuccess = false;
+    const optedOut = !u.emailNotifications; // the single notifications flag governs BOTH channels
+    let emailOk = false;
+    let tgOk = false;
+    let retryable = false; // a transient failure we should retry next run
 
+    // Email
     if (canEmail) {
-      if (!u.emailNotifications) {
+      if (optedOut) {
         s.emailOptedOut++;
+      } else if (dry) {
+        s.emailSent++;
+        emailOk = true;
       } else {
-        attempted = true;
-        if (dry) {
-          s.emailSent++;
-          anySuccess = true;
-        } else {
-          try {
-            const { subject, html, text } = winbackEmail({ name: u.name });
-            const ok = await sendMail({ to: u.email, subject, html, text });
-            if (ok) {
-              s.emailSent++;
-              anySuccess = true;
-            } else {
-              s.emailFailed++;
-            }
-          } catch {
+        try {
+          const { subject, html, text } = winbackEmail({ name: u.name });
+          const ok = await sendMail({ to: u.email, subject, html, text });
+          if (ok) {
+            s.emailSent++;
+            emailOk = true;
+          } else {
             s.emailFailed++;
+            retryable = true;
           }
+        } catch {
+          s.emailFailed++;
+          retryable = true;
         }
       }
     }
 
-    if (hasTelegram) {
-      attempted = true;
+    // Telegram (respects the same opt-out)
+    if (u.telegramId && !optedOut) {
       if (dry) {
         s.telegramSent++;
-        anySuccess = true;
+        tgOk = true;
       } else {
         const { text, button } = winbackTelegram({ name: u.name });
-        const r = await sendTelegramMessage(u.telegramId!, text, { button });
+        const r = await sendTelegramMessage(u.telegramId, text, { button });
         if (r.ok) {
           s.telegramSent++;
-          anySuccess = true;
+          tgOk = true;
         } else if (r.blocked) {
-          s.telegramUnreachable++;
+          s.telegramUnreachable++; // terminal (never /started the bot) — the in-app banner covers them
         } else {
           s.telegramFailed++;
+          retryable = true;
         }
       }
     }
 
-    const shouldMark = !attempted || anySuccess;
-    if (!dry && shouldMark) {
+    // Stamp so we never re-send for this expiry — UNLESS a transient failure means
+    // we should retry next run. Terminal cases (opted out, telegram-blocked, no
+    // reachable channel) get stamped so they don't clog the queue forever.
+    const anySuccess = emailOk || tgOk;
+    if (!dry && (anySuccess || !retryable)) {
       await prisma.user.update({ where: { id: u.id }, data: { winbackSentAt: now } });
       s.marked++;
     }
+  };
+
+  for (let i = 0; i < list.length; i += CONCURRENCY) {
+    await Promise.all(list.slice(i, i + CONCURRENCY).map(processOne));
   }
 
   return s;

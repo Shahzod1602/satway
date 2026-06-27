@@ -46,6 +46,12 @@ export function rateLimit(key: string, limit: number, windowMs: number): RateLim
 /** Best-effort client IP from proxy headers, falling back to a constant. */
 export function clientIp(req: NextRequest): string {
   const xff = req.headers.get("x-forwarded-for");
-  if (xff) return xff.split(",")[0].trim();
+  if (xff) {
+    // Trust the LAST hop — our nginx edge appends the real $remote_addr there.
+    // The leftmost value is attacker-controlled (a client can prepend a fake IP),
+    // so using it would let anyone rotate buckets and defeat rate limiting.
+    const parts = xff.split(",").map((s) => s.trim()).filter(Boolean);
+    if (parts.length) return parts[parts.length - 1];
+  }
   return req.headers.get("x-real-ip") || "unknown";
 }

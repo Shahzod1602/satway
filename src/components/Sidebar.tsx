@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, ClipboardList, LineChart, BookText, Shield, User, Sparkles, Gift, Crown, LifeBuoy, Trophy } from "lucide-react";
+import { Home, ClipboardList, LineChart, BookText, Shield, User, Sparkles, Gift, Crown, LifeBuoy, Trophy, Menu, X } from "lucide-react";
 
 interface NavItem {
   label: string;
@@ -23,6 +23,11 @@ export default function Sidebar({
   plan?: string;
 }) {
   const pathname = usePathname() ?? "";
+  const [open, setOpen] = useState(false);
+  // Close the mobile drawer on navigation.
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   const [supportUnread, setSupportUnread] = useState(0);
   useEffect(() => {
@@ -77,7 +82,35 @@ export default function Sidebar({
   ];
 
   return (
-    <aside className="sticky top-0 flex h-screen w-64 shrink-0 flex-col border-r border-[#EAEAEA] bg-[#FFFDFB] px-4 py-6">
+    <>
+      {/* Mobile menu trigger */}
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        aria-label="Open menu"
+        className="fixed left-2 top-2 z-40 grid h-10 w-10 place-items-center rounded-lg border border-[#EAEAEA] bg-white/90 text-slate-700 shadow-sm backdrop-blur md:hidden"
+      >
+        <Menu className="h-5 w-5" />
+      </button>
+      {/* Backdrop */}
+      {open && (
+        <div
+          className="fixed inset-0 z-40 bg-black/30 md:hidden"
+          onClick={() => setOpen(false)}
+          aria-hidden
+        />
+      )}
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 flex h-screen w-64 shrink-0 flex-col border-r border-[#EAEAEA] bg-[#FFFDFB] px-4 py-6 transition-transform duration-200 md:sticky md:top-0 md:z-auto md:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}
+      >
+      <button
+        type="button"
+        onClick={() => setOpen(false)}
+        aria-label="Close menu"
+        className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-lg text-slate-500 hover:bg-slate-100 md:hidden"
+      >
+        <X className="h-5 w-5" />
+      </button>
       <Link href="/dashboard" className="flex flex-col px-2">
         <span className="flex items-center text-xl font-extrabold tracking-tight text-slate-900">
           SAT
@@ -180,5 +213,6 @@ export default function Sidebar({
         )}
       </div>
     </aside>
+    </>
   );
 }

@@ -33,7 +33,7 @@ export const POST = withErrorHandling(async (req: NextRequest) => {
     where: { id: user.id },
     select: { plan: true, premiumUntil: true },
   });
-  if (!canAccessTest(effectivePlan(dbUser?.plan, dbUser?.premiumUntil), test.slug)) {
+  if (!canAccessTest(effectivePlan(dbUser?.plan, dbUser?.premiumUntil), test)) {
     return jsonError("This test requires Premium.", 403);
   }
 
@@ -66,6 +66,8 @@ export const POST = withErrorHandling(async (req: NextRequest) => {
         mode === "module" && practiceModule === 2 && section.difficulty !== "STANDARD"
           ? section.difficulty
           : null,
+      // Stamp when the first module is served — the submit handler enforces the limit.
+      moduleStartedAt: new Date(),
     },
   });
 

@@ -68,7 +68,8 @@ export async function sendMail(opts: {
 
   const t = getTransporter();
   if (!t) {
-    console.log(`[mail] not configured — would send to ${opts.to}: ${opts.subject}`);
+    // Don't log the subject — OTP/reset subjects embed the live code.
+    console.log(`[mail] not configured — would send to ${opts.to}`);
     return false;
   }
   const from = process.env.MAIL_FROM || `SATway <${process.env.GMAIL_USER}>`;

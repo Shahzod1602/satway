@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { currentUser } from "@/lib/session";
 import { gradeAnswer, type SatQuestionType } from "@/lib/grading";
 import { rawToScaled, rawToScaledAdaptive, pickModule2Difficulty, type SatSkill } from "@/lib/scoring";
-import { buildClientModule, findModule1, findModule2, hasModule2 } from "@/lib/exam";
+import { buildClientModule, findModule1, findModule2, hasModule2, moduleDurationSec } from "@/lib/exam";
 import { parseJson } from "@/lib/validation";
 import { jsonError, withErrorHandling } from "@/lib/apiError";
 import type { Prisma } from "@/generated/prisma/client";
@@ -72,6 +72,15 @@ export const POST = withErrorHandling(
     if (!test) return jsonError("Test not found", 404);
     const skill = test.skill as SatSkill;
 
+    // Server-side time-limit guard. The client auto-submits at 0, so honest users
+    // are always within the limit; a tampered/paused client clock that submits
+    // long after the deadline gets flagged (not rejected — we keep the result)
+    // and flagged attempts are excluded from the leaderboard.
+    const GRACE_SEC = 180;
+    const moduleExceeded =
+      !!attempt.moduleStartedAt &&
+      (Date.now() - attempt.moduleStartedAt.getTime()) / 1000 > moduleDurationSec(skill) + GRACE_SEC;
+
     // ── Single-module practice ──────────────────────────────────────────
     if (attempt.module != null) {
       const section =
@@ -86,14 +95,16 @@ export const POST = withErrorHandling(
           data: rows.map((r) => ({ attemptId: attempt.id, ...r })),
           skipDuplicates: true,
         }),
-        prisma.testAttempt.update({
-          where: { id: attempt.id },
+        // Guard on status so two concurrent submits can't both score the attempt.
+        prisma.testAttempt.updateMany({
+          where: { id: attempt.id, status: "IN_PROGRESS" },
           data: {
             status: "SUBMITTED",
             submittedAt: new Date(),
             rawScore: raw,
             totalQuestions: total,
             scaledScore: null, // module-only practice has no scaled score
+            flagged: moduleExceeded,
           },
         }),
       ]);
@@ -123,8 +134,8 @@ export const POST = withErrorHandling(
             data: rows.map((r) => ({ attemptId: attempt.id, ...r })),
             skipDuplicates: true,
           }),
-          prisma.testAttempt.update({
-            where: { id: attempt.id },
+          prisma.testAttempt.updateMany({
+            where: { id: attempt.id, status: "IN_PROGRESS" },
             data: {
               status: "SUBMITTED",
               submittedAt: new Date(),
@@ -132,6 +143,7 @@ export const POST = withErrorHandling(
               totalQuestions: total,
               scaledScore: scaled,
               module1Raw: raw,
+              flagged: moduleExceeded,
             },
           }),
         ]);
@@ -147,15 +159,24 @@ export const POST = withErrorHandling(
       const difficulty = pickModule2Difficulty(raw, total);
       const m2 = findModule2(test.sections, difficulty);
       if (!m2) return jsonError("Module 2 not found", 400);
+      // Store the difficulty of the section ACTUALLY served (the fallback may
+      // serve the other variant), so final scoring caps/floors match the questions.
+      const servedDifficulty = (m2.difficulty as "EASY" | "HARD") ?? difficulty;
 
       await prisma.$transaction([
         prisma.attemptAnswer.createMany({
           data: rows.map((r) => ({ attemptId: attempt.id, ...r })),
           skipDuplicates: true,
         }),
-        prisma.testAttempt.update({
-          where: { id: attempt.id },
-          data: { module1Raw: raw, module2Difficulty: difficulty },
+        // Guard on module1Raw=null so a duplicate Module-1 submit can't re-route.
+        prisma.testAttempt.updateMany({
+          where: { id: attempt.id, status: "IN_PROGRESS", module1Raw: null },
+          data: {
+            module1Raw: raw,
+            module2Difficulty: servedDifficulty,
+            moduleStartedAt: new Date(), // reset the clock for Module 2
+            flagged: moduleExceeded,
+          },
         }),
       ]);
 
@@ -181,14 +202,15 @@ export const POST = withErrorHandling(
         data: rows.map((r) => ({ attemptId: attempt.id, ...r })),
         skipDuplicates: true,
       }),
-      prisma.testAttempt.update({
-        where: { id: attempt.id },
+      prisma.testAttempt.updateMany({
+        where: { id: attempt.id, status: "IN_PROGRESS" },
         data: {
           status: "SUBMITTED",
           submittedAt: new Date(),
           rawScore: totalRaw,
           totalQuestions: total,
           scaledScore: scaled,
+          flagged: moduleExceeded || attempt.flagged,
         },
       }),
     ]);

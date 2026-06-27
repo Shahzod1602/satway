@@ -38,8 +38,10 @@ export const authOptions: NextAuthOptions = {
 
         const user = await prisma.user.findUnique({ where: { email } });
 
+        // Generic message for both "no such email" and "wrong password" so the
+        // login form can't be used to enumerate which emails are registered.
         if (!user) {
-          throw new Error("User not found");
+          throw new Error("Invalid email or password");
         }
 
         const isPasswordValid = await bcrypt.compare(
@@ -48,7 +50,7 @@ export const authOptions: NextAuthOptions = {
         );
 
         if (!isPasswordValid) {
-          throw new Error("Incorrect password");
+          throw new Error("Invalid email or password");
         }
 
         // Enforce email verification — the OTP flow at signup must be completed.

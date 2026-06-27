@@ -4,6 +4,7 @@
 
 import type { ClientModule, ClientQuestion, ModuleDifficulty } from "./types";
 import type { SatQuestionType } from "./grading";
+import { sanitizeHtml } from "./sanitize";
 
 export type SatSkill = "READING_WRITING" | "MATH";
 
@@ -45,7 +46,7 @@ export function sanitizeQuestion(q: DbQuestion): ClientQuestion {
     order: q.order,
     type: q.type as SatQuestionType,
     groupTitle: q.groupTitle ?? null,
-    stimulus: q.stimulus ?? null,
+    stimulus: sanitizeHtml(q.stimulus), // strip active content before it reaches the browser
     imageUrl: q.imageUrl ?? null,
     prompt: q.prompt ?? null,
     options: Array.isArray(q.options) ? (q.options as string[]) : null,
@@ -60,7 +61,7 @@ export function buildClientModule(section: DbSection, skill: SatSkill): ClientMo
     difficulty: section.difficulty,
     title: section.title,
     instructions: section.instructions,
-    passageText: section.passageText ?? null,
+    passageText: sanitizeHtml(section.passageText),
     formulaSheet: section.formulaSheet,
     durationSec: moduleDurationSec(skill),
     questions: [...section.questions]

@@ -55,6 +55,8 @@ export type TestAttemptMinAggregateOutputType = {
   module: number | null
   module1Raw: number | null
   module2Difficulty: $Enums.SectionDifficulty | null
+  moduleStartedAt: Date | null
+  flagged: boolean | null
 }
 
 export type TestAttemptMaxAggregateOutputType = {
@@ -70,6 +72,8 @@ export type TestAttemptMaxAggregateOutputType = {
   module: number | null
   module1Raw: number | null
   module2Difficulty: $Enums.SectionDifficulty | null
+  moduleStartedAt: Date | null
+  flagged: boolean | null
 }
 
 export type TestAttemptCountAggregateOutputType = {
@@ -85,6 +89,8 @@ export type TestAttemptCountAggregateOutputType = {
   module: number
   module1Raw: number
   module2Difficulty: number
+  moduleStartedAt: number
+  flagged: number
   _all: number
 }
 
@@ -118,6 +124,8 @@ export type TestAttemptMinAggregateInputType = {
   module?: true
   module1Raw?: true
   module2Difficulty?: true
+  moduleStartedAt?: true
+  flagged?: true
 }
 
 export type TestAttemptMaxAggregateInputType = {
@@ -133,6 +141,8 @@ export type TestAttemptMaxAggregateInputType = {
   module?: true
   module1Raw?: true
   module2Difficulty?: true
+  moduleStartedAt?: true
+  flagged?: true
 }
 
 export type TestAttemptCountAggregateInputType = {
@@ -148,6 +158,8 @@ export type TestAttemptCountAggregateInputType = {
   module?: true
   module1Raw?: true
   module2Difficulty?: true
+  moduleStartedAt?: true
+  flagged?: true
   _all?: true
 }
 
@@ -250,6 +262,8 @@ export type TestAttemptGroupByOutputType = {
   module: number | null
   module1Raw: number | null
   module2Difficulty: $Enums.SectionDifficulty | null
+  moduleStartedAt: Date | null
+  flagged: boolean
   _count: TestAttemptCountAggregateOutputType | null
   _avg: TestAttemptAvgAggregateOutputType | null
   _sum: TestAttemptSumAggregateOutputType | null
@@ -288,6 +302,8 @@ export type TestAttemptWhereInput = {
   module?: Prisma.IntNullableFilter<"TestAttempt"> | number | null
   module1Raw?: Prisma.IntNullableFilter<"TestAttempt"> | number | null
   module2Difficulty?: Prisma.EnumSectionDifficultyNullableFilter<"TestAttempt"> | $Enums.SectionDifficulty | null
+  moduleStartedAt?: Prisma.DateTimeNullableFilter<"TestAttempt"> | Date | string | null
+  flagged?: Prisma.BoolFilter<"TestAttempt"> | boolean
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   test?: Prisma.XOR<Prisma.TestScalarRelationFilter, Prisma.TestWhereInput>
   answers?: Prisma.AttemptAnswerListRelationFilter
@@ -306,6 +322,8 @@ export type TestAttemptOrderByWithRelationInput = {
   module?: Prisma.SortOrderInput | Prisma.SortOrder
   module1Raw?: Prisma.SortOrderInput | Prisma.SortOrder
   module2Difficulty?: Prisma.SortOrderInput | Prisma.SortOrder
+  moduleStartedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  flagged?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   test?: Prisma.TestOrderByWithRelationInput
   answers?: Prisma.AttemptAnswerOrderByRelationAggregateInput
@@ -327,6 +345,8 @@ export type TestAttemptWhereUniqueInput = Prisma.AtLeast<{
   module?: Prisma.IntNullableFilter<"TestAttempt"> | number | null
   module1Raw?: Prisma.IntNullableFilter<"TestAttempt"> | number | null
   module2Difficulty?: Prisma.EnumSectionDifficultyNullableFilter<"TestAttempt"> | $Enums.SectionDifficulty | null
+  moduleStartedAt?: Prisma.DateTimeNullableFilter<"TestAttempt"> | Date | string | null
+  flagged?: Prisma.BoolFilter<"TestAttempt"> | boolean
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   test?: Prisma.XOR<Prisma.TestScalarRelationFilter, Prisma.TestWhereInput>
   answers?: Prisma.AttemptAnswerListRelationFilter
@@ -345,6 +365,8 @@ export type TestAttemptOrderByWithAggregationInput = {
   module?: Prisma.SortOrderInput | Prisma.SortOrder
   module1Raw?: Prisma.SortOrderInput | Prisma.SortOrder
   module2Difficulty?: Prisma.SortOrderInput | Prisma.SortOrder
+  moduleStartedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  flagged?: Prisma.SortOrder
   _count?: Prisma.TestAttemptCountOrderByAggregateInput
   _avg?: Prisma.TestAttemptAvgOrderByAggregateInput
   _max?: Prisma.TestAttemptMaxOrderByAggregateInput
@@ -368,6 +390,8 @@ export type TestAttemptScalarWhereWithAggregatesInput = {
   module?: Prisma.IntNullableWithAggregatesFilter<"TestAttempt"> | number | null
   module1Raw?: Prisma.IntNullableWithAggregatesFilter<"TestAttempt"> | number | null
   module2Difficulty?: Prisma.EnumSectionDifficultyNullableWithAggregatesFilter<"TestAttempt"> | $Enums.SectionDifficulty | null
+  moduleStartedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TestAttempt"> | Date | string | null
+  flagged?: Prisma.BoolWithAggregatesFilter<"TestAttempt"> | boolean
 }
 
 export type TestAttemptCreateInput = {
@@ -381,6 +405,8 @@ export type TestAttemptCreateInput = {
   module?: number | null
   module1Raw?: number | null
   module2Difficulty?: $Enums.SectionDifficulty | null
+  moduleStartedAt?: Date | string | null
+  flagged?: boolean
   user: Prisma.UserCreateNestedOneWithoutAttemptsInput
   test: Prisma.TestCreateNestedOneWithoutAttemptsInput
   answers?: Prisma.AttemptAnswerCreateNestedManyWithoutAttemptInput
@@ -399,6 +425,8 @@ export type TestAttemptUncheckedCreateInput = {
   module?: number | null
   module1Raw?: number | null
   module2Difficulty?: $Enums.SectionDifficulty | null
+  moduleStartedAt?: Date | string | null
+  flagged?: boolean
   answers?: Prisma.AttemptAnswerUncheckedCreateNestedManyWithoutAttemptInput
 }
 
@@ -413,6 +441,8 @@ export type TestAttemptUpdateInput = {
   module?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module1Raw?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module2Difficulty?: Prisma.NullableEnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty | null
+  moduleStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutAttemptsNestedInput
   test?: Prisma.TestUpdateOneRequiredWithoutAttemptsNestedInput
   answers?: Prisma.AttemptAnswerUpdateManyWithoutAttemptNestedInput
@@ -431,6 +461,8 @@ export type TestAttemptUncheckedUpdateInput = {
   module?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module1Raw?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module2Difficulty?: Prisma.NullableEnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty | null
+  moduleStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
   answers?: Prisma.AttemptAnswerUncheckedUpdateManyWithoutAttemptNestedInput
 }
 
@@ -447,6 +479,8 @@ export type TestAttemptCreateManyInput = {
   module?: number | null
   module1Raw?: number | null
   module2Difficulty?: $Enums.SectionDifficulty | null
+  moduleStartedAt?: Date | string | null
+  flagged?: boolean
 }
 
 export type TestAttemptUpdateManyMutationInput = {
@@ -460,6 +494,8 @@ export type TestAttemptUpdateManyMutationInput = {
   module?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module1Raw?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module2Difficulty?: Prisma.NullableEnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty | null
+  moduleStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type TestAttemptUncheckedUpdateManyInput = {
@@ -475,6 +511,8 @@ export type TestAttemptUncheckedUpdateManyInput = {
   module?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module1Raw?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module2Difficulty?: Prisma.NullableEnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty | null
+  moduleStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type TestAttemptListRelationFilter = {
@@ -500,6 +538,8 @@ export type TestAttemptCountOrderByAggregateInput = {
   module?: Prisma.SortOrder
   module1Raw?: Prisma.SortOrder
   module2Difficulty?: Prisma.SortOrder
+  moduleStartedAt?: Prisma.SortOrder
+  flagged?: Prisma.SortOrder
 }
 
 export type TestAttemptAvgOrderByAggregateInput = {
@@ -523,6 +563,8 @@ export type TestAttemptMaxOrderByAggregateInput = {
   module?: Prisma.SortOrder
   module1Raw?: Prisma.SortOrder
   module2Difficulty?: Prisma.SortOrder
+  moduleStartedAt?: Prisma.SortOrder
+  flagged?: Prisma.SortOrder
 }
 
 export type TestAttemptMinOrderByAggregateInput = {
@@ -538,6 +580,8 @@ export type TestAttemptMinOrderByAggregateInput = {
   module?: Prisma.SortOrder
   module1Raw?: Prisma.SortOrder
   module2Difficulty?: Prisma.SortOrder
+  moduleStartedAt?: Prisma.SortOrder
+  flagged?: Prisma.SortOrder
 }
 
 export type TestAttemptSumOrderByAggregateInput = {
@@ -670,6 +714,8 @@ export type TestAttemptCreateWithoutUserInput = {
   module?: number | null
   module1Raw?: number | null
   module2Difficulty?: $Enums.SectionDifficulty | null
+  moduleStartedAt?: Date | string | null
+  flagged?: boolean
   test: Prisma.TestCreateNestedOneWithoutAttemptsInput
   answers?: Prisma.AttemptAnswerCreateNestedManyWithoutAttemptInput
 }
@@ -686,6 +732,8 @@ export type TestAttemptUncheckedCreateWithoutUserInput = {
   module?: number | null
   module1Raw?: number | null
   module2Difficulty?: $Enums.SectionDifficulty | null
+  moduleStartedAt?: Date | string | null
+  flagged?: boolean
   answers?: Prisma.AttemptAnswerUncheckedCreateNestedManyWithoutAttemptInput
 }
 
@@ -731,6 +779,8 @@ export type TestAttemptScalarWhereInput = {
   module?: Prisma.IntNullableFilter<"TestAttempt"> | number | null
   module1Raw?: Prisma.IntNullableFilter<"TestAttempt"> | number | null
   module2Difficulty?: Prisma.EnumSectionDifficultyNullableFilter<"TestAttempt"> | $Enums.SectionDifficulty | null
+  moduleStartedAt?: Prisma.DateTimeNullableFilter<"TestAttempt"> | Date | string | null
+  flagged?: Prisma.BoolFilter<"TestAttempt"> | boolean
 }
 
 export type TestAttemptCreateWithoutTestInput = {
@@ -744,6 +794,8 @@ export type TestAttemptCreateWithoutTestInput = {
   module?: number | null
   module1Raw?: number | null
   module2Difficulty?: $Enums.SectionDifficulty | null
+  moduleStartedAt?: Date | string | null
+  flagged?: boolean
   user: Prisma.UserCreateNestedOneWithoutAttemptsInput
   answers?: Prisma.AttemptAnswerCreateNestedManyWithoutAttemptInput
 }
@@ -760,6 +812,8 @@ export type TestAttemptUncheckedCreateWithoutTestInput = {
   module?: number | null
   module1Raw?: number | null
   module2Difficulty?: $Enums.SectionDifficulty | null
+  moduleStartedAt?: Date | string | null
+  flagged?: boolean
   answers?: Prisma.AttemptAnswerUncheckedCreateNestedManyWithoutAttemptInput
 }
 
@@ -800,6 +854,8 @@ export type TestAttemptCreateWithoutAnswersInput = {
   module?: number | null
   module1Raw?: number | null
   module2Difficulty?: $Enums.SectionDifficulty | null
+  moduleStartedAt?: Date | string | null
+  flagged?: boolean
   user: Prisma.UserCreateNestedOneWithoutAttemptsInput
   test: Prisma.TestCreateNestedOneWithoutAttemptsInput
 }
@@ -817,6 +873,8 @@ export type TestAttemptUncheckedCreateWithoutAnswersInput = {
   module?: number | null
   module1Raw?: number | null
   module2Difficulty?: $Enums.SectionDifficulty | null
+  moduleStartedAt?: Date | string | null
+  flagged?: boolean
 }
 
 export type TestAttemptCreateOrConnectWithoutAnswersInput = {
@@ -846,6 +904,8 @@ export type TestAttemptUpdateWithoutAnswersInput = {
   module?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module1Raw?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module2Difficulty?: Prisma.NullableEnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty | null
+  moduleStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutAttemptsNestedInput
   test?: Prisma.TestUpdateOneRequiredWithoutAttemptsNestedInput
 }
@@ -863,6 +923,8 @@ export type TestAttemptUncheckedUpdateWithoutAnswersInput = {
   module?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module1Raw?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module2Difficulty?: Prisma.NullableEnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty | null
+  moduleStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type TestAttemptCreateManyUserInput = {
@@ -877,6 +939,8 @@ export type TestAttemptCreateManyUserInput = {
   module?: number | null
   module1Raw?: number | null
   module2Difficulty?: $Enums.SectionDifficulty | null
+  moduleStartedAt?: Date | string | null
+  flagged?: boolean
 }
 
 export type TestAttemptUpdateWithoutUserInput = {
@@ -890,6 +954,8 @@ export type TestAttemptUpdateWithoutUserInput = {
   module?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module1Raw?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module2Difficulty?: Prisma.NullableEnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty | null
+  moduleStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
   test?: Prisma.TestUpdateOneRequiredWithoutAttemptsNestedInput
   answers?: Prisma.AttemptAnswerUpdateManyWithoutAttemptNestedInput
 }
@@ -906,6 +972,8 @@ export type TestAttemptUncheckedUpdateWithoutUserInput = {
   module?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module1Raw?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module2Difficulty?: Prisma.NullableEnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty | null
+  moduleStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
   answers?: Prisma.AttemptAnswerUncheckedUpdateManyWithoutAttemptNestedInput
 }
 
@@ -921,6 +989,8 @@ export type TestAttemptUncheckedUpdateManyWithoutUserInput = {
   module?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module1Raw?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module2Difficulty?: Prisma.NullableEnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty | null
+  moduleStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type TestAttemptCreateManyTestInput = {
@@ -935,6 +1005,8 @@ export type TestAttemptCreateManyTestInput = {
   module?: number | null
   module1Raw?: number | null
   module2Difficulty?: $Enums.SectionDifficulty | null
+  moduleStartedAt?: Date | string | null
+  flagged?: boolean
 }
 
 export type TestAttemptUpdateWithoutTestInput = {
@@ -948,6 +1020,8 @@ export type TestAttemptUpdateWithoutTestInput = {
   module?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module1Raw?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module2Difficulty?: Prisma.NullableEnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty | null
+  moduleStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutAttemptsNestedInput
   answers?: Prisma.AttemptAnswerUpdateManyWithoutAttemptNestedInput
 }
@@ -964,6 +1038,8 @@ export type TestAttemptUncheckedUpdateWithoutTestInput = {
   module?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module1Raw?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module2Difficulty?: Prisma.NullableEnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty | null
+  moduleStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
   answers?: Prisma.AttemptAnswerUncheckedUpdateManyWithoutAttemptNestedInput
 }
 
@@ -979,6 +1055,8 @@ export type TestAttemptUncheckedUpdateManyWithoutTestInput = {
   module?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module1Raw?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   module2Difficulty?: Prisma.NullableEnumSectionDifficultyFieldUpdateOperationsInput | $Enums.SectionDifficulty | null
+  moduleStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -1025,6 +1103,8 @@ export type TestAttemptSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   module?: boolean
   module1Raw?: boolean
   module2Difficulty?: boolean
+  moduleStartedAt?: boolean
+  flagged?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   test?: boolean | Prisma.TestDefaultArgs<ExtArgs>
   answers?: boolean | Prisma.TestAttempt$answersArgs<ExtArgs>
@@ -1044,6 +1124,8 @@ export type TestAttemptSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   module?: boolean
   module1Raw?: boolean
   module2Difficulty?: boolean
+  moduleStartedAt?: boolean
+  flagged?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   test?: boolean | Prisma.TestDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["testAttempt"]>
@@ -1061,6 +1143,8 @@ export type TestAttemptSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   module?: boolean
   module1Raw?: boolean
   module2Difficulty?: boolean
+  moduleStartedAt?: boolean
+  flagged?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   test?: boolean | Prisma.TestDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["testAttempt"]>
@@ -1078,9 +1162,11 @@ export type TestAttemptSelectScalar = {
   module?: boolean
   module1Raw?: boolean
   module2Difficulty?: boolean
+  moduleStartedAt?: boolean
+  flagged?: boolean
 }
 
-export type TestAttemptOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "testId" | "status" | "startedAt" | "submittedAt" | "rawScore" | "totalQuestions" | "scaledScore" | "module" | "module1Raw" | "module2Difficulty", ExtArgs["result"]["testAttempt"]>
+export type TestAttemptOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "testId" | "status" | "startedAt" | "submittedAt" | "rawScore" | "totalQuestions" | "scaledScore" | "module" | "module1Raw" | "module2Difficulty" | "moduleStartedAt" | "flagged", ExtArgs["result"]["testAttempt"]>
 export type TestAttemptInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   test?: boolean | Prisma.TestDefaultArgs<ExtArgs>
@@ -1116,6 +1202,8 @@ export type $TestAttemptPayload<ExtArgs extends runtime.Types.Extensions.Interna
     module: number | null
     module1Raw: number | null
     module2Difficulty: $Enums.SectionDifficulty | null
+    moduleStartedAt: Date | null
+    flagged: boolean
   }, ExtArgs["result"]["testAttempt"]>
   composites: {}
 }
@@ -1554,6 +1642,8 @@ export interface TestAttemptFieldRefs {
   readonly module: Prisma.FieldRef<"TestAttempt", 'Int'>
   readonly module1Raw: Prisma.FieldRef<"TestAttempt", 'Int'>
   readonly module2Difficulty: Prisma.FieldRef<"TestAttempt", 'SectionDifficulty'>
+  readonly moduleStartedAt: Prisma.FieldRef<"TestAttempt", 'DateTime'>
+  readonly flagged: Prisma.FieldRef<"TestAttempt", 'Boolean'>
 }
     
 

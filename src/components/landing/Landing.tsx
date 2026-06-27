@@ -374,9 +374,11 @@ export default function Landing() {
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 py-10 text-sm text-slate-500 sm:flex-row">
           <Wordmark className="text-lg text-slate-900" />
           <p className="font-mono text-xs uppercase tracking-wider">Digital SAT preparation · satway.online</p>
-          <div className="flex gap-5">
+          <div className="flex flex-wrap justify-center gap-5">
             <Link href="/login" className="hover:text-slate-900">Sign in</Link>
             <Link href="/register" className="hover:text-slate-900">Register</Link>
+            <Link href="/privacy" className="hover:text-slate-900">Privacy</Link>
+            <Link href="/terms" className="hover:text-slate-900">Terms</Link>
           </div>
         </div>
       </footer>

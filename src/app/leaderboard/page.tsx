@@ -15,7 +15,7 @@ export default async function LeaderboardPage() {
 
   const [attempts, dbUser] = await Promise.all([
     prisma.testAttempt.findMany({
-      where: { status: "SUBMITTED", module: null, scaledScore: { not: null } },
+      where: { status: "SUBMITTED", module: null, scaledScore: { not: null }, flagged: false },
       select: { userId: true, scaledScore: true, user: { select: { name: true } }, test: { select: { skill: true } } },
       orderBy: { submittedAt: "desc" },
       take: 8000,

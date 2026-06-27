@@ -26,34 +26,40 @@ export const POST = withErrorHandling(
     }
 
     if (action === "reject") {
-      await prisma.payment.update({
-        where: { id },
+      const r = await prisma.payment.updateMany({
+        where: { id, status: "PENDING" },
         data: { status: "REJECTED", reviewedAt: new Date(), reviewedBy: admin.id },
       });
+      if (r.count === 0) return jsonError("Payment has already been reviewed", 409);
       return Response.json({ ok: true, status: "REJECTED" });
     }
 
-    // Approve: grant premium in a transaction so the two writes stay consistent.
-    const user = await prisma.user.findUnique({
-      where: { id: payment.userId },
-      select: { premiumUntil: true },
-    });
-    if (!user) return jsonError("User not found", 404);
-
-    const premiumUntil = nextPremiumUntil(user.premiumUntil, payment.months);
-
-    await prisma.$transaction([
-      prisma.user.update({
-        where: { id: payment.userId },
-        data: { plan: "PREMIUM", premiumUntil },
-      }),
-      prisma.payment.update({
-        where: { id },
+    // Approve: claim the payment atomically (status PENDING → APPROVED) so two
+    // concurrent approvals can't both grant, then extend Premium from the user's
+    // CURRENT expiry — all in one transaction.
+    const premiumUntil = await prisma.$transaction(async (tx) => {
+      const claim = await tx.payment.updateMany({
+        where: { id, status: "PENDING" },
         data: { status: "APPROVED", reviewedAt: new Date(), reviewedBy: admin.id },
-      }),
-    ]);
+      });
+      if (claim.count === 0) return null; // already reviewed / lost the race
+      const u = await tx.user.findUnique({
+        where: { id: payment.userId },
+        select: { premiumUntil: true },
+      });
+      const until = nextPremiumUntil(u?.premiumUntil ?? null, payment.months);
+      await tx.user.update({
+        where: { id: payment.userId },
+        data: { plan: "PREMIUM", premiumUntil: until },
+      });
+      return until;
+    });
 
-    // If this buyer was referred, grant the referrer their +1 week reward.
+    if (premiumUntil === null) {
+      return jsonError("Payment has already been reviewed", 409);
+    }
+
+    // Reward the referrer exactly once — only the approval that won the claim gets here.
     await rewardReferrerIfNeeded(payment.userId);
 
     return Response.json({ ok: true, status: "APPROVED", premiumUntil });

@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, Mail, Shield, Target, CalendarClock, Bell } from "lucide-react";
+import { signOut } from "next-auth/react";
+import { Loader2, Mail, Shield, Target, CalendarClock, Bell, Download, Trash2 } from "lucide-react";
 import AppHeader from "@/components/AppHeader";
 
 interface ProfileUser {
@@ -45,6 +46,10 @@ export default function ProfileClient({ user }: { user: ProfileUser }) {
   const [emailNotifications, setEmailNotifications] = useState(user.emailNotifications);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState<Msg>(null);
+  const [confirmDel, setConfirmDel] = useState(false);
+  const [delPassword, setDelPassword] = useState("");
+  const [deleting, setDeleting] = useState(false);
+  const [delMsg, setDelMsg] = useState<Msg>(null);
 
   const input =
     "rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 outline-none focus:border-brand-600 focus:ring-1 focus:ring-brand-600/20";
@@ -77,6 +82,26 @@ export default function ProfileClient({ user }: { user: ProfileUser }) {
       setMsg({ ok: false, text: (err as Error).message });
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function deleteAccount() {
+    setDeleting(true);
+    setDelMsg(null);
+    try {
+      const res = await fetch("/api/profile/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: delPassword }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "Could not delete account");
+      await signOut({ redirect: false });
+      router.push("/");
+    } catch (err) {
+      setDelMsg({ ok: false, text: (err as Error).message });
+    } finally {
+      setDeleting(false);
     }
   }
 
@@ -193,6 +218,67 @@ export default function ProfileClient({ user }: { user: ProfileUser }) {
           </div>
           <Banner msg={msg} />
         </form>
+
+        {/* Your data — export / delete (honors the privacy policy) */}
+        <div className={`mt-6 ${card} border-red-200`}>
+          <h2 className="text-base font-semibold text-slate-900">Your data</h2>
+          <p className="mt-1 text-sm text-slate-500">
+            Download a copy of your data, or permanently delete your account.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <a
+              href="/api/profile/export"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+            >
+              <Download className="h-4 w-4" /> Export my data
+            </a>
+            {!confirmDel && (
+              <button
+                type="button"
+                onClick={() => setConfirmDel(true)}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-red-300 px-4 py-2.5 text-sm font-semibold text-red-600 hover:bg-red-50"
+              >
+                <Trash2 className="h-4 w-4" /> Delete account
+              </button>
+            )}
+          </div>
+          {confirmDel && (
+            <div className="mt-4 rounded-lg border border-red-200 bg-red-50/50 p-4">
+              <p className="text-sm text-slate-700">
+                This permanently deletes your account, attempts, and scores. This can&rsquo;t be undone.
+              </p>
+              <input
+                type="password"
+                value={delPassword}
+                onChange={(e) => setDelPassword(e.target.value)}
+                placeholder="Confirm your password"
+                className={`${input} mt-3 w-full`}
+              />
+              <div className="mt-3 flex gap-3">
+                <button
+                  type="button"
+                  onClick={deleteAccount}
+                  disabled={deleting}
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-60"
+                >
+                  {deleting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Permanently delete"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setConfirmDel(false);
+                    setDelPassword("");
+                    setDelMsg(null);
+                  }}
+                  className="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                >
+                  Cancel
+                </button>
+              </div>
+              <Banner msg={delMsg} />
+            </div>
+          )}
+        </div>
       </main>
     </div>
   );

@@ -1204,6 +1204,7 @@ export const TestScalarFieldEnum = {
   description: 'description',
   durationSec: 'durationSec',
   published: 'published',
+  isPremium: 'isPremium',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1258,7 +1259,9 @@ export const TestAttemptScalarFieldEnum = {
   scaledScore: 'scaledScore',
   module: 'module',
   module1Raw: 'module1Raw',
-  module2Difficulty: 'module2Difficulty'
+  module2Difficulty: 'module2Difficulty',
+  moduleStartedAt: 'moduleStartedAt',
+  flagged: 'flagged'
 } as const
 
 export type TestAttemptScalarFieldEnum = (typeof TestAttemptScalarFieldEnum)[keyof typeof TestAttemptScalarFieldEnum]

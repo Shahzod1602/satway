@@ -14,6 +14,11 @@ export const POST = withErrorHandling(async (req: NextRequest) => {
 
   const { email, code } = await parseJson(req, bodySchema);
 
+  // Absolute per-email cap (independent of IP and of resets-on-resend) so the
+  // "request new code → 5 guesses → repeat" loop can't brute-force the 6-digit code.
+  const rle = rateLimit(`verify-email:${email}`, 10, 60 * 60 * 1000); // 10/hour/email
+  if (!rle.ok) return tooManyRequests(rle.retryAfterSec);
+
   const otp = await prisma.emailOtp.findUnique({ where: { email } });
   if (!otp) return jsonError("No verification code found", 404);
   if (otp.expiresAt < new Date()) return jsonError("Code has expired", 410);

@@ -43,6 +43,7 @@ export type TestMinAggregateOutputType = {
   description: string | null
   durationSec: number | null
   published: boolean | null
+  isPremium: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,6 +57,7 @@ export type TestMaxAggregateOutputType = {
   description: string | null
   durationSec: number | null
   published: boolean | null
+  isPremium: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -69,6 +71,7 @@ export type TestCountAggregateOutputType = {
   description: number
   durationSec: number
   published: number
+  isPremium: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -92,6 +95,7 @@ export type TestMinAggregateInputType = {
   description?: true
   durationSec?: true
   published?: true
+  isPremium?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -105,6 +109,7 @@ export type TestMaxAggregateInputType = {
   description?: true
   durationSec?: true
   published?: true
+  isPremium?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -118,6 +123,7 @@ export type TestCountAggregateInputType = {
   description?: true
   durationSec?: true
   published?: true
+  isPremium?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -218,6 +224,7 @@ export type TestGroupByOutputType = {
   description: string | null
   durationSec: number
   published: boolean
+  isPremium: boolean
   createdAt: Date
   updatedAt: Date
   _count: TestCountAggregateOutputType | null
@@ -254,6 +261,7 @@ export type TestWhereInput = {
   description?: Prisma.StringNullableFilter<"Test"> | string | null
   durationSec?: Prisma.IntFilter<"Test"> | number
   published?: Prisma.BoolFilter<"Test"> | boolean
+  isPremium?: Prisma.BoolFilter<"Test"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Test"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Test"> | Date | string
   sections?: Prisma.SectionListRelationFilter
@@ -269,6 +277,7 @@ export type TestOrderByWithRelationInput = {
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   durationSec?: Prisma.SortOrder
   published?: Prisma.SortOrder
+  isPremium?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   sections?: Prisma.SectionOrderByRelationAggregateInput
@@ -287,6 +296,7 @@ export type TestWhereUniqueInput = Prisma.AtLeast<{
   description?: Prisma.StringNullableFilter<"Test"> | string | null
   durationSec?: Prisma.IntFilter<"Test"> | number
   published?: Prisma.BoolFilter<"Test"> | boolean
+  isPremium?: Prisma.BoolFilter<"Test"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Test"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Test"> | Date | string
   sections?: Prisma.SectionListRelationFilter
@@ -302,6 +312,7 @@ export type TestOrderByWithAggregationInput = {
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   durationSec?: Prisma.SortOrder
   published?: Prisma.SortOrder
+  isPremium?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.TestCountOrderByAggregateInput
@@ -323,6 +334,7 @@ export type TestScalarWhereWithAggregatesInput = {
   description?: Prisma.StringNullableWithAggregatesFilter<"Test"> | string | null
   durationSec?: Prisma.IntWithAggregatesFilter<"Test"> | number
   published?: Prisma.BoolWithAggregatesFilter<"Test"> | boolean
+  isPremium?: Prisma.BoolWithAggregatesFilter<"Test"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Test"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Test"> | Date | string
 }
@@ -336,6 +348,7 @@ export type TestCreateInput = {
   description?: string | null
   durationSec?: number
   published?: boolean
+  isPremium?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sections?: Prisma.SectionCreateNestedManyWithoutTestInput
@@ -351,6 +364,7 @@ export type TestUncheckedCreateInput = {
   description?: string | null
   durationSec?: number
   published?: boolean
+  isPremium?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutTestInput
@@ -366,6 +380,7 @@ export type TestUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   durationSec?: Prisma.IntFieldUpdateOperationsInput | number
   published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sections?: Prisma.SectionUpdateManyWithoutTestNestedInput
@@ -381,6 +396,7 @@ export type TestUncheckedUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   durationSec?: Prisma.IntFieldUpdateOperationsInput | number
   published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sections?: Prisma.SectionUncheckedUpdateManyWithoutTestNestedInput
@@ -396,6 +412,7 @@ export type TestCreateManyInput = {
   description?: string | null
   durationSec?: number
   published?: boolean
+  isPremium?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -409,6 +426,7 @@ export type TestUpdateManyMutationInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   durationSec?: Prisma.IntFieldUpdateOperationsInput | number
   published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -422,6 +440,7 @@ export type TestUncheckedUpdateManyInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   durationSec?: Prisma.IntFieldUpdateOperationsInput | number
   published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -435,6 +454,7 @@ export type TestCountOrderByAggregateInput = {
   description?: Prisma.SortOrder
   durationSec?: Prisma.SortOrder
   published?: Prisma.SortOrder
+  isPremium?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -452,6 +472,7 @@ export type TestMaxOrderByAggregateInput = {
   description?: Prisma.SortOrder
   durationSec?: Prisma.SortOrder
   published?: Prisma.SortOrder
+  isPremium?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -465,6 +486,7 @@ export type TestMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
   durationSec?: Prisma.SortOrder
   published?: Prisma.SortOrder
+  isPremium?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -519,6 +541,7 @@ export type TestCreateWithoutSectionsInput = {
   description?: string | null
   durationSec?: number
   published?: boolean
+  isPremium?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   attempts?: Prisma.TestAttemptCreateNestedManyWithoutTestInput
@@ -533,6 +556,7 @@ export type TestUncheckedCreateWithoutSectionsInput = {
   description?: string | null
   durationSec?: number
   published?: boolean
+  isPremium?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   attempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutTestInput
@@ -563,6 +587,7 @@ export type TestUpdateWithoutSectionsInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   durationSec?: Prisma.IntFieldUpdateOperationsInput | number
   published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attempts?: Prisma.TestAttemptUpdateManyWithoutTestNestedInput
@@ -577,6 +602,7 @@ export type TestUncheckedUpdateWithoutSectionsInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   durationSec?: Prisma.IntFieldUpdateOperationsInput | number
   published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutTestNestedInput
@@ -591,6 +617,7 @@ export type TestCreateWithoutAttemptsInput = {
   description?: string | null
   durationSec?: number
   published?: boolean
+  isPremium?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sections?: Prisma.SectionCreateNestedManyWithoutTestInput
@@ -605,6 +632,7 @@ export type TestUncheckedCreateWithoutAttemptsInput = {
   description?: string | null
   durationSec?: number
   published?: boolean
+  isPremium?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutTestInput
@@ -635,6 +663,7 @@ export type TestUpdateWithoutAttemptsInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   durationSec?: Prisma.IntFieldUpdateOperationsInput | number
   published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sections?: Prisma.SectionUpdateManyWithoutTestNestedInput
@@ -649,6 +678,7 @@ export type TestUncheckedUpdateWithoutAttemptsInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   durationSec?: Prisma.IntFieldUpdateOperationsInput | number
   published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sections?: Prisma.SectionUncheckedUpdateManyWithoutTestNestedInput
@@ -703,6 +733,7 @@ export type TestSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   description?: boolean
   durationSec?: boolean
   published?: boolean
+  isPremium?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   sections?: boolean | Prisma.Test$sectionsArgs<ExtArgs>
@@ -719,6 +750,7 @@ export type TestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   description?: boolean
   durationSec?: boolean
   published?: boolean
+  isPremium?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["test"]>
@@ -732,6 +764,7 @@ export type TestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   description?: boolean
   durationSec?: boolean
   published?: boolean
+  isPremium?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["test"]>
@@ -745,11 +778,12 @@ export type TestSelectScalar = {
   description?: boolean
   durationSec?: boolean
   published?: boolean
+  isPremium?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "skill" | "type" | "description" | "durationSec" | "published" | "createdAt" | "updatedAt", ExtArgs["result"]["test"]>
+export type TestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "skill" | "type" | "description" | "durationSec" | "published" | "isPremium" | "createdAt" | "updatedAt", ExtArgs["result"]["test"]>
 export type TestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sections?: boolean | Prisma.Test$sectionsArgs<ExtArgs>
   attempts?: boolean | Prisma.Test$attemptsArgs<ExtArgs>
@@ -773,6 +807,7 @@ export type $TestPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     description: string | null
     durationSec: number
     published: boolean
+    isPremium: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["test"]>
@@ -1208,6 +1243,7 @@ export interface TestFieldRefs {
   readonly description: Prisma.FieldRef<"Test", 'String'>
   readonly durationSec: Prisma.FieldRef<"Test", 'Int'>
   readonly published: Prisma.FieldRef<"Test", 'Boolean'>
+  readonly isPremium: Prisma.FieldRef<"Test", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Test", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Test", 'DateTime'>
 }

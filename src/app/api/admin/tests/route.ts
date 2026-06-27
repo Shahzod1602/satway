@@ -108,6 +108,7 @@ export async function POST(req: NextRequest) {
       description: typeof description === "string" ? description : null,
       durationSec: dur,
       published: published === true,
+      isPremium: (body as { isPremium?: unknown }).isPremium === false ? false : true,
       sections: {
         create: sections.map((s: Record<string, unknown>) => ({
           order: s.order as number,

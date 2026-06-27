@@ -134,6 +134,7 @@ model Test {
   description String?
   durationSec Int      @default(3900) // R&W 64min, Math 70min
   published   Boolean  @default(false)
+  isPremium   Boolean  @default(true) // access gate: false = playable on the free plan
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -239,6 +240,10 @@ model TestAttempt {
   // Adaptive full-test state
   module1Raw        Int? // raw correct in Module 1 (drives Module 2 routing)
   module2Difficulty SectionDifficulty? // EASY | HARD variant served for Module 2
+
+  // Server-side timing / integrity
+  moduleStartedAt DateTime? // when the current module was served (enforces the per-module limit)
+  flagged         Boolean   @default(false) // a module submitted past the time limit → excluded from the leaderboard
 
   user    User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   test    Test            @relation(fields: [testId], references: [id], onDelete: Cascade)

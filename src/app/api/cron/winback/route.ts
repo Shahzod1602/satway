@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { processWinback } from "@/lib/winback";
@@ -17,9 +18,12 @@ async function handle(req: NextRequest) {
   }
 
   const url = new URL(req.url);
-  const bearer = req.headers.get("authorization")?.replace(/^Bearer\s+/i, "");
-  const provided = bearer || url.searchParams.get("key");
-  if (provided !== secret) {
+  // Header-only (no ?key= in the URL → keeps the secret out of access logs/Referer),
+  // compared in constant time.
+  const bearer = req.headers.get("authorization")?.replace(/^Bearer\s+/i, "") ?? "";
+  const sb = Buffer.from(secret);
+  const pb = Buffer.from(bearer);
+  if (pb.length !== sb.length || !crypto.timingSafeEqual(pb, sb)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

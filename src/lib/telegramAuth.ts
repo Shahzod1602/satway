@@ -43,8 +43,8 @@ export function verifyTelegramAuth(data: TelegramAuthData, botToken: string): bo
   return ours.length === theirs.length && crypto.timingSafeEqual(ours, theirs);
 }
 
-/** Reject stale login payloads (replay protection). Default window: 24h. */
-export function isAuthFresh(authDate: number, maxAgeSec = 24 * 60 * 60): boolean {
+/** Reject stale login payloads (replay protection). Default window: 15 min. */
+export function isAuthFresh(authDate: number, maxAgeSec = 15 * 60): boolean {
   const now = Math.floor(Date.now() / 1000);
   return Number.isFinite(Number(authDate)) && now - Number(authDate) < maxAgeSec;
 }
