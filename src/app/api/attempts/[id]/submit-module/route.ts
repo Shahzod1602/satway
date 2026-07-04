@@ -14,6 +14,8 @@ const bodySchema = z.object({
     z.string(),
     z.union([z.string(), z.array(z.string())]),
   ),
+  // Optional per-question seconds — purely additive analytics; never affects grading.
+  times: z.record(z.string(), z.number().int().min(0).max(7200)).optional(),
 });
 
 type GradedQuestion = {
@@ -26,6 +28,7 @@ type GradedQuestion = {
 function gradeSection(
   questions: GradedQuestion[],
   answers: Record<string, string | string[]>,
+  times?: Record<string, number>,
 ) {
   let raw = 0;
   const rows = questions.map((q) => {
@@ -40,6 +43,7 @@ function gradeSection(
       questionId: q.id,
       response: (response ?? "") as Prisma.InputJsonValue,
       isCorrect,
+      timeSpent: times?.[q.id] ?? null,
     };
   });
   return { raw, total: questions.length, rows };
@@ -54,7 +58,7 @@ export const POST = withErrorHandling(
     if (!user) return jsonError("Authorization required", 401);
 
     const { id } = await ctx.params;
-    const { answers } = await parseJson(req, bodySchema);
+    const { answers, times } = await parseJson(req, bodySchema);
     if (Object.keys(answers).length > 200) return jsonError("Too many answers", 400);
 
     const attempt = await prisma.testAttempt.findFirst({
@@ -89,7 +93,7 @@ export const POST = withErrorHandling(
           : findModule2(test.sections, (attempt.module2Difficulty as "EASY" | "HARD") ?? "HARD");
       if (!section) return jsonError("Module not found", 400);
 
-      const { raw, total, rows } = gradeSection(section.questions, answers);
+      const { raw, total, rows } = gradeSection(section.questions, answers, times);
       await prisma.$transaction([
         prisma.attemptAnswer.createMany({
           data: rows.map((r) => ({ attemptId: attempt.id, ...r })),
@@ -124,7 +128,7 @@ export const POST = withErrorHandling(
       const m1 = findModule1(test.sections);
       if (!m1) return jsonError("Module 1 not found", 400);
 
-      const { raw, total, rows } = gradeSection(m1.questions, answers);
+      const { raw, total, rows } = gradeSection(m1.questions, answers, times);
 
       // No Module 2 configured → finish as a single-section test.
       if (!hasModule2(test.sections)) {
@@ -192,10 +196,16 @@ export const POST = withErrorHandling(
     const m2 = findModule2(test.sections, difficulty);
     if (!m1 || !m2) return jsonError("Modules not found", 400);
 
-    const { raw: m2Raw, rows } = gradeSection(m2.questions, answers);
+    const { raw: m2Raw, rows } = gradeSection(m2.questions, answers, times);
     const totalRaw = attempt.module1Raw + m2Raw;
     const total = m1.questions.length + m2.questions.length;
-    const scaled = rawToScaledAdaptive(totalRaw, skill, total, difficulty);
+    const scaled = rawToScaledAdaptive(
+      attempt.module1Raw,
+      m2Raw,
+      m1.questions.length,
+      m2.questions.length,
+      difficulty,
+    );
 
     await prisma.$transaction([
       prisma.attemptAnswer.createMany({

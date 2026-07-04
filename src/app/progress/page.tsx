@@ -3,30 +3,9 @@ import { currentUser } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 import ProgressClient from "./ProgressClient";
 import { effectivePlan } from "@/lib/access";
+import { topicOf } from "@/lib/topics";
 
 export const dynamic = "force-dynamic";
-
-// Group fine-grained question types into the topics shown to students.
-const TOPIC: Record<string, string> = {
-  ALGEBRA: "Algebra",
-  ADVANCED_MATH: "Advanced Math",
-  PROBLEM_SOLVING: "Problem Solving & Data",
-  DATA_ANALYSIS: "Problem Solving & Data",
-  GEOMETRY: "Geometry & Trig",
-  STUDENT_PRODUCED_RESPONSE: "Math grid-ins",
-  WORDS_IN_CONTEXT: "Words in Context",
-  TRANSITIONS: "Transitions",
-  BOUNDARIES: "Grammar & Boundaries",
-  RHETORICAL_SYNTHESIS: "Rhetorical Synthesis",
-  CENTRAL_IDEAS: "Central Ideas",
-  INFERENCE: "Inference",
-  TEXTUAL_EVIDENCE: "Command of Evidence",
-  CROSS_TEXT_CONNECTIONS: "Command of Evidence",
-  PARAGRAPH_REFERENCE: "Reading Comprehension",
-  TEXT_STRUCTURE: "Text Structure",
-  FORM_STRUCTURE: "Text Structure",
-  MCQ_SINGLE: "General",
-};
 
 export default async function ProgressPage() {
   const user = await currentUser();
@@ -53,7 +32,7 @@ export default async function ProgressPage() {
   // Aggregate correctness by topic (weakest first).
   const acc = new Map<string, { correct: number; total: number }>();
   for (const a of answers) {
-    const topic = TOPIC[a.question.type] ?? "Other";
+    const topic = topicOf(a.question.type);
     const cur = acc.get(topic) ?? { correct: 0, total: 0 };
     cur.total += 1;
     if (a.isCorrect) cur.correct += 1;

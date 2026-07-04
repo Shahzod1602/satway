@@ -59,6 +59,15 @@ export const SectionDifficulty = {
 export type SectionDifficulty = (typeof SectionDifficulty)[keyof typeof SectionDifficulty]
 
 
+export const QuestionDifficulty = {
+  EASY: 'EASY',
+  MEDIUM: 'MEDIUM',
+  HARD: 'HARD'
+} as const
+
+export type QuestionDifficulty = (typeof QuestionDifficulty)[keyof typeof QuestionDifficulty]
+
+
 export const SatQuestionType = {
   MCQ_SINGLE: 'MCQ_SINGLE',
   STUDENT_PRODUCED_RESPONSE: 'STUDENT_PRODUCED_RESPONSE',

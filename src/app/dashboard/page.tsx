@@ -2,7 +2,8 @@ import { redirect } from "next/navigation";
 import { currentUser } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 import DashboardClient from "./DashboardClient";
-import { effectivePlan } from "@/lib/access";
+import { effectivePlan, isPremiumActive } from "@/lib/access";
+import { computeStreak } from "@/lib/streak";
 
 export const dynamic = "force-dynamic";
 
@@ -33,24 +34,14 @@ export default async function DashboardPage({
     }),
   ]);
 
-  // Current daily-practice streak (consecutive days ending today or yesterday).
-  const dayKeys = new Set(
-    attemptDays.map((a) => (a.submittedAt ?? new Date(0)).toISOString().slice(0, 10)),
-  );
-  let streak = 0;
-  const cur = new Date();
-  const key = (d: Date) => d.toISOString().slice(0, 10);
-  if (!dayKeys.has(key(cur))) cur.setUTCDate(cur.getUTCDate() - 1);
-  while (dayKeys.has(key(cur))) {
-    streak += 1;
-    cur.setUTCDate(cur.getUTCDate() - 1);
-  }
+  // Current daily-practice streak on the Asia/Tashkent calendar (see lib/streak).
+  const streak = computeStreak(attemptDays.map((a) => a.submittedAt));
 
   // Premium that lapsed (incl. an ended trial) → show the win-back banner.
   const premiumExpired =
     dbUser?.plan === "PREMIUM" &&
     !!dbUser?.premiumUntil &&
-    new Date(dbUser.premiumUntil).getTime() <= Date.now();
+    !isPremiumActive(dbUser.plan, dbUser.premiumUntil);
 
   return (
     <DashboardClient

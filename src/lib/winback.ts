@@ -37,7 +37,7 @@ const PERKS = [
 ];
 
 // ── Marketing email ──────────────────────────────────────────────────────────
-export function winbackEmail(opts: { name?: string | null }): {
+export function winbackEmail(opts: { name?: string | null; trial?: boolean }): {
   subject: string;
   html: string;
   text: string;
@@ -48,17 +48,25 @@ export function winbackEmail(opts: { name?: string | null }): {
   const url = appUrl("/upgrade");
   const maxDiscount = Math.max(...PREMIUM_PLANS.map((p) => p.discount));
 
-  const subject = `Your SATway Premium has ended — come back with up to ${maxDiscount}% off`;
+  // Never-paid users only had the free welcome trial — telling them their
+  // "Premium has ended" implies they lost something they bought. Say the trial did.
+  const trial = !!opts.trial;
+  const cta = trial ? "Unlock Premium" : "Renew Premium";
+  const subject = trial
+    ? `Unlock everything on SATway — up to ${maxDiscount}% off`
+    : `Your SATway Premium has ended — come back with up to ${maxDiscount}% off`;
 
   const text = [
     `Hi ${name},`,
     ``,
-    `Your SATway Premium has ended, so you're back on the free plan.`,
-    `Renew now to keep pushing your score up:`,
+    trial
+      ? `Your free trial has ended, so you're on the free plan (Test 1 only).`
+      : `Your SATway Premium has ended, so you're back on the free plan.`,
+    trial ? `Upgrade now to unlock everything:` : `Renew now to keep pushing your score up:`,
     ...PERKS.map((p) => `  • ${p}`),
     ``,
     `${plan.label} — ${fmtUZS(plan.total)} UZS (was ${fmtUZS(was)} UZS, ${plan.discount}% off).`,
-    `Renew here: ${url}`,
+    `${trial ? "Upgrade" : "Renew"} here: ${url}`,
     ``,
     `Keep studying,`,
     `The SATway team`,
@@ -70,10 +78,15 @@ export function winbackEmail(opts: { name?: string | null }): {
       SAT<span style="background:#2563eb;color:#fff;border-radius:6px;padding:2px 6px">way</span>
     </div>
 
-    <h1 style="font-size:22px;line-height:1.3;margin:0 0 8px">Your Premium has ended, ${name} 👋</h1>
+    <h1 style="font-size:22px;line-height:1.3;margin:0 0 8px">${
+      trial ? `Your free trial has ended, ${name} 👋` : `Your Premium has ended, ${name} 👋`
+    }</h1>
     <p style="font-size:15px;color:#475569;margin:0 0 20px">
-      You've been moved back to the free plan. Pick up right where you left off —
-      renew Premium and unlock everything again:
+      ${
+        trial
+          ? `Your free trial is over, so you're on the free plan (Test 1 only). Upgrade to unlock everything:`
+          : `You've been moved back to the free plan. Pick up right where you left off — renew Premium and unlock everything again:`
+      }
     </p>
 
     <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;margin:0 0 22px">
@@ -96,7 +109,7 @@ export function winbackEmail(opts: { name?: string | null }): {
     </div>
 
     <a href="${url}" style="display:inline-block;background:#2563eb;color:#fff;text-decoration:none;font-size:15px;font-weight:700;padding:14px 28px;border-radius:12px">
-      Renew Premium →
+      ${cta} →
     </a>
 
     <p style="font-size:12px;color:#94a3b8;margin:28px 0 0">
@@ -109,24 +122,30 @@ export function winbackEmail(opts: { name?: string | null }): {
 }
 
 // ── Telegram DM ──────────────────────────────────────────────────────────────
-export function winbackTelegram(opts: { name?: string | null }): {
+export function winbackTelegram(opts: { name?: string | null; trial?: boolean }): {
   text: string;
   button: { text: string; url: string };
 } {
   const name = (opts.name || "").trim().split(/\s+/)[0] || "there";
   const plan = featuredPlan();
   const maxDiscount = Math.max(...PREMIUM_PLANS.map((p) => p.discount));
+  const trial = !!opts.trial;
   const text = [
-    `👋 <b>${name}, your SATway Premium has ended</b>`,
+    trial
+      ? `👋 <b>${name}, your SATway free trial has ended</b>`
+      : `👋 <b>${name}, your SATway Premium has ended</b>`,
     ``,
-    `Renew now to keep full access to:`,
+    trial ? `Upgrade now to unlock:` : `Renew now to keep full access to:`,
     `• Every full-length adaptive Digital SAT test`,
     `• 1000+ practice tests &amp; detailed score reports`,
     `• Mock exams under real test-day conditions`,
     ``,
     `🎯 Up to <b>${maxDiscount}% off</b> — ${plan.label} for just ${fmtUZS(plan.total)} UZS.`,
   ].join("\n");
-  return { text, button: { text: "🔓 Renew Premium", url: appUrl("/upgrade") } };
+  return {
+    text,
+    button: { text: trial ? "🔓 Unlock Premium" : "🔓 Renew Premium", url: appUrl("/upgrade") },
+  };
 }
 
 // ── Detection + send ─────────────────────────────────────────────────────────
@@ -151,6 +170,7 @@ type Candidate = {
   emailNotifications: boolean;
   premiumUntil: Date | null;
   winbackSentAt: Date | null;
+  payments: { id: string }[]; // any APPROVED payment → this user really paid (not trial-only)
 };
 
 /**
@@ -191,6 +211,7 @@ export async function processWinback(
       emailNotifications: true,
       premiumUntil: true,
       winbackSentAt: true,
+      payments: { where: { status: "APPROVED" }, select: { id: true }, take: 1 },
     },
     orderBy: { premiumUntil: "asc" }, // oldest expiries first; covered batch-by-batch
     take: limit,
@@ -212,6 +233,7 @@ export async function processWinback(
   const processOne = async (u: Candidate) => {
     const canEmail = !!u.email && !isSyntheticEmail(u.email);
     const optedOut = !u.emailNotifications; // the single notifications flag governs BOTH channels
+    const trial = u.payments.length === 0; // never paid → this was only the welcome trial
     let emailOk = false;
     let tgOk = false;
     let retryable = false; // a transient failure we should retry next run
@@ -225,7 +247,7 @@ export async function processWinback(
         emailOk = true;
       } else {
         try {
-          const { subject, html, text } = winbackEmail({ name: u.name });
+          const { subject, html, text } = winbackEmail({ name: u.name, trial });
           const ok = await sendMail({ to: u.email, subject, html, text });
           if (ok) {
             s.emailSent++;
@@ -247,7 +269,7 @@ export async function processWinback(
         s.telegramSent++;
         tgOk = true;
       } else {
-        const { text, button } = winbackTelegram({ name: u.name });
+        const { text, button } = winbackTelegram({ name: u.name, trial });
         const r = await sendTelegramMessage(u.telegramId, text, { button });
         if (r.ok) {
           s.telegramSent++;

@@ -5,8 +5,19 @@ import { currentUser } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 import AppHeader from "@/components/AppHeader";
 import { optionValue } from "@/lib/grading";
+import { effectivePlan } from "@/lib/access";
+import MathText from "@/components/MathText";
+import TutorChat from "@/components/TutorChat";
 
 export const dynamic = "force-dynamic";
+
+/** Human-friendly duration: 42 → "42s", 95 → "1m 35s". */
+function fmtDuration(sec: number): string {
+  if (sec < 60) return `${sec}s`;
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return s ? `${m}m ${s}s` : `${m}m`;
+}
 
 function fmtResponse(resp: unknown, options: string[] | null): string {
   if (resp == null || resp === "") return "—";
@@ -55,6 +66,12 @@ export default async function ResultsPage({
   });
   if (!attempt) notFound();
 
+  const dbUser = await prisma.user.findUnique({
+    where: { id: user.id },
+    select: { plan: true, premiumUntil: true },
+  });
+  const isPremium = effectivePlan(dbUser?.plan, dbUser?.premiumUntil) === "PREMIUM";
+
   const rows = [...attempt.answers].sort(
     (a, b) => a.question.order - b.question.order,
   );
@@ -62,6 +79,10 @@ export default async function ResultsPage({
   const pct = attempt.totalQuestions
     ? Math.round(((attempt.rawScore ?? 0) / attempt.totalQuestions) * 100)
     : 0;
+  const timed = rows.filter((r) => r.timeSpent != null);
+  const avgTime = timed.length
+    ? Math.round(timed.reduce((s, r) => s + (r.timeSpent ?? 0), 0) / timed.length)
+    : null;
   const isModule = attempt.module != null;
   const skillLabel =
     attempt.test.skill === "MATH" ? "Math" : "Reading & Writing";
@@ -107,7 +128,7 @@ export default async function ResultsPage({
               </p>
             )}
             {!isModule && (
-              <div className="mt-4 grid grid-cols-2 gap-4 max-w-sm">
+              <div className={`mt-4 grid gap-4 max-w-md ${avgTime != null ? "grid-cols-3" : "grid-cols-2 max-w-sm"}`}>
                 <div className="rounded-xl bg-slate-50 p-3">
                   <p className="text-xs text-slate-500">Correct answers</p>
                   <p className="text-lg font-bold text-slate-900">
@@ -118,6 +139,12 @@ export default async function ResultsPage({
                   <p className="text-xs text-slate-500">Percentage</p>
                   <p className="text-lg font-bold text-slate-900">{pct}%</p>
                 </div>
+                {avgTime != null && (
+                  <div className="rounded-xl bg-slate-50 p-3">
+                    <p className="text-xs text-slate-500">Avg / question</p>
+                    <p className="text-lg font-bold text-slate-900">{fmtDuration(avgTime)}</p>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -146,19 +173,22 @@ export default async function ResultsPage({
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-slate-800">
                       <span className="text-slate-400">{r.question.order}.</span>{" "}
-                      {r.question.prompt}
+                      <MathText>{r.question.prompt}</MathText>
                     </p>
                     <div className="mt-2 flex flex-wrap gap-x-6 gap-y-1 text-sm">
                       <span className="text-slate-600">
                         Your answer:{" "}
                         <strong className={r.isCorrect ? "text-emerald-700" : "text-red-600"}>
-                          {yours}
+                          <MathText>{yours}</MathText>
                         </strong>
                       </span>
                       {!r.isCorrect && (
                         <span className="text-slate-600">
-                          Correct: <strong className="text-emerald-700">{correct}</strong>
+                          Correct: <strong className="text-emerald-700"><MathText>{correct}</MathText></strong>
                         </span>
+                      )}
+                      {r.timeSpent != null && (
+                        <span className="text-slate-400">⏱ {fmtDuration(r.timeSpent)}</span>
                       )}
                     </div>
                     {r.question.explanation && (
@@ -167,10 +197,16 @@ export default async function ResultsPage({
                           Explanation
                         </p>
                         <p className="mt-1 text-sm leading-relaxed text-slate-700">
-                          {r.question.explanation}
+                          <MathText>{r.question.explanation}</MathText>
                         </p>
                       </div>
                     )}
+                    <TutorChat
+                      questionId={r.question.id}
+                      attemptId={attempt.id}
+                      isPremium={isPremium}
+                      wasCorrect={r.isCorrect}
+                    />
                   </div>
                 </div>
               </div>

@@ -2,6 +2,7 @@
 
 import type { ClientQuestion } from "@/lib/types";
 import { optionValue } from "@/lib/grading";
+import MathText from "@/components/MathText";
 
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
 
@@ -79,7 +80,7 @@ export default function QuestionInput({
                   {letter}
                 </span>
                 <span className={struck ? "text-slate-400 line-through" : "text-slate-800"}>
-                  {optionLabel(opt)}
+                  <MathText>{optionLabel(opt)}</MathText>
                 </span>
               </button>
 

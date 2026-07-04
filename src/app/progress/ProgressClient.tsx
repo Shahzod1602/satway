@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Award, TrendingUp, Sparkles, Target, CalendarClock } from "lucide-react";
 import Sidebar from "@/components/Sidebar";
 import BandChart from "@/components/BandChart";
+import { daysUntil } from "@/lib/time";
 
 interface AttemptData {
   id: string;
@@ -40,18 +41,31 @@ export default function ProgressClient({
   const avgScore = scored.length
     ? Math.round(scored.reduce((s, b) => s + b, 0) / scored.length)
     : null;
+  // Best single section (200–800), shown as "Best section".
   const bestScore = scored.length ? Math.max(...scored) : null;
 
+  // The target score is a 400–1600 goal, so it must be compared against a 1600-scale
+  // composite — best Reading & Writing section + best Math section — NOT a single
+  // 200–800 section score (which produced the wrong "620 points to go" for a 780 RW).
+  const bestOf = (skill: string) => {
+    const s = attempts
+      .filter((a) => a.test.skill === skill && a.scaledScore != null)
+      .map((a) => a.scaledScore as number);
+    return s.length ? Math.max(...s) : null;
+  };
+  const bestRW = bestOf("READING_WRITING");
+  const bestMath = bestOf("MATH");
+  const bestTotal =
+    bestRW != null || bestMath != null ? (bestRW ?? 0) + (bestMath ?? 0) : null;
+
   const targetGap =
-    goals.targetScore != null && bestScore != null
-      ? Math.max(0, goals.targetScore - bestScore)
+    goals.targetScore != null && bestTotal != null
+      ? Math.max(0, goals.targetScore - bestTotal)
       : null;
-  const daysToExam = goals.examDate
-    ? Math.ceil((new Date(goals.examDate).getTime() - Date.now()) / 86400000)
-    : null;
+  const daysToExam = goals.examDate ? daysUntil(goals.examDate) : null;
   const targetPct =
-    goals.targetScore != null && bestScore != null
-      ? Math.min(100, Math.round((bestScore / goals.targetScore) * 100))
+    goals.targetScore != null && bestTotal != null
+      ? Math.min(100, Math.round((bestTotal / goals.targetScore) * 100))
       : 0;
 
   const chartData = attempts
@@ -81,7 +95,7 @@ export default function ProgressClient({
                       <Target className="h-4 w-4 text-brand-600" /> Target score
                     </span>
                     <span className="text-sm font-bold text-slate-900">
-                      {bestScore ?? "—"} / {goals.targetScore}
+                      {bestTotal ?? "—"} / {goals.targetScore}
                     </span>
                   </div>
                   <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100">
@@ -175,7 +189,7 @@ export default function ProgressClient({
                       <Sparkles className="h-5 w-5" />
                     </div>
                     <div>
-                      <p className="text-xs font-medium uppercase tracking-wide text-slate-400">Highest score</p>
+                      <p className="text-xs font-medium uppercase tracking-wide text-slate-400">Best section</p>
                       <p className="text-2xl font-bold text-slate-900">{bestScore ?? "—"}</p>
                     </div>
                   </div>
@@ -189,8 +203,18 @@ export default function ProgressClient({
 
               {topics.length > 0 && (
                 <div className="mt-4 rounded-2xl border border-[#EAEAEA] bg-white p-5">
-                  <h2 className="text-sm font-semibold text-slate-900">Strengths &amp; weaknesses</h2>
-                  <p className="mt-0.5 text-xs text-slate-400">Accuracy by topic — focus on the lowest first.</p>
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h2 className="text-sm font-semibold text-slate-900">Strengths &amp; weaknesses</h2>
+                      <p className="mt-0.5 text-xs text-slate-400">Accuracy by topic — focus on the lowest first.</p>
+                    </div>
+                    <Link
+                      href="/review"
+                      className="shrink-0 rounded-lg bg-brand-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-brand-700"
+                    >
+                      Review mistakes
+                    </Link>
+                  </div>
                   <div className="mt-4 space-y-3">
                     {topics.map((t) => {
                       const tone =

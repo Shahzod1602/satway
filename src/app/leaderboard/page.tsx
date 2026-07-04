@@ -9,6 +9,14 @@ export const dynamic = "force-dynamic";
 
 type Entry = { userId: string; name: string; rw: number; math: number; total: number };
 
+// Public leaderboard identity: first name + last initial ("Shahzod N."), so a
+// global board never exposes a (often minor) student's full legal name.
+function publicName(name: string): string {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length <= 1) return parts[0] || "Student";
+  return `${parts[0]} ${parts[parts.length - 1][0].toUpperCase()}.`;
+}
+
 export default async function LeaderboardPage() {
   const user = await currentUser();
   if (!user) redirect("/login");
@@ -85,7 +93,8 @@ export default async function LeaderboardPage() {
                           </span>
                         </td>
                         <td className="px-4 py-3 font-medium text-slate-900">
-                          {e.name}{me && <span className="ml-2 text-xs font-normal text-brand-600">you</span>}
+                          {me ? e.name : publicName(e.name)}
+                          {me && <span className="ml-2 text-xs font-normal text-brand-600">you</span>}
                         </td>
                         <td className="px-4 py-3 text-right tabular-nums text-slate-600">{e.rw || "—"}</td>
                         <td className="px-4 py-3 text-right tabular-nums text-slate-600">{e.math || "—"}</td>

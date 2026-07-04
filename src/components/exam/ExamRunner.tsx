@@ -12,6 +12,7 @@ import type {
 import QuestionInput from "./QuestionInput";
 import CalculatorPanel from "./CalculatorPanel";
 import FormulaSheet from "./FormulaSheet";
+import MathText from "@/components/MathText";
 
 function fmt(sec: number) {
   const m = Math.floor(sec / 60);
@@ -69,6 +70,21 @@ export default function ExamRunner({
   const startedRef = useRef(false);
   const submittingRef = useRef(false);
 
+  // ── Per-question time tracking (pacing analytics; never affects grading) ──
+  const timeSpentRef = useRef<Record<string, number>>({});
+  const qStartRef = useRef(0);
+  const prevQidRef = useRef<string | null>(null);
+  // Add the time spent on the question we're leaving to its running total.
+  const flushTime = useCallback(() => {
+    const now = Date.now();
+    const prev = prevQidRef.current;
+    if (prev && qStartRef.current) {
+      timeSpentRef.current[prev] =
+        (timeSpentRef.current[prev] ?? 0) + Math.max(0, Math.round((now - qStartRef.current) / 1000));
+    }
+    qStartRef.current = now;
+  }, []);
+
   // ───────── Resume (localStorage) ─────────
   // Practice/full attempts survive a refresh or dropped connection. Mock runs
   // are sequenced by MockRunner and intentionally not persisted here.
@@ -98,6 +114,12 @@ export default function ExamRunner({
 
   const questions = mod?.questions ?? [];
   const q = questions[qi];
+
+  // On every question change, bank the time spent on the one we just left.
+  useEffect(() => {
+    flushTime();
+    prevQidRef.current = questions[qi]?.id ?? null;
+  }, [qi, mod, questions, flushTime]);
   const answeredCount = questions.filter((x) => {
     const v = answers[x.id];
     return Array.isArray(v) ? v.length > 0 : !!v?.trim();
@@ -161,10 +183,18 @@ export default function ExamRunner({
       const moduleAnswers: AnswerMap = {};
       for (const [k, v] of Object.entries(answers)) if (ids.has(k)) moduleAnswers[k] = v;
 
+      // Bank the time on the current question, then collect this module's times.
+      flushTime();
+      const moduleTimes: Record<string, number> = {};
+      for (const id of ids) {
+        const t = timeSpentRef.current[id];
+        if (t != null) moduleTimes[id] = t;
+      }
+
       const res = await fetch(`/api/attempts/${attemptId}/submit-module`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ answers: moduleAnswers }),
+        body: JSON.stringify({ answers: moduleAnswers, times: moduleTimes }),
       });
       const data: SubmitModuleResult & { error?: string } = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to submit");
@@ -195,7 +225,7 @@ export default function ExamRunner({
       setStage("review");
       alert((e as Error).message);
     }
-  }, [attemptId, mod, answers, mockMode, onSubmitted, router, test.skill, saveSnapshot, clearSession]);
+  }, [attemptId, mod, answers, mockMode, onSubmitted, router, test.skill, saveSnapshot, clearSession, flushTime]);
 
   // Autosave the live session so a refresh / disconnect can resume.
   useEffect(() => {
@@ -215,6 +245,10 @@ export default function ExamRunner({
     setTimeLeft(nextMod.durationSec);
     stimulusStore.current = {};
     curStimRef.current = null;
+    // Fresh timing for Module 2.
+    timeSpentRef.current = {};
+    prevQidRef.current = null;
+    qStartRef.current = 0;
     setStage("active");
     setShowNav(false);
   };
@@ -663,7 +697,9 @@ export default function ExamRunner({
               )}
 
               {q?.prompt && (
-                <p className="mt-5 text-[16px] leading-relaxed text-slate-900">{q.prompt}</p>
+                <p className="mt-5 text-[16px] leading-relaxed text-slate-900">
+                  <MathText>{q.prompt}</MathText>
+                </p>
               )}
 
               <div className="mt-6">

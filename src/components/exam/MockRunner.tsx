@@ -49,12 +49,11 @@ export default function MockRunner({
         if (step === 0) {
           setRwResult(r);
           setOnBreak(true);
+        } else if (rwResult) {
+          // Pair the two section attempts into a real 1600 score report.
+          router.push(`/mock/result?rw=${rwResult.attemptId}&math=${r.attemptId}`);
         } else {
-          const total = (rwResult?.scaledScore ?? 0) + (r.scaledScore ?? 0);
-          alert(
-            `Mock complete!\nReading & Writing: ${rwResult?.scaledScore ?? "—"}\nMath: ${r.scaledScore ?? "—"}\nTotal: ${total}`,
-          );
-          router.push("/progress");
+          router.push(`/results/${r.attemptId}`);
         }
       }}
     />

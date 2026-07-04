@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, ClipboardList, LineChart, BookText, Shield, User, Sparkles, Gift, Crown, LifeBuoy, Trophy, Menu, X } from "lucide-react";
+import { Home, ClipboardList, LineChart, BookText, Shield, User, Sparkles, Gift, Crown, LifeBuoy, Trophy, Target, Menu, X } from "lucide-react";
 
 interface NavItem {
   label: string;
@@ -60,6 +60,12 @@ export default function Sidebar({
       href: "/progress",
       icon: LineChart,
       match: (p) => p.startsWith("/progress"),
+    },
+    {
+      label: "Review",
+      href: "/review",
+      icon: Target,
+      match: (p) => p.startsWith("/review"),
     },
     {
       label: "Leaderboard",

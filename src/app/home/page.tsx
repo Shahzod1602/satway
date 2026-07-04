@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { computeStreak } from "@/lib/streak";
 import type { LucideIcon } from "lucide-react";
 import {
   Flame,
@@ -83,18 +84,8 @@ export default async function HomePage() {
   const premiumExpired =
     dbUser?.plan === "PREMIUM" && !!dbUser?.premiumUntil && new Date(dbUser.premiumUntil).getTime() <= now;
 
-  // Streak: consecutive UTC days with a submitted attempt, ending today or yesterday.
-  const dayKeys = new Set(
-    submitted.map((a) => (a.submittedAt ?? new Date(0)).toISOString().slice(0, 10)),
-  );
-  const keyOf = (d: Date) => d.toISOString().slice(0, 10);
-  let streak = 0;
-  const cur = new Date();
-  if (!dayKeys.has(keyOf(cur))) cur.setUTCDate(cur.getUTCDate() - 1);
-  while (dayKeys.has(keyOf(cur))) {
-    streak += 1;
-    cur.setUTCDate(cur.getUTCDate() - 1);
-  }
+  // Streak: consecutive Asia/Tashkent days with a submitted attempt (see lib/streak).
+  const streak = computeStreak(submitted.map((a) => a.submittedAt));
 
   // Scores: scaledScore is 200–800 per section (null for module-only practice).
   const scored = submitted.filter((a) => a.scaledScore != null);

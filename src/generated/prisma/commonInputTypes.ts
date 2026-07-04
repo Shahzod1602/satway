@@ -359,6 +359,13 @@ export type JsonFilterBase<$PrismaModel = never> = {
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
 }
 
+export type EnumQuestionDifficultyNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuestionDifficulty | Prisma.EnumQuestionDifficultyFieldRefInput<$PrismaModel> | null
+  in?: $Enums.QuestionDifficulty[] | Prisma.ListEnumQuestionDifficultyFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.QuestionDifficulty[] | Prisma.ListEnumQuestionDifficultyFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumQuestionDifficultyNullableFilter<$PrismaModel> | $Enums.QuestionDifficulty | null
+}
+
 export type EnumSatQuestionTypeWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.SatQuestionType | Prisma.EnumSatQuestionTypeFieldRefInput<$PrismaModel>
   in?: $Enums.SatQuestionType[] | Prisma.ListEnumSatQuestionTypeFieldRefInput<$PrismaModel>
@@ -421,6 +428,16 @@ export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedJsonFilter<$PrismaModel>
   _max?: Prisma.NestedJsonFilter<$PrismaModel>
+}
+
+export type EnumQuestionDifficultyNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuestionDifficulty | Prisma.EnumQuestionDifficultyFieldRefInput<$PrismaModel> | null
+  in?: $Enums.QuestionDifficulty[] | Prisma.ListEnumQuestionDifficultyFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.QuestionDifficulty[] | Prisma.ListEnumQuestionDifficultyFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumQuestionDifficultyNullableWithAggregatesFilter<$PrismaModel> | $Enums.QuestionDifficulty | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQuestionDifficultyNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQuestionDifficultyNullableFilter<$PrismaModel>
 }
 
 export type EnumAttemptStatusFilter<$PrismaModel = never> = {
@@ -767,6 +784,13 @@ export type NestedEnumSatQuestionTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumSatQuestionTypeFilter<$PrismaModel> | $Enums.SatQuestionType
 }
 
+export type NestedEnumQuestionDifficultyNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuestionDifficulty | Prisma.EnumQuestionDifficultyFieldRefInput<$PrismaModel> | null
+  in?: $Enums.QuestionDifficulty[] | Prisma.ListEnumQuestionDifficultyFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.QuestionDifficulty[] | Prisma.ListEnumQuestionDifficultyFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumQuestionDifficultyNullableFilter<$PrismaModel> | $Enums.QuestionDifficulty | null
+}
+
 export type NestedEnumSatQuestionTypeWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.SatQuestionType | Prisma.EnumSatQuestionTypeFieldRefInput<$PrismaModel>
   in?: $Enums.SatQuestionType[] | Prisma.ListEnumSatQuestionTypeFieldRefInput<$PrismaModel>
@@ -823,6 +847,16 @@ export type NestedJsonFilterBase<$PrismaModel = never> = {
   gt?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   gte?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
+}
+
+export type NestedEnumQuestionDifficultyNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuestionDifficulty | Prisma.EnumQuestionDifficultyFieldRefInput<$PrismaModel> | null
+  in?: $Enums.QuestionDifficulty[] | Prisma.ListEnumQuestionDifficultyFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.QuestionDifficulty[] | Prisma.ListEnumQuestionDifficultyFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumQuestionDifficultyNullableWithAggregatesFilter<$PrismaModel> | $Enums.QuestionDifficulty | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQuestionDifficultyNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQuestionDifficultyNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumAttemptStatusFilter<$PrismaModel = never> = {

@@ -164,22 +164,37 @@ export function pickModule2Difficulty(
   return module1Raw / module1Total >= HARD_MODULE_THRESHOLD ? "HARD" : "EASY";
 }
 
-// On the easy second-module path the attainable score is capped; on the hard
-// path it is floored. These approximate the real digital SAT band limits.
-const EASY_PATH_CAP = 600;
-const HARD_PATH_FLOOR = 510;
+// Relative worth of a Module-2 correct answer by the variant served. Module-1
+// items are the reference (weight 1). A correct answer on the HARD second module
+// is worth more than on the EASY one — this is what lets the hard path reach 800
+// and naturally caps the easy path, mirroring how the real exam equates the forms.
+const M2_WEIGHT: Record<Module2Difficulty, number> = { EASY: 0.75, HARD: 1.3 };
 
 /**
- * Convert a full two-module raw score to a scaled score, accounting for which
- * Module 2 variant was served. Approximate — the real exam uses IRT.
+ * Scaled score (200–800) for a two-stage adaptive section.
+ *
+ * The previous version scored a single shared linear table, then hard-clamped the
+ * result (EASY ≤ 600, HARD ≥ 510). That produced two bugs the audit flagged: flat
+ * "dead zones" where extra correct answers raised nothing, and a ~110-point CLIFF
+ * at the routing boundary. This model instead weights each correct answer by the
+ * difficulty of the module it came from and normalises against the hard-path
+ * ceiling, so the score is strictly monotonic in both modules' raw scores, the
+ * EASY path tops out naturally (~660) while only the HARD path can reach 800, and
+ * nothing is clamped. Still an approximation — the real exam uses IRT equating.
  */
 export function rawToScaledAdaptive(
-  raw: number,
-  skill: SatSkill,
-  total: number,
+  module1Raw: number,
+  module2Raw: number,
+  module1Total: number,
+  module2Total: number,
   difficulty: Module2Difficulty,
 ): number {
-  const base = rawToScaled(raw, skill, total);
-  if (difficulty === "EASY") return Math.min(base, EASY_PATH_CAP);
-  return Math.max(base, HARD_PATH_FLOOR);
+  const w = M2_WEIGHT[difficulty];
+  const earned = module1Raw + module2Raw * w;
+  // Normalise against the HARD-path maximum so only the hard path can reach 800.
+  const maxEarned = module1Total + module2Total * M2_WEIGHT.HARD;
+  const frac = maxEarned > 0 ? Math.max(0, Math.min(1, earned / maxEarned)) : 0;
+  // SAT section scores move in 10-point steps across the 200–800 range.
+  const scaled = 200 + Math.round((frac * 600) / 10) * 10;
+  return Math.max(200, Math.min(800, scaled));
 }

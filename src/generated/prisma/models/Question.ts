@@ -47,6 +47,7 @@ export type QuestionMinAggregateOutputType = {
   prompt: string | null
   explanation: string | null
   points: number | null
+  difficulty: $Enums.QuestionDifficulty | null
 }
 
 export type QuestionMaxAggregateOutputType = {
@@ -60,6 +61,7 @@ export type QuestionMaxAggregateOutputType = {
   prompt: string | null
   explanation: string | null
   points: number | null
+  difficulty: $Enums.QuestionDifficulty | null
 }
 
 export type QuestionCountAggregateOutputType = {
@@ -75,6 +77,7 @@ export type QuestionCountAggregateOutputType = {
   options: number
   correctAnswers: number
   points: number
+  difficulty: number
   meta: number
   _all: number
 }
@@ -101,6 +104,7 @@ export type QuestionMinAggregateInputType = {
   prompt?: true
   explanation?: true
   points?: true
+  difficulty?: true
 }
 
 export type QuestionMaxAggregateInputType = {
@@ -114,6 +118,7 @@ export type QuestionMaxAggregateInputType = {
   prompt?: true
   explanation?: true
   points?: true
+  difficulty?: true
 }
 
 export type QuestionCountAggregateInputType = {
@@ -129,6 +134,7 @@ export type QuestionCountAggregateInputType = {
   options?: true
   correctAnswers?: true
   points?: true
+  difficulty?: true
   meta?: true
   _all?: true
 }
@@ -232,6 +238,7 @@ export type QuestionGroupByOutputType = {
   options: runtime.JsonValue | null
   correctAnswers: runtime.JsonValue
   points: number
+  difficulty: $Enums.QuestionDifficulty | null
   meta: runtime.JsonValue | null
   _count: QuestionCountAggregateOutputType | null
   _avg: QuestionAvgAggregateOutputType | null
@@ -271,6 +278,7 @@ export type QuestionWhereInput = {
   options?: Prisma.JsonNullableFilter<"Question">
   correctAnswers?: Prisma.JsonFilter<"Question">
   points?: Prisma.IntFilter<"Question"> | number
+  difficulty?: Prisma.EnumQuestionDifficultyNullableFilter<"Question"> | $Enums.QuestionDifficulty | null
   meta?: Prisma.JsonNullableFilter<"Question">
   section?: Prisma.XOR<Prisma.SectionScalarRelationFilter, Prisma.SectionWhereInput>
   answers?: Prisma.AttemptAnswerListRelationFilter
@@ -289,6 +297,7 @@ export type QuestionOrderByWithRelationInput = {
   options?: Prisma.SortOrderInput | Prisma.SortOrder
   correctAnswers?: Prisma.SortOrder
   points?: Prisma.SortOrder
+  difficulty?: Prisma.SortOrderInput | Prisma.SortOrder
   meta?: Prisma.SortOrderInput | Prisma.SortOrder
   section?: Prisma.SectionOrderByWithRelationInput
   answers?: Prisma.AttemptAnswerOrderByRelationAggregateInput
@@ -310,6 +319,7 @@ export type QuestionWhereUniqueInput = Prisma.AtLeast<{
   options?: Prisma.JsonNullableFilter<"Question">
   correctAnswers?: Prisma.JsonFilter<"Question">
   points?: Prisma.IntFilter<"Question"> | number
+  difficulty?: Prisma.EnumQuestionDifficultyNullableFilter<"Question"> | $Enums.QuestionDifficulty | null
   meta?: Prisma.JsonNullableFilter<"Question">
   section?: Prisma.XOR<Prisma.SectionScalarRelationFilter, Prisma.SectionWhereInput>
   answers?: Prisma.AttemptAnswerListRelationFilter
@@ -328,6 +338,7 @@ export type QuestionOrderByWithAggregationInput = {
   options?: Prisma.SortOrderInput | Prisma.SortOrder
   correctAnswers?: Prisma.SortOrder
   points?: Prisma.SortOrder
+  difficulty?: Prisma.SortOrderInput | Prisma.SortOrder
   meta?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.QuestionCountOrderByAggregateInput
   _avg?: Prisma.QuestionAvgOrderByAggregateInput
@@ -352,6 +363,7 @@ export type QuestionScalarWhereWithAggregatesInput = {
   options?: Prisma.JsonNullableWithAggregatesFilter<"Question">
   correctAnswers?: Prisma.JsonWithAggregatesFilter<"Question">
   points?: Prisma.IntWithAggregatesFilter<"Question"> | number
+  difficulty?: Prisma.EnumQuestionDifficultyNullableWithAggregatesFilter<"Question"> | $Enums.QuestionDifficulty | null
   meta?: Prisma.JsonNullableWithAggregatesFilter<"Question">
 }
 
@@ -367,6 +379,7 @@ export type QuestionCreateInput = {
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: number
+  difficulty?: $Enums.QuestionDifficulty | null
   meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   section: Prisma.SectionCreateNestedOneWithoutQuestionsInput
   answers?: Prisma.AttemptAnswerCreateNestedManyWithoutQuestionInput
@@ -385,6 +398,7 @@ export type QuestionUncheckedCreateInput = {
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: number
+  difficulty?: $Enums.QuestionDifficulty | null
   meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   answers?: Prisma.AttemptAnswerUncheckedCreateNestedManyWithoutQuestionInput
 }
@@ -401,6 +415,7 @@ export type QuestionUpdateInput = {
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.NullableEnumQuestionDifficultyFieldUpdateOperationsInput | $Enums.QuestionDifficulty | null
   meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   section?: Prisma.SectionUpdateOneRequiredWithoutQuestionsNestedInput
   answers?: Prisma.AttemptAnswerUpdateManyWithoutQuestionNestedInput
@@ -419,6 +434,7 @@ export type QuestionUncheckedUpdateInput = {
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.NullableEnumQuestionDifficultyFieldUpdateOperationsInput | $Enums.QuestionDifficulty | null
   meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   answers?: Prisma.AttemptAnswerUncheckedUpdateManyWithoutQuestionNestedInput
 }
@@ -436,6 +452,7 @@ export type QuestionCreateManyInput = {
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: number
+  difficulty?: $Enums.QuestionDifficulty | null
   meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
@@ -451,6 +468,7 @@ export type QuestionUpdateManyMutationInput = {
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.NullableEnumQuestionDifficultyFieldUpdateOperationsInput | $Enums.QuestionDifficulty | null
   meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
@@ -467,6 +485,7 @@ export type QuestionUncheckedUpdateManyInput = {
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.NullableEnumQuestionDifficultyFieldUpdateOperationsInput | $Enums.QuestionDifficulty | null
   meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
@@ -493,6 +512,7 @@ export type QuestionCountOrderByAggregateInput = {
   options?: Prisma.SortOrder
   correctAnswers?: Prisma.SortOrder
   points?: Prisma.SortOrder
+  difficulty?: Prisma.SortOrder
   meta?: Prisma.SortOrder
 }
 
@@ -512,6 +532,7 @@ export type QuestionMaxOrderByAggregateInput = {
   prompt?: Prisma.SortOrder
   explanation?: Prisma.SortOrder
   points?: Prisma.SortOrder
+  difficulty?: Prisma.SortOrder
 }
 
 export type QuestionMinOrderByAggregateInput = {
@@ -525,6 +546,7 @@ export type QuestionMinOrderByAggregateInput = {
   prompt?: Prisma.SortOrder
   explanation?: Prisma.SortOrder
   points?: Prisma.SortOrder
+  difficulty?: Prisma.SortOrder
 }
 
 export type QuestionSumOrderByAggregateInput = {
@@ -583,6 +605,10 @@ export type EnumSatQuestionTypeFieldUpdateOperationsInput = {
   set?: $Enums.SatQuestionType
 }
 
+export type NullableEnumQuestionDifficultyFieldUpdateOperationsInput = {
+  set?: $Enums.QuestionDifficulty | null
+}
+
 export type QuestionCreateNestedOneWithoutAnswersInput = {
   create?: Prisma.XOR<Prisma.QuestionCreateWithoutAnswersInput, Prisma.QuestionUncheckedCreateWithoutAnswersInput>
   connectOrCreate?: Prisma.QuestionCreateOrConnectWithoutAnswersInput
@@ -609,6 +635,7 @@ export type QuestionCreateWithoutSectionInput = {
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: number
+  difficulty?: $Enums.QuestionDifficulty | null
   meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   answers?: Prisma.AttemptAnswerCreateNestedManyWithoutQuestionInput
 }
@@ -625,6 +652,7 @@ export type QuestionUncheckedCreateWithoutSectionInput = {
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: number
+  difficulty?: $Enums.QuestionDifficulty | null
   meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   answers?: Prisma.AttemptAnswerUncheckedCreateNestedManyWithoutQuestionInput
 }
@@ -671,6 +699,7 @@ export type QuestionScalarWhereInput = {
   options?: Prisma.JsonNullableFilter<"Question">
   correctAnswers?: Prisma.JsonFilter<"Question">
   points?: Prisma.IntFilter<"Question"> | number
+  difficulty?: Prisma.EnumQuestionDifficultyNullableFilter<"Question"> | $Enums.QuestionDifficulty | null
   meta?: Prisma.JsonNullableFilter<"Question">
 }
 
@@ -686,6 +715,7 @@ export type QuestionCreateWithoutAnswersInput = {
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: number
+  difficulty?: $Enums.QuestionDifficulty | null
   meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   section: Prisma.SectionCreateNestedOneWithoutQuestionsInput
 }
@@ -703,6 +733,7 @@ export type QuestionUncheckedCreateWithoutAnswersInput = {
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: number
+  difficulty?: $Enums.QuestionDifficulty | null
   meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
@@ -734,6 +765,7 @@ export type QuestionUpdateWithoutAnswersInput = {
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.NullableEnumQuestionDifficultyFieldUpdateOperationsInput | $Enums.QuestionDifficulty | null
   meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   section?: Prisma.SectionUpdateOneRequiredWithoutQuestionsNestedInput
 }
@@ -751,6 +783,7 @@ export type QuestionUncheckedUpdateWithoutAnswersInput = {
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.NullableEnumQuestionDifficultyFieldUpdateOperationsInput | $Enums.QuestionDifficulty | null
   meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
@@ -766,6 +799,7 @@ export type QuestionCreateManySectionInput = {
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: number
+  difficulty?: $Enums.QuestionDifficulty | null
   meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
@@ -781,6 +815,7 @@ export type QuestionUpdateWithoutSectionInput = {
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.NullableEnumQuestionDifficultyFieldUpdateOperationsInput | $Enums.QuestionDifficulty | null
   meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   answers?: Prisma.AttemptAnswerUpdateManyWithoutQuestionNestedInput
 }
@@ -797,6 +832,7 @@ export type QuestionUncheckedUpdateWithoutSectionInput = {
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.NullableEnumQuestionDifficultyFieldUpdateOperationsInput | $Enums.QuestionDifficulty | null
   meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   answers?: Prisma.AttemptAnswerUncheckedUpdateManyWithoutQuestionNestedInput
 }
@@ -813,6 +849,7 @@ export type QuestionUncheckedUpdateManyWithoutSectionInput = {
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   correctAnswers?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   points?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.NullableEnumQuestionDifficultyFieldUpdateOperationsInput | $Enums.QuestionDifficulty | null
   meta?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
@@ -860,6 +897,7 @@ export type QuestionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   options?: boolean
   correctAnswers?: boolean
   points?: boolean
+  difficulty?: boolean
   meta?: boolean
   section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
   answers?: boolean | Prisma.Question$answersArgs<ExtArgs>
@@ -879,6 +917,7 @@ export type QuestionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   options?: boolean
   correctAnswers?: boolean
   points?: boolean
+  difficulty?: boolean
   meta?: boolean
   section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["question"]>
@@ -896,6 +935,7 @@ export type QuestionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   options?: boolean
   correctAnswers?: boolean
   points?: boolean
+  difficulty?: boolean
   meta?: boolean
   section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["question"]>
@@ -913,10 +953,11 @@ export type QuestionSelectScalar = {
   options?: boolean
   correctAnswers?: boolean
   points?: boolean
+  difficulty?: boolean
   meta?: boolean
 }
 
-export type QuestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sectionId" | "order" | "type" | "groupTitle" | "stimulus" | "imageUrl" | "prompt" | "explanation" | "options" | "correctAnswers" | "points" | "meta", ExtArgs["result"]["question"]>
+export type QuestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sectionId" | "order" | "type" | "groupTitle" | "stimulus" | "imageUrl" | "prompt" | "explanation" | "options" | "correctAnswers" | "points" | "difficulty" | "meta", ExtArgs["result"]["question"]>
 export type QuestionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
   answers?: boolean | Prisma.Question$answersArgs<ExtArgs>
@@ -948,6 +989,7 @@ export type $QuestionPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     options: runtime.JsonValue | null
     correctAnswers: runtime.JsonValue
     points: number
+    difficulty: $Enums.QuestionDifficulty | null
     meta: runtime.JsonValue | null
   }, ExtArgs["result"]["question"]>
   composites: {}
@@ -1386,6 +1428,7 @@ export interface QuestionFieldRefs {
   readonly options: Prisma.FieldRef<"Question", 'Json'>
   readonly correctAnswers: Prisma.FieldRef<"Question", 'Json'>
   readonly points: Prisma.FieldRef<"Question", 'Int'>
+  readonly difficulty: Prisma.FieldRef<"Question", 'QuestionDifficulty'>
   readonly meta: Prisma.FieldRef<"Question", 'Json'>
 }
     

@@ -192,12 +192,21 @@ model Question {
   options        Json? // choices: ["A) ...", "B) ..."]
   correctAnswers Json // acceptable answers, e.g. ["B"] or ["12.5","25/2"]
   points         Int          @default(1)
+  difficulty     QuestionDifficulty? // item difficulty for analytics + targeted practice
   meta           Json? // { omitCalculator: true, passageRef, etc. }
 
   section Section         @relation(fields: [sectionId], references: [id], onDelete: Cascade)
   answers AttemptAnswer[]
 
   @@index([sectionId])
+}
+
+// Per-question difficulty (distinct from a section's adaptive band). Nullable —
+// older items are untagged until backfilled.
+enum QuestionDifficulty {
+  EASY
+  MEDIUM
+  HARD
 }
 
 enum SatQuestionType {
@@ -264,6 +273,7 @@ model AttemptAnswer {
   questionId String
   response   Json
   isCorrect  Boolean @default(false)
+  timeSpent  Int? // seconds the student spent on this question (pacing analytics)
 
   attempt  TestAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
   question Question    @relation(fields: [questionId], references: [id], onDelete: Cascade)

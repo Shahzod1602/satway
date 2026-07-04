@@ -20,8 +20,18 @@ export type AttemptAnswerModel = runtime.Types.Result.DefaultSelection<Prisma.$A
 
 export type AggregateAttemptAnswer = {
   _count: AttemptAnswerCountAggregateOutputType | null
+  _avg: AttemptAnswerAvgAggregateOutputType | null
+  _sum: AttemptAnswerSumAggregateOutputType | null
   _min: AttemptAnswerMinAggregateOutputType | null
   _max: AttemptAnswerMaxAggregateOutputType | null
+}
+
+export type AttemptAnswerAvgAggregateOutputType = {
+  timeSpent: number | null
+}
+
+export type AttemptAnswerSumAggregateOutputType = {
+  timeSpent: number | null
 }
 
 export type AttemptAnswerMinAggregateOutputType = {
@@ -29,6 +39,7 @@ export type AttemptAnswerMinAggregateOutputType = {
   attemptId: string | null
   questionId: string | null
   isCorrect: boolean | null
+  timeSpent: number | null
 }
 
 export type AttemptAnswerMaxAggregateOutputType = {
@@ -36,6 +47,7 @@ export type AttemptAnswerMaxAggregateOutputType = {
   attemptId: string | null
   questionId: string | null
   isCorrect: boolean | null
+  timeSpent: number | null
 }
 
 export type AttemptAnswerCountAggregateOutputType = {
@@ -44,15 +56,25 @@ export type AttemptAnswerCountAggregateOutputType = {
   questionId: number
   response: number
   isCorrect: number
+  timeSpent: number
   _all: number
 }
 
+
+export type AttemptAnswerAvgAggregateInputType = {
+  timeSpent?: true
+}
+
+export type AttemptAnswerSumAggregateInputType = {
+  timeSpent?: true
+}
 
 export type AttemptAnswerMinAggregateInputType = {
   id?: true
   attemptId?: true
   questionId?: true
   isCorrect?: true
+  timeSpent?: true
 }
 
 export type AttemptAnswerMaxAggregateInputType = {
@@ -60,6 +82,7 @@ export type AttemptAnswerMaxAggregateInputType = {
   attemptId?: true
   questionId?: true
   isCorrect?: true
+  timeSpent?: true
 }
 
 export type AttemptAnswerCountAggregateInputType = {
@@ -68,6 +91,7 @@ export type AttemptAnswerCountAggregateInputType = {
   questionId?: true
   response?: true
   isCorrect?: true
+  timeSpent?: true
   _all?: true
 }
 
@@ -109,6 +133,18 @@ export type AttemptAnswerAggregateArgs<ExtArgs extends runtime.Types.Extensions.
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: AttemptAnswerAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: AttemptAnswerSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: AttemptAnswerMinAggregateInputType
@@ -139,6 +175,8 @@ export type AttemptAnswerGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   _count?: AttemptAnswerCountAggregateInputType | true
+  _avg?: AttemptAnswerAvgAggregateInputType
+  _sum?: AttemptAnswerSumAggregateInputType
   _min?: AttemptAnswerMinAggregateInputType
   _max?: AttemptAnswerMaxAggregateInputType
 }
@@ -149,7 +187,10 @@ export type AttemptAnswerGroupByOutputType = {
   questionId: string
   response: runtime.JsonValue
   isCorrect: boolean
+  timeSpent: number | null
   _count: AttemptAnswerCountAggregateOutputType | null
+  _avg: AttemptAnswerAvgAggregateOutputType | null
+  _sum: AttemptAnswerSumAggregateOutputType | null
   _min: AttemptAnswerMinAggregateOutputType | null
   _max: AttemptAnswerMaxAggregateOutputType | null
 }
@@ -178,6 +219,7 @@ export type AttemptAnswerWhereInput = {
   questionId?: Prisma.StringFilter<"AttemptAnswer"> | string
   response?: Prisma.JsonFilter<"AttemptAnswer">
   isCorrect?: Prisma.BoolFilter<"AttemptAnswer"> | boolean
+  timeSpent?: Prisma.IntNullableFilter<"AttemptAnswer"> | number | null
   attempt?: Prisma.XOR<Prisma.TestAttemptScalarRelationFilter, Prisma.TestAttemptWhereInput>
   question?: Prisma.XOR<Prisma.QuestionScalarRelationFilter, Prisma.QuestionWhereInput>
 }
@@ -188,6 +230,7 @@ export type AttemptAnswerOrderByWithRelationInput = {
   questionId?: Prisma.SortOrder
   response?: Prisma.SortOrder
   isCorrect?: Prisma.SortOrder
+  timeSpent?: Prisma.SortOrderInput | Prisma.SortOrder
   attempt?: Prisma.TestAttemptOrderByWithRelationInput
   question?: Prisma.QuestionOrderByWithRelationInput
 }
@@ -202,6 +245,7 @@ export type AttemptAnswerWhereUniqueInput = Prisma.AtLeast<{
   questionId?: Prisma.StringFilter<"AttemptAnswer"> | string
   response?: Prisma.JsonFilter<"AttemptAnswer">
   isCorrect?: Prisma.BoolFilter<"AttemptAnswer"> | boolean
+  timeSpent?: Prisma.IntNullableFilter<"AttemptAnswer"> | number | null
   attempt?: Prisma.XOR<Prisma.TestAttemptScalarRelationFilter, Prisma.TestAttemptWhereInput>
   question?: Prisma.XOR<Prisma.QuestionScalarRelationFilter, Prisma.QuestionWhereInput>
 }, "id" | "attemptId_questionId">
@@ -212,9 +256,12 @@ export type AttemptAnswerOrderByWithAggregationInput = {
   questionId?: Prisma.SortOrder
   response?: Prisma.SortOrder
   isCorrect?: Prisma.SortOrder
+  timeSpent?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.AttemptAnswerCountOrderByAggregateInput
+  _avg?: Prisma.AttemptAnswerAvgOrderByAggregateInput
   _max?: Prisma.AttemptAnswerMaxOrderByAggregateInput
   _min?: Prisma.AttemptAnswerMinOrderByAggregateInput
+  _sum?: Prisma.AttemptAnswerSumOrderByAggregateInput
 }
 
 export type AttemptAnswerScalarWhereWithAggregatesInput = {
@@ -226,12 +273,14 @@ export type AttemptAnswerScalarWhereWithAggregatesInput = {
   questionId?: Prisma.StringWithAggregatesFilter<"AttemptAnswer"> | string
   response?: Prisma.JsonWithAggregatesFilter<"AttemptAnswer">
   isCorrect?: Prisma.BoolWithAggregatesFilter<"AttemptAnswer"> | boolean
+  timeSpent?: Prisma.IntNullableWithAggregatesFilter<"AttemptAnswer"> | number | null
 }
 
 export type AttemptAnswerCreateInput = {
   id?: string
   response: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isCorrect?: boolean
+  timeSpent?: number | null
   attempt: Prisma.TestAttemptCreateNestedOneWithoutAnswersInput
   question: Prisma.QuestionCreateNestedOneWithoutAnswersInput
 }
@@ -242,12 +291,14 @@ export type AttemptAnswerUncheckedCreateInput = {
   questionId: string
   response: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isCorrect?: boolean
+  timeSpent?: number | null
 }
 
 export type AttemptAnswerUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   response?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  timeSpent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   attempt?: Prisma.TestAttemptUpdateOneRequiredWithoutAnswersNestedInput
   question?: Prisma.QuestionUpdateOneRequiredWithoutAnswersNestedInput
 }
@@ -258,6 +309,7 @@ export type AttemptAnswerUncheckedUpdateInput = {
   questionId?: Prisma.StringFieldUpdateOperationsInput | string
   response?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  timeSpent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type AttemptAnswerCreateManyInput = {
@@ -266,12 +318,14 @@ export type AttemptAnswerCreateManyInput = {
   questionId: string
   response: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isCorrect?: boolean
+  timeSpent?: number | null
 }
 
 export type AttemptAnswerUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   response?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  timeSpent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type AttemptAnswerUncheckedUpdateManyInput = {
@@ -280,6 +334,7 @@ export type AttemptAnswerUncheckedUpdateManyInput = {
   questionId?: Prisma.StringFieldUpdateOperationsInput | string
   response?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  timeSpent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type AttemptAnswerListRelationFilter = {
@@ -303,6 +358,11 @@ export type AttemptAnswerCountOrderByAggregateInput = {
   questionId?: Prisma.SortOrder
   response?: Prisma.SortOrder
   isCorrect?: Prisma.SortOrder
+  timeSpent?: Prisma.SortOrder
+}
+
+export type AttemptAnswerAvgOrderByAggregateInput = {
+  timeSpent?: Prisma.SortOrder
 }
 
 export type AttemptAnswerMaxOrderByAggregateInput = {
@@ -310,6 +370,7 @@ export type AttemptAnswerMaxOrderByAggregateInput = {
   attemptId?: Prisma.SortOrder
   questionId?: Prisma.SortOrder
   isCorrect?: Prisma.SortOrder
+  timeSpent?: Prisma.SortOrder
 }
 
 export type AttemptAnswerMinOrderByAggregateInput = {
@@ -317,6 +378,11 @@ export type AttemptAnswerMinOrderByAggregateInput = {
   attemptId?: Prisma.SortOrder
   questionId?: Prisma.SortOrder
   isCorrect?: Prisma.SortOrder
+  timeSpent?: Prisma.SortOrder
+}
+
+export type AttemptAnswerSumOrderByAggregateInput = {
+  timeSpent?: Prisma.SortOrder
 }
 
 export type AttemptAnswerCreateNestedManyWithoutQuestionInput = {
@@ -407,6 +473,7 @@ export type AttemptAnswerCreateWithoutQuestionInput = {
   id?: string
   response: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isCorrect?: boolean
+  timeSpent?: number | null
   attempt: Prisma.TestAttemptCreateNestedOneWithoutAnswersInput
 }
 
@@ -415,6 +482,7 @@ export type AttemptAnswerUncheckedCreateWithoutQuestionInput = {
   attemptId: string
   response: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isCorrect?: boolean
+  timeSpent?: number | null
 }
 
 export type AttemptAnswerCreateOrConnectWithoutQuestionInput = {
@@ -452,12 +520,14 @@ export type AttemptAnswerScalarWhereInput = {
   questionId?: Prisma.StringFilter<"AttemptAnswer"> | string
   response?: Prisma.JsonFilter<"AttemptAnswer">
   isCorrect?: Prisma.BoolFilter<"AttemptAnswer"> | boolean
+  timeSpent?: Prisma.IntNullableFilter<"AttemptAnswer"> | number | null
 }
 
 export type AttemptAnswerCreateWithoutAttemptInput = {
   id?: string
   response: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isCorrect?: boolean
+  timeSpent?: number | null
   question: Prisma.QuestionCreateNestedOneWithoutAnswersInput
 }
 
@@ -466,6 +536,7 @@ export type AttemptAnswerUncheckedCreateWithoutAttemptInput = {
   questionId: string
   response: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isCorrect?: boolean
+  timeSpent?: number | null
 }
 
 export type AttemptAnswerCreateOrConnectWithoutAttemptInput = {
@@ -499,12 +570,14 @@ export type AttemptAnswerCreateManyQuestionInput = {
   attemptId: string
   response: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isCorrect?: boolean
+  timeSpent?: number | null
 }
 
 export type AttemptAnswerUpdateWithoutQuestionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   response?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  timeSpent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   attempt?: Prisma.TestAttemptUpdateOneRequiredWithoutAnswersNestedInput
 }
 
@@ -513,6 +586,7 @@ export type AttemptAnswerUncheckedUpdateWithoutQuestionInput = {
   attemptId?: Prisma.StringFieldUpdateOperationsInput | string
   response?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  timeSpent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type AttemptAnswerUncheckedUpdateManyWithoutQuestionInput = {
@@ -520,6 +594,7 @@ export type AttemptAnswerUncheckedUpdateManyWithoutQuestionInput = {
   attemptId?: Prisma.StringFieldUpdateOperationsInput | string
   response?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  timeSpent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type AttemptAnswerCreateManyAttemptInput = {
@@ -527,12 +602,14 @@ export type AttemptAnswerCreateManyAttemptInput = {
   questionId: string
   response: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isCorrect?: boolean
+  timeSpent?: number | null
 }
 
 export type AttemptAnswerUpdateWithoutAttemptInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   response?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  timeSpent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   question?: Prisma.QuestionUpdateOneRequiredWithoutAnswersNestedInput
 }
 
@@ -541,6 +618,7 @@ export type AttemptAnswerUncheckedUpdateWithoutAttemptInput = {
   questionId?: Prisma.StringFieldUpdateOperationsInput | string
   response?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  timeSpent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type AttemptAnswerUncheckedUpdateManyWithoutAttemptInput = {
@@ -548,6 +626,7 @@ export type AttemptAnswerUncheckedUpdateManyWithoutAttemptInput = {
   questionId?: Prisma.StringFieldUpdateOperationsInput | string
   response?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  timeSpent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 
@@ -558,6 +637,7 @@ export type AttemptAnswerSelect<ExtArgs extends runtime.Types.Extensions.Interna
   questionId?: boolean
   response?: boolean
   isCorrect?: boolean
+  timeSpent?: boolean
   attempt?: boolean | Prisma.TestAttemptDefaultArgs<ExtArgs>
   question?: boolean | Prisma.QuestionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["attemptAnswer"]>
@@ -568,6 +648,7 @@ export type AttemptAnswerSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   questionId?: boolean
   response?: boolean
   isCorrect?: boolean
+  timeSpent?: boolean
   attempt?: boolean | Prisma.TestAttemptDefaultArgs<ExtArgs>
   question?: boolean | Prisma.QuestionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["attemptAnswer"]>
@@ -578,6 +659,7 @@ export type AttemptAnswerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   questionId?: boolean
   response?: boolean
   isCorrect?: boolean
+  timeSpent?: boolean
   attempt?: boolean | Prisma.TestAttemptDefaultArgs<ExtArgs>
   question?: boolean | Prisma.QuestionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["attemptAnswer"]>
@@ -588,9 +670,10 @@ export type AttemptAnswerSelectScalar = {
   questionId?: boolean
   response?: boolean
   isCorrect?: boolean
+  timeSpent?: boolean
 }
 
-export type AttemptAnswerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "attemptId" | "questionId" | "response" | "isCorrect", ExtArgs["result"]["attemptAnswer"]>
+export type AttemptAnswerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "attemptId" | "questionId" | "response" | "isCorrect" | "timeSpent", ExtArgs["result"]["attemptAnswer"]>
 export type AttemptAnswerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   attempt?: boolean | Prisma.TestAttemptDefaultArgs<ExtArgs>
   question?: boolean | Prisma.QuestionDefaultArgs<ExtArgs>
@@ -616,6 +699,7 @@ export type $AttemptAnswerPayload<ExtArgs extends runtime.Types.Extensions.Inter
     questionId: string
     response: runtime.JsonValue
     isCorrect: boolean
+    timeSpent: number | null
   }, ExtArgs["result"]["attemptAnswer"]>
   composites: {}
 }
@@ -1046,6 +1130,7 @@ export interface AttemptAnswerFieldRefs {
   readonly questionId: Prisma.FieldRef<"AttemptAnswer", 'String'>
   readonly response: Prisma.FieldRef<"AttemptAnswer", 'Json'>
   readonly isCorrect: Prisma.FieldRef<"AttemptAnswer", 'Boolean'>
+  readonly timeSpent: Prisma.FieldRef<"AttemptAnswer", 'Int'>
 }
     
 

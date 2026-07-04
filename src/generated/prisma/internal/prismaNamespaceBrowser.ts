@@ -202,6 +202,7 @@ export const QuestionScalarFieldEnum = {
   options: 'options',
   correctAnswers: 'correctAnswers',
   points: 'points',
+  difficulty: 'difficulty',
   meta: 'meta'
 } as const
 
@@ -233,7 +234,8 @@ export const AttemptAnswerScalarFieldEnum = {
   attemptId: 'attemptId',
   questionId: 'questionId',
   response: 'response',
-  isCorrect: 'isCorrect'
+  isCorrect: 'isCorrect',
+  timeSpent: 'timeSpent'
 } as const
 
 export type AttemptAnswerScalarFieldEnum = (typeof AttemptAnswerScalarFieldEnum)[keyof typeof AttemptAnswerScalarFieldEnum]

@@ -1241,6 +1241,7 @@ export const QuestionScalarFieldEnum = {
   options: 'options',
   correctAnswers: 'correctAnswers',
   points: 'points',
+  difficulty: 'difficulty',
   meta: 'meta'
 } as const
 
@@ -1272,7 +1273,8 @@ export const AttemptAnswerScalarFieldEnum = {
   attemptId: 'attemptId',
   questionId: 'questionId',
   response: 'response',
-  isCorrect: 'isCorrect'
+  isCorrect: 'isCorrect',
+  timeSpent: 'timeSpent'
 } as const
 
 export type AttemptAnswerScalarFieldEnum = (typeof AttemptAnswerScalarFieldEnum)[keyof typeof AttemptAnswerScalarFieldEnum]
@@ -1490,6 +1492,20 @@ export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'J
  * Reference to a field of type 'QueryMode'
  */
 export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
+ * Reference to a field of type 'QuestionDifficulty'
+ */
+export type EnumQuestionDifficultyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuestionDifficulty'>
+    
+
+
+/**
+ * Reference to a field of type 'QuestionDifficulty[]'
+ */
+export type ListEnumQuestionDifficultyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuestionDifficulty[]'>
     
 
 
