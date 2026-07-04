@@ -5,8 +5,10 @@ import { vertexConfig } from "./env";
 let client: GoogleGenAI | null = null;
 function getClient() {
   if (!client) {
-    const { project, location } = vertexConfig();
-    client = new GoogleGenAI({ vertexai: true, project, location });
+    const { apiKey, project, location } = vertexConfig();
+    client = apiKey
+      ? new GoogleGenAI({ apiKey })
+      : new GoogleGenAI({ vertexai: true, project, location });
   }
   return client;
 }

@@ -32,12 +32,23 @@ export function env() {
   return cached;
 }
 
-/** Vertex AI config, validated lazily because it's only needed for AI features. */
+/**
+ * Gemini config, validated lazily (only needed for AI features). Two auth modes:
+ *  - GEMINI_API_KEY  → Google AI Studio developer API (simplest; no GCP/SA-key setup)
+ *  - GOOGLE_CLOUD_PROJECT → Vertex AI via Application Default Credentials
+ * The API key is preferred when present.
+ */
 export function vertexConfig() {
+  const model = process.env.GEMINI_MODEL || "gemini-2.5-pro";
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (apiKey) return { apiKey, project: undefined, location: undefined, model };
+
   const project = process.env.GOOGLE_CLOUD_PROJECT;
   const location = process.env.GOOGLE_CLOUD_LOCATION || "global";
   if (!project) {
-    throw new Error("GOOGLE_CLOUD_PROJECT is not configured — AI test generation is unavailable.");
+    throw new Error(
+      "AI is not configured — set GEMINI_API_KEY (from Google AI Studio) or GOOGLE_CLOUD_PROJECT for Vertex.",
+    );
   }
-  return { project, location, model: process.env.GEMINI_MODEL || "gemini-2.5-pro" };
+  return { apiKey: undefined, project, location, model };
 }
