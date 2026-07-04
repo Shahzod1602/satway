@@ -98,3 +98,11 @@ export const AttemptStatus = {
 } as const
 
 export type AttemptStatus = (typeof AttemptStatus)[keyof typeof AttemptStatus]
+
+
+export const ShareKind = {
+  FRIEND: 'FRIEND',
+  CLASS: 'CLASS'
+} as const
+
+export type ShareKind = (typeof ShareKind)[keyof typeof ShareKind]

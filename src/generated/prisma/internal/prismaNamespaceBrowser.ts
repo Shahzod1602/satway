@@ -59,7 +59,9 @@ export const ModelName = {
   Section: 'Section',
   Question: 'Question',
   TestAttempt: 'TestAttempt',
-  AttemptAnswer: 'AttemptAnswer'
+  AttemptAnswer: 'AttemptAnswer',
+  ShareLink: 'ShareLink',
+  ShareLinkUse: 'ShareLinkUse'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -239,6 +241,30 @@ export const AttemptAnswerScalarFieldEnum = {
 } as const
 
 export type AttemptAnswerScalarFieldEnum = (typeof AttemptAnswerScalarFieldEnum)[keyof typeof AttemptAnswerScalarFieldEnum]
+
+
+export const ShareLinkScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  testId: 'testId',
+  createdById: 'createdById',
+  kind: 'kind',
+  maxUses: 'maxUses',
+  active: 'active',
+  createdAt: 'createdAt'
+} as const
+
+export type ShareLinkScalarFieldEnum = (typeof ShareLinkScalarFieldEnum)[keyof typeof ShareLinkScalarFieldEnum]
+
+
+export const ShareLinkUseScalarFieldEnum = {
+  id: 'id',
+  shareLinkId: 'shareLinkId',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type ShareLinkUseScalarFieldEnum = (typeof ShareLinkUseScalarFieldEnum)[keyof typeof ShareLinkUseScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import AuthShell from "@/components/AuthShell";
 import TelegramLoginButton from "@/components/TelegramLoginButton";
+import { safeNext } from "@/lib/nextParam";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -28,7 +29,7 @@ export default function LoginPage() {
     if (res?.error) {
       setError(res.error);
     } else {
-      router.push("/dashboard");
+      router.push(safeNext());
     }
   };
 

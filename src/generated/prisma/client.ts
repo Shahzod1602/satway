@@ -86,3 +86,13 @@ export type TestAttempt = Prisma.TestAttemptModel
  * 
  */
 export type AttemptAnswer = Prisma.AttemptAnswerModel
+/**
+ * Model ShareLink
+ * 
+ */
+export type ShareLink = Prisma.ShareLinkModel
+/**
+ * Model ShareLinkUse
+ * 
+ */
+export type ShareLinkUse = Prisma.ShareLinkUseModel

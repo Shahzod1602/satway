@@ -413,6 +413,8 @@ export type UserWhereInput = {
   attempts?: Prisma.TestAttemptListRelationFilter
   supportMessages?: Prisma.SupportMessageListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
+  shareLinks?: Prisma.ShareLinkListRelationFilter
+  shareLinkUses?: Prisma.ShareLinkUseListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -449,6 +451,8 @@ export type UserOrderByWithRelationInput = {
   attempts?: Prisma.TestAttemptOrderByRelationAggregateInput
   supportMessages?: Prisma.SupportMessageOrderByRelationAggregateInput
   payments?: Prisma.PaymentOrderByRelationAggregateInput
+  shareLinks?: Prisma.ShareLinkOrderByRelationAggregateInput
+  shareLinkUses?: Prisma.ShareLinkUseOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -488,6 +492,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   attempts?: Prisma.TestAttemptListRelationFilter
   supportMessages?: Prisma.SupportMessageListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
+  shareLinks?: Prisma.ShareLinkListRelationFilter
+  shareLinkUses?: Prisma.ShareLinkUseListRelationFilter
 }, "id" | "email" | "telegramId" | "referralCode">
 
 export type UserOrderByWithAggregationInput = {
@@ -593,6 +599,8 @@ export type UserCreateInput = {
   attempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
   supportMessages?: Prisma.SupportMessageCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkCreateNestedManyWithoutCreatedByInput
+  shareLinkUses?: Prisma.ShareLinkUseCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -628,6 +636,8 @@ export type UserUncheckedCreateInput = {
   attempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
   supportMessages?: Prisma.SupportMessageUncheckedCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkUncheckedCreateNestedManyWithoutCreatedByInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -663,6 +673,8 @@ export type UserUpdateInput = {
   attempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
   supportMessages?: Prisma.SupportMessageUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUpdateManyWithoutCreatedByNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -698,6 +710,8 @@ export type UserUncheckedUpdateInput = {
   attempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
   supportMessages?: Prisma.SupportMessageUncheckedUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUncheckedUpdateManyWithoutCreatedByNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -1057,6 +1071,34 @@ export type UserUpdateOneRequiredWithoutAttemptsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAttemptsInput, Prisma.UserUpdateWithoutAttemptsInput>, Prisma.UserUncheckedUpdateWithoutAttemptsInput>
 }
 
+export type UserCreateNestedOneWithoutShareLinksInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutShareLinksInput, Prisma.UserUncheckedCreateWithoutShareLinksInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutShareLinksInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutShareLinksNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutShareLinksInput, Prisma.UserUncheckedCreateWithoutShareLinksInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutShareLinksInput
+  upsert?: Prisma.UserUpsertWithoutShareLinksInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutShareLinksInput, Prisma.UserUpdateWithoutShareLinksInput>, Prisma.UserUncheckedUpdateWithoutShareLinksInput>
+}
+
+export type UserCreateNestedOneWithoutShareLinkUsesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutShareLinkUsesInput, Prisma.UserUncheckedCreateWithoutShareLinkUsesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutShareLinkUsesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutShareLinkUsesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutShareLinkUsesInput, Prisma.UserUncheckedCreateWithoutShareLinkUsesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutShareLinkUsesInput
+  upsert?: Prisma.UserUpsertWithoutShareLinkUsesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutShareLinkUsesInput, Prisma.UserUpdateWithoutShareLinkUsesInput>, Prisma.UserUncheckedUpdateWithoutShareLinkUsesInput>
+}
+
 export type UserCreateWithoutReferralsInput = {
   id?: string
   name: string
@@ -1089,6 +1131,8 @@ export type UserCreateWithoutReferralsInput = {
   attempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
   supportMessages?: Prisma.SupportMessageCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkCreateNestedManyWithoutCreatedByInput
+  shareLinkUses?: Prisma.ShareLinkUseCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReferralsInput = {
@@ -1123,6 +1167,8 @@ export type UserUncheckedCreateWithoutReferralsInput = {
   attempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
   supportMessages?: Prisma.SupportMessageUncheckedCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkUncheckedCreateNestedManyWithoutCreatedByInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReferralsInput = {
@@ -1162,6 +1208,8 @@ export type UserCreateWithoutReferredByInput = {
   attempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
   supportMessages?: Prisma.SupportMessageCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkCreateNestedManyWithoutCreatedByInput
+  shareLinkUses?: Prisma.ShareLinkUseCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReferredByInput = {
@@ -1196,6 +1244,8 @@ export type UserUncheckedCreateWithoutReferredByInput = {
   attempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
   supportMessages?: Prisma.SupportMessageUncheckedCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkUncheckedCreateNestedManyWithoutCreatedByInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReferredByInput = {
@@ -1251,6 +1301,8 @@ export type UserUpdateWithoutReferralsInput = {
   attempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
   supportMessages?: Prisma.SupportMessageUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUpdateManyWithoutCreatedByNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReferralsInput = {
@@ -1285,6 +1337,8 @@ export type UserUncheckedUpdateWithoutReferralsInput = {
   attempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
   supportMessages?: Prisma.SupportMessageUncheckedUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUncheckedUpdateManyWithoutCreatedByNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithWhereUniqueWithoutReferredByInput = {
@@ -1369,6 +1423,8 @@ export type UserCreateWithoutPaymentsInput = {
   referrals?: Prisma.UserCreateNestedManyWithoutReferredByInput
   attempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
   supportMessages?: Prisma.SupportMessageCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkCreateNestedManyWithoutCreatedByInput
+  shareLinkUses?: Prisma.ShareLinkUseCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPaymentsInput = {
@@ -1403,6 +1459,8 @@ export type UserUncheckedCreateWithoutPaymentsInput = {
   referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferredByInput
   attempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
   supportMessages?: Prisma.SupportMessageUncheckedCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkUncheckedCreateNestedManyWithoutCreatedByInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPaymentsInput = {
@@ -1453,6 +1511,8 @@ export type UserUpdateWithoutPaymentsInput = {
   referrals?: Prisma.UserUpdateManyWithoutReferredByNestedInput
   attempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
   supportMessages?: Prisma.SupportMessageUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUpdateManyWithoutCreatedByNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPaymentsInput = {
@@ -1487,6 +1547,8 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   referrals?: Prisma.UserUncheckedUpdateManyWithoutReferredByNestedInput
   attempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
   supportMessages?: Prisma.SupportMessageUncheckedUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUncheckedUpdateManyWithoutCreatedByNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSupportMessagesInput = {
@@ -1521,6 +1583,8 @@ export type UserCreateWithoutSupportMessagesInput = {
   referrals?: Prisma.UserCreateNestedManyWithoutReferredByInput
   attempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkCreateNestedManyWithoutCreatedByInput
+  shareLinkUses?: Prisma.ShareLinkUseCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSupportMessagesInput = {
@@ -1555,6 +1619,8 @@ export type UserUncheckedCreateWithoutSupportMessagesInput = {
   referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferredByInput
   attempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkUncheckedCreateNestedManyWithoutCreatedByInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSupportMessagesInput = {
@@ -1605,6 +1671,8 @@ export type UserUpdateWithoutSupportMessagesInput = {
   referrals?: Prisma.UserUpdateManyWithoutReferredByNestedInput
   attempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUpdateManyWithoutCreatedByNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSupportMessagesInput = {
@@ -1639,6 +1707,8 @@ export type UserUncheckedUpdateWithoutSupportMessagesInput = {
   referrals?: Prisma.UserUncheckedUpdateManyWithoutReferredByNestedInput
   attempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUncheckedUpdateManyWithoutCreatedByNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAttemptsInput = {
@@ -1673,6 +1743,8 @@ export type UserCreateWithoutAttemptsInput = {
   referrals?: Prisma.UserCreateNestedManyWithoutReferredByInput
   supportMessages?: Prisma.SupportMessageCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkCreateNestedManyWithoutCreatedByInput
+  shareLinkUses?: Prisma.ShareLinkUseCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAttemptsInput = {
@@ -1707,6 +1779,8 @@ export type UserUncheckedCreateWithoutAttemptsInput = {
   referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferredByInput
   supportMessages?: Prisma.SupportMessageUncheckedCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkUncheckedCreateNestedManyWithoutCreatedByInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAttemptsInput = {
@@ -1757,6 +1831,8 @@ export type UserUpdateWithoutAttemptsInput = {
   referrals?: Prisma.UserUpdateManyWithoutReferredByNestedInput
   supportMessages?: Prisma.SupportMessageUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUpdateManyWithoutCreatedByNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAttemptsInput = {
@@ -1791,6 +1867,328 @@ export type UserUncheckedUpdateWithoutAttemptsInput = {
   referrals?: Prisma.UserUncheckedUpdateManyWithoutReferredByNestedInput
   supportMessages?: Prisma.SupportMessageUncheckedUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUncheckedUpdateManyWithoutCreatedByNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutShareLinksInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.Role
+  emailVerified?: boolean
+  verifyToken?: string | null
+  verifyTokenExpiry?: Date | string | null
+  telegramId?: string | null
+  telegramUsername?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  avatarUrl?: string | null
+  country?: string | null
+  nativeLanguage?: string | null
+  phone?: string | null
+  targetScore?: number | null
+  targetMathScore?: number | null
+  targetRWScore?: number | null
+  examDate?: Date | string | null
+  defaultType?: $Enums.TestType
+  emailNotifications?: boolean
+  plan?: $Enums.Plan
+  premiumUntil?: Date | string | null
+  winbackSentAt?: Date | string | null
+  referralCode?: string | null
+  referralRewarded?: boolean
+  referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
+  referrals?: Prisma.UserCreateNestedManyWithoutReferredByInput
+  attempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
+  supportMessages?: Prisma.SupportMessageCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  shareLinkUses?: Prisma.ShareLinkUseCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutShareLinksInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.Role
+  emailVerified?: boolean
+  verifyToken?: string | null
+  verifyTokenExpiry?: Date | string | null
+  telegramId?: string | null
+  telegramUsername?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  avatarUrl?: string | null
+  country?: string | null
+  nativeLanguage?: string | null
+  phone?: string | null
+  targetScore?: number | null
+  targetMathScore?: number | null
+  targetRWScore?: number | null
+  examDate?: Date | string | null
+  defaultType?: $Enums.TestType
+  emailNotifications?: boolean
+  plan?: $Enums.Plan
+  premiumUntil?: Date | string | null
+  winbackSentAt?: Date | string | null
+  referralCode?: string | null
+  referredById?: string | null
+  referralRewarded?: boolean
+  referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferredByInput
+  attempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
+  supportMessages?: Prisma.SupportMessageUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutShareLinksInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutShareLinksInput, Prisma.UserUncheckedCreateWithoutShareLinksInput>
+}
+
+export type UserUpsertWithoutShareLinksInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutShareLinksInput, Prisma.UserUncheckedUpdateWithoutShareLinksInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutShareLinksInput, Prisma.UserUncheckedCreateWithoutShareLinksInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutShareLinksInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutShareLinksInput, Prisma.UserUncheckedUpdateWithoutShareLinksInput>
+}
+
+export type UserUpdateWithoutShareLinksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifyTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  telegramId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telegramUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nativeLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
+  referrals?: Prisma.UserUpdateManyWithoutReferredByNestedInput
+  attempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
+  supportMessages?: Prisma.SupportMessageUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutShareLinksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifyTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  telegramId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telegramUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nativeLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referrals?: Prisma.UserUncheckedUpdateManyWithoutReferredByNestedInput
+  attempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
+  supportMessages?: Prisma.SupportMessageUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutShareLinkUsesInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.Role
+  emailVerified?: boolean
+  verifyToken?: string | null
+  verifyTokenExpiry?: Date | string | null
+  telegramId?: string | null
+  telegramUsername?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  avatarUrl?: string | null
+  country?: string | null
+  nativeLanguage?: string | null
+  phone?: string | null
+  targetScore?: number | null
+  targetMathScore?: number | null
+  targetRWScore?: number | null
+  examDate?: Date | string | null
+  defaultType?: $Enums.TestType
+  emailNotifications?: boolean
+  plan?: $Enums.Plan
+  premiumUntil?: Date | string | null
+  winbackSentAt?: Date | string | null
+  referralCode?: string | null
+  referralRewarded?: boolean
+  referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
+  referrals?: Prisma.UserCreateNestedManyWithoutReferredByInput
+  attempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
+  supportMessages?: Prisma.SupportMessageCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserUncheckedCreateWithoutShareLinkUsesInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.Role
+  emailVerified?: boolean
+  verifyToken?: string | null
+  verifyTokenExpiry?: Date | string | null
+  telegramId?: string | null
+  telegramUsername?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  avatarUrl?: string | null
+  country?: string | null
+  nativeLanguage?: string | null
+  phone?: string | null
+  targetScore?: number | null
+  targetMathScore?: number | null
+  targetRWScore?: number | null
+  examDate?: Date | string | null
+  defaultType?: $Enums.TestType
+  emailNotifications?: boolean
+  plan?: $Enums.Plan
+  premiumUntil?: Date | string | null
+  winbackSentAt?: Date | string | null
+  referralCode?: string | null
+  referredById?: string | null
+  referralRewarded?: boolean
+  referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferredByInput
+  attempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
+  supportMessages?: Prisma.SupportMessageUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkUncheckedCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserCreateOrConnectWithoutShareLinkUsesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutShareLinkUsesInput, Prisma.UserUncheckedCreateWithoutShareLinkUsesInput>
+}
+
+export type UserUpsertWithoutShareLinkUsesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutShareLinkUsesInput, Prisma.UserUncheckedUpdateWithoutShareLinkUsesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutShareLinkUsesInput, Prisma.UserUncheckedCreateWithoutShareLinkUsesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutShareLinkUsesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutShareLinkUsesInput, Prisma.UserUncheckedUpdateWithoutShareLinkUsesInput>
+}
+
+export type UserUpdateWithoutShareLinkUsesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifyTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  telegramId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telegramUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nativeLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
+  referrals?: Prisma.UserUpdateManyWithoutReferredByNestedInput
+  attempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
+  supportMessages?: Prisma.SupportMessageUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUpdateManyWithoutCreatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutShareLinkUsesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifyTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  telegramId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telegramUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nativeLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referrals?: Prisma.UserUncheckedUpdateManyWithoutReferredByNestedInput
+  attempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
+  supportMessages?: Prisma.SupportMessageUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserCreateManyReferredByInput = {
@@ -1855,6 +2253,8 @@ export type UserUpdateWithoutReferredByInput = {
   attempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
   supportMessages?: Prisma.SupportMessageUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUpdateManyWithoutCreatedByNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReferredByInput = {
@@ -1889,6 +2289,8 @@ export type UserUncheckedUpdateWithoutReferredByInput = {
   attempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
   supportMessages?: Prisma.SupportMessageUncheckedUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUncheckedUpdateManyWithoutCreatedByNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutReferredByInput = {
@@ -1931,6 +2333,8 @@ export type UserCountOutputType = {
   attempts: number
   supportMessages: number
   payments: number
+  shareLinks: number
+  shareLinkUses: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1938,6 +2342,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   attempts?: boolean | UserCountOutputTypeCountAttemptsArgs
   supportMessages?: boolean | UserCountOutputTypeCountSupportMessagesArgs
   payments?: boolean | UserCountOutputTypeCountPaymentsArgs
+  shareLinks?: boolean | UserCountOutputTypeCountShareLinksArgs
+  shareLinkUses?: boolean | UserCountOutputTypeCountShareLinkUsesArgs
 }
 
 /**
@@ -1978,6 +2384,20 @@ export type UserCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.PaymentWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountShareLinksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ShareLinkWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountShareLinkUsesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ShareLinkUseWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2013,6 +2433,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   attempts?: boolean | Prisma.User$attemptsArgs<ExtArgs>
   supportMessages?: boolean | Prisma.User$supportMessagesArgs<ExtArgs>
   payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
+  shareLinks?: boolean | Prisma.User$shareLinksArgs<ExtArgs>
+  shareLinkUses?: boolean | Prisma.User$shareLinkUsesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2118,6 +2540,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   attempts?: boolean | Prisma.User$attemptsArgs<ExtArgs>
   supportMessages?: boolean | Prisma.User$supportMessagesArgs<ExtArgs>
   payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
+  shareLinks?: boolean | Prisma.User$shareLinksArgs<ExtArgs>
+  shareLinkUses?: boolean | Prisma.User$shareLinkUsesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2135,6 +2559,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     attempts: Prisma.$TestAttemptPayload<ExtArgs>[]
     supportMessages: Prisma.$SupportMessagePayload<ExtArgs>[]
     payments: Prisma.$PaymentPayload<ExtArgs>[]
+    shareLinks: Prisma.$ShareLinkPayload<ExtArgs>[]
+    shareLinkUses: Prisma.$ShareLinkUsePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2564,6 +2990,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   attempts<T extends Prisma.User$attemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$attemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TestAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   supportMessages<T extends Prisma.User$supportMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$supportMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupportMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payments<T extends Prisma.User$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  shareLinks<T extends Prisma.User$shareLinksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$shareLinksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShareLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  shareLinkUses<T extends Prisma.User$shareLinkUsesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$shareLinkUsesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShareLinkUsePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3134,6 +3562,54 @@ export type User$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
+}
+
+/**
+ * User.shareLinks
+ */
+export type User$shareLinksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ShareLink
+   */
+  select?: Prisma.ShareLinkSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ShareLink
+   */
+  omit?: Prisma.ShareLinkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ShareLinkInclude<ExtArgs> | null
+  where?: Prisma.ShareLinkWhereInput
+  orderBy?: Prisma.ShareLinkOrderByWithRelationInput | Prisma.ShareLinkOrderByWithRelationInput[]
+  cursor?: Prisma.ShareLinkWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ShareLinkScalarFieldEnum | Prisma.ShareLinkScalarFieldEnum[]
+}
+
+/**
+ * User.shareLinkUses
+ */
+export type User$shareLinkUsesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ShareLinkUse
+   */
+  select?: Prisma.ShareLinkUseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ShareLinkUse
+   */
+  omit?: Prisma.ShareLinkUseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ShareLinkUseInclude<ExtArgs> | null
+  where?: Prisma.ShareLinkUseWhereInput
+  orderBy?: Prisma.ShareLinkUseOrderByWithRelationInput | Prisma.ShareLinkUseOrderByWithRelationInput[]
+  cursor?: Prisma.ShareLinkUseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ShareLinkUseScalarFieldEnum | Prisma.ShareLinkUseScalarFieldEnum[]
 }
 
 /**

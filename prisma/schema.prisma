@@ -55,6 +55,8 @@ model User {
   attempts        TestAttempt[]
   supportMessages SupportMessage[]
   payments        Payment[]
+  shareLinks      ShareLink[]      @relation("ShareCreator") // links this user created
+  shareLinkUses   ShareLinkUse[] // links this user redeemed
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -138,8 +140,9 @@ model Test {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  sections Section[]
-  attempts TestAttempt[]
+  sections   Section[]
+  attempts   TestAttempt[]
+  shareLinks ShareLink[]
 }
 
 enum SatSkill {
@@ -280,4 +283,43 @@ model AttemptAnswer {
 
   @@unique([attemptId, questionId])
   @@index([attemptId])
+}
+
+// A premium user shares one test via a link. FRIEND links are capped at 3 distinct
+// redeemers; CLASS links (teacher-style) are uncapped. Redeeming grants access to
+// that one test only — not full Premium.
+enum ShareKind {
+  FRIEND
+  CLASS
+}
+
+model ShareLink {
+  id          String    @id @default(cuid())
+  token       String    @unique
+  testId      String
+  createdById String
+  kind        ShareKind @default(FRIEND)
+  maxUses     Int? // 3 for FRIEND, null = unlimited (CLASS)
+  active      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+
+  test      Test           @relation(fields: [testId], references: [id], onDelete: Cascade)
+  createdBy User           @relation("ShareCreator", fields: [createdById], references: [id], onDelete: Cascade)
+  uses      ShareLinkUse[]
+
+  @@index([createdById])
+  @@index([testId])
+}
+
+model ShareLinkUse {
+  id          String   @id @default(cuid())
+  shareLinkId String
+  userId      String
+  createdAt   DateTime @default(now())
+
+  shareLink ShareLink @relation(fields: [shareLinkId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([shareLinkId, userId]) // one slot per distinct redeemer
+  @@index([userId])
 }

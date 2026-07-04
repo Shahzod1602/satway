@@ -7,6 +7,7 @@ import Link from "next/link";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import AuthShell from "@/components/AuthShell";
 import TelegramLoginButton from "@/components/TelegramLoginButton";
+import { safeNext } from "@/lib/nextParam";
 
 type Step = "email" | "verify" | "details";
 
@@ -102,8 +103,8 @@ export default function RegisterPage() {
         return;
       }
       const signInRes = await signIn("credentials", { email, password, redirect: false });
-      if (signInRes?.error) router.push("/login");
-      else router.push("/dashboard");
+      if (signInRes?.error) router.push("/login" + window.location.search);
+      else router.push(safeNext());
     } catch {
       setError("Network error. Please try again.");
     } finally {

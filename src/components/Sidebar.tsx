@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, ClipboardList, LineChart, BookText, Shield, User, Sparkles, Gift, Crown, LifeBuoy, Trophy, Target, Menu, X } from "lucide-react";
+import { Home, ClipboardList, LineChart, BookText, Shield, User, Sparkles, Gift, Crown, LifeBuoy, Trophy, Target, Share2, Menu, X } from "lucide-react";
 
 interface NavItem {
   label: string;
@@ -84,6 +84,12 @@ export default function Sidebar({
       href: "/vocabulary",
       icon: BookText,
       match: (p) => p.startsWith("/vocabulary"),
+    },
+    {
+      label: "Share",
+      href: "/shares",
+      icon: Share2,
+      match: (p) => p.startsWith("/shares"),
     },
   ];
 

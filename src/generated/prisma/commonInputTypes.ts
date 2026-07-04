@@ -474,6 +474,23 @@ export type EnumSectionDifficultyNullableWithAggregatesFilter<$PrismaModel = nev
   _max?: Prisma.NestedEnumSectionDifficultyNullableFilter<$PrismaModel>
 }
 
+export type EnumShareKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.ShareKind | Prisma.EnumShareKindFieldRefInput<$PrismaModel>
+  in?: $Enums.ShareKind[] | Prisma.ListEnumShareKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ShareKind[] | Prisma.ListEnumShareKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumShareKindFilter<$PrismaModel> | $Enums.ShareKind
+}
+
+export type EnumShareKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ShareKind | Prisma.EnumShareKindFieldRefInput<$PrismaModel>
+  in?: $Enums.ShareKind[] | Prisma.ListEnumShareKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ShareKind[] | Prisma.ListEnumShareKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumShareKindWithAggregatesFilter<$PrismaModel> | $Enums.ShareKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumShareKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumShareKindFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -891,6 +908,23 @@ export type NestedEnumSectionDifficultyNullableWithAggregatesFilter<$PrismaModel
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedEnumSectionDifficultyNullableFilter<$PrismaModel>
   _max?: Prisma.NestedEnumSectionDifficultyNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumShareKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.ShareKind | Prisma.EnumShareKindFieldRefInput<$PrismaModel>
+  in?: $Enums.ShareKind[] | Prisma.ListEnumShareKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ShareKind[] | Prisma.ListEnumShareKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumShareKindFilter<$PrismaModel> | $Enums.ShareKind
+}
+
+export type NestedEnumShareKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ShareKind | Prisma.EnumShareKindFieldRefInput<$PrismaModel>
+  in?: $Enums.ShareKind[] | Prisma.ListEnumShareKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ShareKind[] | Prisma.ListEnumShareKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumShareKindWithAggregatesFilter<$PrismaModel> | $Enums.ShareKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumShareKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumShareKindFilter<$PrismaModel>
 }
 
 
