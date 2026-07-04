@@ -394,7 +394,9 @@ export const ModelName = {
   TestAttempt: 'TestAttempt',
   AttemptAnswer: 'AttemptAnswer',
   ShareLink: 'ShareLink',
-  ShareLinkUse: 'ShareLinkUse'
+  ShareLinkUse: 'ShareLinkUse',
+  LiveSession: 'LiveSession',
+  LiveParticipant: 'LiveParticipant'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -410,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "payment" | "supportMessage" | "emailOtp" | "test" | "section" | "question" | "testAttempt" | "attemptAnswer" | "shareLink" | "shareLinkUse"
+    modelProps: "user" | "payment" | "supportMessage" | "emailOtp" | "test" | "section" | "question" | "testAttempt" | "attemptAnswer" | "shareLink" | "shareLinkUse" | "liveSession" | "liveParticipant"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1228,6 +1230,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    LiveSession: {
+      payload: Prisma.$LiveSessionPayload<ExtArgs>
+      fields: Prisma.LiveSessionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LiveSessionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LiveSessionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload>
+        }
+        findFirst: {
+          args: Prisma.LiveSessionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LiveSessionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload>
+        }
+        findMany: {
+          args: Prisma.LiveSessionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload>[]
+        }
+        create: {
+          args: Prisma.LiveSessionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload>
+        }
+        createMany: {
+          args: Prisma.LiveSessionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LiveSessionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload>[]
+        }
+        delete: {
+          args: Prisma.LiveSessionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload>
+        }
+        update: {
+          args: Prisma.LiveSessionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload>
+        }
+        deleteMany: {
+          args: Prisma.LiveSessionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LiveSessionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LiveSessionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload>[]
+        }
+        upsert: {
+          args: Prisma.LiveSessionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload>
+        }
+        aggregate: {
+          args: Prisma.LiveSessionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLiveSession>
+        }
+        groupBy: {
+          args: Prisma.LiveSessionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LiveSessionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LiveSessionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LiveSessionCountAggregateOutputType> | number
+        }
+      }
+    }
+    LiveParticipant: {
+      payload: Prisma.$LiveParticipantPayload<ExtArgs>
+      fields: Prisma.LiveParticipantFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LiveParticipantFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveParticipantPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LiveParticipantFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveParticipantPayload>
+        }
+        findFirst: {
+          args: Prisma.LiveParticipantFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveParticipantPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LiveParticipantFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveParticipantPayload>
+        }
+        findMany: {
+          args: Prisma.LiveParticipantFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveParticipantPayload>[]
+        }
+        create: {
+          args: Prisma.LiveParticipantCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveParticipantPayload>
+        }
+        createMany: {
+          args: Prisma.LiveParticipantCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LiveParticipantCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveParticipantPayload>[]
+        }
+        delete: {
+          args: Prisma.LiveParticipantDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveParticipantPayload>
+        }
+        update: {
+          args: Prisma.LiveParticipantUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveParticipantPayload>
+        }
+        deleteMany: {
+          args: Prisma.LiveParticipantDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LiveParticipantUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LiveParticipantUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveParticipantPayload>[]
+        }
+        upsert: {
+          args: Prisma.LiveParticipantUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveParticipantPayload>
+        }
+        aggregate: {
+          args: Prisma.LiveParticipantAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLiveParticipant>
+        }
+        groupBy: {
+          args: Prisma.LiveParticipantGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LiveParticipantGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LiveParticipantCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LiveParticipantCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1452,6 +1602,29 @@ export const ShareLinkUseScalarFieldEnum = {
 } as const
 
 export type ShareLinkUseScalarFieldEnum = (typeof ShareLinkUseScalarFieldEnum)[keyof typeof ShareLinkUseScalarFieldEnum]
+
+
+export const LiveSessionScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  testId: 'testId',
+  hostId: 'hostId',
+  status: 'status',
+  startedAt: 'startedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type LiveSessionScalarFieldEnum = (typeof LiveSessionScalarFieldEnum)[keyof typeof LiveSessionScalarFieldEnum]
+
+
+export const LiveParticipantScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  userId: 'userId',
+  joinedAt: 'joinedAt'
+} as const
+
+export type LiveParticipantScalarFieldEnum = (typeof LiveParticipantScalarFieldEnum)[keyof typeof LiveParticipantScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1712,6 +1885,20 @@ export type ListEnumShareKindFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
 
 
 /**
+ * Reference to a field of type 'LiveStatus'
+ */
+export type EnumLiveStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LiveStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'LiveStatus[]'
+ */
+export type ListEnumLiveStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LiveStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1845,6 +2032,8 @@ export type GlobalOmitConfig = {
   attemptAnswer?: Prisma.AttemptAnswerOmit
   shareLink?: Prisma.ShareLinkOmit
   shareLinkUse?: Prisma.ShareLinkUseOmit
+  liveSession?: Prisma.LiveSessionOmit
+  liveParticipant?: Prisma.LiveParticipantOmit
 }
 
 /* Types for Logging */

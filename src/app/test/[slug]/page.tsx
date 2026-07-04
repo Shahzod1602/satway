@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import ExamRunner from "@/components/exam/ExamRunner";
 import type { ClientExamMeta } from "@/lib/types";
 import { canAccessTest, effectivePlan } from "@/lib/access";
-import { hasShareGrant } from "@/lib/share";
+import { hasTestGrant } from "@/lib/share";
 
 export const dynamic = "force-dynamic";
 
@@ -41,7 +41,7 @@ export default async function TestPage({
   });
   const canAccess =
     canAccessTest(effectivePlan(dbUser?.plan, dbUser?.premiumUntil), test.slug) ||
-    (await hasShareGrant(user.id, test.id));
+    (await hasTestGrant(user.id, test.id));
   if (!canAccess) {
     redirect("/upgrade");
   }

@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Share2, Copy, Check, Trash2, Users, UserPlus, ChevronDown } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Share2, Copy, Check, Trash2, Users, UserPlus, ChevronDown, Radio } from "lucide-react";
 
 export type ShareLinkData = {
   id: string;
@@ -17,9 +18,10 @@ export type ShareLinkData = {
 type TestOpt = { id: string; title: string; skill: string };
 
 export default function SharesClient({ tests, initialLinks }: { tests: TestOpt[]; initialLinks: ShareLinkData[] }) {
+  const router = useRouter();
   const [links, setLinks] = useState(initialLinks);
   const [testId, setTestId] = useState(tests[0]?.id ?? "");
-  const [kind, setKind] = useState<"FRIEND" | "CLASS">("FRIEND");
+  const [kind, setKind] = useState<"FRIEND" | "CLASS" | "LIVE">("FRIEND");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
@@ -33,6 +35,18 @@ export default function SharesClient({ tests, initialLinks }: { tests: TestOpt[]
     setBusy(true);
     setError(null);
     try {
+      // Live session → create it and jump to the host console.
+      if (kind === "LIVE") {
+        const res = await fetch("/api/live", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ testId }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data?.error || "Could not start session");
+        router.push(`/live/${data.code}/host`);
+        return;
+      }
       const res = await fetch("/api/share", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -86,20 +100,27 @@ export default function SharesClient({ tests, initialLinks }: { tests: TestOpt[]
           ))}
         </select>
 
-        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
           <button
             onClick={() => setKind("FRIEND")}
             className={`rounded-xl border p-3 text-left transition-colors ${kind === "FRIEND" ? "border-brand-600 bg-brand-50/60 ring-1 ring-brand-600" : "border-slate-200 hover:border-slate-300"}`}
           >
             <span className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900"><UserPlus className="h-4 w-4 text-brand-600" /> Friend link</span>
-            <p className="mt-1 text-xs text-slate-500">Up to 3 people can take this test.</p>
+            <p className="mt-1 text-xs text-slate-500">Up to 3 people, any time.</p>
           </button>
           <button
             onClick={() => setKind("CLASS")}
             className={`rounded-xl border p-3 text-left transition-colors ${kind === "CLASS" ? "border-brand-600 bg-brand-50/60 ring-1 ring-brand-600" : "border-slate-200 hover:border-slate-300"}`}
           >
             <span className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900"><Users className="h-4 w-4 text-brand-600" /> Class link</span>
-            <p className="mt-1 text-xs text-slate-500">Unlimited — for a whole group.</p>
+            <p className="mt-1 text-xs text-slate-500">Unlimited, any time.</p>
+          </button>
+          <button
+            onClick={() => setKind("LIVE")}
+            className={`rounded-xl border p-3 text-left transition-colors ${kind === "LIVE" ? "border-brand-600 bg-brand-50/60 ring-1 ring-brand-600" : "border-slate-200 hover:border-slate-300"}`}
+          >
+            <span className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900"><Radio className="h-4 w-4 text-brand-600" /> Live session</span>
+            <p className="mt-1 text-xs text-slate-500">You start it for everyone together.</p>
           </button>
         </div>
 
@@ -108,7 +129,7 @@ export default function SharesClient({ tests, initialLinks }: { tests: TestOpt[]
           disabled={busy || !testId}
           className="mt-4 inline-flex items-center gap-2 rounded-xl bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-700 disabled:opacity-50"
         >
-          {busy ? "Creating…" : "Generate link"}
+          {busy ? "Starting…" : kind === "LIVE" ? "Start live session" : "Generate link"}
         </button>
         {error && <p className="mt-2 text-xs text-red-500">{error}</p>}
       </div>

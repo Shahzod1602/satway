@@ -3,7 +3,7 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { currentUser } from "@/lib/session";
 import { canAccessTest, effectivePlan } from "@/lib/access";
-import { hasShareGrant } from "@/lib/share";
+import { hasTestGrant } from "@/lib/share";
 import { buildClientModule, findModule1, findModule2 } from "@/lib/exam";
 import { parseJson } from "@/lib/validation";
 import { jsonError, withErrorHandling } from "@/lib/apiError";
@@ -36,7 +36,7 @@ export const POST = withErrorHandling(async (req: NextRequest) => {
   });
   const canAccess =
     canAccessTest(effectivePlan(dbUser?.plan, dbUser?.premiumUntil), test) ||
-    (await hasShareGrant(user.id, test.id));
+    (await hasTestGrant(user.id, test.id));
   if (!canAccess) {
     return jsonError("This test requires Premium.", 403);
   }

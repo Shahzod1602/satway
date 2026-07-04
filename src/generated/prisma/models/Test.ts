@@ -267,6 +267,7 @@ export type TestWhereInput = {
   sections?: Prisma.SectionListRelationFilter
   attempts?: Prisma.TestAttemptListRelationFilter
   shareLinks?: Prisma.ShareLinkListRelationFilter
+  liveSessions?: Prisma.LiveSessionListRelationFilter
 }
 
 export type TestOrderByWithRelationInput = {
@@ -284,6 +285,7 @@ export type TestOrderByWithRelationInput = {
   sections?: Prisma.SectionOrderByRelationAggregateInput
   attempts?: Prisma.TestAttemptOrderByRelationAggregateInput
   shareLinks?: Prisma.ShareLinkOrderByRelationAggregateInput
+  liveSessions?: Prisma.LiveSessionOrderByRelationAggregateInput
 }
 
 export type TestWhereUniqueInput = Prisma.AtLeast<{
@@ -304,6 +306,7 @@ export type TestWhereUniqueInput = Prisma.AtLeast<{
   sections?: Prisma.SectionListRelationFilter
   attempts?: Prisma.TestAttemptListRelationFilter
   shareLinks?: Prisma.ShareLinkListRelationFilter
+  liveSessions?: Prisma.LiveSessionListRelationFilter
 }, "id" | "slug">
 
 export type TestOrderByWithAggregationInput = {
@@ -357,6 +360,7 @@ export type TestCreateInput = {
   sections?: Prisma.SectionCreateNestedManyWithoutTestInput
   attempts?: Prisma.TestAttemptCreateNestedManyWithoutTestInput
   shareLinks?: Prisma.ShareLinkCreateNestedManyWithoutTestInput
+  liveSessions?: Prisma.LiveSessionCreateNestedManyWithoutTestInput
 }
 
 export type TestUncheckedCreateInput = {
@@ -374,6 +378,7 @@ export type TestUncheckedCreateInput = {
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutTestInput
   attempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutTestInput
   shareLinks?: Prisma.ShareLinkUncheckedCreateNestedManyWithoutTestInput
+  liveSessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutTestInput
 }
 
 export type TestUpdateInput = {
@@ -391,6 +396,7 @@ export type TestUpdateInput = {
   sections?: Prisma.SectionUpdateManyWithoutTestNestedInput
   attempts?: Prisma.TestAttemptUpdateManyWithoutTestNestedInput
   shareLinks?: Prisma.ShareLinkUpdateManyWithoutTestNestedInput
+  liveSessions?: Prisma.LiveSessionUpdateManyWithoutTestNestedInput
 }
 
 export type TestUncheckedUpdateInput = {
@@ -408,6 +414,7 @@ export type TestUncheckedUpdateInput = {
   sections?: Prisma.SectionUncheckedUpdateManyWithoutTestNestedInput
   attempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutTestNestedInput
   shareLinks?: Prisma.ShareLinkUncheckedUpdateManyWithoutTestNestedInput
+  liveSessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutTestNestedInput
 }
 
 export type TestCreateManyInput = {
@@ -553,6 +560,20 @@ export type TestUpdateOneRequiredWithoutShareLinksNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TestUpdateToOneWithWhereWithoutShareLinksInput, Prisma.TestUpdateWithoutShareLinksInput>, Prisma.TestUncheckedUpdateWithoutShareLinksInput>
 }
 
+export type TestCreateNestedOneWithoutLiveSessionsInput = {
+  create?: Prisma.XOR<Prisma.TestCreateWithoutLiveSessionsInput, Prisma.TestUncheckedCreateWithoutLiveSessionsInput>
+  connectOrCreate?: Prisma.TestCreateOrConnectWithoutLiveSessionsInput
+  connect?: Prisma.TestWhereUniqueInput
+}
+
+export type TestUpdateOneRequiredWithoutLiveSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.TestCreateWithoutLiveSessionsInput, Prisma.TestUncheckedCreateWithoutLiveSessionsInput>
+  connectOrCreate?: Prisma.TestCreateOrConnectWithoutLiveSessionsInput
+  upsert?: Prisma.TestUpsertWithoutLiveSessionsInput
+  connect?: Prisma.TestWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TestUpdateToOneWithWhereWithoutLiveSessionsInput, Prisma.TestUpdateWithoutLiveSessionsInput>, Prisma.TestUncheckedUpdateWithoutLiveSessionsInput>
+}
+
 export type TestCreateWithoutSectionsInput = {
   id?: string
   title: string
@@ -567,6 +588,7 @@ export type TestCreateWithoutSectionsInput = {
   updatedAt?: Date | string
   attempts?: Prisma.TestAttemptCreateNestedManyWithoutTestInput
   shareLinks?: Prisma.ShareLinkCreateNestedManyWithoutTestInput
+  liveSessions?: Prisma.LiveSessionCreateNestedManyWithoutTestInput
 }
 
 export type TestUncheckedCreateWithoutSectionsInput = {
@@ -583,6 +605,7 @@ export type TestUncheckedCreateWithoutSectionsInput = {
   updatedAt?: Date | string
   attempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutTestInput
   shareLinks?: Prisma.ShareLinkUncheckedCreateNestedManyWithoutTestInput
+  liveSessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutTestInput
 }
 
 export type TestCreateOrConnectWithoutSectionsInput = {
@@ -615,6 +638,7 @@ export type TestUpdateWithoutSectionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attempts?: Prisma.TestAttemptUpdateManyWithoutTestNestedInput
   shareLinks?: Prisma.ShareLinkUpdateManyWithoutTestNestedInput
+  liveSessions?: Prisma.LiveSessionUpdateManyWithoutTestNestedInput
 }
 
 export type TestUncheckedUpdateWithoutSectionsInput = {
@@ -631,6 +655,7 @@ export type TestUncheckedUpdateWithoutSectionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutTestNestedInput
   shareLinks?: Prisma.ShareLinkUncheckedUpdateManyWithoutTestNestedInput
+  liveSessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutTestNestedInput
 }
 
 export type TestCreateWithoutAttemptsInput = {
@@ -647,6 +672,7 @@ export type TestCreateWithoutAttemptsInput = {
   updatedAt?: Date | string
   sections?: Prisma.SectionCreateNestedManyWithoutTestInput
   shareLinks?: Prisma.ShareLinkCreateNestedManyWithoutTestInput
+  liveSessions?: Prisma.LiveSessionCreateNestedManyWithoutTestInput
 }
 
 export type TestUncheckedCreateWithoutAttemptsInput = {
@@ -663,6 +689,7 @@ export type TestUncheckedCreateWithoutAttemptsInput = {
   updatedAt?: Date | string
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutTestInput
   shareLinks?: Prisma.ShareLinkUncheckedCreateNestedManyWithoutTestInput
+  liveSessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutTestInput
 }
 
 export type TestCreateOrConnectWithoutAttemptsInput = {
@@ -695,6 +722,7 @@ export type TestUpdateWithoutAttemptsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sections?: Prisma.SectionUpdateManyWithoutTestNestedInput
   shareLinks?: Prisma.ShareLinkUpdateManyWithoutTestNestedInput
+  liveSessions?: Prisma.LiveSessionUpdateManyWithoutTestNestedInput
 }
 
 export type TestUncheckedUpdateWithoutAttemptsInput = {
@@ -711,6 +739,7 @@ export type TestUncheckedUpdateWithoutAttemptsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sections?: Prisma.SectionUncheckedUpdateManyWithoutTestNestedInput
   shareLinks?: Prisma.ShareLinkUncheckedUpdateManyWithoutTestNestedInput
+  liveSessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutTestNestedInput
 }
 
 export type TestCreateWithoutShareLinksInput = {
@@ -727,6 +756,7 @@ export type TestCreateWithoutShareLinksInput = {
   updatedAt?: Date | string
   sections?: Prisma.SectionCreateNestedManyWithoutTestInput
   attempts?: Prisma.TestAttemptCreateNestedManyWithoutTestInput
+  liveSessions?: Prisma.LiveSessionCreateNestedManyWithoutTestInput
 }
 
 export type TestUncheckedCreateWithoutShareLinksInput = {
@@ -743,6 +773,7 @@ export type TestUncheckedCreateWithoutShareLinksInput = {
   updatedAt?: Date | string
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutTestInput
   attempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutTestInput
+  liveSessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutTestInput
 }
 
 export type TestCreateOrConnectWithoutShareLinksInput = {
@@ -775,6 +806,7 @@ export type TestUpdateWithoutShareLinksInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sections?: Prisma.SectionUpdateManyWithoutTestNestedInput
   attempts?: Prisma.TestAttemptUpdateManyWithoutTestNestedInput
+  liveSessions?: Prisma.LiveSessionUpdateManyWithoutTestNestedInput
 }
 
 export type TestUncheckedUpdateWithoutShareLinksInput = {
@@ -791,6 +823,91 @@ export type TestUncheckedUpdateWithoutShareLinksInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sections?: Prisma.SectionUncheckedUpdateManyWithoutTestNestedInput
   attempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutTestNestedInput
+  liveSessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutTestNestedInput
+}
+
+export type TestCreateWithoutLiveSessionsInput = {
+  id?: string
+  title: string
+  slug: string
+  skill: $Enums.SatSkill
+  type?: $Enums.TestType
+  description?: string | null
+  durationSec?: number
+  published?: boolean
+  isPremium?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sections?: Prisma.SectionCreateNestedManyWithoutTestInput
+  attempts?: Prisma.TestAttemptCreateNestedManyWithoutTestInput
+  shareLinks?: Prisma.ShareLinkCreateNestedManyWithoutTestInput
+}
+
+export type TestUncheckedCreateWithoutLiveSessionsInput = {
+  id?: string
+  title: string
+  slug: string
+  skill: $Enums.SatSkill
+  type?: $Enums.TestType
+  description?: string | null
+  durationSec?: number
+  published?: boolean
+  isPremium?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sections?: Prisma.SectionUncheckedCreateNestedManyWithoutTestInput
+  attempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutTestInput
+  shareLinks?: Prisma.ShareLinkUncheckedCreateNestedManyWithoutTestInput
+}
+
+export type TestCreateOrConnectWithoutLiveSessionsInput = {
+  where: Prisma.TestWhereUniqueInput
+  create: Prisma.XOR<Prisma.TestCreateWithoutLiveSessionsInput, Prisma.TestUncheckedCreateWithoutLiveSessionsInput>
+}
+
+export type TestUpsertWithoutLiveSessionsInput = {
+  update: Prisma.XOR<Prisma.TestUpdateWithoutLiveSessionsInput, Prisma.TestUncheckedUpdateWithoutLiveSessionsInput>
+  create: Prisma.XOR<Prisma.TestCreateWithoutLiveSessionsInput, Prisma.TestUncheckedCreateWithoutLiveSessionsInput>
+  where?: Prisma.TestWhereInput
+}
+
+export type TestUpdateToOneWithWhereWithoutLiveSessionsInput = {
+  where?: Prisma.TestWhereInput
+  data: Prisma.XOR<Prisma.TestUpdateWithoutLiveSessionsInput, Prisma.TestUncheckedUpdateWithoutLiveSessionsInput>
+}
+
+export type TestUpdateWithoutLiveSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  skill?: Prisma.EnumSatSkillFieldUpdateOperationsInput | $Enums.SatSkill
+  type?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  durationSec?: Prisma.IntFieldUpdateOperationsInput | number
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sections?: Prisma.SectionUpdateManyWithoutTestNestedInput
+  attempts?: Prisma.TestAttemptUpdateManyWithoutTestNestedInput
+  shareLinks?: Prisma.ShareLinkUpdateManyWithoutTestNestedInput
+}
+
+export type TestUncheckedUpdateWithoutLiveSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  skill?: Prisma.EnumSatSkillFieldUpdateOperationsInput | $Enums.SatSkill
+  type?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  durationSec?: Prisma.IntFieldUpdateOperationsInput | number
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sections?: Prisma.SectionUncheckedUpdateManyWithoutTestNestedInput
+  attempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutTestNestedInput
+  shareLinks?: Prisma.ShareLinkUncheckedUpdateManyWithoutTestNestedInput
 }
 
 
@@ -802,12 +919,14 @@ export type TestCountOutputType = {
   sections: number
   attempts: number
   shareLinks: number
+  liveSessions: number
 }
 
 export type TestCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sections?: boolean | TestCountOutputTypeCountSectionsArgs
   attempts?: boolean | TestCountOutputTypeCountAttemptsArgs
   shareLinks?: boolean | TestCountOutputTypeCountShareLinksArgs
+  liveSessions?: boolean | TestCountOutputTypeCountLiveSessionsArgs
 }
 
 /**
@@ -841,6 +960,13 @@ export type TestCountOutputTypeCountShareLinksArgs<ExtArgs extends runtime.Types
   where?: Prisma.ShareLinkWhereInput
 }
 
+/**
+ * TestCountOutputType without action
+ */
+export type TestCountOutputTypeCountLiveSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LiveSessionWhereInput
+}
+
 
 export type TestSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -857,6 +983,7 @@ export type TestSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   sections?: boolean | Prisma.Test$sectionsArgs<ExtArgs>
   attempts?: boolean | Prisma.Test$attemptsArgs<ExtArgs>
   shareLinks?: boolean | Prisma.Test$shareLinksArgs<ExtArgs>
+  liveSessions?: boolean | Prisma.Test$liveSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.TestCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["test"]>
 
@@ -907,6 +1034,7 @@ export type TestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   sections?: boolean | Prisma.Test$sectionsArgs<ExtArgs>
   attempts?: boolean | Prisma.Test$attemptsArgs<ExtArgs>
   shareLinks?: boolean | Prisma.Test$shareLinksArgs<ExtArgs>
+  liveSessions?: boolean | Prisma.Test$liveSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.TestCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TestIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -918,6 +1046,7 @@ export type $TestPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     sections: Prisma.$SectionPayload<ExtArgs>[]
     attempts: Prisma.$TestAttemptPayload<ExtArgs>[]
     shareLinks: Prisma.$ShareLinkPayload<ExtArgs>[]
+    liveSessions: Prisma.$LiveSessionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1328,6 +1457,7 @@ export interface Prisma__TestClient<T, Null = never, ExtArgs extends runtime.Typ
   sections<T extends Prisma.Test$sectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Test$sectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   attempts<T extends Prisma.Test$attemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Test$attemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TestAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   shareLinks<T extends Prisma.Test$shareLinksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Test$shareLinksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShareLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  liveSessions<T extends Prisma.Test$liveSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Test$liveSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LiveSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1830,6 +1960,30 @@ export type Test$shareLinksArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.ShareLinkScalarFieldEnum | Prisma.ShareLinkScalarFieldEnum[]
+}
+
+/**
+ * Test.liveSessions
+ */
+export type Test$liveSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LiveSession
+   */
+  select?: Prisma.LiveSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LiveSession
+   */
+  omit?: Prisma.LiveSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LiveSessionInclude<ExtArgs> | null
+  where?: Prisma.LiveSessionWhereInput
+  orderBy?: Prisma.LiveSessionOrderByWithRelationInput | Prisma.LiveSessionOrderByWithRelationInput[]
+  cursor?: Prisma.LiveSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LiveSessionScalarFieldEnum | Prisma.LiveSessionScalarFieldEnum[]
 }
 
 /**

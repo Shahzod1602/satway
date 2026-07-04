@@ -61,7 +61,9 @@ export const ModelName = {
   TestAttempt: 'TestAttempt',
   AttemptAnswer: 'AttemptAnswer',
   ShareLink: 'ShareLink',
-  ShareLinkUse: 'ShareLinkUse'
+  ShareLinkUse: 'ShareLinkUse',
+  LiveSession: 'LiveSession',
+  LiveParticipant: 'LiveParticipant'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -265,6 +267,29 @@ export const ShareLinkUseScalarFieldEnum = {
 } as const
 
 export type ShareLinkUseScalarFieldEnum = (typeof ShareLinkUseScalarFieldEnum)[keyof typeof ShareLinkUseScalarFieldEnum]
+
+
+export const LiveSessionScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  testId: 'testId',
+  hostId: 'hostId',
+  status: 'status',
+  startedAt: 'startedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type LiveSessionScalarFieldEnum = (typeof LiveSessionScalarFieldEnum)[keyof typeof LiveSessionScalarFieldEnum]
+
+
+export const LiveParticipantScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  userId: 'userId',
+  joinedAt: 'joinedAt'
+} as const
+
+export type LiveParticipantScalarFieldEnum = (typeof LiveParticipantScalarFieldEnum)[keyof typeof LiveParticipantScalarFieldEnum]
 
 
 export const SortOrder = {

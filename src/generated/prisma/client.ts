@@ -96,3 +96,13 @@ export type ShareLink = Prisma.ShareLinkModel
  * 
  */
 export type ShareLinkUse = Prisma.ShareLinkUseModel
+/**
+ * Model LiveSession
+ * 
+ */
+export type LiveSession = Prisma.LiveSessionModel
+/**
+ * Model LiveParticipant
+ * 
+ */
+export type LiveParticipant = Prisma.LiveParticipantModel

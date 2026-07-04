@@ -21,3 +21,23 @@ export async function hasShareGrant(userId: string, testId: string): Promise<boo
   });
   return !!use;
 }
+
+/** Human-friendly live-session join code (no ambiguous chars). */
+export function newLiveCode(): string {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  return Array.from(randomBytes(6), (x) => chars[x % chars.length]).join("");
+}
+
+/** True if the user is a participant of a LIVE session for this test (host started it). */
+export async function hasLiveGrant(userId: string, testId: string): Promise<boolean> {
+  const p = await prisma.liveParticipant.findFirst({
+    where: { userId, session: { testId, status: "LIVE" } },
+    select: { id: true },
+  });
+  return !!p;
+}
+
+/** Combined non-Premium access grant for a test (share link OR live session). */
+export async function hasTestGrant(userId: string, testId: string): Promise<boolean> {
+  return (await hasShareGrant(userId, testId)) || (await hasLiveGrant(userId, testId));
+}

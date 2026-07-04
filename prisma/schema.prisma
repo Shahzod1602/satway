@@ -57,6 +57,8 @@ model User {
   payments        Payment[]
   shareLinks      ShareLink[]      @relation("ShareCreator") // links this user created
   shareLinkUses   ShareLinkUse[] // links this user redeemed
+  liveHosted      LiveSession[]    @relation("LiveHost") // live sessions this user hosts
+  liveJoined      LiveParticipant[] // live sessions this user joined
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -140,9 +142,10 @@ model Test {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  sections   Section[]
-  attempts   TestAttempt[]
-  shareLinks ShareLink[]
+  sections     Section[]
+  attempts     TestAttempt[]
+  shareLinks   ShareLink[]
+  liveSessions LiveSession[]
 }
 
 enum SatSkill {
@@ -321,5 +324,42 @@ model ShareLinkUse {
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([shareLinkId, userId]) // one slot per distinct redeemer
+  @@index([userId])
+}
+
+// A host-controlled LIVE session: participants join a lobby by code, then the host
+// starts everyone together. Uncapped. Real-time state is polled from the DB.
+enum LiveStatus {
+  LOBBY
+  LIVE
+  ENDED
+}
+
+model LiveSession {
+  id        String     @id @default(cuid())
+  code      String     @unique // short join code
+  testId    String
+  hostId    String
+  status    LiveStatus @default(LOBBY)
+  startedAt DateTime?
+  createdAt DateTime   @default(now())
+
+  test         Test              @relation(fields: [testId], references: [id], onDelete: Cascade)
+  host         User              @relation("LiveHost", fields: [hostId], references: [id], onDelete: Cascade)
+  participants LiveParticipant[]
+
+  @@index([hostId])
+}
+
+model LiveParticipant {
+  id        String   @id @default(cuid())
+  sessionId String
+  userId    String
+  joinedAt  DateTime @default(now())
+
+  session LiveSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, userId])
   @@index([userId])
 }

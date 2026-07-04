@@ -106,3 +106,12 @@ export const ShareKind = {
 } as const
 
 export type ShareKind = (typeof ShareKind)[keyof typeof ShareKind]
+
+
+export const LiveStatus = {
+  LOBBY: 'LOBBY',
+  LIVE: 'LIVE',
+  ENDED: 'ENDED'
+} as const
+
+export type LiveStatus = (typeof LiveStatus)[keyof typeof LiveStatus]
