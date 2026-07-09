@@ -49,6 +49,13 @@ services:
       PAYMENT_TELEGRAM: ${PAYMENT_TELEGRAM}
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
       TELEGRAM_ADMIN_CHAT_ID: ${TELEGRAM_ADMIN_CHAT_ID}
+      # Login bot (@satwayonlinebot) — also the bot that verifies channel
+      # membership for the subscription gate, so it must reach the container.
+      TELEGRAM_LOGIN_BOT_TOKEN: ${TELEGRAM_LOGIN_BOT_TOKEN}
+      # Subscription gate (leave blank to disable the gate).
+      INSTAGRAM_URL: ${INSTAGRAM_URL}
+      TELEGRAM_CHANNEL_URL: ${TELEGRAM_CHANNEL_URL}
+      TELEGRAM_CHANNEL_ID: ${TELEGRAM_CHANNEL_ID}
       UPLOAD_DIR: /data/uploads
     volumes:
       # Persist admin uploads across container restarts.

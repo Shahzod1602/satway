@@ -108,6 +108,8 @@ export const UserScalarFieldEnum = {
   plan: 'plan',
   premiumUntil: 'premiumUntil',
   winbackSentAt: 'winbackSentAt',
+  igFollowedAt: 'igFollowedAt',
+  tgSubVerifiedAt: 'tgSubVerifiedAt',
   referralCode: 'referralCode',
   referredById: 'referredById',
   referralRewarded: 'referralRewarded'

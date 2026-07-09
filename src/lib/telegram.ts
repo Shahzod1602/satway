@@ -1,5 +1,48 @@
 import { prisma } from "@/lib/prisma";
 
+// Statuses getChatMember returns for someone who IS currently in the chat.
+// "left"/"kicked" mean they are not. For groups "restricted" can still be a
+// member (is_member=true); channels only ever report the first three.
+const PRESENT_STATUSES = new Set(["creator", "administrator", "member"]);
+
+/**
+ * Check whether a Telegram user is currently a member of the gate channel,
+ * using the Bot API `getChatMember`. The bot (TELEGRAM_LOGIN_BOT_TOKEN by
+ * default) MUST be an administrator of that channel or the API returns an
+ * error — in which case we fail closed (member: false) and log the reason.
+ *
+ * `channelId` accepts a public @username or a numeric -100… id.
+ * Never throws; returns { member, error? }.
+ */
+export async function isChannelMember(
+  telegramId: string | number,
+  opts?: { channelId?: string; token?: string },
+): Promise<{ member: boolean; error?: string }> {
+  const token =
+    opts?.token || process.env.TELEGRAM_LOGIN_BOT_TOKEN || process.env.TELEGRAM_BOT_TOKEN;
+  const channelId = opts?.channelId || process.env.TELEGRAM_CHANNEL_ID;
+  if (!token) return { member: false, error: "no telegram bot token configured" };
+  if (!channelId) return { member: false, error: "TELEGRAM_CHANNEL_ID not configured" };
+
+  const url =
+    `https://api.telegram.org/bot${token}/getChatMember` +
+    `?chat_id=${encodeURIComponent(channelId)}&user_id=${encodeURIComponent(String(telegramId))}`;
+  try {
+    const res = await fetch(url);
+    const data = (await res.json().catch(() => ({}))) as {
+      ok?: boolean;
+      description?: string;
+      result?: { status?: string; is_member?: boolean };
+    };
+    if (!data.ok) return { member: false, error: data.description || `HTTP ${res.status}` };
+    const status = data.result?.status ?? "";
+    const member = PRESENT_STATUSES.has(status) || (status === "restricted" && !!data.result?.is_member);
+    return { member };
+  } catch (e) {
+    return { member: false, error: e instanceof Error ? e.message : String(e) };
+  }
+}
+
 /** Send a Telegram notification to the admin when a user sends a support message. */
 export async function notifyAdminSupport(userName: string, messagePreview: string): Promise<void> {
   const token = process.env.TELEGRAM_BOT_TOKEN;

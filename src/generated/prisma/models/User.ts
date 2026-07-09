@@ -64,6 +64,8 @@ export type UserMinAggregateOutputType = {
   plan: $Enums.Plan | null
   premiumUntil: Date | null
   winbackSentAt: Date | null
+  igFollowedAt: Date | null
+  tgSubVerifiedAt: Date | null
   referralCode: string | null
   referredById: string | null
   referralRewarded: boolean | null
@@ -95,6 +97,8 @@ export type UserMaxAggregateOutputType = {
   plan: $Enums.Plan | null
   premiumUntil: Date | null
   winbackSentAt: Date | null
+  igFollowedAt: Date | null
+  tgSubVerifiedAt: Date | null
   referralCode: string | null
   referredById: string | null
   referralRewarded: boolean | null
@@ -126,6 +130,8 @@ export type UserCountAggregateOutputType = {
   plan: number
   premiumUntil: number
   winbackSentAt: number
+  igFollowedAt: number
+  tgSubVerifiedAt: number
   referralCode: number
   referredById: number
   referralRewarded: number
@@ -171,6 +177,8 @@ export type UserMinAggregateInputType = {
   plan?: true
   premiumUntil?: true
   winbackSentAt?: true
+  igFollowedAt?: true
+  tgSubVerifiedAt?: true
   referralCode?: true
   referredById?: true
   referralRewarded?: true
@@ -202,6 +210,8 @@ export type UserMaxAggregateInputType = {
   plan?: true
   premiumUntil?: true
   winbackSentAt?: true
+  igFollowedAt?: true
+  tgSubVerifiedAt?: true
   referralCode?: true
   referredById?: true
   referralRewarded?: true
@@ -233,6 +243,8 @@ export type UserCountAggregateInputType = {
   plan?: true
   premiumUntil?: true
   winbackSentAt?: true
+  igFollowedAt?: true
+  tgSubVerifiedAt?: true
   referralCode?: true
   referredById?: true
   referralRewarded?: true
@@ -351,6 +363,8 @@ export type UserGroupByOutputType = {
   plan: $Enums.Plan
   premiumUntil: Date | null
   winbackSentAt: Date | null
+  igFollowedAt: Date | null
+  tgSubVerifiedAt: Date | null
   referralCode: string | null
   referredById: string | null
   referralRewarded: boolean
@@ -405,6 +419,8 @@ export type UserWhereInput = {
   plan?: Prisma.EnumPlanFilter<"User"> | $Enums.Plan
   premiumUntil?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   winbackSentAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  igFollowedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  tgSubVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   referralCode?: Prisma.StringNullableFilter<"User"> | string | null
   referredById?: Prisma.StringNullableFilter<"User"> | string | null
   referralRewarded?: Prisma.BoolFilter<"User"> | boolean
@@ -445,6 +461,8 @@ export type UserOrderByWithRelationInput = {
   plan?: Prisma.SortOrder
   premiumUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   winbackSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  igFollowedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  tgSubVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   referralCode?: Prisma.SortOrderInput | Prisma.SortOrder
   referredById?: Prisma.SortOrderInput | Prisma.SortOrder
   referralRewarded?: Prisma.SortOrder
@@ -489,6 +507,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   plan?: Prisma.EnumPlanFilter<"User"> | $Enums.Plan
   premiumUntil?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   winbackSentAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  igFollowedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  tgSubVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   referredById?: Prisma.StringNullableFilter<"User"> | string | null
   referralRewarded?: Prisma.BoolFilter<"User"> | boolean
   referredBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -528,6 +548,8 @@ export type UserOrderByWithAggregationInput = {
   plan?: Prisma.SortOrder
   premiumUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   winbackSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  igFollowedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  tgSubVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   referralCode?: Prisma.SortOrderInput | Prisma.SortOrder
   referredById?: Prisma.SortOrderInput | Prisma.SortOrder
   referralRewarded?: Prisma.SortOrder
@@ -567,6 +589,8 @@ export type UserScalarWhereWithAggregatesInput = {
   plan?: Prisma.EnumPlanWithAggregatesFilter<"User"> | $Enums.Plan
   premiumUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   winbackSentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  igFollowedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  tgSubVerifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   referralCode?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   referredById?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   referralRewarded?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
@@ -598,6 +622,8 @@ export type UserCreateInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
@@ -637,6 +663,8 @@ export type UserUncheckedCreateInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referredById?: string | null
   referralRewarded?: boolean
@@ -676,6 +704,8 @@ export type UserUpdateInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
@@ -715,6 +745,8 @@ export type UserUncheckedUpdateInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -754,6 +786,8 @@ export type UserCreateManyInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referredById?: string | null
   referralRewarded?: boolean
@@ -785,6 +819,8 @@ export type UserUpdateManyMutationInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
@@ -815,6 +851,8 @@ export type UserUncheckedUpdateManyInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -861,6 +899,8 @@ export type UserCountOrderByAggregateInput = {
   plan?: Prisma.SortOrder
   premiumUntil?: Prisma.SortOrder
   winbackSentAt?: Prisma.SortOrder
+  igFollowedAt?: Prisma.SortOrder
+  tgSubVerifiedAt?: Prisma.SortOrder
   referralCode?: Prisma.SortOrder
   referredById?: Prisma.SortOrder
   referralRewarded?: Prisma.SortOrder
@@ -898,6 +938,8 @@ export type UserMaxOrderByAggregateInput = {
   plan?: Prisma.SortOrder
   premiumUntil?: Prisma.SortOrder
   winbackSentAt?: Prisma.SortOrder
+  igFollowedAt?: Prisma.SortOrder
+  tgSubVerifiedAt?: Prisma.SortOrder
   referralCode?: Prisma.SortOrder
   referredById?: Prisma.SortOrder
   referralRewarded?: Prisma.SortOrder
@@ -929,6 +971,8 @@ export type UserMinOrderByAggregateInput = {
   plan?: Prisma.SortOrder
   premiumUntil?: Prisma.SortOrder
   winbackSentAt?: Prisma.SortOrder
+  igFollowedAt?: Prisma.SortOrder
+  tgSubVerifiedAt?: Prisma.SortOrder
   referralCode?: Prisma.SortOrder
   referredById?: Prisma.SortOrder
   referralRewarded?: Prisma.SortOrder
@@ -1167,6 +1211,8 @@ export type UserCreateWithoutReferralsInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
@@ -1205,6 +1251,8 @@ export type UserUncheckedCreateWithoutReferralsInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referredById?: string | null
   referralRewarded?: boolean
@@ -1248,6 +1296,8 @@ export type UserCreateWithoutReferredByInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referrals?: Prisma.UserCreateNestedManyWithoutReferredByInput
@@ -1286,6 +1336,8 @@ export type UserUncheckedCreateWithoutReferredByInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferredByInput
@@ -1345,6 +1397,8 @@ export type UserUpdateWithoutReferralsInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
@@ -1383,6 +1437,8 @@ export type UserUncheckedUpdateWithoutReferralsInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1440,6 +1496,8 @@ export type UserScalarWhereInput = {
   plan?: Prisma.EnumPlanFilter<"User"> | $Enums.Plan
   premiumUntil?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   winbackSentAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  igFollowedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  tgSubVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   referralCode?: Prisma.StringNullableFilter<"User"> | string | null
   referredById?: Prisma.StringNullableFilter<"User"> | string | null
   referralRewarded?: Prisma.BoolFilter<"User"> | boolean
@@ -1471,6 +1529,8 @@ export type UserCreateWithoutPaymentsInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
@@ -1509,6 +1569,8 @@ export type UserUncheckedCreateWithoutPaymentsInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referredById?: string | null
   referralRewarded?: boolean
@@ -1563,6 +1625,8 @@ export type UserUpdateWithoutPaymentsInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
@@ -1601,6 +1665,8 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1639,6 +1705,8 @@ export type UserCreateWithoutSupportMessagesInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
@@ -1677,6 +1745,8 @@ export type UserUncheckedCreateWithoutSupportMessagesInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referredById?: string | null
   referralRewarded?: boolean
@@ -1731,6 +1801,8 @@ export type UserUpdateWithoutSupportMessagesInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
@@ -1769,6 +1841,8 @@ export type UserUncheckedUpdateWithoutSupportMessagesInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1807,6 +1881,8 @@ export type UserCreateWithoutAttemptsInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
@@ -1845,6 +1921,8 @@ export type UserUncheckedCreateWithoutAttemptsInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referredById?: string | null
   referralRewarded?: boolean
@@ -1899,6 +1977,8 @@ export type UserUpdateWithoutAttemptsInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
@@ -1937,6 +2017,8 @@ export type UserUncheckedUpdateWithoutAttemptsInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1975,6 +2057,8 @@ export type UserCreateWithoutShareLinksInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
@@ -2013,6 +2097,8 @@ export type UserUncheckedCreateWithoutShareLinksInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referredById?: string | null
   referralRewarded?: boolean
@@ -2067,6 +2153,8 @@ export type UserUpdateWithoutShareLinksInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
@@ -2105,6 +2193,8 @@ export type UserUncheckedUpdateWithoutShareLinksInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2143,6 +2233,8 @@ export type UserCreateWithoutShareLinkUsesInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
@@ -2181,6 +2273,8 @@ export type UserUncheckedCreateWithoutShareLinkUsesInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referredById?: string | null
   referralRewarded?: boolean
@@ -2235,6 +2329,8 @@ export type UserUpdateWithoutShareLinkUsesInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
@@ -2273,6 +2369,8 @@ export type UserUncheckedUpdateWithoutShareLinkUsesInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2311,6 +2409,8 @@ export type UserCreateWithoutLiveHostedInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
@@ -2349,6 +2449,8 @@ export type UserUncheckedCreateWithoutLiveHostedInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referredById?: string | null
   referralRewarded?: boolean
@@ -2403,6 +2505,8 @@ export type UserUpdateWithoutLiveHostedInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
@@ -2441,6 +2545,8 @@ export type UserUncheckedUpdateWithoutLiveHostedInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2479,6 +2585,8 @@ export type UserCreateWithoutLiveJoinedInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
@@ -2517,6 +2625,8 @@ export type UserUncheckedCreateWithoutLiveJoinedInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referredById?: string | null
   referralRewarded?: boolean
@@ -2571,6 +2681,8 @@ export type UserUpdateWithoutLiveJoinedInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
@@ -2609,6 +2721,8 @@ export type UserUncheckedUpdateWithoutLiveJoinedInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2647,6 +2761,8 @@ export type UserCreateManyReferredByInput = {
   plan?: $Enums.Plan
   premiumUntil?: Date | string | null
   winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
 }
@@ -2677,6 +2793,8 @@ export type UserUpdateWithoutReferredByInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referrals?: Prisma.UserUpdateManyWithoutReferredByNestedInput
@@ -2715,6 +2833,8 @@ export type UserUncheckedUpdateWithoutReferredByInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referrals?: Prisma.UserUncheckedUpdateManyWithoutReferredByNestedInput
@@ -2753,6 +2873,8 @@ export type UserUncheckedUpdateManyWithoutReferredByInput = {
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
@@ -2877,6 +2999,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   plan?: boolean
   premiumUntil?: boolean
   winbackSentAt?: boolean
+  igFollowedAt?: boolean
+  tgSubVerifiedAt?: boolean
   referralCode?: boolean
   referredById?: boolean
   referralRewarded?: boolean
@@ -2918,6 +3042,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   plan?: boolean
   premiumUntil?: boolean
   winbackSentAt?: boolean
+  igFollowedAt?: boolean
+  tgSubVerifiedAt?: boolean
   referralCode?: boolean
   referredById?: boolean
   referralRewarded?: boolean
@@ -2950,6 +3076,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   plan?: boolean
   premiumUntil?: boolean
   winbackSentAt?: boolean
+  igFollowedAt?: boolean
+  tgSubVerifiedAt?: boolean
   referralCode?: boolean
   referredById?: boolean
   referralRewarded?: boolean
@@ -2982,12 +3110,14 @@ export type UserSelectScalar = {
   plan?: boolean
   premiumUntil?: boolean
   winbackSentAt?: boolean
+  igFollowedAt?: boolean
+  tgSubVerifiedAt?: boolean
   referralCode?: boolean
   referredById?: boolean
   referralRewarded?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "emailVerified" | "verifyToken" | "verifyTokenExpiry" | "telegramId" | "telegramUsername" | "createdAt" | "updatedAt" | "avatarUrl" | "country" | "nativeLanguage" | "phone" | "targetScore" | "targetMathScore" | "targetRWScore" | "examDate" | "defaultType" | "emailNotifications" | "plan" | "premiumUntil" | "winbackSentAt" | "referralCode" | "referredById" | "referralRewarded", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "emailVerified" | "verifyToken" | "verifyTokenExpiry" | "telegramId" | "telegramUsername" | "createdAt" | "updatedAt" | "avatarUrl" | "country" | "nativeLanguage" | "phone" | "targetScore" | "targetMathScore" | "targetRWScore" | "examDate" | "defaultType" | "emailNotifications" | "plan" | "premiumUntil" | "winbackSentAt" | "igFollowedAt" | "tgSubVerifiedAt" | "referralCode" | "referredById" | "referralRewarded", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   referredBy?: boolean | Prisma.User$referredByArgs<ExtArgs>
   referrals?: boolean | Prisma.User$referralsArgs<ExtArgs>
@@ -3046,6 +3176,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     plan: $Enums.Plan
     premiumUntil: Date | null
     winbackSentAt: Date | null
+    igFollowedAt: Date | null
+    tgSubVerifiedAt: Date | null
     referralCode: string | null
     referredById: string | null
     referralRewarded: boolean
@@ -3506,6 +3638,8 @@ export interface UserFieldRefs {
   readonly plan: Prisma.FieldRef<"User", 'Plan'>
   readonly premiumUntil: Prisma.FieldRef<"User", 'DateTime'>
   readonly winbackSentAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly igFollowedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly tgSubVerifiedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly referralCode: Prisma.FieldRef<"User", 'String'>
   readonly referredById: Prisma.FieldRef<"User", 'String'>
   readonly referralRewarded: Prisma.FieldRef<"User", 'Boolean'>

@@ -46,6 +46,11 @@ model User {
   // current expiry. Re-armed on renewal because premiumUntil moves past it.
   winbackSentAt      DateTime?
 
+  // Subscription gate: unlock the app by following on Instagram + joining the
+  // Telegram channel. Set once (gate is shown a single time, at first entry).
+  igFollowedAt    DateTime? // honor-system "I followed on Instagram" click
+  tgSubVerifiedAt DateTime? // verified via Telegram Bot API getChatMember
+
   referralCode     String?  @unique
   referredById     String?
   referredBy       User?    @relation("Referrals", fields: [referredById], references: [id])
