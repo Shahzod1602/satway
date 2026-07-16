@@ -120,8 +120,15 @@ model Payment {
 
   // ── Provider state (null on manual rows) ──
   clickPrepareId Int? // issued at Prepare, must be echoed at Complete
-  providerRef    String? // the provider's transaction id, e.g. "click:1234567"
+  providerRef    String? // the provider's transaction id, e.g. "click:1234567" / "payme:<id>"
   paidAt         DateTime? // when the provider confirmed money moved
+
+  // ── Payme state machine (see src/lib/payme.ts) ──
+  paymeTransId      String?   @unique // Payme's transaction id — every Payme method looks the row up by it
+  paymeState        Int? // 1 created · 2 performed · -1 cancelled · -2 cancelled after perform
+  paymeCreatedAt    DateTime? // our create_time for this Payme transaction
+  paymeCancelledAt  DateTime? // our cancel_time
+  paymeCancelReason Int? // Payme's cancellation reason code (1-5; 4 = 12h timeout)
 
   // ── Promo snapshot ──
   // Snapshots, not joins. A promo's percentage can be edited and its owner reassigned;

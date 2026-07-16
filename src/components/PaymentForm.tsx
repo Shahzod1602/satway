@@ -12,6 +12,7 @@ export default function PaymentForm({
   cardHolder,
   paymentTelegram,
   clickEnabled,
+  paymeEnabled,
   onClose,
 }: {
   plan: PremiumPlan;
@@ -19,6 +20,7 @@ export default function PaymentForm({
   cardHolder: string;
   paymentTelegram: string;
   clickEnabled: boolean;
+  paymeEnabled: boolean;
   onClose: () => void;
 }) {
   // e.g. "https://t.me/identify_admin" → "@identify_admin"
@@ -30,9 +32,12 @@ export default function PaymentForm({
   const [submitted, setSubmitted] = useState(false);
   const [orderNo, setOrderNo] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  // Click first when it exists: an automated flow that grants in seconds should never
-  // sit behind the one that needs a human to read a screenshot.
-  const [method, setMethod] = useState<"click" | "transfer">(clickEnabled ? "click" : "transfer");
+  // Automated providers first: a flow that grants in seconds should never sit behind
+  // the one that needs a human to read a screenshot.
+  const [method, setMethod] = useState<"payme" | "click" | "transfer">(
+    paymeEnabled ? "payme" : clickEnabled ? "click" : "transfer",
+  );
+  const providerCount = Number(paymeEnabled) + Number(clickEnabled);
 
   // Promo. `applied` is only ever set from the SERVER's answer — the amount shown here
   // is the one the server computed, never one this component worked out for itself.
@@ -93,23 +98,23 @@ export default function PaymentForm({
     setLoading(false);
   };
 
-  const payWithClick = async () => {
+  // One redirect flow for every automated provider — the return URL lands on
+  // /upgrade/success, which polls until the webhook's grant is visible.
+  const payWithProvider = async (provider: "click" | "payme") => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/payment/click", {
+      const res = await fetch(`/api/payment/${provider}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ planId: plan.id, promoCode: applied?.code }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.url) {
-        setError(data.error || "Click is unavailable right now. Try the card transfer.");
+        setError(data.error || "This method is unavailable right now. Try the card transfer.");
         setLoading(false);
         return;
       }
-      // Off to my.click.uz; Click's return_url brings them back to /upgrade/success,
-      // where the page polls until the webhook's grant lands.
       window.location.href = data.url;
     } catch {
       setError("Network error. Please try again.");
@@ -225,13 +230,14 @@ export default function PaymentForm({
           {promoMsg && <p className="mt-1 text-xs text-rose-600">{promoMsg}</p>}
         </div>
 
-        {clickEnabled && (
-          <div className="mt-4 grid grid-cols-2 gap-2">
+        {providerCount > 0 && (
+          <div className={`mt-4 grid gap-2 ${providerCount === 2 ? "grid-cols-3" : "grid-cols-2"}`}>
             {(
               [
-                { id: "click", label: "Click", sub: "Uzcard/Humo — avtomatik" },
-                { id: "transfer", label: "Karta o'tkazma", sub: "Admin tasdiqlaydi" },
-              ] as const
+                ...(paymeEnabled ? [{ id: "payme" as const, label: "Payme", sub: "Avtomatik" }] : []),
+                ...(clickEnabled ? [{ id: "click" as const, label: "Click", sub: "Avtomatik" }] : []),
+                { id: "transfer" as const, label: "Karta o'tkazma", sub: "Admin tasdiqlaydi" },
+              ]
             ).map((m) => (
               <button
                 key={m.id}
@@ -250,10 +256,17 @@ export default function PaymentForm({
           </div>
         )}
 
-        {method === "click" && clickEnabled ? (
+        {(method === "payme" && paymeEnabled) || (method === "click" && clickEnabled) ? (
           <>
-            <div className="mt-4 rounded-xl bg-[#0072FF]/5 border border-[#0072FF]/20 p-4 text-sm text-slate-700">
-              Uzcard yoki Humo bilan to&apos;laysiz — Click tasdiqlashi bilan Premium{" "}
+            <div
+              className={`mt-4 rounded-xl border p-4 text-sm text-slate-700 ${
+                method === "payme"
+                  ? "border-[#33CCCC]/30 bg-[#33CCCC]/5"
+                  : "border-[#0072FF]/20 bg-[#0072FF]/5"
+              }`}
+            >
+              Uzcard, Humo{method === "payme" ? " yoki Visa" : ""} bilan to&apos;laysiz —{" "}
+              {method === "payme" ? "Payme" : "Click"} tasdiqlashi bilan Premium{" "}
               <strong>avtomatik, bir necha soniyada</strong> yoqiladi. Chek yuborish, admin
               kutish yo&apos;q.
             </div>
@@ -268,11 +281,17 @@ export default function PaymentForm({
                 Cancel
               </button>
               <button
-                onClick={payWithClick}
+                onClick={() => payWithProvider(method as "click" | "payme")}
                 disabled={loading}
-                className="px-5 py-2 rounded-lg bg-[#0072FF] text-white text-sm font-semibold hover:bg-[#005fd6] disabled:opacity-60"
+                className={`px-5 py-2 rounded-lg text-white text-sm font-semibold disabled:opacity-60 ${
+                  method === "payme"
+                    ? "bg-[#31b3b3] hover:bg-[#2aa0a0]"
+                    : "bg-[#0072FF] hover:bg-[#005fd6]"
+                }`}
               >
-                {loading ? "Yo'naltirilmoqda…" : `Click orqali to'lash — ${fmtUZS(total)} UZS`}
+                {loading
+                  ? "Yo'naltirilmoqda…"
+                  : `${method === "payme" ? "Payme" : "Click"} orqali to'lash — ${fmtUZS(total)} UZS`}
               </button>
             </div>
           </>

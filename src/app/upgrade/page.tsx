@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { effectivePlan } from "@/lib/access";
 import { getPlan } from "@/lib/plans";
 import { clickConfigured } from "@/lib/click";
+import { paymeConfigured } from "@/lib/payme";
 import PricingSelector from "@/components/PricingSelector";
 import Sidebar from "@/components/Sidebar";
 
@@ -47,6 +48,7 @@ export default async function UpgradePage() {
             cardHolder={process.env.PAYMENT_CARD_HOLDER || ""}
             paymentTelegram={process.env.PAYMENT_TELEGRAM || ""}
             clickEnabled={clickConfigured()}
+            paymeEnabled={paymeConfigured()}
           />
         </main>
       </div>
