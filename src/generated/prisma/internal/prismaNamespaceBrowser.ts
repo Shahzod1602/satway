@@ -53,6 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Payment: 'Payment',
+  PromoCode: 'PromoCode',
   SupportMessage: 'SupportMessage',
   EmailOtp: 'EmailOtp',
   Test: 'Test',
@@ -63,7 +64,12 @@ export const ModelName = {
   ShareLink: 'ShareLink',
   ShareLinkUse: 'ShareLinkUse',
   LiveSession: 'LiveSession',
-  LiveParticipant: 'LiveParticipant'
+  LiveParticipant: 'LiveParticipant',
+  VocabProgress: 'VocabProgress',
+  Event: 'Event',
+  AiBillMonth: 'AiBillMonth',
+  Broadcast: 'Broadcast',
+  AiAlert: 'AiAlert'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -110,6 +116,11 @@ export const UserScalarFieldEnum = {
   winbackSentAt: 'winbackSentAt',
   igFollowedAt: 'igFollowedAt',
   tgSubVerifiedAt: 'tgSubVerifiedAt',
+  currentStreak: 'currentStreak',
+  longestStreak: 'longestStreak',
+  lastActiveDay: 'lastActiveDay',
+  nudgeSentAt: 'nudgeSentAt',
+  welcomeSentAt: 'welcomeSentAt',
   referralCode: 'referralCode',
   referredById: 'referredById',
   referralRewarded: 'referralRewarded'
@@ -129,10 +140,34 @@ export const PaymentScalarFieldEnum = {
   proofUrl: 'proofUrl',
   reviewedAt: 'reviewedAt',
   reviewedBy: 'reviewedBy',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  orderNo: 'orderNo',
+  provider: 'provider',
+  promoCode: 'promoCode',
+  promoOwnerId: 'promoOwnerId',
+  discountPercent: 'discountPercent',
+  commissionPct: 'commissionPct',
+  baseAmount: 'baseAmount'
 } as const
 
 export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
+
+
+export const PromoCodeScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  percentOff: 'percentOff',
+  ownerId: 'ownerId',
+  commissionPct: 'commissionPct',
+  maxUses: 'maxUses',
+  usedCount: 'usedCount',
+  expiresAt: 'expiresAt',
+  active: 'active',
+  note: 'note',
+  createdAt: 'createdAt'
+} as const
+
+export type PromoCodeScalarFieldEnum = (typeof PromoCodeScalarFieldEnum)[keyof typeof PromoCodeScalarFieldEnum]
 
 
 export const SupportMessageScalarFieldEnum = {
@@ -292,6 +327,94 @@ export const LiveParticipantScalarFieldEnum = {
 } as const
 
 export type LiveParticipantScalarFieldEnum = (typeof LiveParticipantScalarFieldEnum)[keyof typeof LiveParticipantScalarFieldEnum]
+
+
+export const VocabProgressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  wordId: 'wordId',
+  box: 'box',
+  dueAt: 'dueAt',
+  correctCount: 'correctCount',
+  wrongCount: 'wrongCount',
+  lastReviewedAt: 'lastReviewedAt'
+} as const
+
+export type VocabProgressScalarFieldEnum = (typeof VocabProgressScalarFieldEnum)[keyof typeof VocabProgressScalarFieldEnum]
+
+
+export const EventScalarFieldEnum = {
+  id: 'id',
+  ts: 'ts',
+  name: 'name',
+  surface: 'surface',
+  key: 'key',
+  itemId: 'itemId',
+  userId: 'userId',
+  plan: 'plan',
+  origin: 'origin',
+  ms: 'ms',
+  pct: 'pct',
+  ok: 'ok',
+  model: 'model',
+  inTextTok: 'inTextTok',
+  inAudioTok: 'inAudioTok',
+  inCachedTok: 'inCachedTok',
+  outTextTok: 'outTextTok',
+  outAudioTok: 'outAudioTok',
+  thinkTok: 'thinkTok',
+  images: 'images',
+  usdMicros: 'usdMicros',
+  priceRev: 'priceRev',
+  cacheHit: 'cacheHit',
+  estimated: 'estimated',
+  retries: 'retries',
+  attemptId: 'attemptId',
+  props: 'props'
+} as const
+
+export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
+
+
+export const AiBillMonthScalarFieldEnum = {
+  month: 'month',
+  actualUsdCents: 'actualUsdCents',
+  note: 'note',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AiBillMonthScalarFieldEnum = (typeof AiBillMonthScalarFieldEnum)[keyof typeof AiBillMonthScalarFieldEnum]
+
+
+export const BroadcastScalarFieldEnum = {
+  id: 'id',
+  body: 'body',
+  audience: 'audience',
+  channels: 'channels',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  recipients: 'recipients',
+  inappSent: 'inappSent',
+  telegramSent: 'telegramSent',
+  telegramFailed: 'telegramFailed',
+  emailSent: 'emailSent',
+  emailFailed: 'emailFailed',
+  deliveredAt: 'deliveredAt'
+} as const
+
+export type BroadcastScalarFieldEnum = (typeof BroadcastScalarFieldEnum)[keyof typeof BroadcastScalarFieldEnum]
+
+
+export const AiAlertScalarFieldEnum = {
+  id: 'id',
+  day: 'day',
+  kind: 'kind',
+  target: 'target',
+  createdAt: 'createdAt'
+} as const
+
+export type AiAlertScalarFieldEnum = (typeof AiAlertScalarFieldEnum)[keyof typeof AiAlertScalarFieldEnum]
 
 
 export const SortOrder = {

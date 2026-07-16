@@ -5,7 +5,9 @@ import { prisma } from "@/lib/prisma";
 import { parseJson, emailSchema, passwordSchema } from "@/lib/validation";
 import { jsonError, tooManyRequests, withErrorHandling } from "@/lib/apiError";
 import { rateLimit, clientIp } from "@/lib/rateLimit";
-import { welcomePremiumUntil } from "@/lib/access";
+import { welcomePremiumUntil, WELCOME_PREMIUM_DAYS } from "@/lib/access";
+import { sendMail, welcomeEmail } from "@/lib/mail";
+import { appUrl } from "@/lib/winback";
 
 const bodySchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
@@ -45,8 +47,8 @@ export const POST = withErrorHandling(async (req: NextRequest) => {
   // Welcome gift: every new account starts with a short free Premium trial.
   const premiumUntil = welcomePremiumUntil();
 
-  await prisma.$transaction(async (tx) => {
-    await tx.user.create({
+  const created = await prisma.$transaction(async (tx) => {
+    const u = await tx.user.create({
       data: {
         name,
         email,
@@ -57,9 +59,34 @@ export const POST = withErrorHandling(async (req: NextRequest) => {
         plan: "PREMIUM",
         premiumUntil,
       },
+      select: { id: true, name: true },
     });
     await tx.emailOtp.delete({ where: { email } });
+    return u;
   });
+
+  // Outside the transaction, deliberately: an SMTP call can take seconds, and holding a
+  // database connection open for it under a signup spike is how the pool runs dry.
+  //
+  // Awaited rather than fire-and-forget because this route runs in a serverless-style
+  // handler — a floating promise can be killed the moment the response is returned. The
+  // send is wrapped so a mail outage can never fail a registration that already
+  // committed: the account exists, and the day-2 nudge will reach them anyway.
+  try {
+    const { subject, html, text } = welcomeEmail({
+      name: created.name,
+      trialDays: WELCOME_PREMIUM_DAYS,
+      appUrl: appUrl(),
+    });
+    if (await sendMail({ to: email, subject, html, text })) {
+      await prisma.user.update({
+        where: { id: created.id },
+        data: { welcomeSentAt: new Date() },
+      });
+    }
+  } catch (e) {
+    console.error("[register] welcome email failed:", (e as Error).message);
+  }
 
   return Response.json({ ok: true });
 });

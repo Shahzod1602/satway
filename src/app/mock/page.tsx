@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import MockRunner from "@/components/exam/MockRunner";
 import type { ClientExamMeta } from "@/lib/types";
 import { canAccessMock, effectivePlan } from "@/lib/access";
+import { blocked } from "@/lib/events";
+import { BLOCK_REASONS } from "@/lib/surfaces";
 
 export const dynamic = "force-dynamic";
 
@@ -35,7 +37,10 @@ export default async function MockPage({
     where: { id: user.id },
     select: { plan: true, premiumUntil: true },
   });
-  if (!canAccessMock(effectivePlan(dbUser?.plan, dbUser?.premiumUntil))) {
+  const plan = effectivePlan(dbUser?.plan, dbUser?.premiumUntil);
+  if (!canAccessMock(plan)) {
+    // Before the redirect, not after — redirect() throws, so a line below it never runs.
+    blocked("mock", { userId: user.id, plan, reason: BLOCK_REASONS.PREMIUM_REQUIRED });
     redirect("/upgrade");
   }
 

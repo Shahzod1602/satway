@@ -3,7 +3,7 @@ import { currentUser } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 import DashboardClient from "./DashboardClient";
 import { effectivePlan, isPremiumActive } from "@/lib/access";
-import { computeStreak } from "@/lib/streak";
+import { effectiveStreak } from "@/lib/streak";
 
 export const dynamic = "force-dynamic";
 
@@ -19,23 +19,21 @@ export default async function DashboardPage({
   const tabRaw = Array.isArray(sp.tab) ? sp.tab[0] : sp.tab;
   const initialTab = (tabRaw ?? "").toUpperCase();
 
-  const [tests, dbUser, attemptDays] = await Promise.all([
+  const [tests, dbUser] = await Promise.all([
     prisma.test.findMany({
       where: { published: true },
       orderBy: { createdAt: "asc" },
       include: { _count: { select: { sections: true } } },
     }),
-    prisma.user.findUnique({ where: { id: user.id }, select: { plan: true, premiumUntil: true } }),
-    prisma.testAttempt.findMany({
-      where: { userId: user.id, status: "SUBMITTED" },
-      select: { submittedAt: true },
-      orderBy: { submittedAt: "desc" },
-      take: 400,
+    prisma.user.findUnique({
+      where: { id: user.id },
+      select: { plan: true, premiumUntil: true, currentStreak: true, lastActiveDay: true },
     }),
   ]);
 
-  // Current daily-practice streak on the Asia/Tashkent calendar (see lib/streak).
-  const streak = computeStreak(attemptDays.map((a) => a.submittedAt));
+  // Read the stored streak rather than re-deriving it from 400 attempt rows on every
+  // dashboard load. effectiveStreak() decays it once the student goes idle (lib/streak).
+  const streak = effectiveStreak(dbUser?.currentStreak, dbUser?.lastActiveDay);
 
   // Premium that lapsed (incl. an ended trial) → show the win-back banner.
   const premiumExpired =

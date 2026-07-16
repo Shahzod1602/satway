@@ -4,6 +4,7 @@ import { requireAdmin } from "@/lib/adminGuard";
 import { prisma } from "@/lib/prisma";
 import AppHeader from "@/components/AppHeader";
 import AdminPaymentsClient from "./AdminPaymentsClient";
+import { formatOrderNo } from "@/lib/checkout";
 
 export const dynamic = "force-dynamic";
 
@@ -24,9 +25,15 @@ export default async function AdminPaymentsPage() {
 
   const initial = payments.map((p) => ({
     id: p.id,
+    // The reference the student was told to quote with their receipt. Without it on this
+    // screen, the person approving is matching a Telegram screenshot to a name by eye.
+    orderNo: formatOrderNo(p.orderNo),
     planLabel: p.planLabel,
     months: p.months,
     amount: p.amount,
+    baseAmount: p.baseAmount,
+    discountPercent: p.discountPercent,
+    promoCode: p.promoCode,
     status: p.status,
     note: p.note,
     createdAt: p.createdAt.toISOString(),

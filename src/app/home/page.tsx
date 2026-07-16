@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { computeStreak } from "@/lib/streak";
+import { effectiveStreak } from "@/lib/streak";
 import type { LucideIcon } from "lucide-react";
 import {
   Flame,
@@ -53,7 +53,13 @@ export default async function HomePage() {
   const [dbUser, submitted, inProgress, tests, totalSolved] = await Promise.all([
     prisma.user.findUnique({
       where: { id: user.id },
-      select: { plan: true, premiumUntil: true },
+      select: {
+        plan: true,
+        premiumUntil: true,
+        currentStreak: true,
+        lastActiveDay: true,
+        longestStreak: true,
+      },
     }),
     prisma.testAttempt.findMany({
       where: { userId: user.id, status: "SUBMITTED" },
@@ -84,8 +90,10 @@ export default async function HomePage() {
   const premiumExpired =
     dbUser?.plan === "PREMIUM" && !!dbUser?.premiumUntil && new Date(dbUser.premiumUntil).getTime() <= now;
 
-  // Streak: consecutive Asia/Tashkent days with a submitted attempt (see lib/streak).
-  const streak = computeStreak(submitted.map((a) => a.submittedAt));
+  // Streak: read the stored value rather than recomputing from `submitted`, which is
+  // capped at 100 rows and would silently truncate a long streak. effectiveStreak()
+  // decays it to 0 once the student has been idle past yesterday (see lib/streak).
+  const streak = effectiveStreak(dbUser?.currentStreak, dbUser?.lastActiveDay);
 
   // Scores: scaledScore is 200–800 per section (null for module-only practice).
   const scored = submitted.filter((a) => a.scaledScore != null);

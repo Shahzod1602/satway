@@ -7,13 +7,11 @@ import { Crown, CheckCircle2 } from "lucide-react";
 
 export default function PricingSelector({
   currentPlan,
-  referralCode,
   cardNumber,
   cardHolder,
   paymentTelegram,
 }: {
   currentPlan: string;
-  referralCode: string;
   cardNumber: string;
   cardHolder: string;
   paymentTelegram: string;
@@ -71,7 +69,6 @@ export default function PricingSelector({
       {showPayment && plan && (
         <PaymentForm
           plan={plan}
-          referralCode={referralCode}
           cardNumber={cardNumber}
           cardHolder={cardHolder}
           paymentTelegram={paymentTelegram}

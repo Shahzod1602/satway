@@ -28,6 +28,16 @@ export type User = Prisma.UserModel
  */
 export type Payment = Prisma.PaymentModel
 /**
+ * Model PromoCode
+ * A discount code. Optionally owned by someone who earns commission on what it sells.
+ * 
+ * This is the distribution channel: in this market students come through teachers and
+ * learning centres, and a code with a name on it is how you find out which ones. There
+ * is deliberately no TEACHER role — an owner is just a User, the same call share links
+ * already make.
+ */
+export type PromoCode = Prisma.PromoCodeModel
+/**
  * Model SupportMessage
  * 
  */
@@ -82,3 +92,43 @@ export type LiveSession = Prisma.LiveSessionModel
  * 
  */
 export type LiveParticipant = Prisma.LiveParticipantModel
+/**
+ * Model VocabProgress
+ * One learner's memory of one word.
+ * 
+ * This used to be a Set<string> of "known" ids in localStorage, which had three
+ * problems: it vanished on a device change, it was invisible to every dashboard, and
+ * "known" is not a thing you either are or aren't — you forget. A Leitner box plus a due
+ * date is the smallest model that expresses forgetting (see src/lib/srs.ts).
+ * 
+ * wordId is the slug from VOCAB_DECKS (src/lib/vocabulary.ts) — deliberately NOT a
+ * foreign key, because the deck is static data in the repo, not a table. A word removed
+ * from the deck leaves a harmless orphan row rather than breaking a delete.
+ */
+export type VocabProgress = Prisma.VocabProgressModel
+/**
+ * Model Event
+ * 
+ */
+export type Event = Prisma.EventModel
+/**
+ * Model AiBillMonth
+ * The REAL Google invoice, typed in once a month.
+ * Without this the cost board is a guess: the rate card is a model, not accounting.
+ * Every cost screen prints "estimated $X · actual $Y · drift +Z%".
+ */
+export type AiBillMonth = Prisma.AiBillMonthModel
+/**
+ * Model Broadcast
+ * One admin announcement, and what actually happened when it went out.
+ * 
+ * The counts are a SNAPSHOT taken at send time, not a live join. A "sent to 412 free
+ * students" that silently becomes 380 next month as people upgrade is not history — and
+ * history is the only reason to keep this row at all.
+ */
+export type Broadcast = Prisma.BroadcastModel
+/**
+ * Model AiAlert
+ * Fire each budget alert exactly once per (day, kind, target).
+ */
+export type AiAlert = Prisma.AiAlertModel

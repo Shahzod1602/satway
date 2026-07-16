@@ -14,7 +14,6 @@ export default function PaymentForm({
   onClose,
 }: {
   plan: PremiumPlan;
-  referralCode: string;
   cardNumber: string;
   cardHolder: string;
   paymentTelegram: string;
@@ -27,7 +26,43 @@ export default function PaymentForm({
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [orderNo, setOrderNo] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // Promo. `applied` is only ever set from the SERVER's answer — the amount shown here
+  // is the one the server computed, never one this component worked out for itself.
+  const [promo, setPromo] = useState("");
+  const [applied, setApplied] = useState<{ code: string; percentOff: number; amount: number } | null>(null);
+  const [promoMsg, setPromoMsg] = useState<string | null>(null);
+  const [checkingPromo, setCheckingPromo] = useState(false);
+
+  const total = applied?.amount ?? plan.total;
+
+  const checkPromo = async () => {
+    if (!promo.trim()) return;
+    setCheckingPromo(true);
+    setPromoMsg(null);
+    try {
+      const res = await fetch("/api/promo/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: promo.trim(), planId: plan.id }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPromoMsg(data.error ?? "Could not check that code.");
+      } else if (data.valid) {
+        setApplied({ code: data.code, percentOff: data.percentOff, amount: data.amount });
+        setPromoMsg(null);
+      } else {
+        setApplied(null);
+        setPromoMsg(data.reason);
+      }
+    } catch {
+      setPromoMsg("Network error. Try again.");
+    }
+    setCheckingPromo(false);
+  };
 
   const submitPayment = async () => {
     setLoading(true);
@@ -36,14 +71,16 @@ export default function PaymentForm({
       const res = await fetch("/api/profile/upgrade", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ planId: plan.id }),
+        // The code, not the price. The server re-derives the amount — see lib/checkout.
+        body: JSON.stringify({ planId: plan.id, promoCode: applied?.code }),
       });
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
         setError(data.error || "Could not submit payment. Please try again.");
         setLoading(false);
         return;
       }
+      setOrderNo(data.orderNo ?? null);
       setSubmitted(true);
     } catch {
       setError("Network error. Please try again.");
@@ -62,7 +99,18 @@ export default function PaymentForm({
           <div className="py-6 text-center">
             <CheckCircle2 className="mx-auto h-12 w-12 text-emerald-500" />
             <h3 className="mt-3 font-bold text-lg text-slate-900">Payment submitted</h3>
-            <p className="mt-2 text-sm text-slate-600">
+            {/* The order number is the whole reason the manual flow is workable: without a
+                reference, an admin matching a screenshot to an account is guessing. */}
+            {orderNo && (
+              <div className="mt-3 rounded-xl bg-slate-50 px-4 py-3">
+                <p className="text-xs uppercase tracking-wide text-slate-400">Your order number</p>
+                <p className="mt-0.5 font-mono text-xl font-bold text-slate-900">{orderNo}</p>
+                <p className="mt-1 text-xs text-slate-500">
+                  Send this with your receipt so we can find your transfer.
+                </p>
+              </div>
+            )}
+            <p className="mt-3 text-sm text-slate-600">
               Thanks! Make sure you&apos;ve sent the payment receipt
               {tgHandle ? ` to ${tgHandle} on Telegram` : ""}. Our admin will verify your
               transfer and activate Premium shortly. You&apos;ll see it reflected on your
@@ -79,7 +127,7 @@ export default function PaymentForm({
         <>
         <h3 className="font-bold text-lg text-slate-900">Complete payment</h3>
         <p className="mt-2 text-sm text-slate-600">
-          {plan.label} plan — <strong>{fmtUZS(plan.total)} UZS</strong>
+          {plan.label} plan — <strong>{fmtUZS(total)} UZS</strong>
         </p>
 
         <div className="mt-4 rounded-xl bg-slate-50 p-4 space-y-2 text-sm">
@@ -91,10 +139,61 @@ export default function PaymentForm({
             <span className="text-slate-500">Discount:</span>
             <span className="font-medium text-accent-600">{plan.discount}%</span>
           </div>
+          {applied && (
+            <div className="flex justify-between">
+              <span className="text-slate-500">
+                Code <span className="font-mono font-semibold">{applied.code}</span>:
+              </span>
+              <span className="font-medium text-emerald-600">
+                −{applied.percentOff}% ({fmtUZS(plan.total - applied.amount)} off)
+              </span>
+            </div>
+          )}
           <div className="flex justify-between border-t border-slate-200 pt-2">
             <span className="font-semibold">Total:</span>
-            <span className="font-bold text-slate-900">{fmtUZS(plan.total)} UZS</span>
+            <span className="font-bold text-slate-900">
+              {applied && (
+                <span className="mr-2 font-normal text-slate-400 line-through">
+                  {fmtUZS(plan.total)}
+                </span>
+              )}
+              {fmtUZS(total)} UZS
+            </span>
           </div>
+        </div>
+
+        <div className="mt-3">
+          <label className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+            Promo code
+          </label>
+          <div className="mt-1 flex gap-2">
+            <input
+              value={promo}
+              onChange={(e) => {
+                setPromo(e.target.value.toUpperCase());
+                setApplied(null); // any edit invalidates the server's answer
+                setPromoMsg(null);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  void checkPromo();
+                }
+              }}
+              placeholder="If your teacher gave you one"
+              maxLength={40}
+              className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm uppercase text-slate-900 placeholder:normal-case placeholder:text-slate-400"
+            />
+            <button
+              type="button"
+              onClick={checkPromo}
+              disabled={checkingPromo || !promo.trim() || !!applied}
+              className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 disabled:opacity-50"
+            >
+              {checkingPromo ? "…" : applied ? "Applied" : "Apply"}
+            </button>
+          </div>
+          {promoMsg && <p className="mt-1 text-xs text-rose-600">{promoMsg}</p>}
         </div>
 
         <div className="mt-4 rounded-xl border border-slate-200 p-4">

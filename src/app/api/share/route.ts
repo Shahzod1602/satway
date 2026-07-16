@@ -7,6 +7,8 @@ import { parseJson } from "@/lib/validation";
 import { jsonError, tooManyRequests, withErrorHandling } from "@/lib/apiError";
 import { rateLimit } from "@/lib/rateLimit";
 import { FRIEND_CAP, newShareToken } from "@/lib/share";
+import { blocked } from "@/lib/events";
+import { BLOCK_REASONS } from "@/lib/surfaces";
 
 const bodySchema = z.object({
   testId: z.string().min(1).max(40),
@@ -22,7 +24,9 @@ export const POST = withErrorHandling(async (req: NextRequest) => {
     select: { plan: true, premiumUntil: true },
   });
   // Only Premium users can share a premium test with others.
-  if (effectivePlan(dbUser?.plan, dbUser?.premiumUntil) !== "PREMIUM") {
+  const plan = effectivePlan(dbUser?.plan, dbUser?.premiumUntil);
+  if (plan !== "PREMIUM") {
+    blocked("group", { userId: user.id, plan, reason: BLOCK_REASONS.PREMIUM_REQUIRED });
     return jsonError("Sharing tests is a Premium feature.", 403);
   }
 

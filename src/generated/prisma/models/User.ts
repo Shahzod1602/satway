@@ -30,12 +30,16 @@ export type UserAvgAggregateOutputType = {
   targetScore: number | null
   targetMathScore: number | null
   targetRWScore: number | null
+  currentStreak: number | null
+  longestStreak: number | null
 }
 
 export type UserSumAggregateOutputType = {
   targetScore: number | null
   targetMathScore: number | null
   targetRWScore: number | null
+  currentStreak: number | null
+  longestStreak: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -66,6 +70,11 @@ export type UserMinAggregateOutputType = {
   winbackSentAt: Date | null
   igFollowedAt: Date | null
   tgSubVerifiedAt: Date | null
+  currentStreak: number | null
+  longestStreak: number | null
+  lastActiveDay: string | null
+  nudgeSentAt: Date | null
+  welcomeSentAt: Date | null
   referralCode: string | null
   referredById: string | null
   referralRewarded: boolean | null
@@ -99,6 +108,11 @@ export type UserMaxAggregateOutputType = {
   winbackSentAt: Date | null
   igFollowedAt: Date | null
   tgSubVerifiedAt: Date | null
+  currentStreak: number | null
+  longestStreak: number | null
+  lastActiveDay: string | null
+  nudgeSentAt: Date | null
+  welcomeSentAt: Date | null
   referralCode: string | null
   referredById: string | null
   referralRewarded: boolean | null
@@ -132,6 +146,11 @@ export type UserCountAggregateOutputType = {
   winbackSentAt: number
   igFollowedAt: number
   tgSubVerifiedAt: number
+  currentStreak: number
+  longestStreak: number
+  lastActiveDay: number
+  nudgeSentAt: number
+  welcomeSentAt: number
   referralCode: number
   referredById: number
   referralRewarded: number
@@ -143,12 +162,16 @@ export type UserAvgAggregateInputType = {
   targetScore?: true
   targetMathScore?: true
   targetRWScore?: true
+  currentStreak?: true
+  longestStreak?: true
 }
 
 export type UserSumAggregateInputType = {
   targetScore?: true
   targetMathScore?: true
   targetRWScore?: true
+  currentStreak?: true
+  longestStreak?: true
 }
 
 export type UserMinAggregateInputType = {
@@ -179,6 +202,11 @@ export type UserMinAggregateInputType = {
   winbackSentAt?: true
   igFollowedAt?: true
   tgSubVerifiedAt?: true
+  currentStreak?: true
+  longestStreak?: true
+  lastActiveDay?: true
+  nudgeSentAt?: true
+  welcomeSentAt?: true
   referralCode?: true
   referredById?: true
   referralRewarded?: true
@@ -212,6 +240,11 @@ export type UserMaxAggregateInputType = {
   winbackSentAt?: true
   igFollowedAt?: true
   tgSubVerifiedAt?: true
+  currentStreak?: true
+  longestStreak?: true
+  lastActiveDay?: true
+  nudgeSentAt?: true
+  welcomeSentAt?: true
   referralCode?: true
   referredById?: true
   referralRewarded?: true
@@ -245,6 +278,11 @@ export type UserCountAggregateInputType = {
   winbackSentAt?: true
   igFollowedAt?: true
   tgSubVerifiedAt?: true
+  currentStreak?: true
+  longestStreak?: true
+  lastActiveDay?: true
+  nudgeSentAt?: true
+  welcomeSentAt?: true
   referralCode?: true
   referredById?: true
   referralRewarded?: true
@@ -365,6 +403,11 @@ export type UserGroupByOutputType = {
   winbackSentAt: Date | null
   igFollowedAt: Date | null
   tgSubVerifiedAt: Date | null
+  currentStreak: number
+  longestStreak: number
+  lastActiveDay: string | null
+  nudgeSentAt: Date | null
+  welcomeSentAt: Date | null
   referralCode: string | null
   referredById: string | null
   referralRewarded: boolean
@@ -421,6 +464,11 @@ export type UserWhereInput = {
   winbackSentAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   igFollowedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   tgSubVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  currentStreak?: Prisma.IntFilter<"User"> | number
+  longestStreak?: Prisma.IntFilter<"User"> | number
+  lastActiveDay?: Prisma.StringNullableFilter<"User"> | string | null
+  nudgeSentAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  welcomeSentAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   referralCode?: Prisma.StringNullableFilter<"User"> | string | null
   referredById?: Prisma.StringNullableFilter<"User"> | string | null
   referralRewarded?: Prisma.BoolFilter<"User"> | boolean
@@ -433,6 +481,10 @@ export type UserWhereInput = {
   shareLinkUses?: Prisma.ShareLinkUseListRelationFilter
   liveHosted?: Prisma.LiveSessionListRelationFilter
   liveJoined?: Prisma.LiveParticipantListRelationFilter
+  events?: Prisma.EventListRelationFilter
+  promoCodes?: Prisma.PromoCodeListRelationFilter
+  promoEarnings?: Prisma.PaymentListRelationFilter
+  vocabProgress?: Prisma.VocabProgressListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -463,6 +515,11 @@ export type UserOrderByWithRelationInput = {
   winbackSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
   igFollowedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   tgSubVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  currentStreak?: Prisma.SortOrder
+  longestStreak?: Prisma.SortOrder
+  lastActiveDay?: Prisma.SortOrderInput | Prisma.SortOrder
+  nudgeSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  welcomeSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
   referralCode?: Prisma.SortOrderInput | Prisma.SortOrder
   referredById?: Prisma.SortOrderInput | Prisma.SortOrder
   referralRewarded?: Prisma.SortOrder
@@ -475,6 +532,10 @@ export type UserOrderByWithRelationInput = {
   shareLinkUses?: Prisma.ShareLinkUseOrderByRelationAggregateInput
   liveHosted?: Prisma.LiveSessionOrderByRelationAggregateInput
   liveJoined?: Prisma.LiveParticipantOrderByRelationAggregateInput
+  events?: Prisma.EventOrderByRelationAggregateInput
+  promoCodes?: Prisma.PromoCodeOrderByRelationAggregateInput
+  promoEarnings?: Prisma.PaymentOrderByRelationAggregateInput
+  vocabProgress?: Prisma.VocabProgressOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -509,6 +570,11 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   winbackSentAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   igFollowedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   tgSubVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  currentStreak?: Prisma.IntFilter<"User"> | number
+  longestStreak?: Prisma.IntFilter<"User"> | number
+  lastActiveDay?: Prisma.StringNullableFilter<"User"> | string | null
+  nudgeSentAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  welcomeSentAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   referredById?: Prisma.StringNullableFilter<"User"> | string | null
   referralRewarded?: Prisma.BoolFilter<"User"> | boolean
   referredBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -520,6 +586,10 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   shareLinkUses?: Prisma.ShareLinkUseListRelationFilter
   liveHosted?: Prisma.LiveSessionListRelationFilter
   liveJoined?: Prisma.LiveParticipantListRelationFilter
+  events?: Prisma.EventListRelationFilter
+  promoCodes?: Prisma.PromoCodeListRelationFilter
+  promoEarnings?: Prisma.PaymentListRelationFilter
+  vocabProgress?: Prisma.VocabProgressListRelationFilter
 }, "id" | "email" | "telegramId" | "referralCode">
 
 export type UserOrderByWithAggregationInput = {
@@ -550,6 +620,11 @@ export type UserOrderByWithAggregationInput = {
   winbackSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
   igFollowedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   tgSubVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  currentStreak?: Prisma.SortOrder
+  longestStreak?: Prisma.SortOrder
+  lastActiveDay?: Prisma.SortOrderInput | Prisma.SortOrder
+  nudgeSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  welcomeSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
   referralCode?: Prisma.SortOrderInput | Prisma.SortOrder
   referredById?: Prisma.SortOrderInput | Prisma.SortOrder
   referralRewarded?: Prisma.SortOrder
@@ -591,6 +666,11 @@ export type UserScalarWhereWithAggregatesInput = {
   winbackSentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   igFollowedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   tgSubVerifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  currentStreak?: Prisma.IntWithAggregatesFilter<"User"> | number
+  longestStreak?: Prisma.IntWithAggregatesFilter<"User"> | number
+  lastActiveDay?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  nudgeSentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  welcomeSentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   referralCode?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   referredById?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   referralRewarded?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
@@ -624,6 +704,11 @@ export type UserCreateInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
@@ -635,6 +720,10 @@ export type UserCreateInput = {
   shareLinkUses?: Prisma.ShareLinkUseCreateNestedManyWithoutUserInput
   liveHosted?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
   liveJoined?: Prisma.LiveParticipantCreateNestedManyWithoutUserInput
+  events?: Prisma.EventCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -665,6 +754,11 @@ export type UserUncheckedCreateInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referredById?: string | null
   referralRewarded?: boolean
@@ -676,6 +770,10 @@ export type UserUncheckedCreateInput = {
   shareLinkUses?: Prisma.ShareLinkUseUncheckedCreateNestedManyWithoutUserInput
   liveHosted?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
   liveJoined?: Prisma.LiveParticipantUncheckedCreateNestedManyWithoutUserInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeUncheckedCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentUncheckedCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -706,6 +804,11 @@ export type UserUpdateInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
@@ -717,6 +820,10 @@ export type UserUpdateInput = {
   shareLinkUses?: Prisma.ShareLinkUseUpdateManyWithoutUserNestedInput
   liveHosted?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
   liveJoined?: Prisma.LiveParticipantUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -747,6 +854,11 @@ export type UserUncheckedUpdateInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -758,6 +870,10 @@ export type UserUncheckedUpdateInput = {
   shareLinkUses?: Prisma.ShareLinkUseUncheckedUpdateManyWithoutUserNestedInput
   liveHosted?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
   liveJoined?: Prisma.LiveParticipantUncheckedUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUncheckedUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUncheckedUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -788,6 +904,11 @@ export type UserCreateManyInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referredById?: string | null
   referralRewarded?: boolean
@@ -821,6 +942,11 @@ export type UserUpdateManyMutationInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
@@ -853,6 +979,11 @@ export type UserUncheckedUpdateManyInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -901,6 +1032,11 @@ export type UserCountOrderByAggregateInput = {
   winbackSentAt?: Prisma.SortOrder
   igFollowedAt?: Prisma.SortOrder
   tgSubVerifiedAt?: Prisma.SortOrder
+  currentStreak?: Prisma.SortOrder
+  longestStreak?: Prisma.SortOrder
+  lastActiveDay?: Prisma.SortOrder
+  nudgeSentAt?: Prisma.SortOrder
+  welcomeSentAt?: Prisma.SortOrder
   referralCode?: Prisma.SortOrder
   referredById?: Prisma.SortOrder
   referralRewarded?: Prisma.SortOrder
@@ -910,6 +1046,8 @@ export type UserAvgOrderByAggregateInput = {
   targetScore?: Prisma.SortOrder
   targetMathScore?: Prisma.SortOrder
   targetRWScore?: Prisma.SortOrder
+  currentStreak?: Prisma.SortOrder
+  longestStreak?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -940,6 +1078,11 @@ export type UserMaxOrderByAggregateInput = {
   winbackSentAt?: Prisma.SortOrder
   igFollowedAt?: Prisma.SortOrder
   tgSubVerifiedAt?: Prisma.SortOrder
+  currentStreak?: Prisma.SortOrder
+  longestStreak?: Prisma.SortOrder
+  lastActiveDay?: Prisma.SortOrder
+  nudgeSentAt?: Prisma.SortOrder
+  welcomeSentAt?: Prisma.SortOrder
   referralCode?: Prisma.SortOrder
   referredById?: Prisma.SortOrder
   referralRewarded?: Prisma.SortOrder
@@ -973,6 +1116,11 @@ export type UserMinOrderByAggregateInput = {
   winbackSentAt?: Prisma.SortOrder
   igFollowedAt?: Prisma.SortOrder
   tgSubVerifiedAt?: Prisma.SortOrder
+  currentStreak?: Prisma.SortOrder
+  longestStreak?: Prisma.SortOrder
+  lastActiveDay?: Prisma.SortOrder
+  nudgeSentAt?: Prisma.SortOrder
+  welcomeSentAt?: Prisma.SortOrder
   referralCode?: Prisma.SortOrder
   referredById?: Prisma.SortOrder
   referralRewarded?: Prisma.SortOrder
@@ -982,6 +1130,8 @@ export type UserSumOrderByAggregateInput = {
   targetScore?: Prisma.SortOrder
   targetMathScore?: Prisma.SortOrder
   targetRWScore?: Prisma.SortOrder
+  currentStreak?: Prisma.SortOrder
+  longestStreak?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -1049,6 +1199,14 @@ export type EnumPlanFieldUpdateOperationsInput = {
   set?: $Enums.Plan
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type UserUpdateOneWithoutReferralsNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutReferralsInput, Prisma.UserUncheckedCreateWithoutReferralsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutReferralsInput
@@ -1093,12 +1251,44 @@ export type UserCreateNestedOneWithoutPaymentsInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
+export type UserCreateNestedOneWithoutPromoEarningsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPromoEarningsInput, Prisma.UserUncheckedCreateWithoutPromoEarningsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPromoEarningsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
 export type UserUpdateOneRequiredWithoutPaymentsNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutPaymentsInput
   upsert?: Prisma.UserUpsertWithoutPaymentsInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPaymentsInput, Prisma.UserUpdateWithoutPaymentsInput>, Prisma.UserUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type UserUpdateOneWithoutPromoEarningsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPromoEarningsInput, Prisma.UserUncheckedCreateWithoutPromoEarningsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPromoEarningsInput
+  upsert?: Prisma.UserUpsertWithoutPromoEarningsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPromoEarningsInput, Prisma.UserUpdateWithoutPromoEarningsInput>, Prisma.UserUncheckedUpdateWithoutPromoEarningsInput>
+}
+
+export type UserCreateNestedOneWithoutPromoCodesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPromoCodesInput, Prisma.UserUncheckedCreateWithoutPromoCodesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPromoCodesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutPromoCodesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPromoCodesInput, Prisma.UserUncheckedCreateWithoutPromoCodesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPromoCodesInput
+  upsert?: Prisma.UserUpsertWithoutPromoCodesInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPromoCodesInput, Prisma.UserUpdateWithoutPromoCodesInput>, Prisma.UserUncheckedUpdateWithoutPromoCodesInput>
 }
 
 export type UserCreateNestedOneWithoutSupportMessagesInput = {
@@ -1185,6 +1375,36 @@ export type UserUpdateOneRequiredWithoutLiveJoinedNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLiveJoinedInput, Prisma.UserUpdateWithoutLiveJoinedInput>, Prisma.UserUncheckedUpdateWithoutLiveJoinedInput>
 }
 
+export type UserCreateNestedOneWithoutVocabProgressInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVocabProgressInput, Prisma.UserUncheckedCreateWithoutVocabProgressInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVocabProgressInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutVocabProgressNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVocabProgressInput, Prisma.UserUncheckedCreateWithoutVocabProgressInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVocabProgressInput
+  upsert?: Prisma.UserUpsertWithoutVocabProgressInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutVocabProgressInput, Prisma.UserUpdateWithoutVocabProgressInput>, Prisma.UserUncheckedUpdateWithoutVocabProgressInput>
+}
+
+export type UserCreateNestedOneWithoutEventsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEventsInput, Prisma.UserUncheckedCreateWithoutEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEventsInput, Prisma.UserUncheckedCreateWithoutEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEventsInput
+  upsert?: Prisma.UserUpsertWithoutEventsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEventsInput, Prisma.UserUpdateWithoutEventsInput>, Prisma.UserUncheckedUpdateWithoutEventsInput>
+}
+
 export type UserCreateWithoutReferralsInput = {
   id?: string
   name: string
@@ -1213,6 +1433,11 @@ export type UserCreateWithoutReferralsInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
@@ -1223,6 +1448,10 @@ export type UserCreateWithoutReferralsInput = {
   shareLinkUses?: Prisma.ShareLinkUseCreateNestedManyWithoutUserInput
   liveHosted?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
   liveJoined?: Prisma.LiveParticipantCreateNestedManyWithoutUserInput
+  events?: Prisma.EventCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReferralsInput = {
@@ -1253,6 +1482,11 @@ export type UserUncheckedCreateWithoutReferralsInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referredById?: string | null
   referralRewarded?: boolean
@@ -1263,6 +1497,10 @@ export type UserUncheckedCreateWithoutReferralsInput = {
   shareLinkUses?: Prisma.ShareLinkUseUncheckedCreateNestedManyWithoutUserInput
   liveHosted?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
   liveJoined?: Prisma.LiveParticipantUncheckedCreateNestedManyWithoutUserInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeUncheckedCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentUncheckedCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReferralsInput = {
@@ -1298,6 +1536,11 @@ export type UserCreateWithoutReferredByInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referrals?: Prisma.UserCreateNestedManyWithoutReferredByInput
@@ -1308,6 +1551,10 @@ export type UserCreateWithoutReferredByInput = {
   shareLinkUses?: Prisma.ShareLinkUseCreateNestedManyWithoutUserInput
   liveHosted?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
   liveJoined?: Prisma.LiveParticipantCreateNestedManyWithoutUserInput
+  events?: Prisma.EventCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReferredByInput = {
@@ -1338,6 +1585,11 @@ export type UserUncheckedCreateWithoutReferredByInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferredByInput
@@ -1348,6 +1600,10 @@ export type UserUncheckedCreateWithoutReferredByInput = {
   shareLinkUses?: Prisma.ShareLinkUseUncheckedCreateNestedManyWithoutUserInput
   liveHosted?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
   liveJoined?: Prisma.LiveParticipantUncheckedCreateNestedManyWithoutUserInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeUncheckedCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentUncheckedCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReferredByInput = {
@@ -1399,6 +1655,11 @@ export type UserUpdateWithoutReferralsInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
@@ -1409,6 +1670,10 @@ export type UserUpdateWithoutReferralsInput = {
   shareLinkUses?: Prisma.ShareLinkUseUpdateManyWithoutUserNestedInput
   liveHosted?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
   liveJoined?: Prisma.LiveParticipantUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReferralsInput = {
@@ -1439,6 +1704,11 @@ export type UserUncheckedUpdateWithoutReferralsInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1449,6 +1719,10 @@ export type UserUncheckedUpdateWithoutReferralsInput = {
   shareLinkUses?: Prisma.ShareLinkUseUncheckedUpdateManyWithoutUserNestedInput
   liveHosted?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
   liveJoined?: Prisma.LiveParticipantUncheckedUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUncheckedUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUncheckedUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithWhereUniqueWithoutReferredByInput = {
@@ -1498,6 +1772,11 @@ export type UserScalarWhereInput = {
   winbackSentAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   igFollowedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   tgSubVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  currentStreak?: Prisma.IntFilter<"User"> | number
+  longestStreak?: Prisma.IntFilter<"User"> | number
+  lastActiveDay?: Prisma.StringNullableFilter<"User"> | string | null
+  nudgeSentAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  welcomeSentAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   referralCode?: Prisma.StringNullableFilter<"User"> | string | null
   referredById?: Prisma.StringNullableFilter<"User"> | string | null
   referralRewarded?: Prisma.BoolFilter<"User"> | boolean
@@ -1531,6 +1810,11 @@ export type UserCreateWithoutPaymentsInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
@@ -1541,6 +1825,10 @@ export type UserCreateWithoutPaymentsInput = {
   shareLinkUses?: Prisma.ShareLinkUseCreateNestedManyWithoutUserInput
   liveHosted?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
   liveJoined?: Prisma.LiveParticipantCreateNestedManyWithoutUserInput
+  events?: Prisma.EventCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPaymentsInput = {
@@ -1571,6 +1859,11 @@ export type UserUncheckedCreateWithoutPaymentsInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referredById?: string | null
   referralRewarded?: boolean
@@ -1581,11 +1874,118 @@ export type UserUncheckedCreateWithoutPaymentsInput = {
   shareLinkUses?: Prisma.ShareLinkUseUncheckedCreateNestedManyWithoutUserInput
   liveHosted?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
   liveJoined?: Prisma.LiveParticipantUncheckedCreateNestedManyWithoutUserInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeUncheckedCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentUncheckedCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPaymentsInput = {
   where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+}
+
+export type UserCreateWithoutPromoEarningsInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.Role
+  emailVerified?: boolean
+  verifyToken?: string | null
+  verifyTokenExpiry?: Date | string | null
+  telegramId?: string | null
+  telegramUsername?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  avatarUrl?: string | null
+  country?: string | null
+  nativeLanguage?: string | null
+  phone?: string | null
+  targetScore?: number | null
+  targetMathScore?: number | null
+  targetRWScore?: number | null
+  examDate?: Date | string | null
+  defaultType?: $Enums.TestType
+  emailNotifications?: boolean
+  plan?: $Enums.Plan
+  premiumUntil?: Date | string | null
+  winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
+  referralCode?: string | null
+  referralRewarded?: boolean
+  referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
+  referrals?: Prisma.UserCreateNestedManyWithoutReferredByInput
+  attempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
+  supportMessages?: Prisma.SupportMessageCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkCreateNestedManyWithoutCreatedByInput
+  shareLinkUses?: Prisma.ShareLinkUseCreateNestedManyWithoutUserInput
+  liveHosted?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
+  liveJoined?: Prisma.LiveParticipantCreateNestedManyWithoutUserInput
+  events?: Prisma.EventCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeCreateNestedManyWithoutOwnerInput
+  vocabProgress?: Prisma.VocabProgressCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutPromoEarningsInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.Role
+  emailVerified?: boolean
+  verifyToken?: string | null
+  verifyTokenExpiry?: Date | string | null
+  telegramId?: string | null
+  telegramUsername?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  avatarUrl?: string | null
+  country?: string | null
+  nativeLanguage?: string | null
+  phone?: string | null
+  targetScore?: number | null
+  targetMathScore?: number | null
+  targetRWScore?: number | null
+  examDate?: Date | string | null
+  defaultType?: $Enums.TestType
+  emailNotifications?: boolean
+  plan?: $Enums.Plan
+  premiumUntil?: Date | string | null
+  winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
+  referralCode?: string | null
+  referredById?: string | null
+  referralRewarded?: boolean
+  referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferredByInput
+  attempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
+  supportMessages?: Prisma.SupportMessageUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkUncheckedCreateNestedManyWithoutCreatedByInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedCreateNestedManyWithoutUserInput
+  liveHosted?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
+  liveJoined?: Prisma.LiveParticipantUncheckedCreateNestedManyWithoutUserInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeUncheckedCreateNestedManyWithoutOwnerInput
+  vocabProgress?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutPromoEarningsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPromoEarningsInput, Prisma.UserUncheckedCreateWithoutPromoEarningsInput>
 }
 
 export type UserUpsertWithoutPaymentsInput = {
@@ -1627,6 +2027,11 @@ export type UserUpdateWithoutPaymentsInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
@@ -1637,6 +2042,10 @@ export type UserUpdateWithoutPaymentsInput = {
   shareLinkUses?: Prisma.ShareLinkUseUpdateManyWithoutUserNestedInput
   liveHosted?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
   liveJoined?: Prisma.LiveParticipantUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPaymentsInput = {
@@ -1667,6 +2076,11 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1677,6 +2091,331 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   shareLinkUses?: Prisma.ShareLinkUseUncheckedUpdateManyWithoutUserNestedInput
   liveHosted?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
   liveJoined?: Prisma.LiveParticipantUncheckedUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUncheckedUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUncheckedUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUpsertWithoutPromoEarningsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPromoEarningsInput, Prisma.UserUncheckedUpdateWithoutPromoEarningsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPromoEarningsInput, Prisma.UserUncheckedCreateWithoutPromoEarningsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPromoEarningsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPromoEarningsInput, Prisma.UserUncheckedUpdateWithoutPromoEarningsInput>
+}
+
+export type UserUpdateWithoutPromoEarningsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifyTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  telegramId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telegramUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nativeLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
+  referrals?: Prisma.UserUpdateManyWithoutReferredByNestedInput
+  attempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
+  supportMessages?: Prisma.SupportMessageUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUpdateManyWithoutCreatedByNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUpdateManyWithoutUserNestedInput
+  liveHosted?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
+  liveJoined?: Prisma.LiveParticipantUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUpdateManyWithoutOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPromoEarningsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifyTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  telegramId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telegramUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nativeLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referrals?: Prisma.UserUncheckedUpdateManyWithoutReferredByNestedInput
+  attempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
+  supportMessages?: Prisma.SupportMessageUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUncheckedUpdateManyWithoutCreatedByNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedUpdateManyWithoutUserNestedInput
+  liveHosted?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
+  liveJoined?: Prisma.LiveParticipantUncheckedUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUncheckedUpdateManyWithoutOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutPromoCodesInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.Role
+  emailVerified?: boolean
+  verifyToken?: string | null
+  verifyTokenExpiry?: Date | string | null
+  telegramId?: string | null
+  telegramUsername?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  avatarUrl?: string | null
+  country?: string | null
+  nativeLanguage?: string | null
+  phone?: string | null
+  targetScore?: number | null
+  targetMathScore?: number | null
+  targetRWScore?: number | null
+  examDate?: Date | string | null
+  defaultType?: $Enums.TestType
+  emailNotifications?: boolean
+  plan?: $Enums.Plan
+  premiumUntil?: Date | string | null
+  winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
+  referralCode?: string | null
+  referralRewarded?: boolean
+  referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
+  referrals?: Prisma.UserCreateNestedManyWithoutReferredByInput
+  attempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
+  supportMessages?: Prisma.SupportMessageCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkCreateNestedManyWithoutCreatedByInput
+  shareLinkUses?: Prisma.ShareLinkUseCreateNestedManyWithoutUserInput
+  liveHosted?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
+  liveJoined?: Prisma.LiveParticipantCreateNestedManyWithoutUserInput
+  events?: Prisma.EventCreateNestedManyWithoutUserInput
+  promoEarnings?: Prisma.PaymentCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutPromoCodesInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.Role
+  emailVerified?: boolean
+  verifyToken?: string | null
+  verifyTokenExpiry?: Date | string | null
+  telegramId?: string | null
+  telegramUsername?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  avatarUrl?: string | null
+  country?: string | null
+  nativeLanguage?: string | null
+  phone?: string | null
+  targetScore?: number | null
+  targetMathScore?: number | null
+  targetRWScore?: number | null
+  examDate?: Date | string | null
+  defaultType?: $Enums.TestType
+  emailNotifications?: boolean
+  plan?: $Enums.Plan
+  premiumUntil?: Date | string | null
+  winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
+  referralCode?: string | null
+  referredById?: string | null
+  referralRewarded?: boolean
+  referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferredByInput
+  attempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
+  supportMessages?: Prisma.SupportMessageUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkUncheckedCreateNestedManyWithoutCreatedByInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedCreateNestedManyWithoutUserInput
+  liveHosted?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
+  liveJoined?: Prisma.LiveParticipantUncheckedCreateNestedManyWithoutUserInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutUserInput
+  promoEarnings?: Prisma.PaymentUncheckedCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutPromoCodesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPromoCodesInput, Prisma.UserUncheckedCreateWithoutPromoCodesInput>
+}
+
+export type UserUpsertWithoutPromoCodesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPromoCodesInput, Prisma.UserUncheckedUpdateWithoutPromoCodesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPromoCodesInput, Prisma.UserUncheckedCreateWithoutPromoCodesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPromoCodesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPromoCodesInput, Prisma.UserUncheckedUpdateWithoutPromoCodesInput>
+}
+
+export type UserUpdateWithoutPromoCodesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifyTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  telegramId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telegramUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nativeLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
+  referrals?: Prisma.UserUpdateManyWithoutReferredByNestedInput
+  attempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
+  supportMessages?: Prisma.SupportMessageUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUpdateManyWithoutCreatedByNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUpdateManyWithoutUserNestedInput
+  liveHosted?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
+  liveJoined?: Prisma.LiveParticipantUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUpdateManyWithoutUserNestedInput
+  promoEarnings?: Prisma.PaymentUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPromoCodesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifyTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  telegramId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telegramUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nativeLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referrals?: Prisma.UserUncheckedUpdateManyWithoutReferredByNestedInput
+  attempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
+  supportMessages?: Prisma.SupportMessageUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUncheckedUpdateManyWithoutCreatedByNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedUpdateManyWithoutUserNestedInput
+  liveHosted?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
+  liveJoined?: Prisma.LiveParticipantUncheckedUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutUserNestedInput
+  promoEarnings?: Prisma.PaymentUncheckedUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSupportMessagesInput = {
@@ -1707,6 +2446,11 @@ export type UserCreateWithoutSupportMessagesInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
@@ -1717,6 +2461,10 @@ export type UserCreateWithoutSupportMessagesInput = {
   shareLinkUses?: Prisma.ShareLinkUseCreateNestedManyWithoutUserInput
   liveHosted?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
   liveJoined?: Prisma.LiveParticipantCreateNestedManyWithoutUserInput
+  events?: Prisma.EventCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSupportMessagesInput = {
@@ -1747,6 +2495,11 @@ export type UserUncheckedCreateWithoutSupportMessagesInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referredById?: string | null
   referralRewarded?: boolean
@@ -1757,6 +2510,10 @@ export type UserUncheckedCreateWithoutSupportMessagesInput = {
   shareLinkUses?: Prisma.ShareLinkUseUncheckedCreateNestedManyWithoutUserInput
   liveHosted?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
   liveJoined?: Prisma.LiveParticipantUncheckedCreateNestedManyWithoutUserInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeUncheckedCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentUncheckedCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSupportMessagesInput = {
@@ -1803,6 +2560,11 @@ export type UserUpdateWithoutSupportMessagesInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
@@ -1813,6 +2575,10 @@ export type UserUpdateWithoutSupportMessagesInput = {
   shareLinkUses?: Prisma.ShareLinkUseUpdateManyWithoutUserNestedInput
   liveHosted?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
   liveJoined?: Prisma.LiveParticipantUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSupportMessagesInput = {
@@ -1843,6 +2609,11 @@ export type UserUncheckedUpdateWithoutSupportMessagesInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1853,6 +2624,10 @@ export type UserUncheckedUpdateWithoutSupportMessagesInput = {
   shareLinkUses?: Prisma.ShareLinkUseUncheckedUpdateManyWithoutUserNestedInput
   liveHosted?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
   liveJoined?: Prisma.LiveParticipantUncheckedUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUncheckedUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUncheckedUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAttemptsInput = {
@@ -1883,6 +2658,11 @@ export type UserCreateWithoutAttemptsInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
@@ -1893,6 +2673,10 @@ export type UserCreateWithoutAttemptsInput = {
   shareLinkUses?: Prisma.ShareLinkUseCreateNestedManyWithoutUserInput
   liveHosted?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
   liveJoined?: Prisma.LiveParticipantCreateNestedManyWithoutUserInput
+  events?: Prisma.EventCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAttemptsInput = {
@@ -1923,6 +2707,11 @@ export type UserUncheckedCreateWithoutAttemptsInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referredById?: string | null
   referralRewarded?: boolean
@@ -1933,6 +2722,10 @@ export type UserUncheckedCreateWithoutAttemptsInput = {
   shareLinkUses?: Prisma.ShareLinkUseUncheckedCreateNestedManyWithoutUserInput
   liveHosted?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
   liveJoined?: Prisma.LiveParticipantUncheckedCreateNestedManyWithoutUserInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeUncheckedCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentUncheckedCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAttemptsInput = {
@@ -1979,6 +2772,11 @@ export type UserUpdateWithoutAttemptsInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
@@ -1989,6 +2787,10 @@ export type UserUpdateWithoutAttemptsInput = {
   shareLinkUses?: Prisma.ShareLinkUseUpdateManyWithoutUserNestedInput
   liveHosted?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
   liveJoined?: Prisma.LiveParticipantUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAttemptsInput = {
@@ -2019,6 +2821,11 @@ export type UserUncheckedUpdateWithoutAttemptsInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2029,6 +2836,10 @@ export type UserUncheckedUpdateWithoutAttemptsInput = {
   shareLinkUses?: Prisma.ShareLinkUseUncheckedUpdateManyWithoutUserNestedInput
   liveHosted?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
   liveJoined?: Prisma.LiveParticipantUncheckedUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUncheckedUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUncheckedUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutShareLinksInput = {
@@ -2059,6 +2870,11 @@ export type UserCreateWithoutShareLinksInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
@@ -2069,6 +2885,10 @@ export type UserCreateWithoutShareLinksInput = {
   shareLinkUses?: Prisma.ShareLinkUseCreateNestedManyWithoutUserInput
   liveHosted?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
   liveJoined?: Prisma.LiveParticipantCreateNestedManyWithoutUserInput
+  events?: Prisma.EventCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutShareLinksInput = {
@@ -2099,6 +2919,11 @@ export type UserUncheckedCreateWithoutShareLinksInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referredById?: string | null
   referralRewarded?: boolean
@@ -2109,6 +2934,10 @@ export type UserUncheckedCreateWithoutShareLinksInput = {
   shareLinkUses?: Prisma.ShareLinkUseUncheckedCreateNestedManyWithoutUserInput
   liveHosted?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
   liveJoined?: Prisma.LiveParticipantUncheckedCreateNestedManyWithoutUserInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeUncheckedCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentUncheckedCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutShareLinksInput = {
@@ -2155,6 +2984,11 @@ export type UserUpdateWithoutShareLinksInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
@@ -2165,6 +2999,10 @@ export type UserUpdateWithoutShareLinksInput = {
   shareLinkUses?: Prisma.ShareLinkUseUpdateManyWithoutUserNestedInput
   liveHosted?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
   liveJoined?: Prisma.LiveParticipantUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutShareLinksInput = {
@@ -2195,6 +3033,11 @@ export type UserUncheckedUpdateWithoutShareLinksInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2205,6 +3048,10 @@ export type UserUncheckedUpdateWithoutShareLinksInput = {
   shareLinkUses?: Prisma.ShareLinkUseUncheckedUpdateManyWithoutUserNestedInput
   liveHosted?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
   liveJoined?: Prisma.LiveParticipantUncheckedUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUncheckedUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUncheckedUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutShareLinkUsesInput = {
@@ -2235,6 +3082,11 @@ export type UserCreateWithoutShareLinkUsesInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
@@ -2245,6 +3097,10 @@ export type UserCreateWithoutShareLinkUsesInput = {
   shareLinks?: Prisma.ShareLinkCreateNestedManyWithoutCreatedByInput
   liveHosted?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
   liveJoined?: Prisma.LiveParticipantCreateNestedManyWithoutUserInput
+  events?: Prisma.EventCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutShareLinkUsesInput = {
@@ -2275,6 +3131,11 @@ export type UserUncheckedCreateWithoutShareLinkUsesInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referredById?: string | null
   referralRewarded?: boolean
@@ -2285,6 +3146,10 @@ export type UserUncheckedCreateWithoutShareLinkUsesInput = {
   shareLinks?: Prisma.ShareLinkUncheckedCreateNestedManyWithoutCreatedByInput
   liveHosted?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
   liveJoined?: Prisma.LiveParticipantUncheckedCreateNestedManyWithoutUserInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeUncheckedCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentUncheckedCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutShareLinkUsesInput = {
@@ -2331,6 +3196,11 @@ export type UserUpdateWithoutShareLinkUsesInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
@@ -2341,6 +3211,10 @@ export type UserUpdateWithoutShareLinkUsesInput = {
   shareLinks?: Prisma.ShareLinkUpdateManyWithoutCreatedByNestedInput
   liveHosted?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
   liveJoined?: Prisma.LiveParticipantUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutShareLinkUsesInput = {
@@ -2371,6 +3245,11 @@ export type UserUncheckedUpdateWithoutShareLinkUsesInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2381,6 +3260,10 @@ export type UserUncheckedUpdateWithoutShareLinkUsesInput = {
   shareLinks?: Prisma.ShareLinkUncheckedUpdateManyWithoutCreatedByNestedInput
   liveHosted?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
   liveJoined?: Prisma.LiveParticipantUncheckedUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUncheckedUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUncheckedUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLiveHostedInput = {
@@ -2411,6 +3294,11 @@ export type UserCreateWithoutLiveHostedInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
@@ -2421,6 +3309,10 @@ export type UserCreateWithoutLiveHostedInput = {
   shareLinks?: Prisma.ShareLinkCreateNestedManyWithoutCreatedByInput
   shareLinkUses?: Prisma.ShareLinkUseCreateNestedManyWithoutUserInput
   liveJoined?: Prisma.LiveParticipantCreateNestedManyWithoutUserInput
+  events?: Prisma.EventCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLiveHostedInput = {
@@ -2451,6 +3343,11 @@ export type UserUncheckedCreateWithoutLiveHostedInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referredById?: string | null
   referralRewarded?: boolean
@@ -2461,6 +3358,10 @@ export type UserUncheckedCreateWithoutLiveHostedInput = {
   shareLinks?: Prisma.ShareLinkUncheckedCreateNestedManyWithoutCreatedByInput
   shareLinkUses?: Prisma.ShareLinkUseUncheckedCreateNestedManyWithoutUserInput
   liveJoined?: Prisma.LiveParticipantUncheckedCreateNestedManyWithoutUserInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeUncheckedCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentUncheckedCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLiveHostedInput = {
@@ -2507,6 +3408,11 @@ export type UserUpdateWithoutLiveHostedInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
@@ -2517,6 +3423,10 @@ export type UserUpdateWithoutLiveHostedInput = {
   shareLinks?: Prisma.ShareLinkUpdateManyWithoutCreatedByNestedInput
   shareLinkUses?: Prisma.ShareLinkUseUpdateManyWithoutUserNestedInput
   liveJoined?: Prisma.LiveParticipantUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLiveHostedInput = {
@@ -2547,6 +3457,11 @@ export type UserUncheckedUpdateWithoutLiveHostedInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2557,6 +3472,10 @@ export type UserUncheckedUpdateWithoutLiveHostedInput = {
   shareLinks?: Prisma.ShareLinkUncheckedUpdateManyWithoutCreatedByNestedInput
   shareLinkUses?: Prisma.ShareLinkUseUncheckedUpdateManyWithoutUserNestedInput
   liveJoined?: Prisma.LiveParticipantUncheckedUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUncheckedUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUncheckedUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLiveJoinedInput = {
@@ -2587,6 +3506,11 @@ export type UserCreateWithoutLiveJoinedInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
   referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
@@ -2597,6 +3521,10 @@ export type UserCreateWithoutLiveJoinedInput = {
   shareLinks?: Prisma.ShareLinkCreateNestedManyWithoutCreatedByInput
   shareLinkUses?: Prisma.ShareLinkUseCreateNestedManyWithoutUserInput
   liveHosted?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
+  events?: Prisma.EventCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLiveJoinedInput = {
@@ -2627,6 +3555,11 @@ export type UserUncheckedCreateWithoutLiveJoinedInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referredById?: string | null
   referralRewarded?: boolean
@@ -2637,6 +3570,10 @@ export type UserUncheckedCreateWithoutLiveJoinedInput = {
   shareLinks?: Prisma.ShareLinkUncheckedCreateNestedManyWithoutCreatedByInput
   shareLinkUses?: Prisma.ShareLinkUseUncheckedCreateNestedManyWithoutUserInput
   liveHosted?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeUncheckedCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentUncheckedCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLiveJoinedInput = {
@@ -2683,6 +3620,11 @@ export type UserUpdateWithoutLiveJoinedInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
@@ -2693,6 +3635,10 @@ export type UserUpdateWithoutLiveJoinedInput = {
   shareLinks?: Prisma.ShareLinkUpdateManyWithoutCreatedByNestedInput
   shareLinkUses?: Prisma.ShareLinkUseUpdateManyWithoutUserNestedInput
   liveHosted?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
+  events?: Prisma.EventUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLiveJoinedInput = {
@@ -2723,6 +3669,11 @@ export type UserUncheckedUpdateWithoutLiveJoinedInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2733,6 +3684,434 @@ export type UserUncheckedUpdateWithoutLiveJoinedInput = {
   shareLinks?: Prisma.ShareLinkUncheckedUpdateManyWithoutCreatedByNestedInput
   shareLinkUses?: Prisma.ShareLinkUseUncheckedUpdateManyWithoutUserNestedInput
   liveHosted?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUncheckedUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUncheckedUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutVocabProgressInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.Role
+  emailVerified?: boolean
+  verifyToken?: string | null
+  verifyTokenExpiry?: Date | string | null
+  telegramId?: string | null
+  telegramUsername?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  avatarUrl?: string | null
+  country?: string | null
+  nativeLanguage?: string | null
+  phone?: string | null
+  targetScore?: number | null
+  targetMathScore?: number | null
+  targetRWScore?: number | null
+  examDate?: Date | string | null
+  defaultType?: $Enums.TestType
+  emailNotifications?: boolean
+  plan?: $Enums.Plan
+  premiumUntil?: Date | string | null
+  winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
+  referralCode?: string | null
+  referralRewarded?: boolean
+  referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
+  referrals?: Prisma.UserCreateNestedManyWithoutReferredByInput
+  attempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
+  supportMessages?: Prisma.SupportMessageCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkCreateNestedManyWithoutCreatedByInput
+  shareLinkUses?: Prisma.ShareLinkUseCreateNestedManyWithoutUserInput
+  liveHosted?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
+  liveJoined?: Prisma.LiveParticipantCreateNestedManyWithoutUserInput
+  events?: Prisma.EventCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentCreateNestedManyWithoutPromoOwnerInput
+}
+
+export type UserUncheckedCreateWithoutVocabProgressInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.Role
+  emailVerified?: boolean
+  verifyToken?: string | null
+  verifyTokenExpiry?: Date | string | null
+  telegramId?: string | null
+  telegramUsername?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  avatarUrl?: string | null
+  country?: string | null
+  nativeLanguage?: string | null
+  phone?: string | null
+  targetScore?: number | null
+  targetMathScore?: number | null
+  targetRWScore?: number | null
+  examDate?: Date | string | null
+  defaultType?: $Enums.TestType
+  emailNotifications?: boolean
+  plan?: $Enums.Plan
+  premiumUntil?: Date | string | null
+  winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
+  referralCode?: string | null
+  referredById?: string | null
+  referralRewarded?: boolean
+  referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferredByInput
+  attempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
+  supportMessages?: Prisma.SupportMessageUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkUncheckedCreateNestedManyWithoutCreatedByInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedCreateNestedManyWithoutUserInput
+  liveHosted?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
+  liveJoined?: Prisma.LiveParticipantUncheckedCreateNestedManyWithoutUserInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeUncheckedCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentUncheckedCreateNestedManyWithoutPromoOwnerInput
+}
+
+export type UserCreateOrConnectWithoutVocabProgressInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutVocabProgressInput, Prisma.UserUncheckedCreateWithoutVocabProgressInput>
+}
+
+export type UserUpsertWithoutVocabProgressInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutVocabProgressInput, Prisma.UserUncheckedUpdateWithoutVocabProgressInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutVocabProgressInput, Prisma.UserUncheckedCreateWithoutVocabProgressInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutVocabProgressInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutVocabProgressInput, Prisma.UserUncheckedUpdateWithoutVocabProgressInput>
+}
+
+export type UserUpdateWithoutVocabProgressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifyTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  telegramId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telegramUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nativeLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
+  referrals?: Prisma.UserUpdateManyWithoutReferredByNestedInput
+  attempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
+  supportMessages?: Prisma.SupportMessageUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUpdateManyWithoutCreatedByNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUpdateManyWithoutUserNestedInput
+  liveHosted?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
+  liveJoined?: Prisma.LiveParticipantUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUpdateManyWithoutPromoOwnerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutVocabProgressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifyTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  telegramId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telegramUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nativeLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referrals?: Prisma.UserUncheckedUpdateManyWithoutReferredByNestedInput
+  attempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
+  supportMessages?: Prisma.SupportMessageUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUncheckedUpdateManyWithoutCreatedByNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedUpdateManyWithoutUserNestedInput
+  liveHosted?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
+  liveJoined?: Prisma.LiveParticipantUncheckedUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUncheckedUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUncheckedUpdateManyWithoutPromoOwnerNestedInput
+}
+
+export type UserCreateWithoutEventsInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.Role
+  emailVerified?: boolean
+  verifyToken?: string | null
+  verifyTokenExpiry?: Date | string | null
+  telegramId?: string | null
+  telegramUsername?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  avatarUrl?: string | null
+  country?: string | null
+  nativeLanguage?: string | null
+  phone?: string | null
+  targetScore?: number | null
+  targetMathScore?: number | null
+  targetRWScore?: number | null
+  examDate?: Date | string | null
+  defaultType?: $Enums.TestType
+  emailNotifications?: boolean
+  plan?: $Enums.Plan
+  premiumUntil?: Date | string | null
+  winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
+  referralCode?: string | null
+  referralRewarded?: boolean
+  referredBy?: Prisma.UserCreateNestedOneWithoutReferralsInput
+  referrals?: Prisma.UserCreateNestedManyWithoutReferredByInput
+  attempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
+  supportMessages?: Prisma.SupportMessageCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkCreateNestedManyWithoutCreatedByInput
+  shareLinkUses?: Prisma.ShareLinkUseCreateNestedManyWithoutUserInput
+  liveHosted?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
+  liveJoined?: Prisma.LiveParticipantCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutEventsInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  role?: $Enums.Role
+  emailVerified?: boolean
+  verifyToken?: string | null
+  verifyTokenExpiry?: Date | string | null
+  telegramId?: string | null
+  telegramUsername?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  avatarUrl?: string | null
+  country?: string | null
+  nativeLanguage?: string | null
+  phone?: string | null
+  targetScore?: number | null
+  targetMathScore?: number | null
+  targetRWScore?: number | null
+  examDate?: Date | string | null
+  defaultType?: $Enums.TestType
+  emailNotifications?: boolean
+  plan?: $Enums.Plan
+  premiumUntil?: Date | string | null
+  winbackSentAt?: Date | string | null
+  igFollowedAt?: Date | string | null
+  tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
+  referralCode?: string | null
+  referredById?: string | null
+  referralRewarded?: boolean
+  referrals?: Prisma.UserUncheckedCreateNestedManyWithoutReferredByInput
+  attempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
+  supportMessages?: Prisma.SupportMessageUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  shareLinks?: Prisma.ShareLinkUncheckedCreateNestedManyWithoutCreatedByInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedCreateNestedManyWithoutUserInput
+  liveHosted?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
+  liveJoined?: Prisma.LiveParticipantUncheckedCreateNestedManyWithoutUserInput
+  promoCodes?: Prisma.PromoCodeUncheckedCreateNestedManyWithoutOwnerInput
+  promoEarnings?: Prisma.PaymentUncheckedCreateNestedManyWithoutPromoOwnerInput
+  vocabProgress?: Prisma.VocabProgressUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutEventsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutEventsInput, Prisma.UserUncheckedCreateWithoutEventsInput>
+}
+
+export type UserUpsertWithoutEventsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutEventsInput, Prisma.UserUncheckedUpdateWithoutEventsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutEventsInput, Prisma.UserUncheckedCreateWithoutEventsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutEventsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutEventsInput, Prisma.UserUncheckedUpdateWithoutEventsInput>
+}
+
+export type UserUpdateWithoutEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifyTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  telegramId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telegramUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nativeLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referredBy?: Prisma.UserUpdateOneWithoutReferralsNestedInput
+  referrals?: Prisma.UserUpdateManyWithoutReferredByNestedInput
+  attempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
+  supportMessages?: Prisma.SupportMessageUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUpdateManyWithoutCreatedByNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUpdateManyWithoutUserNestedInput
+  liveHosted?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
+  liveJoined?: Prisma.LiveParticipantUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifyTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  telegramId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telegramUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nativeLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
+  emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
+  premiumUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referredById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  referrals?: Prisma.UserUncheckedUpdateManyWithoutReferredByNestedInput
+  attempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
+  supportMessages?: Prisma.SupportMessageUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  shareLinks?: Prisma.ShareLinkUncheckedUpdateManyWithoutCreatedByNestedInput
+  shareLinkUses?: Prisma.ShareLinkUseUncheckedUpdateManyWithoutUserNestedInput
+  liveHosted?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
+  liveJoined?: Prisma.LiveParticipantUncheckedUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUncheckedUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUncheckedUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyReferredByInput = {
@@ -2763,6 +4142,11 @@ export type UserCreateManyReferredByInput = {
   winbackSentAt?: Date | string | null
   igFollowedAt?: Date | string | null
   tgSubVerifiedAt?: Date | string | null
+  currentStreak?: number
+  longestStreak?: number
+  lastActiveDay?: string | null
+  nudgeSentAt?: Date | string | null
+  welcomeSentAt?: Date | string | null
   referralCode?: string | null
   referralRewarded?: boolean
 }
@@ -2795,6 +4179,11 @@ export type UserUpdateWithoutReferredByInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referrals?: Prisma.UserUpdateManyWithoutReferredByNestedInput
@@ -2805,6 +4194,10 @@ export type UserUpdateWithoutReferredByInput = {
   shareLinkUses?: Prisma.ShareLinkUseUpdateManyWithoutUserNestedInput
   liveHosted?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
   liveJoined?: Prisma.LiveParticipantUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReferredByInput = {
@@ -2835,6 +4228,11 @@ export type UserUncheckedUpdateWithoutReferredByInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   referrals?: Prisma.UserUncheckedUpdateManyWithoutReferredByNestedInput
@@ -2845,6 +4243,10 @@ export type UserUncheckedUpdateWithoutReferredByInput = {
   shareLinkUses?: Prisma.ShareLinkUseUncheckedUpdateManyWithoutUserNestedInput
   liveHosted?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
   liveJoined?: Prisma.LiveParticipantUncheckedUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutUserNestedInput
+  promoCodes?: Prisma.PromoCodeUncheckedUpdateManyWithoutOwnerNestedInput
+  promoEarnings?: Prisma.PaymentUncheckedUpdateManyWithoutPromoOwnerNestedInput
+  vocabProgress?: Prisma.VocabProgressUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutReferredByInput = {
@@ -2875,6 +4277,11 @@ export type UserUncheckedUpdateManyWithoutReferredByInput = {
   winbackSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   igFollowedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tgSubVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveDay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nudgeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   referralCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referralRewarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
@@ -2893,6 +4300,10 @@ export type UserCountOutputType = {
   shareLinkUses: number
   liveHosted: number
   liveJoined: number
+  events: number
+  promoCodes: number
+  promoEarnings: number
+  vocabProgress: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2904,6 +4315,10 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   shareLinkUses?: boolean | UserCountOutputTypeCountShareLinkUsesArgs
   liveHosted?: boolean | UserCountOutputTypeCountLiveHostedArgs
   liveJoined?: boolean | UserCountOutputTypeCountLiveJoinedArgs
+  events?: boolean | UserCountOutputTypeCountEventsArgs
+  promoCodes?: boolean | UserCountOutputTypeCountPromoCodesArgs
+  promoEarnings?: boolean | UserCountOutputTypeCountPromoEarningsArgs
+  vocabProgress?: boolean | UserCountOutputTypeCountVocabProgressArgs
 }
 
 /**
@@ -2972,6 +4387,34 @@ export type UserCountOutputTypeCountLiveJoinedArgs<ExtArgs extends runtime.Types
   where?: Prisma.LiveParticipantWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EventWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPromoCodesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PromoCodeWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPromoEarningsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountVocabProgressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.VocabProgressWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -3001,6 +4444,11 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   winbackSentAt?: boolean
   igFollowedAt?: boolean
   tgSubVerifiedAt?: boolean
+  currentStreak?: boolean
+  longestStreak?: boolean
+  lastActiveDay?: boolean
+  nudgeSentAt?: boolean
+  welcomeSentAt?: boolean
   referralCode?: boolean
   referredById?: boolean
   referralRewarded?: boolean
@@ -3013,6 +4461,10 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   shareLinkUses?: boolean | Prisma.User$shareLinkUsesArgs<ExtArgs>
   liveHosted?: boolean | Prisma.User$liveHostedArgs<ExtArgs>
   liveJoined?: boolean | Prisma.User$liveJoinedArgs<ExtArgs>
+  events?: boolean | Prisma.User$eventsArgs<ExtArgs>
+  promoCodes?: boolean | Prisma.User$promoCodesArgs<ExtArgs>
+  promoEarnings?: boolean | Prisma.User$promoEarningsArgs<ExtArgs>
+  vocabProgress?: boolean | Prisma.User$vocabProgressArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -3044,6 +4496,11 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   winbackSentAt?: boolean
   igFollowedAt?: boolean
   tgSubVerifiedAt?: boolean
+  currentStreak?: boolean
+  longestStreak?: boolean
+  lastActiveDay?: boolean
+  nudgeSentAt?: boolean
+  welcomeSentAt?: boolean
   referralCode?: boolean
   referredById?: boolean
   referralRewarded?: boolean
@@ -3078,6 +4535,11 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   winbackSentAt?: boolean
   igFollowedAt?: boolean
   tgSubVerifiedAt?: boolean
+  currentStreak?: boolean
+  longestStreak?: boolean
+  lastActiveDay?: boolean
+  nudgeSentAt?: boolean
+  welcomeSentAt?: boolean
   referralCode?: boolean
   referredById?: boolean
   referralRewarded?: boolean
@@ -3112,12 +4574,17 @@ export type UserSelectScalar = {
   winbackSentAt?: boolean
   igFollowedAt?: boolean
   tgSubVerifiedAt?: boolean
+  currentStreak?: boolean
+  longestStreak?: boolean
+  lastActiveDay?: boolean
+  nudgeSentAt?: boolean
+  welcomeSentAt?: boolean
   referralCode?: boolean
   referredById?: boolean
   referralRewarded?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "emailVerified" | "verifyToken" | "verifyTokenExpiry" | "telegramId" | "telegramUsername" | "createdAt" | "updatedAt" | "avatarUrl" | "country" | "nativeLanguage" | "phone" | "targetScore" | "targetMathScore" | "targetRWScore" | "examDate" | "defaultType" | "emailNotifications" | "plan" | "premiumUntil" | "winbackSentAt" | "igFollowedAt" | "tgSubVerifiedAt" | "referralCode" | "referredById" | "referralRewarded", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "emailVerified" | "verifyToken" | "verifyTokenExpiry" | "telegramId" | "telegramUsername" | "createdAt" | "updatedAt" | "avatarUrl" | "country" | "nativeLanguage" | "phone" | "targetScore" | "targetMathScore" | "targetRWScore" | "examDate" | "defaultType" | "emailNotifications" | "plan" | "premiumUntil" | "winbackSentAt" | "igFollowedAt" | "tgSubVerifiedAt" | "currentStreak" | "longestStreak" | "lastActiveDay" | "nudgeSentAt" | "welcomeSentAt" | "referralCode" | "referredById" | "referralRewarded", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   referredBy?: boolean | Prisma.User$referredByArgs<ExtArgs>
   referrals?: boolean | Prisma.User$referralsArgs<ExtArgs>
@@ -3128,6 +4595,10 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   shareLinkUses?: boolean | Prisma.User$shareLinkUsesArgs<ExtArgs>
   liveHosted?: boolean | Prisma.User$liveHostedArgs<ExtArgs>
   liveJoined?: boolean | Prisma.User$liveJoinedArgs<ExtArgs>
+  events?: boolean | Prisma.User$eventsArgs<ExtArgs>
+  promoCodes?: boolean | Prisma.User$promoCodesArgs<ExtArgs>
+  promoEarnings?: boolean | Prisma.User$promoEarningsArgs<ExtArgs>
+  vocabProgress?: boolean | Prisma.User$vocabProgressArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3149,6 +4620,10 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     shareLinkUses: Prisma.$ShareLinkUsePayload<ExtArgs>[]
     liveHosted: Prisma.$LiveSessionPayload<ExtArgs>[]
     liveJoined: Prisma.$LiveParticipantPayload<ExtArgs>[]
+    events: Prisma.$EventPayload<ExtArgs>[]
+    promoCodes: Prisma.$PromoCodePayload<ExtArgs>[]
+    promoEarnings: Prisma.$PaymentPayload<ExtArgs>[]
+    vocabProgress: Prisma.$VocabProgressPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3178,6 +4653,11 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     winbackSentAt: Date | null
     igFollowedAt: Date | null
     tgSubVerifiedAt: Date | null
+    currentStreak: number
+    longestStreak: number
+    lastActiveDay: string | null
+    nudgeSentAt: Date | null
+    welcomeSentAt: Date | null
     referralCode: string | null
     referredById: string | null
     referralRewarded: boolean
@@ -3584,6 +5064,10 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   shareLinkUses<T extends Prisma.User$shareLinkUsesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$shareLinkUsesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShareLinkUsePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   liveHosted<T extends Prisma.User$liveHostedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$liveHostedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LiveSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   liveJoined<T extends Prisma.User$liveJoinedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$liveJoinedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LiveParticipantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  events<T extends Prisma.User$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  promoCodes<T extends Prisma.User$promoCodesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$promoCodesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PromoCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  promoEarnings<T extends Prisma.User$promoEarningsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$promoEarningsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  vocabProgress<T extends Prisma.User$vocabProgressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$vocabProgressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VocabProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3640,6 +5124,11 @@ export interface UserFieldRefs {
   readonly winbackSentAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly igFollowedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly tgSubVerifiedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly currentStreak: Prisma.FieldRef<"User", 'Int'>
+  readonly longestStreak: Prisma.FieldRef<"User", 'Int'>
+  readonly lastActiveDay: Prisma.FieldRef<"User", 'String'>
+  readonly nudgeSentAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly welcomeSentAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly referralCode: Prisma.FieldRef<"User", 'String'>
   readonly referredById: Prisma.FieldRef<"User", 'String'>
   readonly referralRewarded: Prisma.FieldRef<"User", 'Boolean'>
@@ -4252,6 +5741,102 @@ export type User$liveJoinedArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.LiveParticipantScalarFieldEnum | Prisma.LiveParticipantScalarFieldEnum[]
+}
+
+/**
+ * User.events
+ */
+export type User$eventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Event
+   */
+  select?: Prisma.EventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Event
+   */
+  omit?: Prisma.EventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EventInclude<ExtArgs> | null
+  where?: Prisma.EventWhereInput
+  orderBy?: Prisma.EventOrderByWithRelationInput | Prisma.EventOrderByWithRelationInput[]
+  cursor?: Prisma.EventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.EventScalarFieldEnum | Prisma.EventScalarFieldEnum[]
+}
+
+/**
+ * User.promoCodes
+ */
+export type User$promoCodesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PromoCode
+   */
+  select?: Prisma.PromoCodeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PromoCode
+   */
+  omit?: Prisma.PromoCodeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PromoCodeInclude<ExtArgs> | null
+  where?: Prisma.PromoCodeWhereInput
+  orderBy?: Prisma.PromoCodeOrderByWithRelationInput | Prisma.PromoCodeOrderByWithRelationInput[]
+  cursor?: Prisma.PromoCodeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PromoCodeScalarFieldEnum | Prisma.PromoCodeScalarFieldEnum[]
+}
+
+/**
+ * User.promoEarnings
+ */
+export type User$promoEarningsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Payment
+   */
+  select?: Prisma.PaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Payment
+   */
+  omit?: Prisma.PaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentInclude<ExtArgs> | null
+  where?: Prisma.PaymentWhereInput
+  orderBy?: Prisma.PaymentOrderByWithRelationInput | Prisma.PaymentOrderByWithRelationInput[]
+  cursor?: Prisma.PaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
+}
+
+/**
+ * User.vocabProgress
+ */
+export type User$vocabProgressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the VocabProgress
+   */
+  select?: Prisma.VocabProgressSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the VocabProgress
+   */
+  omit?: Prisma.VocabProgressOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VocabProgressInclude<ExtArgs> | null
+  where?: Prisma.VocabProgressWhereInput
+  orderBy?: Prisma.VocabProgressOrderByWithRelationInput | Prisma.VocabProgressOrderByWithRelationInput[]
+  cursor?: Prisma.VocabProgressWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.VocabProgressScalarFieldEnum | Prisma.VocabProgressScalarFieldEnum[]
 }
 
 /**

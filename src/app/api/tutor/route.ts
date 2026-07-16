@@ -7,6 +7,8 @@ import { jsonError, tooManyRequests, withErrorHandling } from "@/lib/apiError";
 import { rateLimit } from "@/lib/rateLimit";
 import { effectivePlan } from "@/lib/access";
 import { tutorReply, type TutorTurn } from "@/lib/vertexai";
+import { blocked } from "@/lib/events";
+import { BLOCK_REASONS } from "@/lib/surfaces";
 
 const bodySchema = z.object({
   questionId: z.string().min(1).max(60),
@@ -42,13 +44,21 @@ export const POST = withErrorHandling(async (req: NextRequest) => {
     where: { id: user.id },
     select: { plan: true, premiumUntil: true, nativeLanguage: true },
   });
-  if (effectivePlan(dbUser?.plan, dbUser?.premiumUntil) !== "PREMIUM") {
+  const plan = effectivePlan(dbUser?.plan, dbUser?.premiumUntil);
+  if (plan !== "PREMIUM") {
+    // The demand signal for the one feature we charge for. Without it, a free user
+    // who wanted the tutor is indistinguishable from one who never looked.
+    blocked("tutor", { userId: user.id, plan, reason: BLOCK_REASONS.PREMIUM_REQUIRED });
     return jsonError("The AI tutor is a Premium feature.", 403);
   }
 
   // AI calls are costly — cap per user regardless of source IP.
   const rl = rateLimit(`tutor:${user.id}`, 30, 10 * 60 * 1000); // 30 / 10 min
-  if (!rl.ok) return tooManyRequests(rl.retryAfterSec);
+  if (!rl.ok) {
+    // A paying user hitting this is a product bug, not abuse — it should be visible.
+    blocked("tutor", { userId: user.id, plan, reason: BLOCK_REASONS.RATE_LIMIT });
+    return tooManyRequests(rl.retryAfterSec);
+  }
 
   const { questionId, attemptId, message, history } = await parseJson(req, bodySchema);
 
@@ -84,6 +94,7 @@ export const POST = withErrorHandling(async (req: NextRequest) => {
       language,
       history: (history as TutorTurn[]) ?? [],
       message,
+      ctx: { userId: user.id, plan, origin: "USER", attemptId, itemId: questionId },
     });
     return Response.json({ reply });
   } catch (e) {

@@ -51,6 +51,22 @@ model User {
   igFollowedAt    DateTime? // honor-system "I followed on Instagram" click
   tgSubVerifiedAt DateTime? // verified via Telegram Bot API getChatMember
 
+  // ── Streak, as a derived cache ──
+  // The streak is still DERIVABLE from TestAttempt.submittedAt, and the page reads
+  // recompute it. These columns exist so the nudge cron can ask "who is about to lose a
+  // streak?" with one indexed query instead of loading every attempt for every user.
+  //
+  // currentStreak is only true AS OF lastActiveDay — a stored 5 means nothing on its own
+  // once two days have passed. Never render it raw; go through effectiveStreak().
+  currentStreak  Int     @default(0)
+  longestStreak  Int     @default(0)
+  lastActiveDay  String? // Asia/Tashkent calendar day, "YYYY-MM-DD" (see src/lib/streak.ts)
+
+  // Day-2 nudge: the single biggest retention hole. Stamped once, ever — this is a
+  // "you signed up and vanished" message, not a recurring newsletter.
+  nudgeSentAt    DateTime?
+  welcomeSentAt  DateTime? // welcome email at registration
+
   referralCode     String?  @unique
   referredById     String?
   referredBy       User?    @relation("Referrals", fields: [referredById], references: [id])
@@ -64,6 +80,10 @@ model User {
   shareLinkUses   ShareLinkUse[] // links this user redeemed
   liveHosted      LiveSession[]    @relation("LiveHost") // live sessions this user hosts
   liveJoined      LiveParticipant[] // live sessions this user joined
+  events          Event[]          @relation("UserEvents") // SetNull on delete — see Event
+  promoCodes      PromoCode[]      @relation("PromoOwner") // codes this user earns on
+  promoEarnings   Payment[]        @relation("PromoEarnings") // sales made with those codes
+  vocabProgress   VocabProgress[]
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -75,7 +95,7 @@ model Payment {
   userId     String
   planLabel  String // "1m" | "3m" | "6m"
   months     Int
-  amount     Int           @default(0)
+  amount     Int           @default(0) // what they actually owe, AFTER any promo discount
   status     PaymentStatus @default(PENDING)
   note       String? // user-supplied note / payment reference
   proofUrl   String? // optional uploaded receipt
@@ -83,10 +103,65 @@ model Payment {
   reviewedBy String? // admin user id
   createdAt  DateTime      @default(now())
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// Human-readable reference, e.g. "SW-000042".
+  ///
+  /// Today it is what a student quotes in a Telegram message so an admin can find their
+  /// transfer. It is also exactly what every UZ payment provider needs as its account
+  /// key — Payme and Click both identify an order by one opaque merchant-side id — so
+  /// the seam is here rather than bolted on later.
+  ///
+  /// Not nullable: a payment without a reference is one a human cannot find. Adding it
+  /// as SERIAL numbers the existing rows on the way in.
+  orderNo    Int           @unique @default(autoincrement())
+
+  /// How this was paid. "manual" = bank-card transfer approved by hand, which is every
+  /// row today. An automated provider adds its own value here and NOTHING else in this
+  /// model has to change.
+  provider   String        @default("manual")
+
+  // ── Promo snapshot ──
+  // Snapshots, not joins. A promo's percentage can be edited and its owner reassigned;
+  // if commission were computed by joining to PromoCode as it is TODAY, editing a code
+  // would silently rewrite the history of what everyone was already owed.
+  promoCode       String? // the code as typed, uppercased
+  promoOwnerId    String? // who earns commission on this sale (see PromoCode.ownerId)
+  discountPercent Int     @default(0)
+  /// The commission rate AS IT WAS when this sale happened. Snapshotting the owner but
+  /// not the rate would leave the same hole one level down: renegotiate a teacher from
+  /// 50% to 30% and every historical payout silently drops.
+  commissionPct   Int     @default(0)
+  baseAmount      Int     @default(0) // list price before the discount
+
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  promoOwner User?     @relation("PromoEarnings", fields: [promoOwnerId], references: [id], onDelete: SetNull)
 
   @@index([userId])
   @@index([status])
+  @@index([promoOwnerId])
+}
+
+/// A discount code. Optionally owned by someone who earns commission on what it sells.
+///
+/// This is the distribution channel: in this market students come through teachers and
+/// learning centres, and a code with a name on it is how you find out which ones. There
+/// is deliberately no TEACHER role — an owner is just a User, the same call share links
+/// already make.
+model PromoCode {
+  id             String    @id @default(cuid())
+  code           String    @unique // stored uppercase; compared uppercase
+  percentOff     Int // 1-100
+  ownerId        String? // earns commission; null = a plain marketing code
+  commissionPct  Int       @default(0) // % of the PAID amount the owner earns
+  maxUses        Int? // null = unlimited
+  usedCount      Int       @default(0)
+  expiresAt      DateTime?
+  active         Boolean   @default(true)
+  note           String?
+  createdAt      DateTime  @default(now())
+
+  owner User? @relation("PromoOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+
+  @@index([ownerId])
 }
 
 enum PaymentStatus {
@@ -367,4 +442,158 @@ model LiveParticipant {
 
   @@unique([sessionId, userId])
   @@index([userId])
+}
+
+// ─────────────────────────────────────────────────────────────
+// Vocabulary — spaced repetition
+// ─────────────────────────────────────────────────────────────
+
+/// One learner's memory of one word.
+///
+/// This used to be a Set<string> of "known" ids in localStorage, which had three
+/// problems: it vanished on a device change, it was invisible to every dashboard, and
+/// "known" is not a thing you either are or aren't — you forget. A Leitner box plus a due
+/// date is the smallest model that expresses forgetting (see src/lib/srs.ts).
+///
+/// wordId is the slug from VOCAB_DECKS (src/lib/vocabulary.ts) — deliberately NOT a
+/// foreign key, because the deck is static data in the repo, not a table. A word removed
+/// from the deck leaves a harmless orphan row rather than breaking a delete.
+model VocabProgress {
+  id             String    @id @default(cuid())
+  userId         String
+  wordId         String
+  box            Int       @default(0) // 0..5 — see SRS_INTERVALS_DAYS
+  dueAt          DateTime  @default(now())
+  correctCount   Int       @default(0)
+  wrongCount     Int       @default(0)
+  lastReviewedAt DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, wordId])
+  @@index([userId, dueAt]) // "what is due for this student right now" — the only hot query
+}
+
+// ─────────────────────────────────────────────────────────────
+// Analytics + the AI cost ledger
+// ─────────────────────────────────────────────────────────────
+
+// One append-only table serving two jobs: what people do, and what we pay for it.
+// Written only by src/lib/events.ts. See src/lib/surfaces.ts for the closed vocabulary.
+model Event {
+  // Int, not BigInt: BigInt throws inside JSON.stringify, and this repo serialises
+  // server data to client components that way. 2.1B rows is centuries at this volume.
+  id      Int      @id @default(autoincrement())
+  ts      DateTime @default(now())
+  name    String // closed verb set — src/lib/surfaces.ts
+  surface String // closed section set — src/lib/surfaces.ts. Never "".
+  // The categorical sub-dimension you GROUP BY:
+  //   ai_call → model id · blocked → reason · error → the failing operation
+  // "" rather than NULL, so a GROUP BY has no NULL bucket.
+  key     String   @default("")
+  itemId  String? // the entity: testId / questionId / shareLinkId
+  userId  String? // null = signed out, or anonymised after account deletion
+
+  // SNAPSHOT of the plan AT EVENT TIME. Without it, every retrospective question
+  // ("what did free users do before they upgraded?") silently answers with today's
+  // plan rather than the one that was true then.
+  plan   String @default("") // FREE | PREMIUM
+  // Separates recurring per-user cost of goods sold from one-off content CAPEX.
+  // Admin test generation is AI spend, but it is NOT what a user costs — without
+  // this column it silently inflates every per-user figure.
+  origin String @default("USER") // USER | ADMIN | SCRIPT | CRON | BOT
+
+  ms  Int? // duration: AI call latency, session length
+  pct Int? // 0-100: progress through an item
+  ok  Boolean @default(true)
+
+  // ── The AI cost ledger. Typed integer columns, never a JSON blob: you cannot
+  //    re-price history by modality if the tokens are buried in JSON, and
+  //    SUM((props->>'usd')::numeric) is a cast-per-row scan with no schema. ──
+  model       String? // the RESOLVED model id — satway defaults to gemini-2.5-pro,
+  // which costs 4x flash on input and 4x on output. Pricing it model-blind would
+  // under-report the tutor by exactly the multiple that matters.
+  inTextTok   Int?
+  inAudioTok  Int? // unused today (no audio surface) — kept so the rate card and the
+  // re-pricing UPDATE stay identical to the sister app's, which already bills audio.
+  inCachedTok Int? // context-cache reads bill at a large discount
+  outTextTok  Int?
+  outAudioTok Int?
+  thinkTok    Int? // bills as OUTPUT. 2.5-pro has thinking ON unless told otherwise.
+  images      Int? // image models bill PER IMAGE, not per token
+  usdMicros   Int? // integer micro-USD, priced at write time by src/lib/aiPricing.ts.
+  // Integer, not float: money does not round-trip through binary fractions.
+  priceRev    String? // which rate card produced usdMicros → re-price ALL history with one UPDATE
+  // A $0 row. Demand stays visible even when the call was free, "$ saved by cache"
+  // becomes measurable, and a COLLAPSING hit rate becomes alarmable.
+  cacheHit    Boolean @default(false)
+  // usdMicros came from a floor rather than real usageMetadata.
+  estimated   Boolean @default(false)
+  retries     Int? // every retry that reached the model was still billed
+  attemptId   String? // soft ref to TestAttempt.id — deliberately NO foreign key, so a
+  // cascade-deleted attempt cannot poison a batched INSERT.
+
+  // The long tail: score, accuracy, an error message. Never queried in a hot path.
+  // NEVER prompts or student messages — a liability with no analytic payoff.
+  props Json?
+
+  // The ONLY foreign key, and SetNull rather than Cascade on purpose: deleting an
+  // account must anonymise the behavioural trail but MUST NOT erase the money we
+  // spent on that person. It was spent. The row carries no personal data.
+  user User? @relation("UserEvents", fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([ts]) // pruning + global time windows
+  @@index([name, ts]) // the workhorse: name='ai_call' | 'blocked' | 'view' over a window
+  @@index([surface, ts]) // the section board
+  @@index([userId, ts]) // per-user timeline + the whale drill-down
+}
+
+/// The REAL Google invoice, typed in once a month.
+/// Without this the cost board is a guess: the rate card is a model, not accounting.
+/// Every cost screen prints "estimated $X · actual $Y · drift +Z%".
+model AiBillMonth {
+  month          String   @id // "2026-07" (UTC)
+  actualUsdCents Int
+  note           String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+/// One admin announcement, and what actually happened when it went out.
+///
+/// The counts are a SNAPSHOT taken at send time, not a live join. A "sent to 412 free
+/// students" that silently becomes 380 next month as people upgrade is not history — and
+/// history is the only reason to keep this row at all.
+model Broadcast {
+  id        String   @id @default(cuid())
+  body      String
+  audience  String // ALL | FREE | PREMIUM | USERS — see src/lib/broadcastAudience.ts
+  channels  String // comma-separated: inapp,telegram,email
+  createdAt DateTime @default(now())
+  createdBy String? // admin user id
+
+  recipients        Int @default(0) // matched the audience
+  inappSent         Int @default(0)
+  telegramSent      Int @default(0)
+  telegramFailed    Int @default(0)
+  emailSent         Int @default(0)
+  emailFailed       Int @default(0)
+
+  /// Telegram/email delivery runs in the background after the response is returned, so
+  /// the row is written first with zeros and updated when the send finishes. A row stuck
+  /// at "pending" means the process died mid-broadcast — which you want to be able to see.
+  deliveredAt DateTime?
+
+  @@index([createdAt])
+}
+
+/// Fire each budget alert exactly once per (day, kind, target).
+model AiAlert {
+  id        String   @id @default(cuid())
+  day       String // "2026-07-16" (UTC)
+  kind      String // daily_50 | daily_80 | daily_100 | user_spike
+  target    String   @default("") // userId for user_spike, "" for global
+  createdAt DateTime @default(now())
+
+  @@unique([day, kind, target])
 }

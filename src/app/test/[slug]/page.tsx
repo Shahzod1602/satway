@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import ExamRunner from "@/components/exam/ExamRunner";
 import type { ClientExamMeta } from "@/lib/types";
 import { canAccessTest, effectivePlan } from "@/lib/access";
+import { blocked } from "@/lib/events";
+import { BLOCK_REASONS } from "@/lib/surfaces";
 import { hasTestGrant } from "@/lib/share";
 
 export const dynamic = "force-dynamic";
@@ -39,10 +41,16 @@ export default async function TestPage({
     where: { id: user.id },
     select: { plan: true, premiumUntil: true },
   });
-  const canAccess =
-    canAccessTest(effectivePlan(dbUser?.plan, dbUser?.premiumUntil), test.slug) ||
-    (await hasTestGrant(user.id, test.id));
+  const plan = effectivePlan(dbUser?.plan, dbUser?.premiumUntil);
+  const canAccess = canAccessTest(plan, test.slug) || (await hasTestGrant(user.id, test.id));
   if (!canAccess) {
+    // itemId carries the test — this is what ranks WHICH locked tests people want.
+    blocked("tests", {
+      userId: user.id,
+      plan,
+      reason: BLOCK_REASONS.PREMIUM_REQUIRED,
+      itemId: test.id,
+    });
     redirect("/upgrade");
   }
 

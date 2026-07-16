@@ -43,22 +43,42 @@ export async function isChannelMember(
   }
 }
 
-/** Send a Telegram notification to the admin when a user sends a support message. */
-export async function notifyAdminSupport(userName: string, messagePreview: string): Promise<void> {
+/**
+ * Escape text going into a parse_mode:"HTML" message.
+ *
+ * sendTelegramMessage defaults to HTML parse mode, so any admin-authored text with a
+ * stray `<` or `&` makes Telegram reject the whole send with a 400 — the message just
+ * silently never arrives. Escape anything that did not come from us.
+ */
+export function escapeHtml(s: unknown): string {
+  return String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+/**
+ * DM the admin. Returns whether it actually went out — unlike the notify* helpers
+ * below, some callers (the AI budget watchdog) need to know, because "the alert was
+ * suppressed as already-sent" and "the alert silently failed" must not look the same.
+ */
+export async function notifyAdmin(text: string): Promise<boolean> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_ADMIN_CHAT_ID;
-  if (!token || !chatId) return;
+  if (!token || !chatId) return false;
 
-  const text = `New support message from ${userName}:\n\n${messagePreview.slice(0, 300)}`;
   try {
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ chat_id: chatId, text }),
     });
+    return res.ok;
   } catch {
-    // silently fail
+    return false;
   }
+}
+
+/** Send a Telegram notification to the admin when a user sends a support message. */
+export async function notifyAdminSupport(userName: string, messagePreview: string): Promise<void> {
+  await notifyAdmin(`New support message from ${userName}:\n\n${messagePreview.slice(0, 300)}`);
 }
 
 /** Send a Telegram admin notification for payment received. */

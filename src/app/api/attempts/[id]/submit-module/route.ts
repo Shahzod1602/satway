@@ -7,6 +7,7 @@ import { rawToScaled, rawToScaledAdaptive, pickModule2Difficulty, type SatSkill 
 import { buildClientModule, findModule1, findModule2, hasModule2, moduleDurationSec } from "@/lib/exam";
 import { parseJson } from "@/lib/validation";
 import { jsonError, withErrorHandling } from "@/lib/apiError";
+import { recordPractice } from "@/lib/streakStore";
 import type { Prisma } from "@/generated/prisma/client";
 
 const bodySchema = z.object({
@@ -112,6 +113,7 @@ export const POST = withErrorHandling(
           },
         }),
       ]);
+      await recordPractice(user.id);
       return Response.json({
         stage: "done",
         attemptId: attempt.id,
@@ -151,6 +153,7 @@ export const POST = withErrorHandling(
             },
           }),
         ]);
+        await recordPractice(user.id);
         return Response.json({
           stage: "done",
           attemptId: attempt.id,
@@ -225,6 +228,7 @@ export const POST = withErrorHandling(
       }),
     ]);
 
+    await recordPractice(user.id);
     return Response.json({
       stage: "done",
       attemptId: attempt.id,

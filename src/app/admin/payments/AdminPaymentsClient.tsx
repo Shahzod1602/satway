@@ -6,9 +6,13 @@ import { fmtUZS } from "@/lib/plans";
 
 type Payment = {
   id: string;
+  orderNo: string;
   planLabel: string;
   months: number;
   amount: number;
+  baseAmount: number;
+  discountPercent: number;
+  promoCode: string | null;
   status: "PENDING" | "APPROVED" | "REJECTED";
   note: string | null;
   createdAt: string;
@@ -69,13 +73,24 @@ export default function AdminPaymentsClient({ initial }: { initial: Payment[] })
             className="flex flex-wrap items-center gap-4 rounded-2xl border border-[#EAEAEA] bg-white p-5"
           >
             <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="font-mono text-sm font-bold text-slate-900">{p.orderNo}</span>
                 <span className="font-semibold text-slate-900">{p.user.name}</span>
                 <span className="text-sm text-slate-400">{p.user.email}</span>
               </div>
               <div className="mt-1 text-sm text-slate-500">
-                {p.months} month{p.months !== 1 ? "s" : ""} · {fmtUZS(p.amount)} UZS ·{" "}
-                {new Date(p.createdAt).toLocaleString()}
+                {p.months} month{p.months !== 1 ? "s" : ""} ·{" "}
+                <span className="font-medium text-slate-700">{fmtUZS(p.amount)} UZS</span>
+                {p.discountPercent > 0 && (
+                  <>
+                    {" "}
+                    <span className="text-slate-400 line-through">{fmtUZS(p.baseAmount)}</span>{" "}
+                    <span className="rounded bg-violet-50 px-1.5 py-0.5 text-xs font-medium text-violet-700">
+                      {p.promoCode} −{p.discountPercent}%
+                    </span>
+                  </>
+                )}{" "}
+                · {new Date(p.createdAt).toLocaleString()}
               </div>
               {p.note && <div className="mt-1 text-sm text-slate-600">“{p.note}”</div>}
             </div>

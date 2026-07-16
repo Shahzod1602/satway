@@ -14,19 +14,33 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import type { VocabDeck, VocabWord } from "@/lib/vocabulary";
+import { LEARNED_BOX } from "@/lib/srs";
 
+// The old home of this data. Progress now lives in the database (VocabProgress) so it
+// survives a device change and is visible to the dashboards; this key is read exactly
+// once per browser, to import whatever was already here, and then retired.
 const STORAGE_KEY = "satway_vocab_known";
+const MIGRATED_KEY = "satway_vocab_migrated";
 
 type Mode = { kind: "decks" } | { kind: "study"; deckId: string } | { kind: "quiz"; deckId: string };
 
-function loadKnown(): Set<string> {
-  if (typeof window === "undefined") return new Set();
+type ServerProgress = {
+  wordId: string;
+  box: number;
+  dueAt: string;
+  correctCount: number;
+  wrongCount: number;
+};
+
+function loadLocalKnown(): string[] {
+  if (typeof window === "undefined") return [];
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return new Set();
-    return new Set(JSON.parse(raw) as string[]);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? (parsed as string[]) : [];
   } catch {
-    return new Set();
+    return [];
   }
 }
 
@@ -45,26 +59,70 @@ export default function VocabularyClient({ decks }: { decks: VocabDeck[] }) {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    /* eslint-disable react-hooks/set-state-in-effect -- client-only localStorage hydration */
-    setKnown(loadKnown());
-    setHydrated(true);
-    /* eslint-enable react-hooks/set-state-in-effect */
+    let cancelled = false;
+
+    // Load from the server, importing this browser's old localStorage progress the first
+    // time. Without the import, every student using the flashcards today would open the
+    // page and find their progress gone.
+    const load = async () => {
+      try {
+        const alreadyMigrated = window.localStorage.getItem(MIGRATED_KEY) === "1";
+        if (!alreadyMigrated) {
+          const local = loadLocalKnown();
+          if (local.length > 0) {
+            await fetch("/api/vocabulary", {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ knownWordIds: local }),
+            });
+          }
+          // Set the flag even when there was nothing to import — the check itself is
+          // what we only want to do once.
+          window.localStorage.setItem(MIGRATED_KEY, "1");
+        }
+
+        const res = await fetch("/api/vocabulary");
+        if (!res.ok) throw new Error(String(res.status));
+        const data: { progress: ServerProgress[] } = await res.json();
+        if (cancelled) return;
+        // "Known" for this UI = survived to the long intervals. A word in box 0-2 is
+        // still being learned, and showing it as known is how you fail it on test day.
+        setKnown(new Set(data.progress.filter((p) => p.box >= LEARNED_BOX).map((p) => p.wordId)));
+      } catch {
+        // Offline or signed out: fall back to whatever this browser remembers rather
+        // than showing an empty deck. This page is in the PWA's offline shell.
+        if (!cancelled) setKnown(new Set(loadLocalKnown()));
+      } finally {
+        if (!cancelled) setHydrated(true);
+      }
+    };
+
+    void load();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  const persist = (next: Set<string>) => {
-    setKnown(new Set(next));
-    try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify([...next]));
-    } catch {
-      // ignore quota / private-mode errors
-    }
-  };
-
   const toggleKnown = (id: string, value: boolean) => {
+    // Optimistic: a flashcard must flip instantly. The write is one upsert and the worst
+    // case for a lost one is that the word comes back sooner than it needed to.
     const next = new Set(known);
     if (value) next.add(id);
     else next.delete(id);
-    persist(next);
+    setKnown(next);
+
+    void fetch("/api/vocabulary", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ wordId: id, correct: value }),
+    }).catch(() => {
+      // Keep a local copy so an offline session is not simply lost.
+      try {
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify([...next]));
+      } catch {
+        /* quota / private mode */
+      }
+    });
   };
 
   const activeDeck = mode.kind !== "decks" ? decks.find((d) => d.id === mode.deckId) : undefined;

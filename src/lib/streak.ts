@@ -32,3 +32,68 @@ export function computeStreak(
   }
   return streak;
 }
+
+/** The longest run of consecutive Tashkent days in a submission history. */
+export function computeLongestStreak(submittedAts: (Date | null | undefined)[]): number {
+  const days = [
+    ...new Set(submittedAts.filter(Boolean).map((d) => tashkentDayKey(d as Date))),
+  ].sort();
+  let best = 0;
+  let run = 0;
+  let prev: string | null = null;
+  for (const day of days) {
+    run = prev !== null && day === nextDay(prev) ? run + 1 : 1;
+    if (run > best) best = run;
+    prev = day;
+  }
+  return best;
+}
+
+/** The Tashkent day after `key`. Safe across months — it goes through a real Date. */
+function nextDay(key: string): string {
+  return new Date(new Date(`${key}T00:00:00Z`).getTime() + DAY_MS).toISOString().slice(0, 10);
+}
+
+/**
+ * What User.currentStreak actually means today.
+ *
+ * The stored value was true as of lastActiveDay and nothing rewrites it when the student
+ * stops showing up — so a row can say 5 forever. Reading it raw would render a streak
+ * that has been dead for a month, which is the one thing a streak must never do: it is a
+ * commitment device, and a fake one destroys the mechanic.
+ *
+ * Active today or yesterday → the stored value stands (missing today only breaks the
+ * streak once tomorrow arrives). Older → it is 0.
+ */
+export function effectiveStreak(
+  currentStreak: number | null | undefined,
+  lastActiveDay: string | null | undefined,
+  now: Date = new Date(),
+): number {
+  if (!currentStreak || !lastActiveDay) return 0;
+  const today = tashkentDayKey(now);
+  const yesterday = tashkentDayKey(new Date(now.getTime() - DAY_MS));
+  return lastActiveDay === today || lastActiveDay === yesterday ? currentStreak : 0;
+}
+
+/**
+ * The new streak state after a submission lands. Pure — the caller writes it.
+ *
+ * Returns null when nothing changed (already practised today), so the caller can skip
+ * the UPDATE entirely: most submissions are the second, third or tenth of the same day.
+ */
+export function streakAfterSubmission(
+  prev: { currentStreak: number; longestStreak: number; lastActiveDay: string | null },
+  now: Date = new Date(),
+): { currentStreak: number; longestStreak: number; lastActiveDay: string } | null {
+  const today = tashkentDayKey(now);
+  if (prev.lastActiveDay === today) return null;
+
+  const yesterday = tashkentDayKey(new Date(now.getTime() - DAY_MS));
+  const currentStreak = prev.lastActiveDay === yesterday ? prev.currentStreak + 1 : 1;
+  return {
+    currentStreak,
+    longestStreak: Math.max(prev.longestStreak, currentStreak),
+    lastActiveDay: today,
+  };
+}

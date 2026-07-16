@@ -7,6 +7,8 @@ import { parseJson } from "@/lib/validation";
 import { jsonError, tooManyRequests, withErrorHandling } from "@/lib/apiError";
 import { rateLimit } from "@/lib/rateLimit";
 import { newLiveCode } from "@/lib/share";
+import { blocked } from "@/lib/events";
+import { BLOCK_REASONS } from "@/lib/surfaces";
 
 const bodySchema = z.object({ testId: z.string().min(1).max(40) });
 
@@ -19,7 +21,9 @@ export const POST = withErrorHandling(async (req: NextRequest) => {
     where: { id: user.id },
     select: { plan: true, premiumUntil: true },
   });
-  if (effectivePlan(dbUser?.plan, dbUser?.premiumUntil) !== "PREMIUM") {
+  const plan = effectivePlan(dbUser?.plan, dbUser?.premiumUntil);
+  if (plan !== "PREMIUM") {
+    blocked("live", { userId: user.id, plan, reason: BLOCK_REASONS.PREMIUM_REQUIRED });
     return jsonError("Hosting a live session is a Premium feature.", 403);
   }
 

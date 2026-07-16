@@ -3,6 +3,8 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { currentUser } from "@/lib/session";
 import { canAccessTest, effectivePlan } from "@/lib/access";
+import { blocked } from "@/lib/events";
+import { BLOCK_REASONS } from "@/lib/surfaces";
 import { hasTestGrant } from "@/lib/share";
 import { buildClientModule, findModule1, findModule2 } from "@/lib/exam";
 import { parseJson } from "@/lib/validation";
@@ -34,10 +36,15 @@ export const POST = withErrorHandling(async (req: NextRequest) => {
     where: { id: user.id },
     select: { plan: true, premiumUntil: true },
   });
-  const canAccess =
-    canAccessTest(effectivePlan(dbUser?.plan, dbUser?.premiumUntil), test) ||
-    (await hasTestGrant(user.id, test.id));
+  const plan = effectivePlan(dbUser?.plan, dbUser?.premiumUntil);
+  const canAccess = canAccessTest(plan, test) || (await hasTestGrant(user.id, test.id));
   if (!canAccess) {
+    blocked("tests", {
+      userId: user.id,
+      plan,
+      reason: BLOCK_REASONS.PREMIUM_REQUIRED,
+      itemId: test.id,
+    });
     return jsonError("This test requires Premium.", 403);
   }
 

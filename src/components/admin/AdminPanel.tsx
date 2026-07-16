@@ -2,7 +2,20 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Users, LifeBuoy, FilePlus, Loader2, CheckCircle2, AlertCircle, CreditCard } from "lucide-react";
+import {
+  Users,
+  LifeBuoy,
+  FilePlus,
+  Loader2,
+  CheckCircle2,
+  AlertCircle,
+  CreditCard,
+  BarChart3,
+  Megaphone,
+  Ticket,
+  ListChecks,
+  Sparkles,
+} from "lucide-react";
 
 export default function AdminPanel() {
   const [json, setJson] = useState("");
@@ -38,6 +51,61 @@ export default function AdminPanel() {
       <p className="mt-1 text-sm text-slate-500">Manage users, support tickets, and tests.</p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Link
+          href="/admin/analytics"
+          className="rounded-2xl border border-[#EAEAEA] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
+        >
+          <div className="grid h-10 w-10 place-items-center rounded-xl bg-sky-50 text-sky-600">
+            <BarChart3 className="h-5 w-5" />
+          </div>
+          <h3 className="mt-4 text-lg font-semibold text-slate-900">Analytics</h3>
+          <p className="mt-1 text-sm text-slate-500">Retention, funnel, AI spend</p>
+        </Link>
+
+        <Link
+          href="/admin/broadcast"
+          className="rounded-2xl border border-[#EAEAEA] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
+        >
+          <div className="grid h-10 w-10 place-items-center rounded-xl bg-amber-50 text-amber-600">
+            <Megaphone className="h-5 w-5" />
+          </div>
+          <h3 className="mt-4 text-lg font-semibold text-slate-900">Announcements</h3>
+          <p className="mt-1 text-sm text-slate-500">Message everyone at once</p>
+        </Link>
+
+        <Link
+          href="/admin/tests"
+          className="rounded-2xl border border-[#EAEAEA] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
+        >
+          <div className="grid h-10 w-10 place-items-center rounded-xl bg-blue-50 text-blue-600">
+            <ListChecks className="h-5 w-5" />
+          </div>
+          <h3 className="mt-4 text-lg font-semibold text-slate-900">Tests</h3>
+          <p className="mt-1 text-sm text-slate-500">Browse, publish, edit</p>
+        </Link>
+
+        <Link
+          href="/admin/generate"
+          className="rounded-2xl border border-[#EAEAEA] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
+        >
+          <div className="grid h-10 w-10 place-items-center rounded-xl bg-fuchsia-50 text-fuchsia-600">
+            <Sparkles className="h-5 w-5" />
+          </div>
+          <h3 className="mt-4 text-lg font-semibold text-slate-900">Generate</h3>
+          <p className="mt-1 text-sm text-slate-500">AI questions from a passage</p>
+        </Link>
+
+        <Link
+          href="/admin/promo"
+          className="rounded-2xl border border-[#EAEAEA] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
+        >
+          <div className="grid h-10 w-10 place-items-center rounded-xl bg-violet-50 text-violet-600">
+            <Ticket className="h-5 w-5" />
+          </div>
+          <h3 className="mt-4 text-lg font-semibold text-slate-900">Promo codes</h3>
+          <p className="mt-1 text-sm text-slate-500">Discounts + teacher commission</p>
+        </Link>
+
         <Link
           href="/admin/payments"
           className="rounded-2xl border border-[#EAEAEA] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"

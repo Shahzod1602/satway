@@ -12,16 +12,13 @@ export default async function UpgradePage() {
   const user = await currentUser();
   if (!user) redirect("/login");
 
-  const [dbUser, referralCode] = await Promise.all([
-    prisma.user.findUnique({
-      where: { id: user.id },
-      select: { plan: true, premiumUntil: true },
-    }),
-    (async () => {
-      const { ensureReferralCode } = await import("@/lib/referral");
-      return ensureReferralCode(user.id);
-    })(),
-  ]);
+  // No ensureReferralCode() here: it was minting a referral code on every visit to this
+  // page purely to hand it to PaymentForm, which never read it. Referral codes are the
+  // /referral page's job.
+  const dbUser = await prisma.user.findUnique({
+    where: { id: user.id },
+    select: { plan: true, premiumUntil: true },
+  });
 
   const plan = effectivePlan(dbUser?.plan, dbUser?.premiumUntil);
 
@@ -45,7 +42,6 @@ export default async function UpgradePage() {
           )}
           <PricingSelector
             currentPlan={plan}
-            referralCode={referralCode}
             cardNumber={process.env.PAYMENT_CARD_NUMBER || ""}
             cardHolder={process.env.PAYMENT_CARD_HOLDER || ""}
             paymentTelegram={process.env.PAYMENT_TELEGRAM || ""}

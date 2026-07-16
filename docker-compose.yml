@@ -37,7 +37,17 @@ services:
       GOOGLE_CLOUD_PROJECT: ${GOOGLE_CLOUD_PROJECT}
       GOOGLE_CLOUD_LOCATION: ${GOOGLE_CLOUD_LOCATION}
       GOOGLE_APPLICATION_CREDENTIALS: /run/secrets/gcp-key.json
+      # AI Studio key. env.ts PREFERS this over the Vertex SA key when both are present.
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
       GEMINI_MODEL: ${GEMINI_MODEL}
+      # Cost ledger + budget watchdog. AI_RATES_JSON patches the rate card without a
+      # redeploy on the day an invoice proves one wrong.
+      AI_MONTHLY_BUDGET_USD: ${AI_MONTHLY_BUDGET_USD}
+      AI_DAILY_BUDGET_USD: ${AI_DAILY_BUDGET_USD}
+      AI_USER_DAILY_ALERT_USD: ${AI_USER_DAILY_ALERT_USD}
+      AI_RATES_JSON: ${AI_RATES_JSON}
+      UZS_PER_USD: ${UZS_PER_USD}
+      CRON_SECRET: ${CRON_SECRET}
       GMAIL_USER: ${GMAIL_USER}
       GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD}
       MAIL_FROM: ${MAIL_FROM}
@@ -64,6 +74,59 @@ services:
       - ${GCP_KEY_FILE:-./gemini-key.json}:/run/secrets/gcp-key.json:ro
     ports:
       - "3000:3000"
+
+  # ── Schedulers ──────────────────────────────────────────────────────────────
+  # Both are no-ops unless CRON_SECRET is set; the script exits loudly rather than
+  # looping against an endpoint that will 503 forever.
+
+  # Re-engage expired Premium. Daily is enough — the copy is the same whether it
+  # arrives at 09:00 or 15:00, and more often just risks double-sending on a restart.
+  cron-winback:
+    image: curlimages/curl:8.11.1
+    restart: unless-stopped
+    depends_on:
+      - app
+    environment:
+      CRON_SECRET: ${CRON_SECRET}
+      CRON_PATH: /api/cron/winback
+      CRON_INTERVAL: "86400"
+      CRON_JITTER: "60"
+    volumes:
+      - ./scripts/cron-loop.sh:/cron-loop.sh:ro
+    entrypoint: ["sh", "/cron-loop.sh"]
+
+  # One nudge to people who signed up and vanished. Daily; each user is stamped once
+  # ever, so the schedule only decides how promptly it lands.
+  cron-nudge:
+    image: curlimages/curl:8.11.1
+    restart: unless-stopped
+    depends_on:
+      - app
+    environment:
+      CRON_SECRET: ${CRON_SECRET}
+      CRON_PATH: /api/cron/nudge
+      CRON_INTERVAL: "86400"
+      CRON_JITTER: "120"
+    volumes:
+      - ./scripts/cron-loop.sh:/cron-loop.sh:ro
+    entrypoint: ["sh", "/cron-loop.sh"]
+
+  # Watch AI spend. Every 15 min: each alert is claimed once per (day, kind, target),
+  # so a tight schedule costs nothing but catches a runaway within the quarter hour
+  # instead of at the end of the month.
+  cron-ai-budget:
+    image: curlimages/curl:8.11.1
+    restart: unless-stopped
+    depends_on:
+      - app
+    environment:
+      CRON_SECRET: ${CRON_SECRET}
+      CRON_PATH: /api/cron/ai-budget
+      CRON_INTERVAL: "900"
+      CRON_JITTER: "30"
+    volumes:
+      - ./scripts/cron-loop.sh:/cron-loop.sh:ro
+    entrypoint: ["sh", "/cron-loop.sh"]
 
 volumes:
   satway_db:
