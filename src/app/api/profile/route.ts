@@ -26,6 +26,7 @@ export async function GET() {
       examDate: true,
       emailNotifications: true,
       plan: true,
+      premiumUntil: true, // /upgrade/success polls this to see the Click grant land
     },
   });
 

@@ -114,10 +114,14 @@ model Payment {
   /// as SERIAL numbers the existing rows on the way in.
   orderNo    Int           @unique @default(autoincrement())
 
-  /// How this was paid. "manual" = bank-card transfer approved by hand, which is every
-  /// row today. An automated provider adds its own value here and NOTHING else in this
-  /// model has to change.
+  /// How this was paid. "manual" = bank-card transfer approved by hand; "click" =
+  /// Click SHOP-API, granted by the Complete webhook with no human in the loop.
   provider   String        @default("manual")
+
+  // ── Provider state (null on manual rows) ──
+  clickPrepareId Int? // issued at Prepare, must be echoed at Complete
+  providerRef    String? // the provider's transaction id, e.g. "click:1234567"
+  paidAt         DateTime? // when the provider confirmed money moved
 
   // ── Promo snapshot ──
   // Snapshots, not joins. A promo's percentage can be edited and its owner reassigned;
@@ -166,8 +170,10 @@ model PromoCode {
 
 enum PaymentStatus {
   PENDING
-  APPROVED
-  REJECTED
+  APPROVED // paid — by admin review (manual) or a provider webhook (click)
+  REJECTED // admin declined a manual transfer
+  CANCELLED // the provider reported failure/cancellation before money moved
+  REFUNDED // a provider reversed an APPROVED payment — Premium needs a human review
 }
 
 model SupportMessage {

@@ -10,11 +10,13 @@ export default function PricingSelector({
   cardNumber,
   cardHolder,
   paymentTelegram,
+  clickEnabled,
 }: {
   currentPlan: string;
   cardNumber: string;
   cardHolder: string;
   paymentTelegram: string;
+  clickEnabled: boolean;
 }) {
   const [selected, setSelected] = useState<string>("1m");
   const [showPayment, setShowPayment] = useState(false);
@@ -72,6 +74,7 @@ export default function PricingSelector({
           cardNumber={cardNumber}
           cardHolder={cardHolder}
           paymentTelegram={paymentTelegram}
+          clickEnabled={clickEnabled}
           onClose={() => setShowPayment(false)}
         />
       )}

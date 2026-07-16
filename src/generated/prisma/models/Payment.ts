@@ -30,6 +30,7 @@ export type PaymentAvgAggregateOutputType = {
   months: number | null
   amount: number | null
   orderNo: number | null
+  clickPrepareId: number | null
   discountPercent: number | null
   commissionPct: number | null
   baseAmount: number | null
@@ -39,6 +40,7 @@ export type PaymentSumAggregateOutputType = {
   months: number | null
   amount: number | null
   orderNo: number | null
+  clickPrepareId: number | null
   discountPercent: number | null
   commissionPct: number | null
   baseAmount: number | null
@@ -58,6 +60,9 @@ export type PaymentMinAggregateOutputType = {
   createdAt: Date | null
   orderNo: number | null
   provider: string | null
+  clickPrepareId: number | null
+  providerRef: string | null
+  paidAt: Date | null
   promoCode: string | null
   promoOwnerId: string | null
   discountPercent: number | null
@@ -79,6 +84,9 @@ export type PaymentMaxAggregateOutputType = {
   createdAt: Date | null
   orderNo: number | null
   provider: string | null
+  clickPrepareId: number | null
+  providerRef: string | null
+  paidAt: Date | null
   promoCode: string | null
   promoOwnerId: string | null
   discountPercent: number | null
@@ -100,6 +108,9 @@ export type PaymentCountAggregateOutputType = {
   createdAt: number
   orderNo: number
   provider: number
+  clickPrepareId: number
+  providerRef: number
+  paidAt: number
   promoCode: number
   promoOwnerId: number
   discountPercent: number
@@ -113,6 +124,7 @@ export type PaymentAvgAggregateInputType = {
   months?: true
   amount?: true
   orderNo?: true
+  clickPrepareId?: true
   discountPercent?: true
   commissionPct?: true
   baseAmount?: true
@@ -122,6 +134,7 @@ export type PaymentSumAggregateInputType = {
   months?: true
   amount?: true
   orderNo?: true
+  clickPrepareId?: true
   discountPercent?: true
   commissionPct?: true
   baseAmount?: true
@@ -141,6 +154,9 @@ export type PaymentMinAggregateInputType = {
   createdAt?: true
   orderNo?: true
   provider?: true
+  clickPrepareId?: true
+  providerRef?: true
+  paidAt?: true
   promoCode?: true
   promoOwnerId?: true
   discountPercent?: true
@@ -162,6 +178,9 @@ export type PaymentMaxAggregateInputType = {
   createdAt?: true
   orderNo?: true
   provider?: true
+  clickPrepareId?: true
+  providerRef?: true
+  paidAt?: true
   promoCode?: true
   promoOwnerId?: true
   discountPercent?: true
@@ -183,6 +202,9 @@ export type PaymentCountAggregateInputType = {
   createdAt?: true
   orderNo?: true
   provider?: true
+  clickPrepareId?: true
+  providerRef?: true
+  paidAt?: true
   promoCode?: true
   promoOwnerId?: true
   discountPercent?: true
@@ -291,6 +313,9 @@ export type PaymentGroupByOutputType = {
   createdAt: Date
   orderNo: number
   provider: string
+  clickPrepareId: number | null
+  providerRef: string | null
+  paidAt: Date | null
   promoCode: string | null
   promoOwnerId: string | null
   discountPercent: number
@@ -335,6 +360,9 @@ export type PaymentWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   orderNo?: Prisma.IntFilter<"Payment"> | number
   provider?: Prisma.StringFilter<"Payment"> | string
+  clickPrepareId?: Prisma.IntNullableFilter<"Payment"> | number | null
+  providerRef?: Prisma.StringNullableFilter<"Payment"> | string | null
+  paidAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   promoCode?: Prisma.StringNullableFilter<"Payment"> | string | null
   promoOwnerId?: Prisma.StringNullableFilter<"Payment"> | string | null
   discountPercent?: Prisma.IntFilter<"Payment"> | number
@@ -358,6 +386,9 @@ export type PaymentOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   orderNo?: Prisma.SortOrder
   provider?: Prisma.SortOrder
+  clickPrepareId?: Prisma.SortOrderInput | Prisma.SortOrder
+  providerRef?: Prisma.SortOrderInput | Prisma.SortOrder
+  paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
   promoCode?: Prisma.SortOrderInput | Prisma.SortOrder
   promoOwnerId?: Prisma.SortOrderInput | Prisma.SortOrder
   discountPercent?: Prisma.SortOrder
@@ -384,6 +415,9 @@ export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   reviewedBy?: Prisma.StringNullableFilter<"Payment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   provider?: Prisma.StringFilter<"Payment"> | string
+  clickPrepareId?: Prisma.IntNullableFilter<"Payment"> | number | null
+  providerRef?: Prisma.StringNullableFilter<"Payment"> | string | null
+  paidAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   promoCode?: Prisma.StringNullableFilter<"Payment"> | string | null
   promoOwnerId?: Prisma.StringNullableFilter<"Payment"> | string | null
   discountPercent?: Prisma.IntFilter<"Payment"> | number
@@ -407,6 +441,9 @@ export type PaymentOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   orderNo?: Prisma.SortOrder
   provider?: Prisma.SortOrder
+  clickPrepareId?: Prisma.SortOrderInput | Prisma.SortOrder
+  providerRef?: Prisma.SortOrderInput | Prisma.SortOrder
+  paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
   promoCode?: Prisma.SortOrderInput | Prisma.SortOrder
   promoOwnerId?: Prisma.SortOrderInput | Prisma.SortOrder
   discountPercent?: Prisma.SortOrder
@@ -436,6 +473,9 @@ export type PaymentScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Payment"> | Date | string
   orderNo?: Prisma.IntWithAggregatesFilter<"Payment"> | number
   provider?: Prisma.StringWithAggregatesFilter<"Payment"> | string
+  clickPrepareId?: Prisma.IntNullableWithAggregatesFilter<"Payment"> | number | null
+  providerRef?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
+  paidAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
   promoCode?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
   promoOwnerId?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
   discountPercent?: Prisma.IntWithAggregatesFilter<"Payment"> | number
@@ -456,6 +496,9 @@ export type PaymentCreateInput = {
   createdAt?: Date | string
   orderNo?: number
   provider?: string
+  clickPrepareId?: number | null
+  providerRef?: string | null
+  paidAt?: Date | string | null
   promoCode?: string | null
   discountPercent?: number
   commissionPct?: number
@@ -478,6 +521,9 @@ export type PaymentUncheckedCreateInput = {
   createdAt?: Date | string
   orderNo?: number
   provider?: string
+  clickPrepareId?: number | null
+  providerRef?: string | null
+  paidAt?: Date | string | null
   promoCode?: string | null
   promoOwnerId?: string | null
   discountPercent?: number
@@ -497,6 +543,9 @@ export type PaymentUpdateInput = {
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   provider?: Prisma.StringFieldUpdateOperationsInput | string
+  clickPrepareId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  providerRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   promoCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discountPercent?: Prisma.IntFieldUpdateOperationsInput | number
   commissionPct?: Prisma.IntFieldUpdateOperationsInput | number
@@ -519,6 +568,9 @@ export type PaymentUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderNo?: Prisma.IntFieldUpdateOperationsInput | number
   provider?: Prisma.StringFieldUpdateOperationsInput | string
+  clickPrepareId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  providerRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   promoCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   promoOwnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discountPercent?: Prisma.IntFieldUpdateOperationsInput | number
@@ -540,6 +592,9 @@ export type PaymentCreateManyInput = {
   createdAt?: Date | string
   orderNo?: number
   provider?: string
+  clickPrepareId?: number | null
+  providerRef?: string | null
+  paidAt?: Date | string | null
   promoCode?: string | null
   promoOwnerId?: string | null
   discountPercent?: number
@@ -559,6 +614,9 @@ export type PaymentUpdateManyMutationInput = {
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   provider?: Prisma.StringFieldUpdateOperationsInput | string
+  clickPrepareId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  providerRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   promoCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discountPercent?: Prisma.IntFieldUpdateOperationsInput | number
   commissionPct?: Prisma.IntFieldUpdateOperationsInput | number
@@ -579,6 +637,9 @@ export type PaymentUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderNo?: Prisma.IntFieldUpdateOperationsInput | number
   provider?: Prisma.StringFieldUpdateOperationsInput | string
+  clickPrepareId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  providerRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   promoCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   promoOwnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discountPercent?: Prisma.IntFieldUpdateOperationsInput | number
@@ -610,6 +671,9 @@ export type PaymentCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   orderNo?: Prisma.SortOrder
   provider?: Prisma.SortOrder
+  clickPrepareId?: Prisma.SortOrder
+  providerRef?: Prisma.SortOrder
+  paidAt?: Prisma.SortOrder
   promoCode?: Prisma.SortOrder
   promoOwnerId?: Prisma.SortOrder
   discountPercent?: Prisma.SortOrder
@@ -621,6 +685,7 @@ export type PaymentAvgOrderByAggregateInput = {
   months?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   orderNo?: Prisma.SortOrder
+  clickPrepareId?: Prisma.SortOrder
   discountPercent?: Prisma.SortOrder
   commissionPct?: Prisma.SortOrder
   baseAmount?: Prisma.SortOrder
@@ -640,6 +705,9 @@ export type PaymentMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   orderNo?: Prisma.SortOrder
   provider?: Prisma.SortOrder
+  clickPrepareId?: Prisma.SortOrder
+  providerRef?: Prisma.SortOrder
+  paidAt?: Prisma.SortOrder
   promoCode?: Prisma.SortOrder
   promoOwnerId?: Prisma.SortOrder
   discountPercent?: Prisma.SortOrder
@@ -661,6 +729,9 @@ export type PaymentMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   orderNo?: Prisma.SortOrder
   provider?: Prisma.SortOrder
+  clickPrepareId?: Prisma.SortOrder
+  providerRef?: Prisma.SortOrder
+  paidAt?: Prisma.SortOrder
   promoCode?: Prisma.SortOrder
   promoOwnerId?: Prisma.SortOrder
   discountPercent?: Prisma.SortOrder
@@ -672,6 +743,7 @@ export type PaymentSumOrderByAggregateInput = {
   months?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   orderNo?: Prisma.SortOrder
+  clickPrepareId?: Prisma.SortOrder
   discountPercent?: Prisma.SortOrder
   commissionPct?: Prisma.SortOrder
   baseAmount?: Prisma.SortOrder
@@ -778,6 +850,9 @@ export type PaymentCreateWithoutUserInput = {
   createdAt?: Date | string
   orderNo?: number
   provider?: string
+  clickPrepareId?: number | null
+  providerRef?: string | null
+  paidAt?: Date | string | null
   promoCode?: string | null
   discountPercent?: number
   commissionPct?: number
@@ -798,6 +873,9 @@ export type PaymentUncheckedCreateWithoutUserInput = {
   createdAt?: Date | string
   orderNo?: number
   provider?: string
+  clickPrepareId?: number | null
+  providerRef?: string | null
+  paidAt?: Date | string | null
   promoCode?: string | null
   promoOwnerId?: string | null
   discountPercent?: number
@@ -828,6 +906,9 @@ export type PaymentCreateWithoutPromoOwnerInput = {
   createdAt?: Date | string
   orderNo?: number
   provider?: string
+  clickPrepareId?: number | null
+  providerRef?: string | null
+  paidAt?: Date | string | null
   promoCode?: string | null
   discountPercent?: number
   commissionPct?: number
@@ -849,6 +930,9 @@ export type PaymentUncheckedCreateWithoutPromoOwnerInput = {
   createdAt?: Date | string
   orderNo?: number
   provider?: string
+  clickPrepareId?: number | null
+  providerRef?: string | null
+  paidAt?: Date | string | null
   promoCode?: string | null
   discountPercent?: number
   commissionPct?: number
@@ -898,6 +982,9 @@ export type PaymentScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   orderNo?: Prisma.IntFilter<"Payment"> | number
   provider?: Prisma.StringFilter<"Payment"> | string
+  clickPrepareId?: Prisma.IntNullableFilter<"Payment"> | number | null
+  providerRef?: Prisma.StringNullableFilter<"Payment"> | string | null
+  paidAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   promoCode?: Prisma.StringNullableFilter<"Payment"> | string | null
   promoOwnerId?: Prisma.StringNullableFilter<"Payment"> | string | null
   discountPercent?: Prisma.IntFilter<"Payment"> | number
@@ -934,6 +1021,9 @@ export type PaymentCreateManyUserInput = {
   createdAt?: Date | string
   orderNo?: number
   provider?: string
+  clickPrepareId?: number | null
+  providerRef?: string | null
+  paidAt?: Date | string | null
   promoCode?: string | null
   promoOwnerId?: string | null
   discountPercent?: number
@@ -955,6 +1045,9 @@ export type PaymentCreateManyPromoOwnerInput = {
   createdAt?: Date | string
   orderNo?: number
   provider?: string
+  clickPrepareId?: number | null
+  providerRef?: string | null
+  paidAt?: Date | string | null
   promoCode?: string | null
   discountPercent?: number
   commissionPct?: number
@@ -973,6 +1066,9 @@ export type PaymentUpdateWithoutUserInput = {
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   provider?: Prisma.StringFieldUpdateOperationsInput | string
+  clickPrepareId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  providerRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   promoCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discountPercent?: Prisma.IntFieldUpdateOperationsInput | number
   commissionPct?: Prisma.IntFieldUpdateOperationsInput | number
@@ -993,6 +1089,9 @@ export type PaymentUncheckedUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderNo?: Prisma.IntFieldUpdateOperationsInput | number
   provider?: Prisma.StringFieldUpdateOperationsInput | string
+  clickPrepareId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  providerRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   promoCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   promoOwnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discountPercent?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1013,6 +1112,9 @@ export type PaymentUncheckedUpdateManyWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderNo?: Prisma.IntFieldUpdateOperationsInput | number
   provider?: Prisma.StringFieldUpdateOperationsInput | string
+  clickPrepareId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  providerRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   promoCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   promoOwnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discountPercent?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1032,6 +1134,9 @@ export type PaymentUpdateWithoutPromoOwnerInput = {
   reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   provider?: Prisma.StringFieldUpdateOperationsInput | string
+  clickPrepareId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  providerRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   promoCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discountPercent?: Prisma.IntFieldUpdateOperationsInput | number
   commissionPct?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1053,6 +1158,9 @@ export type PaymentUncheckedUpdateWithoutPromoOwnerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderNo?: Prisma.IntFieldUpdateOperationsInput | number
   provider?: Prisma.StringFieldUpdateOperationsInput | string
+  clickPrepareId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  providerRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   promoCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discountPercent?: Prisma.IntFieldUpdateOperationsInput | number
   commissionPct?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1073,6 +1181,9 @@ export type PaymentUncheckedUpdateManyWithoutPromoOwnerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderNo?: Prisma.IntFieldUpdateOperationsInput | number
   provider?: Prisma.StringFieldUpdateOperationsInput | string
+  clickPrepareId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  providerRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   promoCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discountPercent?: Prisma.IntFieldUpdateOperationsInput | number
   commissionPct?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1095,6 +1206,9 @@ export type PaymentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   orderNo?: boolean
   provider?: boolean
+  clickPrepareId?: boolean
+  providerRef?: boolean
+  paidAt?: boolean
   promoCode?: boolean
   promoOwnerId?: boolean
   discountPercent?: boolean
@@ -1118,6 +1232,9 @@ export type PaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   createdAt?: boolean
   orderNo?: boolean
   provider?: boolean
+  clickPrepareId?: boolean
+  providerRef?: boolean
+  paidAt?: boolean
   promoCode?: boolean
   promoOwnerId?: boolean
   discountPercent?: boolean
@@ -1141,6 +1258,9 @@ export type PaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   createdAt?: boolean
   orderNo?: boolean
   provider?: boolean
+  clickPrepareId?: boolean
+  providerRef?: boolean
+  paidAt?: boolean
   promoCode?: boolean
   promoOwnerId?: boolean
   discountPercent?: boolean
@@ -1164,6 +1284,9 @@ export type PaymentSelectScalar = {
   createdAt?: boolean
   orderNo?: boolean
   provider?: boolean
+  clickPrepareId?: boolean
+  providerRef?: boolean
+  paidAt?: boolean
   promoCode?: boolean
   promoOwnerId?: boolean
   discountPercent?: boolean
@@ -1171,7 +1294,7 @@ export type PaymentSelectScalar = {
   baseAmount?: boolean
 }
 
-export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "planLabel" | "months" | "amount" | "status" | "note" | "proofUrl" | "reviewedAt" | "reviewedBy" | "createdAt" | "orderNo" | "provider" | "promoCode" | "promoOwnerId" | "discountPercent" | "commissionPct" | "baseAmount", ExtArgs["result"]["payment"]>
+export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "planLabel" | "months" | "amount" | "status" | "note" | "proofUrl" | "reviewedAt" | "reviewedBy" | "createdAt" | "orderNo" | "provider" | "clickPrepareId" | "providerRef" | "paidAt" | "promoCode" | "promoOwnerId" | "discountPercent" | "commissionPct" | "baseAmount", ExtArgs["result"]["payment"]>
 export type PaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   promoOwner?: boolean | Prisma.Payment$promoOwnerArgs<ExtArgs>
@@ -1216,11 +1339,13 @@ export type $PaymentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
      */
     orderNo: number
     /**
-     * How this was paid. "manual" = bank-card transfer approved by hand, which is every
-     * row today. An automated provider adds its own value here and NOTHING else in this
-     * model has to change.
+     * How this was paid. "manual" = bank-card transfer approved by hand; "click" =
+     * Click SHOP-API, granted by the Complete webhook with no human in the loop.
      */
     provider: string
+    clickPrepareId: number | null
+    providerRef: string | null
+    paidAt: Date | null
     promoCode: string | null
     promoOwnerId: string | null
     discountPercent: number
@@ -1669,6 +1794,9 @@ export interface PaymentFieldRefs {
   readonly createdAt: Prisma.FieldRef<"Payment", 'DateTime'>
   readonly orderNo: Prisma.FieldRef<"Payment", 'Int'>
   readonly provider: Prisma.FieldRef<"Payment", 'String'>
+  readonly clickPrepareId: Prisma.FieldRef<"Payment", 'Int'>
+  readonly providerRef: Prisma.FieldRef<"Payment", 'String'>
+  readonly paidAt: Prisma.FieldRef<"Payment", 'DateTime'>
   readonly promoCode: Prisma.FieldRef<"Payment", 'String'>
   readonly promoOwnerId: Prisma.FieldRef<"Payment", 'String'>
   readonly discountPercent: Prisma.FieldRef<"Payment", 'Int'>

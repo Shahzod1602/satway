@@ -13,7 +13,7 @@ type Payment = {
   baseAmount: number;
   discountPercent: number;
   promoCode: string | null;
-  status: "PENDING" | "APPROVED" | "REJECTED";
+  status: "PENDING" | "APPROVED" | "REJECTED" | "CANCELLED" | "REFUNDED";
   note: string | null;
   createdAt: string;
   user: { name: string; email: string; plan: string; premiumUntil: string | null };
@@ -23,6 +23,8 @@ const statusStyles: Record<Payment["status"], string> = {
   PENDING: "bg-amber-50 text-amber-700",
   APPROVED: "bg-emerald-50 text-emerald-700",
   REJECTED: "bg-red-50 text-red-600",
+  CANCELLED: "bg-slate-100 text-slate-500", // gateway failure before money moved — routine
+  REFUNDED: "bg-rose-100 text-rose-700", // money went back AFTER a grant — review the user
 };
 
 export default function AdminPaymentsClient({ initial }: { initial: Payment[] }) {

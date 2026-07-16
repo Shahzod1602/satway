@@ -11,12 +11,14 @@ export default function PaymentForm({
   cardNumber,
   cardHolder,
   paymentTelegram,
+  clickEnabled,
   onClose,
 }: {
   plan: PremiumPlan;
   cardNumber: string;
   cardHolder: string;
   paymentTelegram: string;
+  clickEnabled: boolean;
   onClose: () => void;
 }) {
   // e.g. "https://t.me/identify_admin" → "@identify_admin"
@@ -28,6 +30,9 @@ export default function PaymentForm({
   const [submitted, setSubmitted] = useState(false);
   const [orderNo, setOrderNo] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  // Click first when it exists: an automated flow that grants in seconds should never
+  // sit behind the one that needs a human to read a screenshot.
+  const [method, setMethod] = useState<"click" | "transfer">(clickEnabled ? "click" : "transfer");
 
   // Promo. `applied` is only ever set from the SERVER's answer — the amount shown here
   // is the one the server computed, never one this component worked out for itself.
@@ -86,6 +91,30 @@ export default function PaymentForm({
       setError("Network error. Please try again.");
     }
     setLoading(false);
+  };
+
+  const payWithClick = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/payment/click", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ planId: plan.id, promoCode: applied?.code }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.url) {
+        setError(data.error || "Click is unavailable right now. Try the card transfer.");
+        setLoading(false);
+        return;
+      }
+      // Off to my.click.uz; Click's return_url brings them back to /upgrade/success,
+      // where the page polls until the webhook's grant lands.
+      window.location.href = data.url;
+    } catch {
+      setError("Network error. Please try again.");
+      setLoading(false);
+    }
   };
 
   return (
@@ -196,55 +225,110 @@ export default function PaymentForm({
           {promoMsg && <p className="mt-1 text-xs text-rose-600">{promoMsg}</p>}
         </div>
 
-        <div className="mt-4 rounded-xl border border-slate-200 p-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-2">
-            Transfer to the card
-          </p>
-          <p className="text-lg font-mono font-bold text-slate-900">{cardNumber}</p>
-          <p className="text-sm text-slate-500">{cardHolder}</p>
-        </div>
-
-        {tgHandle && (
-          <div className="mt-4 rounded-xl border border-brand-200 bg-brand-50 p-4 text-sm">
-            <p className="flex items-center gap-2 font-semibold text-brand-700">
-              <Send className="h-4 w-4 shrink-0" /> Send your payment receipt
-            </p>
-            <p className="mt-1 text-slate-600">
-              After transferring, send the check (screenshot) to our admin on Telegram:
-            </p>
-            <a
-              href={paymentTelegram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-brand-700"
-            >
-              <Send className="h-3.5 w-3.5" /> {tgHandle}
-            </a>
+        {clickEnabled && (
+          <div className="mt-4 grid grid-cols-2 gap-2">
+            {(
+              [
+                { id: "click", label: "Click", sub: "Uzcard/Humo — avtomatik" },
+                { id: "transfer", label: "Karta o'tkazma", sub: "Admin tasdiqlaydi" },
+              ] as const
+            ).map((m) => (
+              <button
+                key={m.id}
+                type="button"
+                onClick={() => setMethod(m.id)}
+                className={`rounded-xl border p-3 text-left transition-colors ${
+                  method === m.id
+                    ? "border-brand-600 bg-brand-50"
+                    : "border-slate-200 hover:border-slate-300"
+                }`}
+              >
+                <span className="block text-sm font-semibold text-slate-900">{m.label}</span>
+                <span className="block text-xs text-slate-500">{m.sub}</span>
+              </button>
+            ))}
           </div>
         )}
 
-        <div className="mt-4 rounded-xl bg-amber-50 p-3 flex gap-2 text-sm text-amber-700">
-          <CheckCircle2 className="h-4 w-4 shrink-0 mt-0.5" />
-          <span>After sending the receipt, click &quot;I&apos;ve paid&quot; — our admin will verify and activate your Premium access.</span>
-        </div>
+        {method === "click" && clickEnabled ? (
+          <>
+            <div className="mt-4 rounded-xl bg-[#0072FF]/5 border border-[#0072FF]/20 p-4 text-sm text-slate-700">
+              Uzcard yoki Humo bilan to&apos;laysiz — Click tasdiqlashi bilan Premium{" "}
+              <strong>avtomatik, bir necha soniyada</strong> yoqiladi. Chek yuborish, admin
+              kutish yo&apos;q.
+            </div>
 
-        {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+            {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
 
-        <div className="mt-5 flex gap-3 justify-end">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 rounded-lg border border-slate-300 text-sm font-medium hover:bg-slate-50"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={submitPayment}
-            disabled={loading}
-            className="px-5 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium hover:bg-brand-700 disabled:opacity-60"
-          >
-            {loading ? "Submitting…" : "I've paid"}
-          </button>
-        </div>
+            <div className="mt-5 flex gap-3 justify-end">
+              <button
+                onClick={onClose}
+                className="px-4 py-2 rounded-lg border border-slate-300 text-sm font-medium hover:bg-slate-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={payWithClick}
+                disabled={loading}
+                className="px-5 py-2 rounded-lg bg-[#0072FF] text-white text-sm font-semibold hover:bg-[#005fd6] disabled:opacity-60"
+              >
+                {loading ? "Yo'naltirilmoqda…" : `Click orqali to'lash — ${fmtUZS(total)} UZS`}
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="mt-4 rounded-xl border border-slate-200 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-2">
+                Transfer to the card
+              </p>
+              <p className="text-lg font-mono font-bold text-slate-900">{cardNumber}</p>
+              <p className="text-sm text-slate-500">{cardHolder}</p>
+            </div>
+
+            {tgHandle && (
+              <div className="mt-4 rounded-xl border border-brand-200 bg-brand-50 p-4 text-sm">
+                <p className="flex items-center gap-2 font-semibold text-brand-700">
+                  <Send className="h-4 w-4 shrink-0" /> Send your payment receipt
+                </p>
+                <p className="mt-1 text-slate-600">
+                  After transferring, send the check (screenshot) to our admin on Telegram:
+                </p>
+                <a
+                  href={paymentTelegram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-brand-700"
+                >
+                  <Send className="h-3.5 w-3.5" /> {tgHandle}
+                </a>
+              </div>
+            )}
+
+            <div className="mt-4 rounded-xl bg-amber-50 p-3 flex gap-2 text-sm text-amber-700">
+              <CheckCircle2 className="h-4 w-4 shrink-0 mt-0.5" />
+              <span>After sending the receipt, click &quot;I&apos;ve paid&quot; — our admin will verify and activate your Premium access.</span>
+            </div>
+
+            {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+
+            <div className="mt-5 flex gap-3 justify-end">
+              <button
+                onClick={onClose}
+                className="px-4 py-2 rounded-lg border border-slate-300 text-sm font-medium hover:bg-slate-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={submitPayment}
+                disabled={loading}
+                className="px-5 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium hover:bg-brand-700 disabled:opacity-60"
+              >
+                {loading ? "Submitting…" : "I've paid"}
+              </button>
+            </div>
+          </>
+        )}
         </>
         )}
       </div>
