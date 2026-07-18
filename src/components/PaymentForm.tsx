@@ -1,405 +1,592 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import type { PremiumPlan } from "@/lib/plans";
+import { Copy, Check, Send, CreditCard, Tag, Loader2, X, Globe, Zap, Lock } from "lucide-react";
 import { fmtUZS, fmtUSD, CARD_FEE_USD_CENTS } from "@/lib/plans";
-import { X, CheckCircle2, Send } from "lucide-react";
+
+const groupCard = (n: string) => (n.replace(/\D/g, "").match(/.{1,4}/g) || []).join(" ");
+
+/** Click.uz logomark — a rounded diamond with a punched-out center. */
+function ClickLogo({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
+      <g transform="rotate(45 12 12)">
+        <path
+          fillRule="evenodd"
+          d="M10 4.2h4a5.8 5.8 0 0 1 5.8 5.8v4a5.8 5.8 0 0 1-5.8 5.8h-4A5.8 5.8 0 0 1 4.2 14v-4A5.8 5.8 0 0 1 10 4.2Zm1.4 5.2a2.2 2.2 0 0 0-2.2 2.2v.8a2.2 2.2 0 0 0 2.2 2.2h1.2a2.2 2.2 0 0 0 2.2-2.2v-.8a2.2 2.2 0 0 0-2.2-2.2h-1.2Z"
+        />
+      </g>
+    </svg>
+  );
+}
+
+/**
+ * Payme wordmark — dark "Pay" over the turquoise "me" banner. The word is the logo, so
+ * it can't shrink to a 16px glyph like Click's diamond: it replaces the text label in
+ * the tab instead of sitting beside it. "Pay" rides currentColor so it stays legible
+ * when the tab flips to a dark fill; `mono` whites out the whole mark for use on a
+ * solid brand button. textLength pins the letters inside the banner whatever font the
+ * device actually resolves.
+ */
+function PaymeLogo({ className, mono = false }: { className?: string; mono?: boolean }) {
+  const font = '"Helvetica Neue", Helvetica, Arial, sans-serif';
+  return (
+    <svg viewBox="0 0 100 96" className={className} aria-label="Payme" role="img">
+      <text
+        x="2"
+        y="42"
+        textLength="86"
+        lengthAdjust="spacingAndGlyphs"
+        fontFamily={font}
+        fontSize="46"
+        fontWeight="700"
+        fill="currentColor"
+      >
+        Pay
+      </text>
+      <path
+        d="M4 52h78l14 20-14 20H4a4 4 0 0 1-4-4V56a4 4 0 0 1 4-4Z"
+        fill={mono ? "currentColor" : "#5ECFCF"}
+      />
+      <text
+        x="12"
+        y="86"
+        textLength="62"
+        lengthAdjust="spacingAndGlyphs"
+        fontFamily={font}
+        fontSize="40"
+        fontWeight="700"
+        fill={mono ? "#00A3A3" : "#fff"}
+      >
+        me
+      </text>
+    </svg>
+  );
+}
+
+type Method = "payme" | "click" | "transfer" | "visa";
+
+// Provider tabs wear their own brand; the rest fall back to slate. `tab` is the
+// selected fill (darkened from the logo colour so white text stays legible), `ink`
+// tints the idle logo, `sub` the caption on the selected fill. Payme takes a dark
+// fill, not its own turquoise — the wordmark's banner IS turquoise and would vanish.
+const BRAND = {
+  payme: { tab: "bg-slate-900", ink: "text-slate-900", sub: "text-slate-300" },
+  click: { tab: "bg-[#0072FF]", ink: "text-[#0072FF]", sub: "text-blue-100" },
+} as const;
 
 export default function PaymentForm({
-  plan,
-  cardNumber,
-  cardHolder,
-  paymentTelegram,
+  planId,
+  planLabel,
+  amount,
+  amountUsd,
+  card,
+  holder,
+  telegramUrl,
+  visaEnabled,
   clickEnabled,
   paymeEnabled,
-  visaEnabled,
-  onClose,
+  allowPromo = true,
+  initialPromo = null,
 }: {
-  plan: PremiumPlan;
-  cardNumber: string;
-  cardHolder: string;
-  paymentTelegram: string;
+  planId: string;
+  planLabel: string;
+  amount: number; // UZS
+  amountUsd: number; // US cents
+  card: string;
+  holder: string;
+  telegramUrl: string;
+  visaEnabled: boolean;
   clickEnabled: boolean;
   paymeEnabled: boolean;
-  visaEnabled: boolean;
-  onClose: () => void;
+  allowPromo?: boolean;
+  /** Code the learner already entered on the pricing page, carried in the url. */
+  initialPromo?: string | null;
 }) {
-  // e.g. "https://t.me/identify_admin" → "@identify_admin"
-  const tgHandle = paymentTelegram
-    ? "@" + paymentTelegram.replace(/\/+$/, "").split("/").pop()
-    : "";
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [orderNo, setOrderNo] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  // Automated providers first: a flow that grants in seconds should never sit behind
-  // the one that needs a human to read a screenshot.
-  const [method, setMethod] = useState<"payme" | "click" | "visa" | "transfer">(
+  const [copied, setCopied] = useState(false);
+  // Prefer an automated method that's actually live; fall back to manual transfer.
+  const [method, setMethod] = useState<Method>(
     paymeEnabled ? "payme" : clickEnabled ? "click" : visaEnabled ? "visa" : "transfer",
   );
-  const providerCount = Number(paymeEnabled) + Number(clickEnabled) + Number(visaEnabled);
 
-  // Promo. `applied` is only ever set from the SERVER's answer — the amount shown here
-  // is the one the server computed, never one this component worked out for itself.
-  const [promo, setPromo] = useState("");
-  const [applied, setApplied] = useState<{ code: string; percentOff: number; amount: number } | null>(null);
-  const [promoMsg, setPromoMsg] = useState<string | null>(null);
-  const [checkingPromo, setCheckingPromo] = useState(false);
+  // promo
+  const [code, setCode] = useState(initialPromo ?? "");
+  const [applied, setApplied] = useState<{ code: string; pct: number } | null>(null);
+  const [checking, setChecking] = useState(false);
+  const [error, setError] = useState("");
 
-  const total = applied?.amount ?? plan.total;
+  // Hosted checkout (Payme / Click / Polar)
+  const [paying, setPaying] = useState(false);
+  const [payError, setPayError] = useState("");
 
-  // Visa (Polar) charges USD. Mirrors the server's formula in /api/payment/polar —
-  // display only; the server recomputes and locks the real amount into the checkout.
-  const visaPlanUsd = Math.round((plan.totalUsd * (100 - (applied?.percentOff ?? 0))) / 100);
-  const visaTotalUsd = visaPlanUsd + CARD_FEE_USD_CENTS;
+  // Manual transfer — creates a PENDING order an admin matches to the receipt. Keep the
+  // server's recorded amount, not just the number: if the promo lapsed between the
+  // pricing page and this submit, the server records list price and the success screen
+  // must show that true figure rather than the stale discounted one on the card above.
+  const [submitting, setSubmitting] = useState(false);
+  const [manualOrder, setManualOrder] = useState<{ orderNo: string; amount: number | null } | null>(null);
+  const [submitError, setSubmitError] = useState("");
 
-  const checkPromo = async () => {
-    if (!promo.trim()) return;
-    setCheckingPromo(true);
-    setPromoMsg(null);
-    try {
-      const res = await fetch("/api/promo/validate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code: promo.trim(), planId: plan.id }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setPromoMsg(data.error ?? "Could not check that code.");
-      } else if (data.valid) {
-        setApplied({ code: data.code, percentOff: data.percentOff, amount: data.amount });
-        setPromoMsg(null);
-      } else {
-        setApplied(null);
-        setPromoMsg(data.reason);
-      }
-    } catch {
-      setPromoMsg("Network error. Try again.");
-    }
-    setCheckingPromo(false);
+  const finalAmount = applied ? Math.round((amount * (100 - applied.pct)) / 100) : amount;
+  const finalUsd = applied ? Math.round((amountUsd * (100 - applied.pct)) / 100) : amountUsd;
+
+  const validate = async (c: string) => {
+    const res = await fetch("/api/promo/validate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code: c, planId }),
+    });
+    return res.json();
   };
 
-  const submitPayment = async () => {
-    setLoading(true);
-    setError(null);
+  const applyPromo = async () => {
+    const c = code.trim();
+    if (!c) return;
+    setChecking(true);
+    setError("");
+    try {
+      const data = await validate(c);
+      if (data.valid) {
+        setApplied({ code: data.code, pct: data.percentOff });
+        setError("");
+      } else {
+        setApplied(null);
+        setError(data.reason || "Invalid or expired promo code.");
+      }
+    } catch {
+      setError("Couldn't check the code — please try again.");
+    } finally {
+      setChecking(false);
+    }
+  };
+
+  // Re-validate the code that came in the url rather than trusting it. If it has expired
+  // since the pricing page, the learner sees the error here instead of a wrong price.
+  useEffect(() => {
+    const c = initialPromo?.trim();
+    if (!allowPromo || !c) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const data = await validate(c);
+        if (cancelled) return;
+        if (data.valid) setApplied({ code: data.code, pct: data.percentOff });
+        else setError(data.reason || "Invalid or expired promo code.");
+      } catch {
+        /* leave the box empty — the learner can retype it */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialPromo, allowPromo]);
+
+  const clearPromo = () => {
+    setApplied(null);
+    setCode("");
+    setError("");
+  };
+
+  const copyCard = async () => {
+    try {
+      await navigator.clipboard.writeText(card.replace(/\D/g, ""));
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      /* ignore */
+    }
+  };
+
+  // Start a hosted checkout (Payme / Click / Polar) and follow the URL. satway auths
+  // via the app session (no Telegram Mini App), so a plain navigation is fine.
+  const startCheckout = async (endpoint: string) => {
+    setPaying(true);
+    setPayError("");
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ planId, promoCode: applied?.code }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.url) {
+        window.location.href = data.url;
+        return;
+      }
+      setPayError(data.error || "Couldn't start checkout — please try again.");
+    } catch {
+      setPayError("Couldn't start checkout — please try again.");
+    }
+    setPaying(false);
+  };
+
+  // Record a manual bank transfer as PENDING and surface its order number, which is
+  // what an admin matches the receipt screenshot to.
+  const submitManual = async () => {
+    setSubmitting(true);
+    setSubmitError("");
     try {
       const res = await fetch("/api/profile/upgrade", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // The code, not the price. The server re-derives the amount — see lib/checkout.
-        body: JSON.stringify({ planId: plan.id, promoCode: applied?.code }),
+        body: JSON.stringify({ planId, promoCode: applied?.code }),
       });
       const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        setError(data.error || "Could not submit payment. Please try again.");
-        setLoading(false);
-        return;
+      if (res.ok && data.orderNo) {
+        setManualOrder({
+          orderNo: data.orderNo,
+          amount: typeof data.amount === "number" ? data.amount : null,
+        });
+      } else {
+        setSubmitError(data.error || "Couldn't submit — please try again.");
       }
-      setOrderNo(data.orderNo ?? null);
-      setSubmitted(true);
     } catch {
-      setError("Network error. Please try again.");
+      setSubmitError("Couldn't submit — please try again.");
     }
-    setLoading(false);
-  };
-
-  // One redirect flow for every automated provider — the return URL lands on
-  // /upgrade/success, which polls until the webhook's grant is visible.
-  const payWithProvider = async (provider: "click" | "payme" | "polar") => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch(`/api/payment/${provider}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ planId: plan.id, promoCode: applied?.code }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data.url) {
-        setError(data.error || "This method is unavailable right now. Try the card transfer.");
-        setLoading(false);
-        return;
-      }
-      window.location.href = data.url;
-    } catch {
-      setError("Network error. Please try again.");
-      setLoading(false);
-    }
+    setSubmitting(false);
   };
 
   return (
-    <div className="fixed inset-0 z-30 bg-black/40 grid place-items-center px-5">
-      <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-xl relative">
-        <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
-          <X className="h-5 w-5" />
-        </button>
-
-        {submitted ? (
-          <div className="py-6 text-center">
-            <CheckCircle2 className="mx-auto h-12 w-12 text-emerald-500" />
-            <h3 className="mt-3 font-bold text-lg text-slate-900">Payment submitted</h3>
-            {/* The order number is the whole reason the manual flow is workable: without a
-                reference, an admin matching a screenshot to an account is guessing. */}
-            {orderNo && (
-              <div className="mt-3 rounded-xl bg-slate-50 px-4 py-3">
-                <p className="text-xs uppercase tracking-wide text-slate-400">Your order number</p>
-                <p className="mt-0.5 font-mono text-xl font-bold text-slate-900">{orderNo}</p>
-                <p className="mt-1 text-xs text-slate-500">
-                  Send this with your receipt so we can find your transfer.
-                </p>
-              </div>
-            )}
-            <p className="mt-3 text-sm text-slate-600">
-              Thanks! Make sure you&apos;ve sent the payment receipt
-              {tgHandle ? ` to ${tgHandle} on Telegram` : ""}. Our admin will verify your
-              transfer and activate Premium shortly. You&apos;ll see it reflected on your
-              dashboard once approved.
-            </p>
-            <button
-              onClick={() => router.push("/dashboard")}
-              className="mt-5 px-5 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium hover:bg-brand-700"
-            >
-              Go to dashboard
-            </button>
-          </div>
-        ) : (
-        <>
-        <h3 className="font-bold text-lg text-slate-900">Complete payment</h3>
-        <p className="mt-2 text-sm text-slate-600">
-          {plan.label} plan — <strong>{fmtUZS(total)} UZS</strong>
-        </p>
-
-        <div className="mt-4 rounded-xl bg-slate-50 p-4 space-y-2 text-sm">
-          <div className="flex justify-between">
-            <span className="text-slate-500">Plan:</span>
-            <span className="font-medium">{plan.label}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-slate-500">Discount:</span>
-            <span className="font-medium text-accent-600">{plan.discount}%</span>
-          </div>
-          {applied && (
-            <div className="flex justify-between">
-              <span className="text-slate-500">
-                Code <span className="font-mono font-semibold">{applied.code}</span>:
+    <div className="mt-6 space-y-5">
+      {/* Promo code — applies to every method (student Premium only; team plans, which
+          satway doesn't sell, would hide this box via allowPromo). */}
+      {allowPromo && (
+        <div className="rounded-2xl border border-[#EAEAEA] bg-white p-5">
+          <h2 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
+            <Tag className="h-4 w-4 text-brand-600" /> Promo code
+          </h2>
+          {applied ? (
+            <div className="mt-3 flex items-center justify-between gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3">
+              <span className="flex items-center gap-2 text-sm font-medium text-emerald-800">
+                <Check className="h-4 w-4" /> <b>{applied.code}</b> — {applied.pct}% off applied
               </span>
-              <span className="font-medium text-emerald-600">
-                −{applied.percentOff}% ({fmtUZS(plan.total - applied.amount)} off)
-              </span>
-            </div>
-          )}
-          <div className="flex justify-between border-t border-slate-200 pt-2">
-            <span className="font-semibold">Total:</span>
-            <span className="font-bold text-slate-900">
-              {applied && (
-                <span className="mr-2 font-normal text-slate-400 line-through">
-                  {fmtUZS(plan.total)}
-                </span>
-              )}
-              {fmtUZS(total)} UZS
-            </span>
-          </div>
-        </div>
-
-        <div className="mt-3">
-          <label className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-            Promo code
-          </label>
-          <div className="mt-1 flex gap-2">
-            <input
-              value={promo}
-              onChange={(e) => {
-                setPromo(e.target.value.toUpperCase());
-                setApplied(null); // any edit invalidates the server's answer
-                setPromoMsg(null);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  void checkPromo();
-                }
-              }}
-              placeholder="If your teacher gave you one"
-              maxLength={40}
-              className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm uppercase text-slate-900 placeholder:normal-case placeholder:text-slate-400"
-            />
-            <button
-              type="button"
-              onClick={checkPromo}
-              disabled={checkingPromo || !promo.trim() || !!applied}
-              className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 disabled:opacity-50"
-            >
-              {checkingPromo ? "…" : applied ? "Applied" : "Apply"}
-            </button>
-          </div>
-          {promoMsg && <p className="mt-1 text-xs text-rose-600">{promoMsg}</p>}
-        </div>
-
-        {providerCount > 0 && (
-          <div className={`mt-4 grid gap-2 ${providerCount === 2 ? "grid-cols-3" : "grid-cols-2"}`}>
-            {(
-              [
-                ...(paymeEnabled ? [{ id: "payme" as const, label: "Payme", sub: "Avtomatik" }] : []),
-                ...(clickEnabled ? [{ id: "click" as const, label: "Click", sub: "Avtomatik" }] : []),
-                ...(visaEnabled ? [{ id: "visa" as const, label: "Visa karta", sub: "USD, avtomatik" }] : []),
-                { id: "transfer" as const, label: "Karta o'tkazma", sub: "Admin tasdiqlaydi" },
-              ]
-            ).map((m) => (
-              <button
-                key={m.id}
-                type="button"
-                onClick={() => setMethod(m.id)}
-                className={`rounded-xl border p-3 text-left transition-colors ${
-                  method === m.id
-                    ? "border-brand-600 bg-brand-50"
-                    : "border-slate-200 hover:border-slate-300"
-                }`}
-              >
-                <span className="block text-sm font-semibold text-slate-900">{m.label}</span>
-                <span className="block text-xs text-slate-500">{m.sub}</span>
+              <button onClick={clearPromo} className="text-emerald-700 hover:text-emerald-900" aria-label="Remove">
+                <X className="h-4 w-4" />
               </button>
-            ))}
-          </div>
-        )}
+            </div>
+          ) : (
+            <>
+              <div className="mt-3 flex gap-2">
+                <input
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && applyPromo()}
+                  placeholder="Enter code"
+                  autoComplete="off"
+                  spellCheck={false}
+                  className="min-w-0 flex-1 rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm uppercase tracking-wide outline-none focus:border-brand-500"
+                />
+                <button
+                  onClick={applyPromo}
+                  disabled={checking || !code.trim()}
+                  className="inline-flex items-center gap-1.5 rounded-xl bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-700 disabled:opacity-50"
+                >
+                  {checking ? <Loader2 className="h-4 w-4 animate-spin" /> : "Apply"}
+                </button>
+              </div>
+              {error && <p className="mt-2 text-xs text-red-600">{error}</p>}
+            </>
+          )}
+        </div>
+      )}
 
-        {(method === "payme" && paymeEnabled) || (method === "click" && clickEnabled) ? (
-          <>
-            <div
-              className={`mt-4 rounded-xl border p-4 text-sm text-slate-700 ${
-                method === "payme"
-                  ? "border-[#33CCCC]/30 bg-[#33CCCC]/5"
-                  : "border-[#0072FF]/20 bg-[#0072FF]/5"
+      {/* Payment method tabs. Dormant providers (Payme, Click — built but awaiting a
+          separate satway kassa) show a "Soon" badge and unlock automatically once their
+          env lands. */}
+      <div className="grid grid-cols-2 gap-2 rounded-2xl border border-[#EAEAEA] bg-white p-2 sm:grid-cols-4">
+        {(
+          [
+            { id: "payme", label: "Payme", sub: "Uzcard/Humo", icon: PaymeLogo, enabled: paymeEnabled },
+            { id: "click", label: "Click", sub: "Uzcard/Humo", icon: ClickLogo, enabled: clickEnabled },
+            { id: "visa", label: "Visa / MC", sub: "USD", icon: Globe, enabled: visaEnabled },
+            { id: "transfer", label: "Transfer", sub: "UZS · manual", icon: CreditCard, enabled: true },
+          ] as const
+        ).map((m) => {
+          const active = method === m.id;
+          const brand = BRAND[m.id as keyof typeof BRAND];
+          return (
+            <button
+              key={m.id}
+              type="button"
+              onClick={() => {
+                if (!m.enabled) return;
+                setMethod(m.id);
+                setPayError(""); // a stale error from another provider misleads
+              }}
+              disabled={!m.enabled}
+              className={`flex flex-col items-center justify-center gap-1 rounded-xl px-2 py-2.5 text-sm font-semibold transition-colors ${
+                active
+                  ? `${brand ? brand.tab : "bg-slate-900"} text-white`
+                  : m.enabled
+                    ? "text-slate-600 hover:bg-slate-50"
+                    : "cursor-not-allowed text-slate-400"
               }`}
             >
-              Uzcard, Humo{method === "payme" ? " yoki Visa" : ""} bilan to&apos;laysiz —{" "}
-              {method === "payme" ? "Payme" : "Click"} tasdiqlashi bilan Premium{" "}
-              <strong>avtomatik, bir necha soniyada</strong> yoqiladi. Chek yuborish, admin
-              kutish yo&apos;q.
+              {/* Fixed height so a wordmark tab and a text tab set the same row height —
+                  otherwise Payme's taller mark makes its cell dominate. */}
+              <span className="flex h-[26px] items-center justify-center gap-1.5 whitespace-nowrap">
+                {m.id === "payme" ? (
+                  // The Payme logo IS the word "Payme" — printing the label beside it
+                  // would just say it twice.
+                  <PaymeLogo className="h-[24px] w-auto" />
+                ) : (
+                  <>
+                    <m.icon className={`h-4 w-4 shrink-0 ${brand && !active ? brand.ink : ""}`} />
+                    {m.label}
+                  </>
+                )}
+              </span>
+              {m.enabled ? (
+                <span
+                  className={`text-[11px] font-normal ${
+                    active ? (brand ? brand.sub : "text-slate-300") : "text-slate-400"
+                  }`}
+                >
+                  {m.sub}
+                </span>
+              ) : (
+                <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-amber-700">
+                  Soon
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      {paymeEnabled && method === "payme" && (
+        <div className="rounded-2xl border border-[#EAEAEA] bg-white p-5">
+          <h2 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
+            <PaymeLogo className="h-7 w-auto" /> <span className="sr-only">Pay with Payme</span>
+          </h2>
+
+          <div className="mt-3 flex items-center justify-between rounded-xl bg-slate-50 px-4 py-3 text-sm">
+            <span className="text-slate-500">Amount</span>
+            <span className="text-right">
+              {applied && <span className="mr-2 text-slate-400 line-through">{fmtUZS(amount)}</span>}
+              <b className="text-slate-900">{fmtUZS(finalAmount)} UZS</b>
+              <span className="text-slate-500"> · {planLabel}</span>
+            </span>
+          </div>
+
+          <ul className="mt-3 space-y-2 text-sm text-slate-700">
+            <li className="flex items-center gap-2">
+              <Zap className="h-4 w-4 shrink-0 text-amber-500" /> Premium activates automatically, within seconds
+            </li>
+            <li className="flex items-center gap-2">
+              <CreditCard className="h-4 w-4 shrink-0 text-slate-400" /> Pay with any Uzcard/Humo card or from your Payme
+              wallet — no registration needed
+            </li>
+          </ul>
+
+          <button
+            onClick={() => startCheckout("/api/payment/payme")}
+            disabled={paying}
+            className="mt-4 flex w-full items-center justify-center gap-2.5 rounded-xl bg-[#00A3A3] px-6 py-3.5 text-sm font-semibold text-white hover:bg-[#008C8C] disabled:opacity-60"
+          >
+            {paying ? <Loader2 className="h-4 w-4 animate-spin" /> : <PaymeLogo className="h-6 w-auto" mono />}
+            {paying ? "Opening Payme…" : `Pay ${fmtUZS(finalAmount)} UZS`}
+          </button>
+          {payError && <p className="mt-2 text-xs text-red-600">{payError}</p>}
+        </div>
+      )}
+
+      {clickEnabled && method === "click" && (
+        <div className="rounded-2xl border border-[#EAEAEA] bg-white p-5">
+          <h2 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
+            <ClickLogo className="h-4 w-4 text-[#0072FF]" /> Pay with Click
+          </h2>
+
+          <div className="mt-3 flex items-center justify-between rounded-xl bg-slate-50 px-4 py-3 text-sm">
+            <span className="text-slate-500">Amount</span>
+            <span className="text-right">
+              {applied && <span className="mr-2 text-slate-400 line-through">{fmtUZS(amount)}</span>}
+              <b className="text-slate-900">{fmtUZS(finalAmount)} UZS</b>
+              <span className="text-slate-500"> · {planLabel}</span>
+            </span>
+          </div>
+
+          <ul className="mt-3 space-y-2 text-sm text-slate-700">
+            <li className="flex items-center gap-2">
+              <Zap className="h-4 w-4 shrink-0 text-amber-500" /> Premium activates automatically, within seconds
+            </li>
+            <li className="flex items-center gap-2">
+              <CreditCard className="h-4 w-4 shrink-0 text-slate-400" /> Pay with any Uzcard/Humo card or via the Click app
+              — no registration needed
+            </li>
+          </ul>
+
+          <button
+            onClick={() => startCheckout("/api/payment/click")}
+            disabled={paying}
+            className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#0072FF] px-6 py-3.5 text-sm font-semibold text-white hover:bg-[#0060d6] disabled:opacity-60"
+          >
+            {paying ? <Loader2 className="h-4 w-4 animate-spin" /> : <ClickLogo className="h-5 w-5" />}
+            {paying ? "Opening Click…" : `Pay ${fmtUZS(finalAmount)} UZS with Click`}
+          </button>
+          {payError && <p className="mt-2 text-xs text-red-600">{payError}</p>}
+        </div>
+      )}
+
+      {visaEnabled && method === "visa" && (
+        <div className="rounded-2xl border border-[#EAEAEA] bg-white p-5">
+          <h2 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
+            <Globe className="h-4 w-4 text-brand-600" /> Pay with Visa / Mastercard
+          </h2>
+
+          <div className="mt-3 space-y-2 rounded-xl bg-slate-50 px-4 py-3 text-sm">
+            <div className="flex items-center justify-between">
+              <span className="text-slate-500">{planLabel}</span>
+              <span className="text-right">
+                {applied && <span className="mr-2 text-slate-400 line-through">{fmtUSD(amountUsd)}</span>}
+                <b className="text-slate-900">{fmtUSD(finalUsd)}</b>
+              </span>
             </div>
+            <div className="flex items-center justify-between text-slate-500">
+              <span>Card processing fee</span>
+              <span>{fmtUSD(CARD_FEE_USD_CENTS)}</span>
+            </div>
+            <div className="flex items-center justify-between border-t border-slate-200 pt-2">
+              <span className="font-semibold text-slate-700">Total</span>
+              <b className="text-slate-900">{fmtUSD(finalUsd + CARD_FEE_USD_CENTS)}</b>
+            </div>
+          </div>
 
-            {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+          <ul className="mt-3 space-y-2 text-sm text-slate-700">
+            <li className="flex items-center gap-2">
+              <Zap className="h-4 w-4 shrink-0 text-amber-500" /> Premium activates automatically, within seconds
+            </li>
+            <li className="flex items-center gap-2">
+              <Lock className="h-4 w-4 shrink-0 text-slate-400" /> Secure checkout by Polar — card details never touch our
+              servers
+            </li>
+          </ul>
 
-            <div className="mt-5 flex gap-3 justify-end">
+          <button
+            onClick={() => startCheckout("/api/payment/polar")}
+            disabled={paying}
+            className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-3.5 text-sm font-semibold text-white hover:bg-brand-700 disabled:opacity-60"
+          >
+            {paying ? <Loader2 className="h-4 w-4 animate-spin" /> : <CreditCard className="h-4 w-4" />}
+            {paying ? "Opening secure checkout…" : `Pay ${fmtUSD(finalUsd + CARD_FEE_USD_CENTS)} now`}
+          </button>
+          {payError && <p className="mt-2 text-xs text-red-600">{payError}</p>}
+        </div>
+      )}
+
+      {method === "transfer" && (
+        <>
+          {/* Card */}
+          <div className="rounded-2xl border border-[#EAEAEA] bg-white p-5">
+            <h2 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
+              <CreditCard className="h-4 w-4 text-brand-600" /> Transfer to this card
+            </h2>
+            <div className="mt-3 flex items-center justify-between gap-3 rounded-xl bg-slate-50 px-4 py-3">
+              <span className="font-mono text-lg font-bold tracking-wider text-slate-900">{groupCard(card)}</span>
               <button
-                onClick={onClose}
-                className="px-4 py-2 rounded-lg border border-slate-300 text-sm font-medium hover:bg-slate-50"
+                onClick={copyCard}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-[#EAEAEA] bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50"
               >
-                Cancel
-              </button>
-              <button
-                onClick={() => payWithProvider(method as "click" | "payme")}
-                disabled={loading}
-                className={`px-5 py-2 rounded-lg text-white text-sm font-semibold disabled:opacity-60 ${
-                  method === "payme"
-                    ? "bg-[#31b3b3] hover:bg-[#2aa0a0]"
-                    : "bg-[#0072FF] hover:bg-[#005fd6]"
-                }`}
-              >
-                {loading
-                  ? "Yo'naltirilmoqda…"
-                  : `${method === "payme" ? "Payme" : "Click"} orqali to'lash — ${fmtUZS(total)} UZS`}
+                {copied ? (
+                  <>
+                    <Check className="h-3.5 w-3.5" /> Copied
+                  </>
+                ) : (
+                  <>
+                    <Copy className="h-3.5 w-3.5" /> Copy
+                  </>
+                )}
               </button>
             </div>
-          </>
-        ) : method === "visa" && visaEnabled ? (
-          <>
-            <div className="mt-4 rounded-xl border border-slate-900/15 bg-slate-900/[0.04] p-4 text-sm text-slate-700">
-              Xalqaro Visa yoki Mastercard bilan <strong>USD&apos;da</strong> to&apos;laysiz —
-              to&apos;lov o&apos;tishi bilan Premium <strong>avtomatik, bir necha soniyada</strong>{" "}
-              yoqiladi. Chek yuborish, admin kutish yo&apos;q.
+            <div className="mt-3 flex items-center justify-between text-sm">
+              <span className="text-slate-500">Card holder</span>
+              <span className="font-medium text-slate-800">{holder}</span>
             </div>
-
-            <div className="mt-3 rounded-xl bg-slate-50 p-4 space-y-1.5 text-sm">
-              <div className="flex justify-between">
-                <span className="text-slate-500">Plan ({plan.label}):</span>
-                <span className="font-medium">{fmtUSD(visaPlanUsd)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">Card fee:</span>
-                <span className="font-medium">{fmtUSD(CARD_FEE_USD_CENTS)}</span>
-              </div>
-              <div className="flex justify-between border-t border-slate-200 pt-1.5">
-                <span className="font-semibold">Total:</span>
-                <span className="font-bold text-slate-900">{fmtUSD(visaTotalUsd)}</span>
-              </div>
+            <div className="mt-2 flex items-center justify-between text-sm">
+              <span className="text-slate-500">Amount</span>
+              <span className="text-right">
+                {applied && <span className="mr-2 text-slate-400 line-through">{fmtUZS(amount)}</span>}
+                <b className="text-slate-900">{fmtUZS(finalAmount)} UZS</b>
+                <span className="text-slate-500"> · {planLabel}</span>
+              </span>
             </div>
+          </div>
 
-            {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
-
-            <div className="mt-5 flex gap-3 justify-end">
-              <button
-                onClick={onClose}
-                className="px-4 py-2 rounded-lg border border-slate-300 text-sm font-medium hover:bg-slate-50"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => payWithProvider("polar")}
-                disabled={loading}
-                className="px-5 py-2 rounded-lg bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 disabled:opacity-60"
-              >
-                {loading ? "Yo'naltirilmoqda…" : `Karta orqali to'lash — ${fmtUSD(visaTotalUsd)}`}
-              </button>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="mt-4 rounded-xl border border-slate-200 p-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-2">
-                Transfer to the card
-              </p>
-              <p className="text-lg font-mono font-bold text-slate-900">{cardNumber}</p>
-              <p className="text-sm text-slate-500">{cardHolder}</p>
-            </div>
-
-            {tgHandle && (
-              <div className="mt-4 rounded-xl border border-brand-200 bg-brand-50 p-4 text-sm">
-                <p className="flex items-center gap-2 font-semibold text-brand-700">
-                  <Send className="h-4 w-4 shrink-0" /> Send your payment receipt
-                </p>
-                <p className="mt-1 text-slate-600">
-                  After transferring, send the check (screenshot) to our admin on Telegram:
+          {/* Steps + submit + Telegram. Manual transfer is the one flow with a human in
+              the loop: it records a PENDING order the admin matches to the receipt. */}
+          <div className="rounded-2xl border border-[#EAEAEA] bg-white p-5">
+            {manualOrder ? (
+              <div className="text-center">
+                <div className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-emerald-50 text-emerald-600">
+                  <Check className="h-6 w-6" />
+                </div>
+                <h2 className="mt-3 text-base font-bold text-slate-900">Order created</h2>
+                <div className="mt-3 rounded-xl bg-slate-50 px-4 py-3">
+                  <p className="text-xs uppercase tracking-wide text-slate-400">Your order number</p>
+                  <p className="mt-0.5 font-mono text-xl font-bold text-slate-900">{manualOrder.orderNo}</p>
+                  <p className="mt-1 text-sm text-slate-500">
+                    {planLabel} — <b className="text-slate-700">{fmtUZS(manualOrder.amount ?? finalAmount)} UZS</b>
+                  </p>
+                </div>
+                {manualOrder.amount != null && manualOrder.amount !== finalAmount && (
+                  <p className="mt-3 rounded-xl bg-amber-50 px-4 py-2 text-xs text-amber-700">
+                    The final price for this order is {fmtUZS(manualOrder.amount)} UZS — please make sure you transfer
+                    exactly this amount.
+                  </p>
+                )}
+                <p className="mt-3 text-sm text-slate-600">
+                  Send this number with your payment receipt so we can find your transfer and activate Premium.
                 </p>
                 <a
-                  href={paymentTelegram}
+                  href={telegramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-brand-700"
+                  className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-3.5 text-sm font-semibold text-white hover:bg-brand-700"
                 >
-                  <Send className="h-3.5 w-3.5" /> {tgHandle}
+                  <Send className="h-4 w-4" /> Send receipt on Telegram
                 </a>
+                <button
+                  onClick={() => router.push("/dashboard")}
+                  className="mt-2 w-full rounded-xl border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                >
+                  Go to dashboard
+                </button>
               </div>
+            ) : (
+              <>
+                <h2 className="text-sm font-semibold text-slate-900">What to do next</h2>
+                <ol className="mt-3 space-y-2.5">
+                  {[
+                    `Transfer ${fmtUZS(finalAmount)} UZS to the card above.`,
+                    'Click "I\'ve paid" to get your order number.',
+                    "Send the receipt screenshot and your order number to us on Telegram.",
+                  ].map((t, i) => (
+                    <li key={i} className="flex items-start gap-3 text-sm text-slate-700">
+                      <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand-50 text-xs font-bold text-brand-600">
+                        {i + 1}
+                      </span>
+                      {t}
+                    </li>
+                  ))}
+                </ol>
+
+                <button
+                  onClick={submitManual}
+                  disabled={submitting}
+                  className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-3.5 text-sm font-semibold text-white hover:bg-brand-700 disabled:opacity-60"
+                >
+                  {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
+                  {submitting ? "Submitting…" : "I've paid"}
+                </button>
+                {submitError && <p className="mt-2 text-xs text-red-600">{submitError}</p>}
+              </>
             )}
-
-            <div className="mt-4 rounded-xl bg-amber-50 p-3 flex gap-2 text-sm text-amber-700">
-              <CheckCircle2 className="h-4 w-4 shrink-0 mt-0.5" />
-              <span>After sending the receipt, click &quot;I&apos;ve paid&quot; — our admin will verify and activate your Premium access.</span>
-            </div>
-
-            {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
-
-            <div className="mt-5 flex gap-3 justify-end">
-              <button
-                onClick={onClose}
-                className="px-4 py-2 rounded-lg border border-slate-300 text-sm font-medium hover:bg-slate-50"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={submitPayment}
-                disabled={loading}
-                className="px-5 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium hover:bg-brand-700 disabled:opacity-60"
-              >
-                {loading ? "Submitting…" : "I've paid"}
-              </button>
-            </div>
-          </>
-        )}
+          </div>
         </>
-        )}
-      </div>
+      )}
     </div>
   );
 }

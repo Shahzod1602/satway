@@ -28,24 +28,11 @@ export const POST = withErrorHandling(async (req: NextRequest) => {
   });
   if (!user) return jsonError("User not found", 404);
 
-  // Avoid stacking duplicate pending requests.
-  const existingPending = await prisma.payment.findFirst({
-    where: { userId: sessionUser.id, status: "PENDING" },
-    select: { id: true, orderNo: true },
-  });
-  if (existingPending) {
-    return Response.json({
-      ok: true,
-      status: "PENDING",
-      pending: true,
-      orderNo: formatOrderNo(existingPending.orderNo),
-    });
-  }
-
   // Everything about the price is decided here, from the plan id and the code. The
   // client never sends an amount. An unusable promo quietly resolves to list price —
   // /api/promo/validate is what tells the student their code is bad, while they can
-  // still do something about it.
+  // still do something about it. Resolve BEFORE the dedup, so the reused order and the
+  // created order describe the same intent.
   const resolved = await resolveCheckoutIntent({
     planId,
     buyerId: sessionUser.id,
@@ -53,6 +40,32 @@ export const POST = withErrorHandling(async (req: NextRequest) => {
   });
   if (!resolved.ok) return jsonError("Unknown plan", 400);
   const { plan, amount, baseAmount, discountPercent, promo } = resolved.intent;
+
+  // Reuse an identical abandoned manual order instead of stacking a new one — but ONLY
+  // one for the SAME plan and amount, and never a hosted-checkout (Polar/Click/Payme)
+  // PENDING row. The order number handed back is what an admin reconciles the receipt
+  // against, so it must describe the transfer shown on screen, not some other pending
+  // intent. Mirrors the { provider, planLabel, amount } dedup the click/payme routes use.
+  const existingPending = await prisma.payment.findFirst({
+    where: {
+      userId: sessionUser.id,
+      provider: "manual",
+      status: "PENDING",
+      planLabel: plan.id,
+      amount,
+    },
+    select: { orderNo: true },
+  });
+  if (existingPending) {
+    return Response.json({
+      ok: true,
+      status: "PENDING",
+      pending: true,
+      orderNo: formatOrderNo(existingPending.orderNo),
+      amount,
+      discountPercent,
+    });
+  }
 
   const payment = await prisma.payment.create({
     data: {

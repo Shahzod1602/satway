@@ -1,11 +1,9 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
+import { Crown } from "lucide-react";
 import { currentUser } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 import { effectivePlan } from "@/lib/access";
-import { getPlan } from "@/lib/plans";
-import { clickConfigured } from "@/lib/click";
-import { paymeConfigured } from "@/lib/payme";
-import { polarConfigured } from "@/lib/polar";
 import PricingSelector from "@/components/PricingSelector";
 import Sidebar from "@/components/Sidebar";
 
@@ -15,43 +13,55 @@ export default async function UpgradePage() {
   const user = await currentUser();
   if (!user) redirect("/login");
 
-  // No ensureReferralCode() here: it was minting a referral code on every visit to this
-  // page purely to hand it to PaymentForm, which never read it. Referral codes are the
-  // /referral page's job.
   const dbUser = await prisma.user.findUnique({
     where: { id: user.id },
     select: { plan: true, premiumUntil: true },
   });
 
   const plan = effectivePlan(dbUser?.plan, dbUser?.premiumUntil);
+  const isPremium = plan === "PREMIUM";
 
   return (
     <div className="flex min-h-screen bg-[#FFFDFB]">
       <Sidebar name={user.name} role={user.role} plan={plan} />
       <div className="min-w-0 flex-1">
-        <main className="px-6 pt-6 pb-10 max-w-3xl">
-          <h1 className="text-2xl font-bold text-slate-900">
-            {plan === "PREMIUM" ? "Your Premium" : "Upgrade to Premium"}
-          </h1>
-          {plan === "PREMIUM" && dbUser?.premiumUntil && (
-            <p className="mt-1 text-sm text-slate-500">
-              Active until{" "}
-              {new Date(dbUser.premiumUntil).toLocaleDateString("en-GB", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}
-            </p>
+        <main className="mx-auto max-w-lg px-6 pt-6 pb-10">
+          <div className="text-center">
+            <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-accent-50 text-accent-600">
+              <Crown className="h-7 w-7" />
+            </div>
+            <h1 className="mt-4 text-2xl font-extrabold text-slate-900">
+              {isPremium ? "Your Premium" : "Upgrade to Premium"}
+            </h1>
+            {isPremium && dbUser?.premiumUntil ? (
+              <p className="mt-2 text-sm text-emerald-600 font-medium">
+                Active until{" "}
+                {new Date(dbUser.premiumUntil).toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}{" "}
+                — everything is unlocked. 🎉
+              </p>
+            ) : (
+              <p className="mx-auto mt-2 max-w-md text-sm text-slate-500">
+                Unlock every adaptive SAT mock test, the full review &amp; mistake bank, and the AI tutor.
+              </p>
+            )}
+          </div>
+
+          {isPremium ? (
+            <Link
+              href="/dashboard"
+              className="mt-7 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-3.5 text-sm font-semibold text-white hover:bg-brand-700"
+            >
+              Back to dashboard
+            </Link>
+          ) : (
+            <div className="mt-7">
+              <PricingSelector />
+            </div>
           )}
-          <PricingSelector
-            currentPlan={plan}
-            cardNumber={process.env.PAYMENT_CARD_NUMBER || ""}
-            cardHolder={process.env.PAYMENT_CARD_HOLDER || ""}
-            paymentTelegram={process.env.PAYMENT_TELEGRAM || ""}
-            clickEnabled={clickConfigured()}
-            paymeEnabled={paymeConfigured()}
-            visaEnabled={polarConfigured()}
-          />
         </main>
       </div>
     </div>
