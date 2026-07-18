@@ -5,6 +5,7 @@ import { effectivePlan } from "@/lib/access";
 import { getPlan } from "@/lib/plans";
 import { clickConfigured } from "@/lib/click";
 import { paymeConfigured } from "@/lib/payme";
+import { polarConfigured } from "@/lib/polar";
 import PricingSelector from "@/components/PricingSelector";
 import Sidebar from "@/components/Sidebar";
 
@@ -49,6 +50,7 @@ export default async function UpgradePage() {
             paymentTelegram={process.env.PAYMENT_TELEGRAM || ""}
             clickEnabled={clickConfigured()}
             paymeEnabled={paymeConfigured()}
+            visaEnabled={polarConfigured()}
           />
         </main>
       </div>

@@ -1930,6 +1930,8 @@ export const PaymentScalarFieldEnum = {
   paymeCreatedAt: 'paymeCreatedAt',
   paymeCancelledAt: 'paymeCancelledAt',
   paymeCancelReason: 'paymeCancelReason',
+  amountUsd: 'amountUsd',
+  polarCheckoutId: 'polarCheckoutId',
   promoCode: 'promoCode',
   promoOwnerId: 'promoOwnerId',
   discountPercent: 'discountPercent',

@@ -130,6 +130,13 @@ model Payment {
   paymeCancelledAt  DateTime? // our cancel_time
   paymeCancelReason Int? // Payme's cancellation reason code (1-5; 4 = 12h timeout)
 
+  // ── Polar state (see src/lib/polar.ts) ──
+  /// US cents the card is actually charged (discounted plan + card fee). The webhook
+  /// enforces the paid order's net_amount against this; `amount` above keeps carrying
+  /// the UZS equivalent so revenue queries and commission stay in one currency.
+  amountUsd       Int?
+  polarCheckoutId String? // Polar checkout session id — the support handle before an order exists
+
   // ── Promo snapshot ──
   // Snapshots, not joins. A promo's percentage can be edited and its owner reassigned;
   // if commission were computed by joining to PromoCode as it is TODAY, editing a code

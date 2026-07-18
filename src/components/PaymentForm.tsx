@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { PremiumPlan } from "@/lib/plans";
-import { fmtUZS } from "@/lib/plans";
+import { fmtUZS, fmtUSD, CARD_FEE_USD_CENTS } from "@/lib/plans";
 import { X, CheckCircle2, Send } from "lucide-react";
 
 export default function PaymentForm({
@@ -13,6 +13,7 @@ export default function PaymentForm({
   paymentTelegram,
   clickEnabled,
   paymeEnabled,
+  visaEnabled,
   onClose,
 }: {
   plan: PremiumPlan;
@@ -21,6 +22,7 @@ export default function PaymentForm({
   paymentTelegram: string;
   clickEnabled: boolean;
   paymeEnabled: boolean;
+  visaEnabled: boolean;
   onClose: () => void;
 }) {
   // e.g. "https://t.me/identify_admin" → "@identify_admin"
@@ -34,10 +36,10 @@ export default function PaymentForm({
   const [error, setError] = useState<string | null>(null);
   // Automated providers first: a flow that grants in seconds should never sit behind
   // the one that needs a human to read a screenshot.
-  const [method, setMethod] = useState<"payme" | "click" | "transfer">(
-    paymeEnabled ? "payme" : clickEnabled ? "click" : "transfer",
+  const [method, setMethod] = useState<"payme" | "click" | "visa" | "transfer">(
+    paymeEnabled ? "payme" : clickEnabled ? "click" : visaEnabled ? "visa" : "transfer",
   );
-  const providerCount = Number(paymeEnabled) + Number(clickEnabled);
+  const providerCount = Number(paymeEnabled) + Number(clickEnabled) + Number(visaEnabled);
 
   // Promo. `applied` is only ever set from the SERVER's answer — the amount shown here
   // is the one the server computed, never one this component worked out for itself.
@@ -47,6 +49,11 @@ export default function PaymentForm({
   const [checkingPromo, setCheckingPromo] = useState(false);
 
   const total = applied?.amount ?? plan.total;
+
+  // Visa (Polar) charges USD. Mirrors the server's formula in /api/payment/polar —
+  // display only; the server recomputes and locks the real amount into the checkout.
+  const visaPlanUsd = Math.round((plan.totalUsd * (100 - (applied?.percentOff ?? 0))) / 100);
+  const visaTotalUsd = visaPlanUsd + CARD_FEE_USD_CENTS;
 
   const checkPromo = async () => {
     if (!promo.trim()) return;
@@ -100,7 +107,7 @@ export default function PaymentForm({
 
   // One redirect flow for every automated provider — the return URL lands on
   // /upgrade/success, which polls until the webhook's grant is visible.
-  const payWithProvider = async (provider: "click" | "payme") => {
+  const payWithProvider = async (provider: "click" | "payme" | "polar") => {
     setLoading(true);
     setError(null);
     try {
@@ -236,6 +243,7 @@ export default function PaymentForm({
               [
                 ...(paymeEnabled ? [{ id: "payme" as const, label: "Payme", sub: "Avtomatik" }] : []),
                 ...(clickEnabled ? [{ id: "click" as const, label: "Click", sub: "Avtomatik" }] : []),
+                ...(visaEnabled ? [{ id: "visa" as const, label: "Visa karta", sub: "USD, avtomatik" }] : []),
                 { id: "transfer" as const, label: "Karta o'tkazma", sub: "Admin tasdiqlaydi" },
               ]
             ).map((m) => (
@@ -292,6 +300,47 @@ export default function PaymentForm({
                 {loading
                   ? "Yo'naltirilmoqda…"
                   : `${method === "payme" ? "Payme" : "Click"} orqali to'lash — ${fmtUZS(total)} UZS`}
+              </button>
+            </div>
+          </>
+        ) : method === "visa" && visaEnabled ? (
+          <>
+            <div className="mt-4 rounded-xl border border-slate-900/15 bg-slate-900/[0.04] p-4 text-sm text-slate-700">
+              Xalqaro Visa yoki Mastercard bilan <strong>USD&apos;da</strong> to&apos;laysiz —
+              to&apos;lov o&apos;tishi bilan Premium <strong>avtomatik, bir necha soniyada</strong>{" "}
+              yoqiladi. Chek yuborish, admin kutish yo&apos;q.
+            </div>
+
+            <div className="mt-3 rounded-xl bg-slate-50 p-4 space-y-1.5 text-sm">
+              <div className="flex justify-between">
+                <span className="text-slate-500">Plan ({plan.label}):</span>
+                <span className="font-medium">{fmtUSD(visaPlanUsd)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">Card fee:</span>
+                <span className="font-medium">{fmtUSD(CARD_FEE_USD_CENTS)}</span>
+              </div>
+              <div className="flex justify-between border-t border-slate-200 pt-1.5">
+                <span className="font-semibold">Total:</span>
+                <span className="font-bold text-slate-900">{fmtUSD(visaTotalUsd)}</span>
+              </div>
+            </div>
+
+            {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+
+            <div className="mt-5 flex gap-3 justify-end">
+              <button
+                onClick={onClose}
+                className="px-4 py-2 rounded-lg border border-slate-300 text-sm font-medium hover:bg-slate-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => payWithProvider("polar")}
+                disabled={loading}
+                className="px-5 py-2 rounded-lg bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 disabled:opacity-60"
+              >
+                {loading ? "Yo'naltirilmoqda…" : `Karta orqali to'lash — ${fmtUSD(visaTotalUsd)}`}
               </button>
             </div>
           </>
