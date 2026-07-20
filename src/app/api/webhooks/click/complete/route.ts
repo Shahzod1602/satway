@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
 
   // Log every callback verbatim — Click support asks for these when debugging.
   console.log(
-    `[click] complete: trans=${p.click_trans_id} order=${p.merchant_trans_id} amount=${p.amount} error=${p.error}`,
+    `[click] complete: trans=${p.click_trans_id} paydoc=${p.click_paydoc_id ?? "-"} order=${p.merchant_trans_id} amount=${p.amount} error=${p.error}`,
   );
 
   if (!verifyClickSign(p)) return resp(p, CLICK_ERR.SIGN_CHECK_FAILED, "SIGN CHECK FAILED");

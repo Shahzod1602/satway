@@ -45,6 +45,7 @@ export type ClickCallbackParams = {
   service_id: string;
   merchant_trans_id: string; // our orderNo (transaction_param)
   merchant_prepare_id?: string; // present on Complete
+  click_paydoc_id?: string; // Click's payment-document id — the "paydoc" support asks for
   amount: string; // e.g. "30000.00" — use VERBATIM in the sign string
   action: string; // "0" prepare | "1" complete
   error: string; // <0 = cancelled/failed on Click's side
@@ -100,6 +101,7 @@ export async function parseClickCallback(req: Request): Promise<ClickCallbackPar
       service_id: get("service_id"),
       merchant_trans_id: get("merchant_trans_id"),
       merchant_prepare_id: get("merchant_prepare_id") || undefined,
+      click_paydoc_id: get("click_paydoc_id") || undefined,
       amount: get("amount"),
       action: get("action"),
       error: get("error"),
