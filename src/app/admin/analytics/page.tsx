@@ -297,7 +297,7 @@ export default async function AdminAnalyticsPage() {
                   <td className="px-4 py-2 tabular-nums text-slate-800">{usd(w.usd30d)}</td>
                   <td className="px-4 py-2 tabular-nums text-slate-600">{w.calls30d}</td>
                   <td className="px-4 py-2 tabular-nums text-slate-600">
-                    {w.paidUzs ? `${w.paidUzs.toLocaleString("en-US")} so'm` : "—"}
+                    {w.paidUzs ? `${w.paidUzs.toLocaleString("en-US")} UZS` : "—"}
                   </td>
                   <td
                     className={`px-4 py-2 tabular-nums ${w.marginUsd < 0 ? "font-semibold text-rose-600" : "text-emerald-700"}`}

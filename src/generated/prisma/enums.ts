@@ -70,6 +70,15 @@ export const QuestionDifficulty = {
 export type QuestionDifficulty = (typeof QuestionDifficulty)[keyof typeof QuestionDifficulty]
 
 
+export const TestLevel = {
+  EASY: 'EASY',
+  MEDIUM: 'MEDIUM',
+  HARD: 'HARD'
+} as const
+
+export type TestLevel = (typeof TestLevel)[keyof typeof TestLevel]
+
+
 export const SatQuestionType = {
   MCQ_SINGLE: 'MCQ_SINGLE',
   STUDENT_PRODUCED_RESPONSE: 'STUDENT_PRODUCED_RESPONSE',

@@ -10,7 +10,7 @@ import {
 import ScoreGauge from "./ScoreGauge";
 import CountUp from "./CountUp";
 import AITutorDemo from "./AITutorDemo";
-import { PREMIUM_PLANS, BASE_MONTHLY, fmtUZS } from "@/lib/plans";
+import { PREMIUM_PLANS, BASE_MONTHLY, fmtUSD } from "@/lib/plans";
 
 function Wordmark({ className = "" }: { className?: string }) {
   return (
@@ -20,11 +20,11 @@ function Wordmark({ className = "" }: { className?: string }) {
   );
 }
 
-// The course price we anchor against (mid of the local 1M–4.8M so'm instructor range).
-const COURSE_PRICE = 4_000_000;
+// The course price we anchor against (~$330 — mid of the local private-tutor range).
+const COURSE_PRICE_USD = "$330";
 
 const BENTO = [
-  { icon: Brain, tag: "AI tutor", title: "Ask why you got it wrong", body: "A tutor that explains every mistake — in O'zbek, Rus or English. Like a repetitor, but 24/7.", span: true },
+  { icon: Brain, tag: "AI tutor", title: "Ask why you got it wrong", body: "A tutor that explains every mistake in plain English — step by step. Like a private tutor, but 24/7.", span: true },
   { icon: RotateCcw, tag: "Mistake bank", title: "Drill your weak spots", body: "Every wrong answer, grouped by topic, until you own it." },
   { icon: Timer, tag: "Pacing", title: "See where time slips", body: "Per-question timing shows exactly where you slow down." },
   { icon: Layers, tag: "Adaptive", title: "A real Module 2", body: "Module 2 gets harder or easier from your Module 1 — like the real exam." },
@@ -33,11 +33,20 @@ const BENTO = [
   { icon: BarChart3, tag: "Scoring", title: "200–800, instantly", body: "College-Board-calibrated scaled scores and a 400–1600 total, in minutes." },
 ];
 
+// Headline price for the comparison table = the 1-month plan, list → current discount.
+const HEADLINE_PLAN = PREMIUM_PLANS.find((p) => p.id === "1m") ?? PREMIUM_PLANS[0];
+const HEADLINE_WAS_USD = Math.round((BASE_MONTHLY * HEADLINE_PLAN.months) / 120);
+
 const COMPARE = [
-  { label: "Narx / Price", tg: "Bepul", sw: "30 000 so'm/oy", co: "1–4.8M so'm" },
+  {
+    label: "Price",
+    tg: "Free",
+    sw: `${fmtUSD(HEADLINE_WAS_USD)} → ${fmtUSD(HEADLINE_PLAN.totalUsd)}/mo`,
+    co: "$83–400",
+  },
   { label: "Real Bluebook interface", tg: false, sw: true, co: "sometimes" },
   { label: "Adaptive Module 1 → 2", tg: false, sw: true, co: false },
-  { label: "Explains mistakes in O'zbek / Rus", tg: false, sw: true, co: true },
+  { label: "Explains every mistake, step by step", tg: false, sw: true, co: true },
   { label: "Mistake bank & timing analytics", tg: false, sw: true, co: false },
   { label: "Structured & self-paced", tg: false, sw: true, co: true },
   { label: "Works on your phone (24/7)", tg: true, sw: true, co: false },
@@ -91,7 +100,7 @@ export default function Landing({ stats }: { stats?: { students: number; tests: 
       <section className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 pb-16 pt-14 lg:grid-cols-[1.05fr_0.95fr] lg:pt-24">
         <motion.div variants={container} initial="hidden" animate="show">
           <motion.p variants={item} className="inline-flex items-center gap-2 rounded-full border border-slate-300/70 bg-white/60 px-3 py-1 text-[12px] font-medium text-slate-600">
-            <Sparkles className="h-3.5 w-3.5 text-accent-600" /> Bepul Telegram va qimmat kurslar orasidagi aqlli yo&rsquo;l
+            <Sparkles className="h-3.5 w-3.5 text-accent-600" /> The smart middle between free Telegram and expensive courses
           </motion.p>
           <motion.h1 variants={item} className="mt-6 font-display text-5xl font-semibold leading-[1.03] tracking-tight text-slate-900 sm:text-6xl">
             Raise your SAT score — for the{" "}
@@ -99,8 +108,8 @@ export default function Landing({ stats }: { stats?: { students: number; tests: 
           </motion.h1>
           <motion.p variants={item} className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600">
             Real adaptive Bluebook mocks, an AI tutor that explains every mistake in{" "}
-            <span className="font-semibold text-slate-900">O&rsquo;zbek &amp; Rus</span>, and instant 200–800 scoring —{" "}
-            <span className="font-semibold text-slate-900">from 30,000 so&rsquo;m</span>.
+            <span className="font-semibold text-slate-900">plain English</span>, and instant 200–800 scoring —{" "}
+            <span className="font-semibold text-slate-900">from $3.71/mo</span>.
           </motion.p>
           <motion.div variants={item} className="mt-8 flex flex-wrap items-center gap-3">
             <Link href="/register" className="group inline-flex items-center gap-2 rounded-xl bg-brand-600 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-brand-600/20 hover:bg-brand-700">
@@ -133,9 +142,9 @@ export default function Landing({ stats }: { stats?: { students: number; tests: 
             className="absolute -right-2 -top-4 hidden items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-semibold shadow-lg sm:flex"
             initial={{ opacity: 0, y: reduce ? 0 : -20, rotate: reduce ? 0 : 8 }} animate={{ opacity: 1, y: 0, rotate: 3 }} transition={{ duration: 0.7, ease: EASE, delay: 0.6 }}
           >
-            <span className="text-slate-400 line-through">Kurs 4M</span>
+            <span className="text-slate-400 line-through">Course $330</span>
             <ArrowRight className="h-3 w-3 text-brand-500" />
-            <span className="text-brand-700">SATway 30k</span>
+            <span className="text-brand-700">SATway $3.71</span>
           </motion.div>
 
           {/* mini exam card */}
@@ -184,22 +193,22 @@ export default function Landing({ stats }: { stats?: { students: number; tests: 
       <section id="tutor" className="relative mx-auto max-w-6xl px-5 py-24">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <motion.div {...inView} variants={container}>
-            <motion.p variants={item} className="font-mono text-[11px] uppercase tracking-[0.2em] text-brand-600">Meet Ustoz · your AI tutor</motion.p>
+            <motion.p variants={item} className="font-mono text-[11px] uppercase tracking-[0.2em] text-brand-600">Meet your AI tutor</motion.p>
             <motion.h2 variants={item} className="mt-3 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
               Wrong answer? Get the <span className="hl-word">why</span> — in your language.
             </motion.h2>
             <motion.p variants={item} className="mt-5 max-w-md text-base leading-relaxed text-slate-600">
-              Every mistake becomes a lesson. Ask <span className="font-medium text-slate-800">&ldquo;nega bu noto&rsquo;g&rsquo;ri?&rdquo;</span> and Ustoz
-              walks you through it in O&rsquo;zbek, Rus or English — with the math written out. Like a repetitor,
+              Every mistake becomes a lesson. Ask <span className="font-medium text-slate-800">&ldquo;why is this wrong?&rdquo;</span> and your tutor
+              walks you through it in plain English — with the math written out. Like a private tutor,
               but 24/7 and for a fraction of the price.
             </motion.p>
             <motion.ul variants={item} className="mt-7 space-y-3 text-sm text-slate-700">
-              {["Step-by-step, not just the answer", "Switch language in one tap", "Ask follow-ups until it clicks", "Built into every mistake you review"].map((t) => (
+              {["Step-by-step, not just the answer", "Explains the concept, not just this question", "Ask follow-ups until it clicks", "Built into every mistake you review"].map((t) => (
                 <li key={t} className="flex items-start gap-2.5"><ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-brand-600" /> {t}</li>
               ))}
             </motion.ul>
             <motion.p variants={item} className="mt-7 text-sm font-medium text-slate-500">
-              👉 Try the toggle — same mistake, three languages.
+              👉 Every wrong answer becomes a lesson.
             </motion.p>
           </motion.div>
 
@@ -246,7 +255,7 @@ export default function Landing({ stats }: { stats?: { students: number; tests: 
             The middle path that actually works.
           </motion.h2>
           <motion.p variants={item} className="mt-4 text-base text-slate-600">
-            Telegram is chaotic. A repetitor costs millions. SATway is the structured, affordable middle.
+            Telegram is chaotic. A private tutor costs a fortune. SATway is the structured, affordable middle.
           </motion.p>
         </motion.div>
 
@@ -260,7 +269,7 @@ export default function Landing({ stats }: { stats?: { students: number; tests: 
               <span className="font-bold text-brand-700">SATway</span>
               <span className="absolute -top-0 left-1/2 hidden -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-600 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white sm:block">Best value</span>
             </div>
-            <div className="border-b border-l border-slate-200 px-3 py-4 text-center text-xs font-semibold text-slate-500">Repetitor kursi</div>
+            <div className="border-b border-l border-slate-200 px-3 py-4 text-center text-xs font-semibold text-slate-500">Private tutor</div>
 
             {COMPARE.map((row, i) => (
               <RowCells key={row.label} row={row} last={i === COMPARE.length - 1} />
@@ -268,7 +277,7 @@ export default function Landing({ stats }: { stats?: { students: number; tests: 
           </div>
         </motion.div>
         <motion.p {...inView} variants={item} className="mt-5 text-center text-sm text-slate-500">
-          Telegram — tartibsiz. Repetitor — millionlab so&rsquo;m. <span className="font-semibold text-slate-800">SATway — ishlaydigan o&rsquo;rta yo&rsquo;l.</span>
+          Telegram is chaotic. A private tutor costs a fortune. <span className="font-semibold text-slate-800">SATway is the middle path that works.</span>
         </motion.p>
       </section>
 
@@ -362,16 +371,16 @@ export default function Landing({ stats }: { stats?: { students: number; tests: 
           </motion.h2>
           {/* price wedge */}
           <motion.div variants={item} className="mt-6 inline-flex flex-wrap items-center justify-center gap-3 rounded-2xl border border-slate-200 bg-white px-5 py-4">
-            <span className="text-lg font-semibold text-slate-400 line-through">{fmtUZS(COURSE_PRICE)} so&rsquo;m</span>
-            <span className="text-slate-400">kurs</span>
+            <span className="text-lg font-semibold text-slate-400 line-through">{COURSE_PRICE_USD}</span>
+            <span className="text-slate-400">course</span>
             <ArrowRight className="h-4 w-4 text-brand-500" />
-            <span className="font-display text-2xl font-semibold text-brand-700">30,000 so&rsquo;m</span>
-            <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-bold text-emerald-700">~40× arzon</span>
+            <span className="font-display text-2xl font-semibold text-brand-700">$3.71/mo</span>
+            <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-bold text-emerald-700">~40× cheaper</span>
           </motion.div>
           <motion.p variants={item} className="mt-4 text-base text-slate-600">Test 1 is free forever. Premium unlocks every test and full adaptive mocks.</motion.p>
           <motion.div variants={item} className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs font-semibold text-slate-500">
             <Wallet className="h-4 w-4 text-slate-400" />
-            {["Payme", "Click", "Uzum"].map((p) => (
+            {["Visa", "Mastercard"].map((p) => (
               <span key={p} className="rounded-md border border-slate-200 bg-white px-2.5 py-1">{p}</span>
             ))}
           </motion.div>
@@ -379,7 +388,7 @@ export default function Landing({ stats }: { stats?: { students: number; tests: 
 
         <motion.div className="mt-12 grid gap-5 md:grid-cols-3" {...inView} variants={container}>
           {PREMIUM_PLANS.map((p) => {
-            const original = BASE_MONTHLY * p.months;
+            const originalUsd = Math.round((BASE_MONTHLY * p.months) / 120);
             return (
               <motion.div key={p.id} variants={item} {...hover}
                 className={`relative flex flex-col rounded-3xl border bg-white p-7 ${p.popular ? "border-brand-600 shadow-xl shadow-brand-600/10 ring-1 ring-brand-600" : "border-slate-200"}`}>
@@ -389,12 +398,12 @@ export default function Landing({ stats }: { stats?: { students: number; tests: 
                   <span className="rounded-full bg-accent-50 px-2.5 py-1 text-[11px] font-bold text-accent-700">−{p.discount}%</span>
                 </div>
                 <div className="mt-4 flex items-end gap-2">
-                  <span className="font-display text-4xl font-semibold tracking-tight text-slate-900">{fmtUZS(p.total)}</span>
-                  <span className="mb-1 font-mono text-xs uppercase text-slate-400">so&rsquo;m</span>
+                  <span className="font-display text-4xl font-semibold tracking-tight text-slate-900">{fmtUSD(p.totalUsd)}</span>
+                  <span className="mb-1 font-mono text-xs uppercase text-slate-400">USD</span>
                 </div>
-                <p className="mt-1 text-sm text-slate-400 line-through">{fmtUZS(original)} so&rsquo;m</p>
+                <p className="mt-1 text-sm text-slate-400 line-through">{fmtUSD(originalUsd)}</p>
                 <ul className="mt-6 flex-1 space-y-2.5 text-sm text-slate-700">
-                  {["All tests + adaptive mocks", "AI tutor in O'zbek / Rus", "Mistake bank & timing", "Progress analytics"].map((t) => (
+                  {["All tests + adaptive mocks", "AI tutor for every mistake", "Mistake bank & timing", "Progress analytics"].map((t) => (
                     <li key={t} className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-600" /> {t}</li>
                   ))}
                 </ul>
@@ -405,7 +414,7 @@ export default function Landing({ stats }: { stats?: { students: number; tests: 
             );
           })}
         </motion.div>
-        <motion.p {...inView} variants={item} className="mt-6 text-center text-xs text-slate-400">Bepul boshlang · Karta shart emas · Istalgan vaqtda bekor qiling</motion.p>
+        <motion.p {...inView} variants={item} className="mt-6 text-center text-xs text-slate-400">Start free · No card required · Cancel anytime</motion.p>
       </section>
 
       {/* ───────── Final CTA ───────── */}
@@ -427,7 +436,7 @@ export default function Landing({ stats }: { stats?: { students: number; tests: 
               Create your free account
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
-            <p className="mt-4 text-xs text-slate-400">Bepul · O&rsquo;zbek va Rus tilida · Telefonda ishlaydi</p>
+            <p className="mt-4 text-xs text-slate-400">Free · Works in your browser · On any phone</p>
           </div>
         </motion.div>
       </section>

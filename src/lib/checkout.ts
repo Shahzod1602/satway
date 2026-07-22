@@ -7,7 +7,7 @@
 //
 // THE RULE: the client sends a plan id and a promo string. It never sends an amount, and
 // an amount it did send would be ignored. A checkout that trusts a client-supplied price
-// is a checkout that sells Premium for 1 so'm to anyone who opens dev tools.
+// is a checkout that sells Premium for 1 UZS to anyone who opens dev tools.
 
 import { prisma } from "./prisma";
 import { getPlan, type PremiumPlan } from "./plans";
@@ -98,7 +98,7 @@ export async function resolveCheckoutIntent(opts: {
 
   const baseAmount = plan.total;
   const discountPercent = promo ? Math.max(0, Math.min(100, promo.percentOff)) : 0;
-  // Round to whole so'm. UZS has no minor unit in practice, and a fractional amount would
+  // Round to whole UZS. UZS has no minor unit in practice, and a fractional amount would
   // be rejected by every provider here.
   const amount = Math.round(baseAmount * (1 - discountPercent / 100));
 
@@ -106,7 +106,7 @@ export async function resolveCheckoutIntent(opts: {
 }
 
 /**
- * Commission owed on one paid sale, in so'm.
+ * Commission owed on one paid sale, in UZS.
  *
  * Reads ONLY the snapshot columns on the Payment row — never the live PromoCode. Both the
  * owner and the rate are snapshotted, so renegotiating a teacher from 50% to 30% changes

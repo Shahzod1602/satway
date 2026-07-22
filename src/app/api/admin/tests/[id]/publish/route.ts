@@ -8,6 +8,7 @@ import { jsonError, withErrorHandling } from "@/lib/apiError";
 const bodySchema = z.object({
   published: z.boolean().optional(),
   isPremium: z.boolean().optional(),
+  level: z.enum(["EASY", "MEDIUM", "HARD"]).optional(),
 });
 
 /**
@@ -23,14 +24,14 @@ export const PATCH = withErrorHandling(
     const { id } = await ctx.params;
     const body = await parseJson(req, bodySchema);
 
-    if (body.published === undefined && body.isPremium === undefined) {
+    if (body.published === undefined && body.isPremium === undefined && body.level === undefined) {
       return jsonError("Nothing to change", 400);
     }
 
     const test = await prisma.test.update({
       where: { id },
       data: body,
-      select: { id: true, published: true, isPremium: true, title: true },
+      select: { id: true, published: true, isPremium: true, level: true, title: true },
     });
 
     return Response.json({ ok: true, test });

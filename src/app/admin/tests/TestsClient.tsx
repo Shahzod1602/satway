@@ -12,9 +12,13 @@ type Test = {
   type: string;
   published: boolean;
   isPremium: boolean;
+  level: string;
   createdAt: string;
   _count: { sections: number; attempts: number };
 };
+
+const LEVELS = ["EASY", "MEDIUM", "HARD"] as const;
+const LEVEL_TEXT: Record<string, string> = { EASY: "Easy", MEDIUM: "Medium", HARD: "Hard" };
 
 const SKILLS = ["ALL", "READING_WRITING", "MATH"] as const;
 
@@ -62,6 +66,30 @@ export default function TestsClient({ initialTests }: { initialTests: Test[] }) 
     }
   }
 
+  async function changeLevel(t: Test, level: string) {
+    if (level === t.level) return;
+    const prevLevel = t.level;
+    // Optimistic: reflect the choice immediately, roll back if the write fails.
+    setTests((prev) => prev.map((x) => (x.id === t.id ? { ...x, level } : x)));
+    setBusy(t.id);
+    try {
+      const res = await fetch(`/api/admin/tests/${t.id}/publish`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ level }),
+      });
+      if (!res.ok) {
+        setTests((prev) => prev.map((x) => (x.id === t.id ? { ...x, level: prevLevel } : x)));
+      } else {
+        router.refresh();
+      }
+    } catch {
+      setTests((prev) => prev.map((x) => (x.id === t.id ? { ...x, level: prevLevel } : x)));
+    } finally {
+      setBusy(null);
+    }
+  }
+
   return (
     <div className="mt-6">
       <div className="flex flex-wrap items-center gap-3">
@@ -104,6 +132,7 @@ export default function TestsClient({ initialTests }: { initialTests: Test[] }) 
               <th className="px-4 py-2 font-medium">Test</th>
               <th className="px-4 py-2 font-medium">Section</th>
               <th className="px-4 py-2 font-medium">Modules</th>
+              <th className="px-4 py-2 font-medium">Level</th>
               <th className="px-4 py-2 font-medium">Attempts</th>
               <th className="px-4 py-2 font-medium">Published</th>
               <th className="px-4 py-2 font-medium">Premium</th>
@@ -113,7 +142,7 @@ export default function TestsClient({ initialTests }: { initialTests: Test[] }) 
           <tbody>
             {shown.length === 0 && (
               <tr>
-                <td colSpan={7} className="px-4 py-4 text-slate-400">
+                <td colSpan={8} className="px-4 py-4 text-slate-400">
                   Nothing matches.
                 </td>
               </tr>
@@ -132,6 +161,21 @@ export default function TestsClient({ initialTests }: { initialTests: Test[] }) 
                   title={t._count.sections === 0 ? "No sections — this test cannot be taken" : undefined}
                 >
                   {t._count.sections}
+                </td>
+                <td className="px-4 py-2">
+                  <select
+                    value={t.level}
+                    onChange={(e) => changeLevel(t, e.target.value)}
+                    disabled={busy === t.id}
+                    className="rounded-lg border border-slate-300 px-2 py-1 text-xs text-slate-700 disabled:opacity-50"
+                    aria-label={`Level for ${t.title}`}
+                  >
+                    {LEVELS.map((lv) => (
+                      <option key={lv} value={lv}>
+                        {LEVEL_TEXT[lv]}
+                      </option>
+                    ))}
+                  </select>
                 </td>
                 <td className="px-4 py-2 tabular-nums text-slate-600">{t._count.attempts || "—"}</td>
                 <td className="px-4 py-2">

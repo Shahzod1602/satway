@@ -11,7 +11,7 @@ import { CARD_FEE_USD_CENTS } from "@/lib/plans";
 import { appUrl } from "@/lib/winback";
 
 const bodySchema = z.object({
-  planId: z.enum(["1m", "3m", "6m"]),
+  planId: z.enum(["1m", "2m", "3m"]),
   promoCode: z.string().trim().max(40).optional(),
 });
 

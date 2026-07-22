@@ -108,6 +108,7 @@ export const UserScalarFieldEnum = {
   targetScore: 'targetScore',
   targetMathScore: 'targetMathScore',
   targetRWScore: 'targetRWScore',
+  level: 'level',
   examDate: 'examDate',
   defaultType: 'defaultType',
   emailNotifications: 'emailNotifications',
@@ -217,6 +218,7 @@ export const TestScalarFieldEnum = {
   durationSec: 'durationSec',
   published: 'published',
   isPremium: 'isPremium',
+  level: 'level',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

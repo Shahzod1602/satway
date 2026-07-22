@@ -9,7 +9,7 @@ import { resolvePromo, PROMO_ERROR_MESSAGE } from "@/lib/checkout";
 
 const bodySchema = z.object({
   code: z.string().trim().min(1).max(40),
-  planId: z.enum(["1m", "3m", "6m"]),
+  planId: z.enum(["1m", "2m", "3m"]),
 });
 
 /**

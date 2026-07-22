@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
         ok: false,
       });
       await notifyAdmin(
-        `↩️ Click REVERSAL · order SW-${String(payment.orderNo).padStart(6, "0")}\n${payment.user.name} (${payment.user.email}), ${fmtUZS(payment.amount)} UZS.\nPremium allaqachon berilgan — /admin/users da ko'rib chiqing.`,
+        `↩️ Click REVERSAL · order SW-${String(payment.orderNo).padStart(6, "0")}\n${payment.user.name} (${payment.user.email}), ${fmtUZS(payment.amount)} UZS.\nPremium already granted — review in /admin/users.`,
       );
     }
     return resp(p, CLICK_ERR.TRANSACTION_CANCELLED, "Transaction cancelled");
@@ -137,14 +137,14 @@ export async function POST(req: NextRequest) {
       : 0;
   await notifyAdmin(
     [
-      `💳 Click to'lov · order SW-${String(payment.orderNo).padStart(6, "0")} (SATway)`,
+      `💳 Click payment · order SW-${String(payment.orderNo).padStart(6, "0")} (SATway)`,
       `${granted.user.name} (${granted.user.email})`,
       `Plan: ${payment.planLabel} — ${fmtUZS(payment.amount)} UZS`,
       payment.promoCode ? `Promo: ${payment.promoCode} (−${payment.discountPercent}%)` : null,
       commission > 0 && payment.promoOwner
-        ? `Owner: ${payment.promoOwner.name} — ulush ${fmtUZS(commission)} UZS (${payment.commissionPct}%)`
+        ? `Owner: ${payment.promoOwner.name} — share ${fmtUZS(commission)} UZS (${payment.commissionPct}%)`
         : null,
-      `Premium: ${granted.user.premiumUntil.toISOString().slice(0, 10)} gacha`,
+      `Premium: until ${granted.user.premiumUntil.toISOString().slice(0, 10)}`,
     ]
       .filter(Boolean)
       .join("\n"),

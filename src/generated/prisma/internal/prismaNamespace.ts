@@ -1887,6 +1887,7 @@ export const UserScalarFieldEnum = {
   targetScore: 'targetScore',
   targetMathScore: 'targetMathScore',
   targetRWScore: 'targetRWScore',
+  level: 'level',
   examDate: 'examDate',
   defaultType: 'defaultType',
   emailNotifications: 'emailNotifications',
@@ -1996,6 +1997,7 @@ export const TestScalarFieldEnum = {
   durationSec: 'durationSec',
   published: 'published',
   isPremium: 'isPremium',
+  level: 'level',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2320,6 +2322,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TestLevel'
+ */
+export type EnumTestLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TestLevel'>
+    
+
+
+/**
+ * Reference to a field of type 'TestLevel[]'
+ */
+export type ListEnumTestLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TestLevel[]'>
     
 
 

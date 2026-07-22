@@ -37,6 +37,7 @@ model User {
   targetScore        Int? // goal score, e.g. 1400
   targetMathScore    Int? // 200-800
   targetRWScore      Int? // 200-800
+  level              TestLevel? // self-selected practice level (null = not chosen; UI suggests one)
   examDate           DateTime?
   defaultType        TestType  @default(DIGITAL)
   emailNotifications Boolean   @default(true)
@@ -239,6 +240,7 @@ model Test {
   durationSec Int      @default(3900) // R&W 64min, Math 70min
   published   Boolean  @default(false)
   isPremium   Boolean  @default(true) // access gate: false = playable on the free plan
+  level       TestLevel @default(MEDIUM) // difficulty band shown to students; admin-set
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -310,6 +312,14 @@ model Question {
 // Per-question difficulty (distinct from a section's adaptive band). Nullable —
 // older items are untagged until backfilled.
 enum QuestionDifficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+// Whole-test difficulty band, used to match a test to a student's level.
+// (Distinct from per-question QuestionDifficulty and adaptive SectionDifficulty.)
+enum TestLevel {
   EASY
   MEDIUM
   HARD

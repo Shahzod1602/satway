@@ -22,6 +22,7 @@ export default async function AdminTestsPage() {
       type: true,
       published: true,
       isPremium: true,
+      level: true,
       createdAt: true,
       _count: { select: { sections: true, attempts: true } },
     },

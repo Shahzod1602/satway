@@ -65,36 +65,36 @@ export default function SuccessClient() {
         {phase === "active" ? (
           <>
             <CheckCircle2 className="mx-auto h-14 w-14 text-emerald-500" />
-            <h1 className="mt-4 text-xl font-bold text-slate-900">Premium faollashdi!</h1>
+            <h1 className="mt-4 text-xl font-bold text-slate-900">Premium activated!</h1>
             <p className="mt-2 text-sm text-slate-600">
-              To&apos;lov qabul qilindi. Premium{" "}
-              {until ? new Date(until).toLocaleDateString("en-GB") : ""} gacha amal qiladi —
-              barcha testlar, full mock va AI tutor ochiq.
+              Payment received. Premium is active until{" "}
+              {until ? new Date(until).toLocaleDateString("en-GB") : ""} —
+              all tests, full mocks and the AI tutor are unlocked.
             </p>
             <Link
               href="/dashboard"
               className="mt-6 inline-block rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-700"
             >
-              Testlarga o&apos;tish
+              Go to tests
             </Link>
           </>
         ) : phase === "waiting" ? (
           <>
             <Loader2 className="mx-auto h-14 w-14 animate-spin text-brand-600" />
-            <h1 className="mt-4 text-xl font-bold text-slate-900">To&apos;lov tekshirilmoqda…</h1>
+            <h1 className="mt-4 text-xl font-bold text-slate-900">Verifying payment…</h1>
             <p className="mt-2 text-sm text-slate-600">
-              Click tasdiqlashi bilan Premium avtomatik yoqiladi — odatda bir necha soniya.
-              Sahifani yopmang.
+              Premium activates automatically once Click confirms — usually within a few seconds.
+              Please don&apos;t close this page.
             </p>
           </>
         ) : (
           <>
             <Clock className="mx-auto h-14 w-14 text-amber-500" />
-            <h1 className="mt-4 text-xl font-bold text-slate-900">Tasdiq hali kelmadi</h1>
+            <h1 className="mt-4 text-xl font-bold text-slate-900">Confirmation hasn&apos;t arrived yet</h1>
             <p className="mt-2 text-sm text-slate-600">
-              To&apos;lov o&apos;tgan bo&apos;lsa, Premium bir necha daqiqada yoqiladi. Agar pul
-              yechilgan-u Premium ko&apos;rinmasa — support orqali yozing, buyurtma raqamingiz
-              bilan darhol hal qilamiz.
+              If the payment went through, Premium will activate within a few minutes. If you were
+              charged but don&apos;t see Premium, message support with your order number and
+              we&apos;ll sort it out right away.
             </p>
             <div className="mt-6 flex justify-center gap-3">
               <Link

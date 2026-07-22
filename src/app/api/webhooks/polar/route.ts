@@ -170,14 +170,14 @@ async function handleOrderPaid(payload: PolarWebhookPayload) {
       : 0;
   await notifyAdmin(
     [
-      `💳 Polar to'lov (Visa/USD) · order ${orderRef} (SATway)`,
+      `💳 Polar payment (Visa/USD) · order ${orderRef} (SATway)`,
       `${granted.user.name} (${granted.user.email})`,
       `Plan: ${payment.planLabel} — ${fmtUSD(payment.amountUsd)} (≈${fmtUZS(payment.amount)} UZS)`,
       payment.promoCode ? `Promo: ${payment.promoCode} (−${payment.discountPercent}%)` : null,
       commission > 0 && payment.promoOwner
-        ? `Owner: ${payment.promoOwner.name} — ulush ${fmtUZS(commission)} UZS (${payment.commissionPct}%)`
+        ? `Owner: ${payment.promoOwner.name} — share ${fmtUZS(commission)} UZS (${payment.commissionPct}%)`
         : null,
-      `Premium: ${granted.user.premiumUntil.toISOString().slice(0, 10)} gacha`,
+      `Premium: until ${granted.user.premiumUntil.toISOString().slice(0, 10)}`,
     ]
       .filter(Boolean)
       .join("\n"),
@@ -223,7 +223,7 @@ async function handleOrderRefunded(payload: PolarWebhookPayload) {
   // Premium is NOT auto-revoked (the user may have other paid time) — the admin
   // decides in /admin/users.
   await notifyAdmin(
-    `↩️ Polar refund\nOrder ${orderRef} — ${payment?.user.name} (${payment?.user.email}), ${fmtUSD(payment?.amountUsd ?? 0)}.\nPremium allaqachon berilgan — /admin/users da ko'rib chiqing.`,
+    `↩️ Polar refund\nOrder ${orderRef} — ${payment?.user.name} (${payment?.user.email}), ${fmtUSD(payment?.amountUsd ?? 0)}.\nPremium already granted — review in /admin/users.`,
   );
   return NextResponse.json({ ok: true });
 }

@@ -7,6 +7,7 @@ import { ArrowRight, BookOpen, Calculator, Trophy, Shuffle, Lock, Crown, Flame }
 import Sidebar from "@/components/Sidebar";
 import PremiumExpiredBanner from "@/components/PremiumExpiredBanner";
 import { canAccessTest } from "@/lib/access";
+import { LEVEL_LABEL, LEVEL_BADGE } from "@/lib/level";
 
 interface TestData {
   id: string;
@@ -17,9 +18,12 @@ interface TestData {
   description: string | null;
   durationSec: number;
   published: boolean;
+  level: string;
   createdAt: string;
   _count: { sections: number };
 }
+
+const LEVEL_ORDER = ["EASY", "MEDIUM", "HARD"] as const;
 
 type Tab = "READING_WRITING" | "MATH" | "MOCK";
 const TABS: Tab[] = ["READING_WRITING", "MATH", "MOCK"];
@@ -37,6 +41,8 @@ export default function DashboardClient({
   premiumExpired = false,
   initialTab,
   streak = 0,
+  userLevel = null,
+  suggestedLevel = "MEDIUM",
 }: {
   user: { name: string; role: string };
   tests: TestData[];
@@ -44,6 +50,8 @@ export default function DashboardClient({
   premiumExpired?: boolean;
   initialTab?: string;
   streak?: number;
+  userLevel?: string | null;
+  suggestedLevel?: string;
 }) {
   const router = useRouter();
   const isPremium = plan === "PREMIUM";
@@ -53,6 +61,27 @@ export default function DashboardClient({
   const [category, setCategory] = useState("All");
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
+
+  // The student's own level drives which tests are shown by default; "ALL" is opt-in
+  // browsing. myLevel is what we've persisted (null until they choose); the filter
+  // starts on their level, or the suggestion if they've never picked one.
+  const [myLevel, setMyLevel] = useState<string | null>(userLevel);
+  const [levelFilter, setLevelFilter] = useState<string>(userLevel ?? suggestedLevel);
+
+  async function pickLevel(lv: string) {
+    setLevelFilter(lv);
+    if (lv === "ALL" || lv === myLevel) return; // browsing all never changes the saved level
+    setMyLevel(lv);
+    try {
+      await fetch("/api/user/level", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ level: lv }),
+      });
+    } catch {
+      // A failed save only means the next visit re-suggests — the filter still worked.
+    }
+  }
 
   const SKILL_PARTS: Record<string, { label: string; count: number }> = {
     READING_WRITING: { label: "Module", count: 2 },
@@ -77,7 +106,7 @@ export default function DashboardClient({
   // Reset to the first page whenever the visible set changes.
   useEffect(() => {
     setPage(1);
-  }, [category, query]);
+  }, [category, query, levelFilter]);
 
   const startRandomMock = () => {
     if (!isPremium) {
@@ -104,6 +133,7 @@ export default function DashboardClient({
     const q = query.trim().toLowerCase();
     const list = tests.filter((t) => {
       if (t.skill !== activeTab) return false;
+      if (levelFilter !== "ALL" && t.level !== levelFilter) return false;
       if (category === "Full test" && t._count.sections < 2) return false;
       if (category !== "All" && category !== "Full test") {
         const n = parseInt(category.replace(/\D/g, ""), 10);
@@ -115,7 +145,7 @@ export default function DashboardClient({
     const accessRank = (t: TestData) => (canAccessTest(plan, t.slug) ? 0 : 1);
     list.sort((a, b) => accessRank(a) - accessRank(b));
     return list;
-  }, [tests, activeTab, category, plan, query]);
+  }, [tests, activeTab, category, plan, query, levelFilter]);
 
   const pageCount = Math.max(1, Math.ceil(filteredTests.length / PAGE_SIZE));
   const safePage = Math.min(page, pageCount);
@@ -234,8 +264,52 @@ export default function DashboardClient({
               </div>
             ) : (
               <>
+                {/* Level matcher — tests shown are matched to the student's level */}
+                <div className="mt-8 rounded-2xl border border-[#EAEAEA] bg-slate-50/60 p-4">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                    <span className="text-sm font-semibold text-slate-700">Your level</span>
+                    <div className="flex flex-wrap gap-2">
+                      {LEVEL_ORDER.map((lv) => {
+                        const active = levelFilter === lv;
+                        const suggested = myLevel === null && suggestedLevel === lv;
+                        return (
+                          <button
+                            key={lv}
+                            onClick={() => pickLevel(lv)}
+                            className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
+                              active
+                                ? `${LEVEL_BADGE[lv]} ring-2 ring-slate-300 ring-offset-1`
+                                : "border-[#EAEAEA] bg-white text-slate-600 hover:bg-slate-50"
+                            }`}
+                          >
+                            {LEVEL_LABEL[lv]}
+                            {suggested && <span className="ml-1 text-xs opacity-70">· suggested</span>}
+                          </button>
+                        );
+                      })}
+                      <button
+                        onClick={() => pickLevel("ALL")}
+                        className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
+                          levelFilter === "ALL"
+                            ? "border-brand-600 bg-brand-50 text-brand-600"
+                            : "border-[#EAEAEA] bg-white text-slate-600 hover:bg-slate-50"
+                        }`}
+                      >
+                        All levels
+                      </button>
+                    </div>
+                  </div>
+                  <p className="mt-2 text-xs text-slate-500">
+                    {levelFilter === "ALL"
+                      ? "Showing tests of every level."
+                      : myLevel === null
+                        ? `Showing ${LEVEL_LABEL[levelFilter as "EASY" | "MEDIUM" | "HARD"]} tests — tap a level to save it as yours.`
+                        : "Showing tests matched to your level. Tap another level any time."}
+                  </p>
+                </div>
+
                 {/* Filter pills */}
-                <div className="mt-8 flex flex-wrap gap-3">
+                <div className="mt-5 flex flex-wrap gap-3">
                   {categoryPills.map((c) => (
                     <button
                       key={c}
@@ -269,7 +343,19 @@ export default function DashboardClient({
 
                 {filteredTests.length === 0 ? (
                   <div className="mt-6 rounded-xl border border-dashed border-[#EAEAEA] bg-slate-50 p-12 text-center">
-                    <p className="text-slate-400 text-sm">No tests yet.</p>
+                    <p className="text-slate-400 text-sm">
+                      {levelFilter === "ALL"
+                        ? "No tests yet."
+                        : `No ${LEVEL_LABEL[levelFilter as "EASY" | "MEDIUM" | "HARD"]} tests in this section yet.`}
+                    </p>
+                    {levelFilter !== "ALL" && (
+                      <button
+                        onClick={() => setLevelFilter("ALL")}
+                        className="mt-3 text-sm font-medium text-brand-600 hover:text-brand-700"
+                      >
+                        Show all levels
+                      </button>
+                    )}
                   </div>
                 ) : (
                   <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -294,11 +380,18 @@ export default function DashboardClient({
                             <h3 className="text-[15px] font-semibold text-slate-900 leading-snug line-clamp-2">
                               {t.title}
                             </h3>
-                            <p className="mt-2.5 text-sm text-slate-400">
-                              {selectedModule
-                                ? `Module ${selectedModule}`
-                                : `${SKILL_LABELS[t.skill] ?? t.skill}`}
-                            </p>
+                            <div className="mt-2.5 flex flex-wrap items-center gap-2">
+                              <span
+                                className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium ${LEVEL_BADGE[t.level as "EASY" | "MEDIUM" | "HARD"]}`}
+                              >
+                                {LEVEL_LABEL[t.level as "EASY" | "MEDIUM" | "HARD"]}
+                              </span>
+                              <span className="text-sm text-slate-400">
+                                {selectedModule
+                                  ? `Module ${selectedModule}`
+                                  : `${SKILL_LABELS[t.skill] ?? t.skill}`}
+                              </span>
+                            </div>
                           </div>
                           {locked ? (
                             <span className="shrink-0 inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700">

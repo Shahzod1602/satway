@@ -33,7 +33,7 @@ export function buildClickPayUrl(input: {
     merchant_id: String(process.env.CLICK_MERCHANT_ID),
     amount: String(input.amountUzs),
     // The short order number also reads much nicer than a cuid on Click's
-    // "Номер заказа" line; the webhooks resolve it back to the row.
+    // order-number line; the webhooks resolve it back to the row.
     transaction_param: String(input.orderNo),
     return_url: input.returnUrl,
   });

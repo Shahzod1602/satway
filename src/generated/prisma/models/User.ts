@@ -62,6 +62,7 @@ export type UserMinAggregateOutputType = {
   targetScore: number | null
   targetMathScore: number | null
   targetRWScore: number | null
+  level: $Enums.TestLevel | null
   examDate: Date | null
   defaultType: $Enums.TestType | null
   emailNotifications: boolean | null
@@ -100,6 +101,7 @@ export type UserMaxAggregateOutputType = {
   targetScore: number | null
   targetMathScore: number | null
   targetRWScore: number | null
+  level: $Enums.TestLevel | null
   examDate: Date | null
   defaultType: $Enums.TestType | null
   emailNotifications: boolean | null
@@ -138,6 +140,7 @@ export type UserCountAggregateOutputType = {
   targetScore: number
   targetMathScore: number
   targetRWScore: number
+  level: number
   examDate: number
   defaultType: number
   emailNotifications: number
@@ -194,6 +197,7 @@ export type UserMinAggregateInputType = {
   targetScore?: true
   targetMathScore?: true
   targetRWScore?: true
+  level?: true
   examDate?: true
   defaultType?: true
   emailNotifications?: true
@@ -232,6 +236,7 @@ export type UserMaxAggregateInputType = {
   targetScore?: true
   targetMathScore?: true
   targetRWScore?: true
+  level?: true
   examDate?: true
   defaultType?: true
   emailNotifications?: true
@@ -270,6 +275,7 @@ export type UserCountAggregateInputType = {
   targetScore?: true
   targetMathScore?: true
   targetRWScore?: true
+  level?: true
   examDate?: true
   defaultType?: true
   emailNotifications?: true
@@ -395,6 +401,7 @@ export type UserGroupByOutputType = {
   targetScore: number | null
   targetMathScore: number | null
   targetRWScore: number | null
+  level: $Enums.TestLevel | null
   examDate: Date | null
   defaultType: $Enums.TestType
   emailNotifications: boolean
@@ -456,6 +463,7 @@ export type UserWhereInput = {
   targetScore?: Prisma.IntNullableFilter<"User"> | number | null
   targetMathScore?: Prisma.IntNullableFilter<"User"> | number | null
   targetRWScore?: Prisma.IntNullableFilter<"User"> | number | null
+  level?: Prisma.EnumTestLevelNullableFilter<"User"> | $Enums.TestLevel | null
   examDate?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   defaultType?: Prisma.EnumTestTypeFilter<"User"> | $Enums.TestType
   emailNotifications?: Prisma.BoolFilter<"User"> | boolean
@@ -507,6 +515,7 @@ export type UserOrderByWithRelationInput = {
   targetScore?: Prisma.SortOrderInput | Prisma.SortOrder
   targetMathScore?: Prisma.SortOrderInput | Prisma.SortOrder
   targetRWScore?: Prisma.SortOrderInput | Prisma.SortOrder
+  level?: Prisma.SortOrderInput | Prisma.SortOrder
   examDate?: Prisma.SortOrderInput | Prisma.SortOrder
   defaultType?: Prisma.SortOrder
   emailNotifications?: Prisma.SortOrder
@@ -562,6 +571,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   targetScore?: Prisma.IntNullableFilter<"User"> | number | null
   targetMathScore?: Prisma.IntNullableFilter<"User"> | number | null
   targetRWScore?: Prisma.IntNullableFilter<"User"> | number | null
+  level?: Prisma.EnumTestLevelNullableFilter<"User"> | $Enums.TestLevel | null
   examDate?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   defaultType?: Prisma.EnumTestTypeFilter<"User"> | $Enums.TestType
   emailNotifications?: Prisma.BoolFilter<"User"> | boolean
@@ -612,6 +622,7 @@ export type UserOrderByWithAggregationInput = {
   targetScore?: Prisma.SortOrderInput | Prisma.SortOrder
   targetMathScore?: Prisma.SortOrderInput | Prisma.SortOrder
   targetRWScore?: Prisma.SortOrderInput | Prisma.SortOrder
+  level?: Prisma.SortOrderInput | Prisma.SortOrder
   examDate?: Prisma.SortOrderInput | Prisma.SortOrder
   defaultType?: Prisma.SortOrder
   emailNotifications?: Prisma.SortOrder
@@ -658,6 +669,7 @@ export type UserScalarWhereWithAggregatesInput = {
   targetScore?: Prisma.IntNullableWithAggregatesFilter<"User"> | number | null
   targetMathScore?: Prisma.IntNullableWithAggregatesFilter<"User"> | number | null
   targetRWScore?: Prisma.IntNullableWithAggregatesFilter<"User"> | number | null
+  level?: Prisma.EnumTestLevelNullableWithAggregatesFilter<"User"> | $Enums.TestLevel | null
   examDate?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   defaultType?: Prisma.EnumTestTypeWithAggregatesFilter<"User"> | $Enums.TestType
   emailNotifications?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
@@ -696,6 +708,7 @@ export type UserCreateInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -746,6 +759,7 @@ export type UserUncheckedCreateInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -796,6 +810,7 @@ export type UserUpdateInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -846,6 +861,7 @@ export type UserUncheckedUpdateInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -896,6 +912,7 @@ export type UserCreateManyInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -934,6 +951,7 @@ export type UserUpdateManyMutationInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -971,6 +989,7 @@ export type UserUncheckedUpdateManyInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1024,6 +1043,7 @@ export type UserCountOrderByAggregateInput = {
   targetScore?: Prisma.SortOrder
   targetMathScore?: Prisma.SortOrder
   targetRWScore?: Prisma.SortOrder
+  level?: Prisma.SortOrder
   examDate?: Prisma.SortOrder
   defaultType?: Prisma.SortOrder
   emailNotifications?: Prisma.SortOrder
@@ -1070,6 +1090,7 @@ export type UserMaxOrderByAggregateInput = {
   targetScore?: Prisma.SortOrder
   targetMathScore?: Prisma.SortOrder
   targetRWScore?: Prisma.SortOrder
+  level?: Prisma.SortOrder
   examDate?: Prisma.SortOrder
   defaultType?: Prisma.SortOrder
   emailNotifications?: Prisma.SortOrder
@@ -1108,6 +1129,7 @@ export type UserMinOrderByAggregateInput = {
   targetScore?: Prisma.SortOrder
   targetMathScore?: Prisma.SortOrder
   targetRWScore?: Prisma.SortOrder
+  level?: Prisma.SortOrder
   examDate?: Prisma.SortOrder
   defaultType?: Prisma.SortOrder
   emailNotifications?: Prisma.SortOrder
@@ -1189,6 +1211,10 @@ export type NullableIntFieldUpdateOperationsInput = {
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type NullableEnumTestLevelFieldUpdateOperationsInput = {
+  set?: $Enums.TestLevel | null
 }
 
 export type EnumTestTypeFieldUpdateOperationsInput = {
@@ -1425,6 +1451,7 @@ export type UserCreateWithoutReferralsInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -1474,6 +1501,7 @@ export type UserUncheckedCreateWithoutReferralsInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -1528,6 +1556,7 @@ export type UserCreateWithoutReferredByInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -1577,6 +1606,7 @@ export type UserUncheckedCreateWithoutReferredByInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -1647,6 +1677,7 @@ export type UserUpdateWithoutReferralsInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1696,6 +1727,7 @@ export type UserUncheckedUpdateWithoutReferralsInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1764,6 +1796,7 @@ export type UserScalarWhereInput = {
   targetScore?: Prisma.IntNullableFilter<"User"> | number | null
   targetMathScore?: Prisma.IntNullableFilter<"User"> | number | null
   targetRWScore?: Prisma.IntNullableFilter<"User"> | number | null
+  level?: Prisma.EnumTestLevelNullableFilter<"User"> | $Enums.TestLevel | null
   examDate?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   defaultType?: Prisma.EnumTestTypeFilter<"User"> | $Enums.TestType
   emailNotifications?: Prisma.BoolFilter<"User"> | boolean
@@ -1802,6 +1835,7 @@ export type UserCreateWithoutPaymentsInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -1851,6 +1885,7 @@ export type UserUncheckedCreateWithoutPaymentsInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -1905,6 +1940,7 @@ export type UserCreateWithoutPromoEarningsInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -1954,6 +1990,7 @@ export type UserUncheckedCreateWithoutPromoEarningsInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -2019,6 +2056,7 @@ export type UserUpdateWithoutPaymentsInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2068,6 +2106,7 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2128,6 +2167,7 @@ export type UserUpdateWithoutPromoEarningsInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2177,6 +2217,7 @@ export type UserUncheckedUpdateWithoutPromoEarningsInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2226,6 +2267,7 @@ export type UserCreateWithoutPromoCodesInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -2275,6 +2317,7 @@ export type UserUncheckedCreateWithoutPromoCodesInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -2340,6 +2383,7 @@ export type UserUpdateWithoutPromoCodesInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2389,6 +2433,7 @@ export type UserUncheckedUpdateWithoutPromoCodesInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2438,6 +2483,7 @@ export type UserCreateWithoutSupportMessagesInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -2487,6 +2533,7 @@ export type UserUncheckedCreateWithoutSupportMessagesInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -2552,6 +2599,7 @@ export type UserUpdateWithoutSupportMessagesInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2601,6 +2649,7 @@ export type UserUncheckedUpdateWithoutSupportMessagesInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2650,6 +2699,7 @@ export type UserCreateWithoutAttemptsInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -2699,6 +2749,7 @@ export type UserUncheckedCreateWithoutAttemptsInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -2764,6 +2815,7 @@ export type UserUpdateWithoutAttemptsInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2813,6 +2865,7 @@ export type UserUncheckedUpdateWithoutAttemptsInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2862,6 +2915,7 @@ export type UserCreateWithoutShareLinksInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -2911,6 +2965,7 @@ export type UserUncheckedCreateWithoutShareLinksInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -2976,6 +3031,7 @@ export type UserUpdateWithoutShareLinksInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3025,6 +3081,7 @@ export type UserUncheckedUpdateWithoutShareLinksInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3074,6 +3131,7 @@ export type UserCreateWithoutShareLinkUsesInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -3123,6 +3181,7 @@ export type UserUncheckedCreateWithoutShareLinkUsesInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -3188,6 +3247,7 @@ export type UserUpdateWithoutShareLinkUsesInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3237,6 +3297,7 @@ export type UserUncheckedUpdateWithoutShareLinkUsesInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3286,6 +3347,7 @@ export type UserCreateWithoutLiveHostedInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -3335,6 +3397,7 @@ export type UserUncheckedCreateWithoutLiveHostedInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -3400,6 +3463,7 @@ export type UserUpdateWithoutLiveHostedInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3449,6 +3513,7 @@ export type UserUncheckedUpdateWithoutLiveHostedInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3498,6 +3563,7 @@ export type UserCreateWithoutLiveJoinedInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -3547,6 +3613,7 @@ export type UserUncheckedCreateWithoutLiveJoinedInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -3612,6 +3679,7 @@ export type UserUpdateWithoutLiveJoinedInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3661,6 +3729,7 @@ export type UserUncheckedUpdateWithoutLiveJoinedInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3710,6 +3779,7 @@ export type UserCreateWithoutVocabProgressInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -3759,6 +3829,7 @@ export type UserUncheckedCreateWithoutVocabProgressInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -3824,6 +3895,7 @@ export type UserUpdateWithoutVocabProgressInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3873,6 +3945,7 @@ export type UserUncheckedUpdateWithoutVocabProgressInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3922,6 +3995,7 @@ export type UserCreateWithoutEventsInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -3971,6 +4045,7 @@ export type UserUncheckedCreateWithoutEventsInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -4036,6 +4111,7 @@ export type UserUpdateWithoutEventsInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4085,6 +4161,7 @@ export type UserUncheckedUpdateWithoutEventsInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4134,6 +4211,7 @@ export type UserCreateManyReferredByInput = {
   targetScore?: number | null
   targetMathScore?: number | null
   targetRWScore?: number | null
+  level?: $Enums.TestLevel | null
   examDate?: Date | string | null
   defaultType?: $Enums.TestType
   emailNotifications?: boolean
@@ -4171,6 +4249,7 @@ export type UserUpdateWithoutReferredByInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4220,6 +4299,7 @@ export type UserUncheckedUpdateWithoutReferredByInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4269,6 +4349,7 @@ export type UserUncheckedUpdateManyWithoutReferredByInput = {
   targetScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetMathScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   targetRWScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  level?: Prisma.NullableEnumTestLevelFieldUpdateOperationsInput | $Enums.TestLevel | null
   examDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   defaultType?: Prisma.EnumTestTypeFieldUpdateOperationsInput | $Enums.TestType
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4436,6 +4517,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   targetScore?: boolean
   targetMathScore?: boolean
   targetRWScore?: boolean
+  level?: boolean
   examDate?: boolean
   defaultType?: boolean
   emailNotifications?: boolean
@@ -4488,6 +4570,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   targetScore?: boolean
   targetMathScore?: boolean
   targetRWScore?: boolean
+  level?: boolean
   examDate?: boolean
   defaultType?: boolean
   emailNotifications?: boolean
@@ -4527,6 +4610,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   targetScore?: boolean
   targetMathScore?: boolean
   targetRWScore?: boolean
+  level?: boolean
   examDate?: boolean
   defaultType?: boolean
   emailNotifications?: boolean
@@ -4566,6 +4650,7 @@ export type UserSelectScalar = {
   targetScore?: boolean
   targetMathScore?: boolean
   targetRWScore?: boolean
+  level?: boolean
   examDate?: boolean
   defaultType?: boolean
   emailNotifications?: boolean
@@ -4584,7 +4669,7 @@ export type UserSelectScalar = {
   referralRewarded?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "emailVerified" | "verifyToken" | "verifyTokenExpiry" | "telegramId" | "telegramUsername" | "createdAt" | "updatedAt" | "avatarUrl" | "country" | "nativeLanguage" | "phone" | "targetScore" | "targetMathScore" | "targetRWScore" | "examDate" | "defaultType" | "emailNotifications" | "plan" | "premiumUntil" | "winbackSentAt" | "igFollowedAt" | "tgSubVerifiedAt" | "currentStreak" | "longestStreak" | "lastActiveDay" | "nudgeSentAt" | "welcomeSentAt" | "referralCode" | "referredById" | "referralRewarded", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "emailVerified" | "verifyToken" | "verifyTokenExpiry" | "telegramId" | "telegramUsername" | "createdAt" | "updatedAt" | "avatarUrl" | "country" | "nativeLanguage" | "phone" | "targetScore" | "targetMathScore" | "targetRWScore" | "level" | "examDate" | "defaultType" | "emailNotifications" | "plan" | "premiumUntil" | "winbackSentAt" | "igFollowedAt" | "tgSubVerifiedAt" | "currentStreak" | "longestStreak" | "lastActiveDay" | "nudgeSentAt" | "welcomeSentAt" | "referralCode" | "referredById" | "referralRewarded", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   referredBy?: boolean | Prisma.User$referredByArgs<ExtArgs>
   referrals?: boolean | Prisma.User$referralsArgs<ExtArgs>
@@ -4645,6 +4730,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     targetScore: number | null
     targetMathScore: number | null
     targetRWScore: number | null
+    level: $Enums.TestLevel | null
     examDate: Date | null
     defaultType: $Enums.TestType
     emailNotifications: boolean
@@ -5116,6 +5202,7 @@ export interface UserFieldRefs {
   readonly targetScore: Prisma.FieldRef<"User", 'Int'>
   readonly targetMathScore: Prisma.FieldRef<"User", 'Int'>
   readonly targetRWScore: Prisma.FieldRef<"User", 'Int'>
+  readonly level: Prisma.FieldRef<"User", 'TestLevel'>
   readonly examDate: Prisma.FieldRef<"User", 'DateTime'>
   readonly defaultType: Prisma.FieldRef<"User", 'TestType'>
   readonly emailNotifications: Prisma.FieldRef<"User", 'Boolean'>

@@ -8,7 +8,7 @@ import { jsonError, withErrorHandling } from "@/lib/apiError";
 import { resolveCheckoutIntent, formatOrderNo } from "@/lib/checkout";
 
 const bodySchema = z.object({
-  planId: z.enum(["1m", "3m", "6m"]),
+  planId: z.enum(["1m", "2m", "3m"]),
   note: z.string().trim().max(500).optional(),
   // The CODE, never a price. See src/lib/checkout.ts — the amount is derived here.
   promoCode: z.string().trim().max(40).optional(),

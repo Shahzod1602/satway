@@ -48,7 +48,7 @@ const findTx = (id: unknown): Promise<Payment | null> =>
     ? prisma.payment.findUnique({ where: { paymeTransId: id } })
     : Promise.resolve(null);
 
-/** Amounts travel in tiyin; the row stores so'm. */
+/** Amounts travel in tiyin (1 UZS = 100 tiyin); the row stores UZS. */
 const tiyin = (p: Payment) => p.amount * 100;
 
 /**
@@ -201,14 +201,14 @@ async function performTransaction(id: unknown, params: Record<string, unknown>) 
     : null;
   await notifyAdmin(
     [
-      `💳 Payme to'lov · order SW-${String(payment.orderNo).padStart(6, "0")} (SATway)`,
+      `💳 Payme payment · order SW-${String(payment.orderNo).padStart(6, "0")} (SATway)`,
       `${granted.user.name} (${granted.user.email})`,
       `Plan: ${payment.planLabel} — ${fmtUZS(payment.amount)} UZS`,
       payment.promoCode ? `Promo: ${payment.promoCode} (−${payment.discountPercent}%)` : null,
       commission > 0 && owner
-        ? `Owner: ${owner.name} — ulush ${fmtUZS(commission)} UZS (${payment.commissionPct}%)`
+        ? `Owner: ${owner.name} — share ${fmtUZS(commission)} UZS (${payment.commissionPct}%)`
         : null,
-      `Premium: ${granted.user.premiumUntil.toISOString().slice(0, 10)} gacha`,
+      `Premium: until ${granted.user.premiumUntil.toISOString().slice(0, 10)}`,
     ]
       .filter(Boolean)
       .join("\n"),
@@ -251,7 +251,7 @@ async function cancelTransaction(id: unknown, params: Record<string, unknown>) {
       select: { name: true, email: true },
     });
     await notifyAdmin(
-      `↩️ Payme REFUND · order SW-${String(payment.orderNo).padStart(6, "0")}\n${u?.name ?? "—"} (${u?.email ?? "—"}), ${fmtUZS(payment.amount)} UZS.\nPremium allaqachon berilgan — /admin/users da ko'rib chiqing.`,
+      `↩️ Payme REFUND · order SW-${String(payment.orderNo).padStart(6, "0")}\n${u?.name ?? "—"} (${u?.email ?? "—"}), ${fmtUZS(payment.amount)} UZS.\nPremium already granted — review in /admin/users.`,
     );
   }
 

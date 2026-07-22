@@ -36,7 +36,7 @@ export default function TermsPage() {
           <h2 className="text-lg font-semibold text-slate-900">Premium &amp; payments</h2>
           <p>
             New accounts include a short free Premium trial. Premium is sold as fixed-length plans
-            (1, 3, or 6 months) paid manually by card transfer and activated after we confirm
+            (1, 2, or 3 months) paid manually by card transfer and activated after we confirm
             payment. Plans do <strong>not</strong> auto-renew. Because access is digital and granted
             immediately on activation, payments are generally non-refundable except where required by
             law.

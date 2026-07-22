@@ -48,6 +48,9 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   if (typeof body.published === "boolean") {
     updateData.published = body.published;
   }
+  if (body.level === "EASY" || body.level === "MEDIUM" || body.level === "HARD") {
+    updateData.level = body.level;
+  }
 
   const updated = await prisma.test.update({
     where: { id },
