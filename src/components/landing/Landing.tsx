@@ -260,20 +260,24 @@ export default function Landing({ stats }: { stats?: { students: number; tests: 
         </motion.div>
 
         <motion.div {...inView} variants={{ hidden: { opacity: 0, y: reduce ? 0 : 30 }, show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } } }}
-          className="mt-12 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-          <div className="grid grid-cols-[1.4fr_1fr_1.1fr_1fr] text-sm">
-            {/* header row */}
-            <div className="border-b border-slate-200 px-4 py-4" />
-            <div className="border-b border-l border-slate-200 px-3 py-4 text-center text-xs font-semibold text-slate-500">Free Telegram</div>
-            <div className="relative border-b border-l-2 border-brand-600 bg-brand-50/50 px-3 py-4 text-center">
-              <span className="font-bold text-brand-700">SATway</span>
-              <span className="absolute -top-0 left-1/2 hidden -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-600 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white sm:block">Best value</span>
-            </div>
-            <div className="border-b border-l border-slate-200 px-3 py-4 text-center text-xs font-semibold text-slate-500">Private tutor</div>
+          className="relative mt-12">
+          {/* Floats above the SATway column — kept OUTSIDE the rounded clip below so it
+              is never cut off. Left % = centre of the SATway column for these fr ratios. */}
+          <span className="pointer-events-none absolute top-0 z-10 hidden -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-600 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white shadow-sm sm:block" style={{ left: "65.5%" }}>Best value</span>
+          <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+            <div className="grid grid-cols-[1.4fr_1fr_1.1fr_1fr] text-sm">
+              {/* header row */}
+              <div className="border-b border-slate-200 px-4 py-4" />
+              <div className="border-b border-l border-slate-200 px-3 py-4 text-center text-xs font-semibold text-slate-500">Free Telegram</div>
+              <div className="border-b border-l-2 border-brand-600 bg-brand-50/50 px-3 py-4 text-center">
+                <span className="font-bold text-brand-700">SATway</span>
+              </div>
+              <div className="border-b border-l border-slate-200 px-3 py-4 text-center text-xs font-semibold text-slate-500">Private tutor</div>
 
-            {COMPARE.map((row, i) => (
-              <RowCells key={row.label} row={row} last={i === COMPARE.length - 1} />
-            ))}
+              {COMPARE.map((row, i) => (
+                <RowCells key={row.label} row={row} last={i === COMPARE.length - 1} />
+              ))}
+            </div>
           </div>
         </motion.div>
         <motion.p {...inView} variants={item} className="mt-5 text-center text-sm text-slate-500">
