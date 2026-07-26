@@ -48,6 +48,10 @@ export default function AdminSupportClient({
         } else {
           setMessages(data.messages ?? []);
         }
+        // GET /api/admin/support/[id] marks inbound (user) messages readByAdmin=true. Tell
+        // the AdminSidebar badge to re-poll now instead of waiting up to 30s — otherwise
+        // the red dot lingers after the admin has read the thread.
+        window.dispatchEvent(new Event("support:read"));
       })
       .catch(() => {})
       .finally(() => setLoading(false));

@@ -28,7 +28,13 @@ export default function SupportClient({
     try {
       const res = await fetch("/api/support", { cache: "no-store" });
       const data = await res.json();
-      if (res.ok) setMessages(data.messages ?? []);
+      if (res.ok) {
+        setMessages(data.messages ?? []);
+        // GET /api/support marks inbound (admin) messages readByUser=true. Tell the rest of
+        // the app (the Sidebar badge, the AppHeader) to re-poll the unread count now instead
+        // of waiting up to 20s — otherwise the red dot lingers after the user has read them.
+        window.dispatchEvent(new Event("support:read"));
+      }
     } catch {
       /* ignore */
     } finally {

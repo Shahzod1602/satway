@@ -43,9 +43,14 @@ export default function Sidebar({
         .catch(() => {});
     load();
     const id = setInterval(load, 20000);
+    // Re-poll immediately when a support thread is opened/read elsewhere on the page, so
+    // the badge clears the moment messages are marked read instead of up to 20s later.
+    const onRead = () => load();
+    window.addEventListener("support:read", onRead);
     return () => {
       alive = false;
       clearInterval(id);
+      window.removeEventListener("support:read", onRead);
     };
   }, [pathname]);
 
