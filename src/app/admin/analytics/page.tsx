@@ -1,7 +1,3 @@
-import { redirect } from "next/navigation";
-import { currentUser } from "@/lib/session";
-import { requireAdmin } from "@/lib/adminGuard";
-import AppHeader from "@/components/AppHeader";
 import {
   getGlance,
   getRetention,
@@ -11,6 +7,7 @@ import {
   getWhales,
   getSuspectQuestions,
   eventSinkReady,
+  getRecentAlerts,
 } from "@/lib/analytics";
 import SpendChart from "./SpendChart";
 import BillForm from "./BillForm";
@@ -43,20 +40,18 @@ function Tile({
 }
 
 export default async function AdminAnalyticsPage() {
-  const user = await currentUser();
-  if (!user) redirect("/login");
-  if (!(await requireAdmin())) redirect("/dashboard");
-
-  const [glance, retention, funnel, board, spend, whales, suspects, sinkReady] = await Promise.all([
-    getGlance(),
-    getRetention(),
-    getFunnel(),
-    getSectionBoard(),
-    getSpend(30),
-    getWhales(20),
-    getSuspectQuestions(15),
-    eventSinkReady(),
-  ]);
+  const [glance, retention, funnel, board, spend, whales, suspects, sinkReady, alerts] =
+    await Promise.all([
+      getGlance(),
+      getRetention(),
+      getFunnel(),
+      getSectionBoard(),
+      getSpend(30),
+      getWhales(20),
+      getSuspectQuestions(15),
+      eventSinkReady(),
+      getRecentAlerts(),
+    ]);
 
   const budgetPct =
     glance.budgetUsd > 0 ? (glance.spendMonthUsd / glance.budgetUsd) * 100 : 0;
@@ -66,10 +61,8 @@ export default async function AdminAnalyticsPage() {
       : null;
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <AppHeader name={user.name} role={user.role} />
-      <div className="mx-auto max-w-6xl px-5 py-10">
-        <h1 className="text-2xl font-bold text-slate-900">Analytics</h1>
+    <div className="mx-auto max-w-6xl">
+      <h1 className="text-2xl font-bold text-slate-900">Analytics</h1>
         <p className="mt-1 text-sm text-slate-600">
           Usage reads retroactively from existing rows via the <code>analytics_activity</code>{" "}
           view. Cost starts from the day the ledger shipped.
@@ -98,7 +91,11 @@ export default async function AdminAnalyticsPage() {
           <Tile
             label="Returned after day 1"
             value={String(retention.returnedDay1)}
-            sub={retention.cohortUsers ? pct((retention.returnedDay1 / retention.cohortUsers) * 100) : undefined}
+            sub={
+              retention.cohortUsers
+                ? pct((retention.returnedDay1 / retention.cohortUsers) * 100)
+                : undefined
+            }
           />
           <Tile
             label="Still back after day 7"
@@ -131,6 +128,36 @@ export default async function AdminAnalyticsPage() {
             tone={glance.aiErrors7d > 0 ? "bad" : "good"}
           />
         </div>
+
+        {/* Budget alerts fired by the cron watchdog (src/lib/aiBudget.ts). The cron sends
+            these via Telegram, but the board never showed them — so an admin could not tell
+            what the watchdog had already complained about. This surfaces the last 14 days. */}
+        {alerts.length > 0 && (
+          <div className="mt-3 rounded-xl border border-amber-200 bg-amber-50 p-4">
+            <h3 className="text-sm font-semibold text-amber-900">
+              Budget alerts (last 14 days)
+            </h3>
+            <p className="mt-1 text-xs text-amber-800">
+              Fired by the watchdog cron (~15 min). <code>daily_50/80/100</code> = % of the daily
+              AI budget; <code>user_spike</code> = one account over the per-user daily threshold.
+            </p>
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {alerts.slice(0, 24).map((a, i) => (
+                <span
+                  key={`${a.day}-${a.kind}-${a.target}-${i}`}
+                  className="inline-flex items-center gap-1 rounded-md border border-amber-300 bg-white px-2 py-0.5 text-xs text-amber-900"
+                  title={a.target ? `target: ${a.target}` : undefined}
+                >
+                  <span className="font-medium">{a.kind}</span>
+                  <span className="text-amber-600">{a.day}</span>
+                </span>
+              ))}
+            </div>
+            {alerts.length > 24 && (
+              <p className="mt-2 text-xs text-amber-700">…and {alerts.length - 24} more.</p>
+            )}
+          </div>
+        )}
 
         {/* The rate card is a model, not accounting. Print the drift or the board is a guess. */}
         <div className="mt-3 rounded-xl border border-slate-200 bg-white p-4 text-sm">
@@ -266,7 +293,11 @@ export default async function AdminAnalyticsPage() {
           ))}
         </div>
 
-        <h2 className="mt-8 text-lg font-semibold text-slate-900">Cost per user (30d, USER origin only)</h2>
+        <h2 className="mt-8 text-lg font-semibold text-slate-900">Cost per user (30d cost vs lifetime revenue)</h2>
+        <p className="mt-1 text-xs text-slate-600">
+          Margin pairs 30-day AI cost against everything the account has ever paid. A negative
+          margin means this student is costing more lately than they have ever contributed.
+        </p>
         <div className="mt-3 overflow-x-auto rounded-xl border border-slate-200 bg-white">
           <table className="w-full min-w-[560px] text-sm">
             <thead className="border-b border-slate-200 bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-500">
@@ -351,6 +382,5 @@ export default async function AdminAnalyticsPage() {
           </table>
         </div>
       </div>
-    </div>
   );
 }

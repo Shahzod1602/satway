@@ -1,20 +1,10 @@
-import { redirect } from "next/navigation";
-import { currentUser } from "@/lib/session";
-import { requireAdmin } from "@/lib/adminGuard";
 import { prisma } from "@/lib/prisma";
-import AppHeader from "@/components/AppHeader";
 import AdminPaymentsClient from "./AdminPaymentsClient";
 import { formatOrderNo } from "@/lib/checkout";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminPaymentsPage() {
-  const user = await currentUser();
-  if (!user) redirect("/login");
-
-  const isAdmin = await requireAdmin();
-  if (!isAdmin) redirect("/dashboard");
-
   const payments = await prisma.payment.findMany({
     orderBy: [{ status: "asc" }, { createdAt: "desc" }],
     take: 200,
@@ -45,10 +35,5 @@ export default async function AdminPaymentsPage() {
     },
   }));
 
-  return (
-    <div className="min-h-screen bg-slate-50">
-      <AppHeader name={user.name} role={user.role} />
-      <AdminPaymentsClient initial={initial} />
-    </div>
-  );
+  return <AdminPaymentsClient initial={initial} />;
 }

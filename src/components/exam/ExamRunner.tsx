@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import {
   Clock, ChevronLeft, ChevronRight, Flag, Highlighter, Eraser, Quote,
@@ -112,7 +112,9 @@ export default function ExamRunner({
     [persist, STORAGE_KEY],
   );
 
-  const questions = mod?.questions ?? [];
+  // Memoize so the questions array keeps its identity across renders that don't change
+  // `mod` — otherwise the time-tracking and popover effects below re-run every keystroke.
+  const questions = useMemo(() => mod?.questions ?? [], [mod]);
   const q = questions[qi];
 
   // On every question change, bank the time spent on the one we just left.
@@ -137,6 +139,9 @@ export default function ExamRunner({
         if (raw) {
           const s = JSON.parse(raw);
           if (s?.attemptId && s?.module?.questions?.length && Date.now() - (s.savedAt ?? 0) < MAX_AGE_MS) {
+            // Restore an in-progress attempt from localStorage (e.g. after a refresh).
+            // setState-in-effect is the only way to hydrate from a client-only store.
+            /* eslint-disable react-hooks/set-state-in-effect */
             setAttemptId(s.attemptId);
             setMod(s.module);
             setQi(Math.min(s.qi ?? 0, s.module.questions.length - 1));
@@ -144,6 +149,7 @@ export default function ExamRunner({
             setAnswers(s.answers ?? {});
             setMarked(new Set<string>(s.marked ?? []));
             setCrossed(s.crossed ?? {});
+            /* eslint-enable react-hooks/set-state-in-effect */
             setStage("active");
             return;
           }
@@ -170,7 +176,8 @@ export default function ExamRunner({
         setStage("error");
       }
     })();
-  }, [test.id, mode, practiceModule]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [test.id, mode, practiceModule]); // saveSnapshot/persist/STORAGE_KEY are stable (useCallback/module-const)
 
   // ───────── Submit current module ─────────
   const submitModule = useCallback(async () => {
@@ -323,6 +330,8 @@ export default function ExamRunner({
           ? stimulusStore.current[cur.id]
           : cur?.stimulus ?? "";
     }
+    // Close the highlight/note popovers when the active question changes.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelBar(null);
     setNotePop(null);
   }, [qi, mod, isRW, questions]);
@@ -551,7 +560,6 @@ export default function ExamRunner({
   }
 
   const moduleLabel = mod?.title || `Module ${mod?.module ?? 1}`;
-  const skillLabel = isRW ? "Reading & Writing" : "Math";
 
   // ───────── Review screen ─────────
   if (stage === "review" || stage === "submitting") {

@@ -110,8 +110,8 @@ export async function getGlance(): Promise<Glance> {
 
 export interface Retention {
   cohortUsers: number; // signed up in the window
-  returnedDay1: number; // came back at all on a LATER calendar day
-  returnedDay7: number; // still coming back a week later
+  returnedDay1: number; // last seen AFTER joined + 24h (ever came back, not strictly "on day 1")
+  returnedDay7: number; // last seen after joined + 7 days
   oneAndDone: number; // active on exactly one day, ever  ← the headline number
   oneAndDonePct: number;
 }
@@ -328,7 +328,7 @@ export async function getSpend(days = 30) {
        GROUP BY ${col} ORDER BY 2 DESC
     `);
 
-  const [daily, bySurface, byModel, byOrigin, byPlan] = await Promise.all([
+  const [daily, bySurface, byModel, byOrigin] = await Promise.all([
     prisma.$queryRawUnsafe<{ day: Date; usd: bigint }[]>(`
       SELECT date_trunc('day', ts) AS day, COALESCE(SUM("usdMicros"), 0) AS usd
         FROM "Event"
@@ -338,22 +338,52 @@ export async function getSpend(days = 30) {
     byGroup(`surface`),
     byGroup(`COALESCE(model, '?')`),
     byGroup(`origin`),
-    byGroup(`COALESCE(NULLIF(plan, ''), '?')`),
   ]);
 
   const map = (rows: { key: string; usd: bigint; calls: bigint }[]): SpendByKey[] =>
     rows.map((r) => ({ key: r.key, usd: n(r.usd) / 1e6, calls: n(r.calls) }));
 
   return {
-    daily: daily.map((r) => ({
-      day: new Date(r.day).toISOString().slice(0, 10),
-      usd: n(r.usd) / 1e6,
-    })) as DailySpend[],
+    daily: zeroFillDays(
+      daily.map((r) => ({
+        day: new Date(r.day).toISOString().slice(0, 10),
+        usd: n(r.usd) / 1e6,
+      })) as DailySpend[],
+      days,
+    ),
     bySurface: map(bySurface),
     byModel: map(byModel),
     byOrigin: map(byOrigin),
-    byPlan: map(byPlan),
   };
+}
+
+/**
+ * Fill the gaps between the first and last spend days with zero-value rows.
+ *
+ * The SQL above only emits a row for days that HAD spend, so a quiet weekday is simply
+ * absent from the array — and recharts then draws a smooth line straight across the gap,
+ * which visually turns "no spend" into "average spend". Padding the missing calendar days
+ * with `usd: 0` makes the chart honest.
+ */
+function zeroFillDays(daily: DailySpend[], days: number): DailySpend[] {
+  if (daily.length === 0) return daily;
+  // Build the full calendar window (oldest of [first spend day, window start] → today).
+  const today = new Date();
+  today.setUTCHours(0, 0, 0, 0);
+  const windowStart = new Date(today);
+  windowStart.setUTCDate(windowStart.getUTCDate() - (days - 1));
+  const first = new Date(daily[0].day + "T00:00:00Z");
+  const start = first < windowStart ? first : windowStart;
+
+  const byDay = new Map(daily.map((d) => [d.day, d.usd]));
+  const out: DailySpend[] = [];
+  const cursor = new Date(start);
+  while (cursor <= today) {
+    const key = cursor.toISOString().slice(0, 10);
+    out.push({ day: key, usd: byDay.has(key) ? (byDay.get(key) as number) : 0 });
+    cursor.setUTCDate(cursor.getUTCDate() + 1);
+  }
+  return out;
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -368,7 +398,13 @@ export interface WhaleRow {
   usd30d: number;
   calls30d: number;
   paidUzs: number;
-  /** Lifetime margin in USD. Negative = this account costs more than it has ever paid. */
+  /** Margin = LIFETIME revenue (UZS→USD) minus 30-DAY AI cost.
+   *
+   * The two windows deliberately differ: pairing a 30d cost against a 30d revenue would
+   * flatter anyone who bought a 6-month plan (their revenue lands in one lump, spread
+   * across months of cost). Lifetime revenue vs recent cost is the conservative read —
+   * it asks "has this account ever paid for what it is spending lately?". The page label
+   * must say exactly that, or the number reads as a mismatch. */
   marginUsd: number;
 }
 
@@ -493,8 +529,76 @@ export async function getSuspectQuestions(limit = 20, minAnswers = 10): Promise<
   }));
 }
 
-/** Has anything ever been written to Event? Drives the board's health banner. */
+/** Has any AI cost ever been recorded? Drives the board's health banner.
+ *
+ * Counts `ai_call` rows specifically, not every Event — a single non-AI event (e.g. a
+ * blocked emit) must NOT hide the "every cost figure reads $0" explanation. */
 export async function eventSinkReady(): Promise<boolean> {
-  const r = await prisma.$queryRawUnsafe<{ c: bigint }[]>(`SELECT COUNT(*) AS c FROM "Event"`);
+  const r = await prisma.$queryRawUnsafe<{ c: bigint }[]>(
+    `SELECT COUNT(*) AS c FROM "Event" WHERE name = 'ai_call'`,
+  );
   return n(r[0]?.c) > 0;
+}
+
+// ─────────────────────────────────────────────────────────────
+// Recent budget alerts — what the watchdog has already fired today
+// ─────────────────────────────────────────────────────────────
+
+export interface AlertRow {
+  day: string;
+  kind: string;
+  target: string;
+}
+
+/** Alerts fired in the last 14 days, newest first.
+ *
+ * The cron fires these via Telegram (claim/release dedup in aiBudget.ts), but the board
+ * never showed them — so an admin looking at the page had no way to see what the watchdog
+ * had already complained about. This closes that loop. */
+export async function getRecentAlerts(limit = 50): Promise<AlertRow[]> {
+  const rows = await prisma.$queryRawUnsafe<
+    { day: string; kind: string; target: string }[]
+  >(`
+    SELECT day, kind, target FROM "AiAlert"
+     WHERE day >= to_char(${NOW} - interval '14 days', 'YYYY-MM-DD')
+     ORDER BY day DESC, kind, target
+     LIMIT ${Math.max(1, Math.min(200, Math.trunc(limit)))}
+  `);
+  return rows.map((r) => ({ day: r.day, kind: r.kind, target: r.target }));
+}
+
+// ─────────────────────────────────────────────────────────────
+// Invoice history — every reconciled month, not just the latest
+// ─────────────────────────────────────────────────────────────
+
+export interface BillRow {
+  month: string;
+  actualUsd: number;
+  estimatedUsd: number;
+}
+
+/** The last N reconciled invoices with the rate-card estimate alongside, for the board.
+ *
+ * Each row pairs the real Google invoice (`AiBillMonth.actualUsdCents`) with what the rate
+ * card thought that month cost (sum of `ai_call.usdMicros` for that month). The drift
+ * between the two is the whole reason `priceRev` is stamped on every Event row: when the
+ * rate card is wrong, history can be re-priced rather than thrown away. */
+export async function getBillHistory(limit = 12): Promise<BillRow[]> {
+  const rows = await prisma.$queryRawUnsafe<
+    { month: string; cents: number; est: bigint }[]
+  >(`
+    SELECT b.month,
+           b."actualUsdCents" AS cents,
+           COALESCE((SELECT SUM(e."usdMicros") FROM "Event" e
+                      WHERE e.name = 'ai_call'
+                        AND to_char(e.ts, 'YYYY-MM') = b.month), 0) AS est
+      FROM "AiBillMonth" b
+     ORDER BY b.month DESC
+     LIMIT ${Math.max(1, Math.min(48, Math.trunc(limit)))}
+  `);
+  return rows.map((r) => ({
+    month: r.month,
+    actualUsd: n(r.cents) / 100,
+    estimatedUsd: n(r.est) / 1e6,
+  }));
 }

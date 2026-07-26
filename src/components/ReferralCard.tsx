@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Copy, Check, Gift, Users } from "lucide-react";
+import { Copy, Check, Gift } from "lucide-react";
 
 export default function ReferralCard({ referralCode }: { referralCode: string }) {
   const [copied, setCopied] = useState(false);

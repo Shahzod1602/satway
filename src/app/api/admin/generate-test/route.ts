@@ -5,10 +5,11 @@ import { currentUser } from "@/lib/session";
 import { generateQuestionsFromPassage } from "@/lib/vertexai";
 import { parseJson } from "@/lib/validation";
 import { jsonError, withErrorHandling } from "@/lib/apiError";
+import { SAT_SKILLS } from "@/lib/testEnums";
 
 const bodySchema = z.object({
   passage: z.string().trim().min(1, "passage is required").max(20000),
-  skill: z.enum(["READING_WRITING", "MATH"]),
+  skill: z.enum(SAT_SKILLS),
   count: z.number().int().min(1).max(20).optional(),
 });
 

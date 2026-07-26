@@ -1,5 +1,3 @@
-import { prisma } from "@/lib/prisma";
-
 // Statuses getChatMember returns for someone who IS currently in the chat.
 // "left"/"kicked" mean they are not. For groups "restricted" can still be a
 // member (is_member=true); channels only ever report the first three.

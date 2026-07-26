@@ -20,10 +20,8 @@ interface Message {
 }
 
 export default function AdminSupportClient({
-  adminId,
   users,
 }: {
-  adminId: string;
   users: SupportUser[];
 }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -37,6 +35,9 @@ export default function AdminSupportClient({
 
   useEffect(() => {
     if (!selectedId) return;
+    // Show a spinner while fetching the selected conversation's messages. setState-in-
+    // effect is the intended pattern for "reflect loading state on selection change".
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
     fetch(`/api/admin/support/${selectedId}`)
       .then((r) => r.json())
@@ -73,7 +74,7 @@ export default function AdminSupportClient({
   };
 
   return (
-    <div className="mx-auto max-w-6xl px-5 py-10">
+    <div className="mx-auto max-w-6xl">
       <h1 className="text-2xl font-bold text-slate-900">Support tickets</h1>
       <p className="mt-1 text-sm text-slate-500">
         {users.length} user{users.length !== 1 ? "s" : ""} with messages

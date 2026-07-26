@@ -1,141 +1,126 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/adminGuard";
-import type { SatQuestionType } from "@/generated/prisma/enums";
+import { jsonError, withErrorHandling } from "@/lib/apiError";
+import { parseJson } from "@/lib/validation";
+import {
+  SAT_SKILLS,
+  TEST_TYPES,
+  SAT_QUESTION_TYPES,
+} from "@/lib/testEnums";
+import { TEST_LEVELS } from "@/lib/level";
 import type { Prisma } from "@/generated/prisma/client";
 
-const VALID_SKILLS = ["READING_WRITING", "MATH"] as const;
-const VALID_QUESTION_TYPES = [
-  "MCQ_SINGLE",
-  "STUDENT_PRODUCED_RESPONSE",
-  "PARAGRAPH_REFERENCE",
-  "CROSS_TEXT_CONNECTIONS",
-  "TEXTUAL_EVIDENCE",
-  "INFERENCE",
-  "CENTRAL_IDEAS",
-  "WORDS_IN_CONTEXT",
-  "TEXT_STRUCTURE",
-  "RHETORICAL_SYNTHESIS",
-  "TRANSITIONS",
-  "BOUNDARIES",
-  "FORM_STRUCTURE",
-  "DATA_ANALYSIS",
-  "ALGEBRA",
-  "ADVANCED_MATH",
-  "PROBLEM_SOLVING",
-  "GEOMETRY",
-] as const;
+// The shape of a question in the create payload. `options` is required for MCQ_SINGLE
+// (a choice question with no choices is corrupt data the exam runner cannot render) and
+// forbidden for STUDENT_PRODUCED_RESPONSE (a grid-in has no options). `correctAnswers` is
+// a non-empty array of strings — `[null]` or `[123]` no longer slip through.
+const questionSchema = z.object({
+  order: z.number().int().positive(),
+  type: z.enum(SAT_QUESTION_TYPES),
+  groupTitle: z.string().optional(),
+  stimulus: z.string().optional(),
+  imageUrl: z.string().optional(),
+  prompt: z.string().optional(),
+  explanation: z.string().optional(),
+  options: z.array(z.string()).optional(),
+  correctAnswers: z.array(z.string().min(1)).min(1),
+  meta: z.record(z.string(), z.unknown()).optional(),
+});
 
-export async function POST(req: NextRequest) {
-  const isAdmin = await requireAdmin();
-  if (!isAdmin) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-  }
+// Refine: enforce the options rule per question type. Doing this in `superRefine` (rather
+// than a discriminated union on `type`) keeps the schema readable and keeps the create
+// payload a single flat shape, which the Prisma write below expects.
+const sectionSchema = z.object({
+  order: z.number().int().positive(),
+  module: z.union([z.literal(1), z.literal(2)]),
+  difficulty: z.enum(["STANDARD", "EASY", "HARD"]),
+  title: z.string().optional(),
+  instructions: z.string().optional(),
+  passageText: z.string().optional(),
+  imageUrl: z.string().optional(),
+  formulaSheet: z.boolean().optional(),
+  questions: z.array(questionSchema).min(1),
+});
 
-  let body: {
-    title?: unknown;
-    slug?: unknown;
-    skill?: unknown;
-    type?: unknown;
-    description?: unknown;
-    durationSec?: unknown;
-    published?: unknown;
-    sections?: unknown;
-  };
-  try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
-  }
+const bodySchema = z
+  .object({
+    title: z.string().trim().min(1),
+    slug: z.string().trim().min(1),
+    skill: z.enum(SAT_SKILLS),
+    type: z.enum(TEST_TYPES).optional(),
+    description: z.string().optional(),
+    durationSec: z.number().int().positive().optional(),
+    published: z.boolean().optional(),
+    isPremium: z.boolean().optional(),
+    level: z.enum(TEST_LEVELS).optional(),
+    sections: z.array(sectionSchema).min(1),
+  })
+  .superRefine((data, ctx) => {
+    data.sections.forEach((s, si) => {
+      s.questions.forEach((q, qi) => {
+        if (q.type === "MCQ_SINGLE") {
+          if (!q.options || q.options.length < 2) {
+            ctx.addIssue({
+              code: "custom",
+              message: `sections[${si}].questions[${qi}]: MCQ_SINGLE requires at least 2 options`,
+              path: ["sections", si, "questions", qi, "options"],
+            });
+          }
+        }
+        if (q.type === "STUDENT_PRODUCED_RESPONSE" && q.options) {
+          ctx.addIssue({
+            code: "custom",
+            message: `sections[${si}].questions[${qi}]: STUDENT_PRODUCED_RESPONSE must not have options`,
+            path: ["sections", si, "questions", qi, "options"],
+          });
+        }
+      });
+    });
+  });
 
-  const { title, slug, skill, type, description, durationSec, published, sections } = body;
+export const POST = withErrorHandling(async (req: NextRequest) => {
+  if (!(await requireAdmin())) return jsonError("Unauthorized", 403);
 
-  if (typeof title !== "string" || !title.trim()) {
-    return NextResponse.json({ error: "title is required" }, { status: 400 });
-  }
-  if (typeof slug !== "string" || !slug.trim()) {
-    return NextResponse.json({ error: "slug is required" }, { status: 400 });
-  }
-  if (typeof skill !== "string" || !VALID_SKILLS.includes(skill as typeof VALID_SKILLS[number])) {
-    return NextResponse.json({ error: "skill must be READING_WRITING or MATH" }, { status: 400 });
-  }
-  if (!Array.isArray(sections) || sections.length === 0) {
-    return NextResponse.json({ error: "sections must be a non-empty array" }, { status: 400 });
-  }
+  const b = await parseJson(req, bodySchema);
 
-  const testType = typeof type === "string" && (type === "DIGITAL" || type === "PAPER") ? type : "DIGITAL";
-  const dur = typeof durationSec === "number" && durationSec > 0 ? durationSec : 3900;
-
-  const existing = await prisma.test.findUnique({ where: { slug: slug.trim() } });
-  if (existing) {
-    return NextResponse.json({ error: "A test with this slug already exists" }, { status: 409 });
-  }
-
-  for (let si = 0; si < sections.length; si++) {
-    const s = sections[si];
-    if (typeof s.order !== "number" || s.order < 1) {
-      return NextResponse.json({ error: `sections[${si}].order must be a positive number` }, { status: 400 });
-    }
-    if (!Array.isArray(s.questions) || s.questions.length === 0) {
-      return NextResponse.json({ error: `sections[${si}].questions must be a non-empty array` }, { status: 400 });
-    }
-    for (let qi = 0; qi < s.questions.length; qi++) {
-      const q = s.questions[qi];
-      if (typeof q.order !== "number" || q.order < 1) {
-        return NextResponse.json({ error: `sections[${si}].questions[${qi}].order must be a positive number` }, { status: 400 });
-      }
-      if (typeof q.type !== "string" || !VALID_QUESTION_TYPES.includes(q.type as typeof VALID_QUESTION_TYPES[number])) {
-        return NextResponse.json(
-          { error: `sections[${si}].questions[${qi}].type "${q.type}" is invalid` },
-          { status: 400 },
-        );
-      }
-      if (!Array.isArray(q.correctAnswers) || q.correctAnswers.length === 0) {
-        return NextResponse.json(
-          { error: `sections[${si}].questions[${qi}].correctAnswers must be a non-empty array` },
-          { status: 400 },
-        );
-      }
-    }
-  }
+  const existing = await prisma.test.findUnique({ where: { slug: b.slug } });
+  if (existing) return jsonError("A test with this slug already exists", 409);
 
   const test = await prisma.test.create({
     data: {
-      title: title.trim(),
-      slug: slug.trim(),
-      skill: skill as "READING_WRITING" | "MATH",
-      type: testType as "DIGITAL" | "PAPER",
-      description: typeof description === "string" ? description : null,
-      durationSec: dur,
-      published: published === true,
-      isPremium: (body as { isPremium?: unknown }).isPremium === false ? false : true,
-      level: ((): "EASY" | "MEDIUM" | "HARD" => {
-        const lv = (body as { level?: unknown }).level;
-        return lv === "EASY" || lv === "HARD" ? lv : "MEDIUM";
-      })(),
+      title: b.title,
+      slug: b.slug,
+      skill: b.skill,
+      type: b.type ?? "DIGITAL",
+      description: b.description ?? null,
+      durationSec: b.durationSec ?? 3900,
+      published: b.published ?? false,
+      isPremium: b.isPremium ?? true,
+      level: b.level ?? "MEDIUM",
       sections: {
-        create: sections.map((s: Record<string, unknown>) => ({
-          order: s.order as number,
-          module: s.module === 2 ? 2 : 1,
-          difficulty:
-            s.difficulty === "EASY" || s.difficulty === "HARD" ? s.difficulty : "STANDARD",
-          title: typeof s.title === "string" ? s.title : null,
-          instructions: typeof s.instructions === "string" ? s.instructions : null,
-          passageText: typeof s.passageText === "string" ? s.passageText : null,
-          imageUrl: typeof s.imageUrl === "string" ? s.imageUrl : null,
-          formulaSheet: s.formulaSheet === true,
+        create: b.sections.map((s) => ({
+          order: s.order,
+          module: s.module,
+          difficulty: s.difficulty,
+          title: s.title ?? null,
+          instructions: s.instructions ?? null,
+          passageText: s.passageText ?? null,
+          imageUrl: s.imageUrl ?? null,
+          formulaSheet: s.formulaSheet ?? false,
           questions: {
-            create: (s.questions as Record<string, unknown>[]).map((q) => ({
-              order: q.order as number,
-              type: q.type as SatQuestionType,
-              groupTitle: typeof q.groupTitle === "string" ? q.groupTitle : null,
-              stimulus: typeof q.stimulus === "string" ? q.stimulus : null,
-              imageUrl: typeof q.imageUrl === "string" ? q.imageUrl : null,
-              prompt: typeof q.prompt === "string" ? q.prompt : null,
-              explanation: typeof q.explanation === "string" ? q.explanation : null,
-              options: Array.isArray(q.options) ? q.options : undefined,
+            create: s.questions.map((q) => ({
+              order: q.order,
+              type: q.type,
+              groupTitle: q.groupTitle ?? null,
+              stimulus: q.stimulus ?? null,
+              imageUrl: q.imageUrl ?? null,
+              prompt: q.prompt ?? null,
+              explanation: q.explanation ?? null,
+              options: q.options,
               correctAnswers: q.correctAnswers as Prisma.InputJsonValue,
-              meta: q.meta ? (q.meta as Prisma.InputJsonValue) : undefined,
+              meta: q.meta as Prisma.InputJsonValue | undefined,
             })),
           },
         })) as unknown as Prisma.SectionCreateWithoutTestInput[],
@@ -143,5 +128,5 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  return NextResponse.json({ id: test.id, title: test.title, slug: test.slug }, { status: 201 });
-}
+  return Response.json({ id: test.id, title: test.title, slug: test.slug }, { status: 201 });
+});

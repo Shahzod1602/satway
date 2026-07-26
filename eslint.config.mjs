@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // E2E helper scripts are throwaway integration checks against the live Click/Payme
+    // sandboxes — they use top-level await and bare expressions deliberately, which the
+    // TS/next rules flag. They are not part of the app build.
+    "scripts/e2e/**",
   ]),
 ]);
 
