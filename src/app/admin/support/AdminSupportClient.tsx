@@ -42,15 +42,10 @@ export default function AdminSupportClient({
     fetch(`/api/admin/support/${selectedId}`)
       .then((r) => r.json())
       .then((data) => {
-        if (Array.isArray(data)) {
-          setMessages(data);
-          fetch(`/api/admin/support/${selectedId}`, { method: "POST" });
-        } else {
-          setMessages(data.messages ?? []);
-        }
-        // GET /api/admin/support/[id] marks inbound (user) messages readByAdmin=true. Tell
-        // the AdminSidebar badge to re-poll now instead of waiting up to 30s — otherwise
-        // the red dot lingers after the admin has read the thread.
+        // The route returns a bare array (the read-marker update is a side effect of GET).
+        setMessages(Array.isArray(data) ? data : data.messages ?? []);
+        // Tell the AdminSidebar badge to re-poll now — the GET just marked inbound
+        // messages readByAdmin=true, so the count should drop immediately.
         window.dispatchEvent(new Event("support:read"));
       })
       .catch(() => {})

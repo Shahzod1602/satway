@@ -22,6 +22,14 @@ export const GET = withErrorHandling(
       orderBy: { createdAt: "asc" },
     });
 
+    // Mark inbound (user) messages as read-by-admin now that the admin has opened the
+    // thread. Without this, the unread badge (count of readByAdmin=false) never drops,
+    // no matter how many messages the admin has read.
+    await prisma.supportMessage.updateMany({
+      where: { userId, fromAdmin: false, readByAdmin: false },
+      data: { readByAdmin: true },
+    });
+
     return Response.json(messages);
   },
 );
