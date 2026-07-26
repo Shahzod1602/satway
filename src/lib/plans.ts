@@ -18,11 +18,12 @@ export type PremiumPlan = {
 };
 
 // List price is BASE_MONTHLY × months; `total` is that after the current launch discount
-// (1m −55%, 2m −60%, 3m −65%). totalUsd is the UZS total ÷ 120 (≈ $1 = 12,000 UZS).
+// (flat 76% across all plans, pricing the dollar targets at $2/$4/$6). totalUsd is the
+// UZS total ÷ 120 (≈ $1 = 12,000 UZS).
 export const PREMIUM_PLANS: PremiumPlan[] = [
-  { id: "1m", label: "1 month", months: 1, total: 44550, totalUsd: 371, discount: 55 },
-  { id: "2m", label: "2 months", months: 2, total: 79200, totalUsd: 660, discount: 60 },
-  { id: "3m", label: "3 months", months: 3, total: 103950, totalUsd: 866, discount: 65, popular: true },
+  { id: "1m", label: "1 month", months: 1, total: 24000, totalUsd: 200, discount: 76 },
+  { id: "2m", label: "2 months", months: 2, total: 48000, totalUsd: 400, discount: 76 },
+  { id: "3m", label: "3 months", months: 3, total: 72000, totalUsd: 600, discount: 76, popular: true },
 ];
 
 export function getPlan(id: string | null | undefined): PremiumPlan | undefined {
