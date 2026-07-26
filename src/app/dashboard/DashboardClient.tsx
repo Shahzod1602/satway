@@ -97,7 +97,11 @@ export default function DashboardClient({
       ? parseInt(category.replace(/\D/g, ""), 10)
       : null;
 
+  // Reset filters when the active skill tab changes (R&W vs Math), and reset to page 1
+  // whenever the visible set changes. setState-in-effect is the right pattern for "reset
+  // UI state when a higher-level control changes" — there is no derived alternative.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCategory("All");
     setQuery("");
     setPage(1);
@@ -105,6 +109,7 @@ export default function DashboardClient({
 
   // Reset to the first page whenever the visible set changes.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPage(1);
   }, [category, query, levelFilter]);
 

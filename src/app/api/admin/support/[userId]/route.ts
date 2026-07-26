@@ -1,53 +1,50 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/adminGuard";
+import { jsonError, withErrorHandling } from "@/lib/apiError";
+import { parseJson } from "@/lib/validation";
 
-export async function GET(_req: NextRequest, { params }: { params: Promise<{ userId: string }> }) {
-  const isAdmin = await requireAdmin();
-  if (!isAdmin) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-  }
+// Max length mirrors broadcast (src/app/api/admin/broadcast/route.ts) — an unbounded body
+// let an admin write an arbitrarily large string into SupportMessage.body, which is silly
+// for a chat message and a DoS vector for the row size.
+const bodySchema = z.object({
+  body: z.string().trim().min(1, "body is required").max(4000, "body is too long"),
+});
 
-  const { userId } = await params;
-  const messages = await prisma.supportMessage.findMany({
-    where: { userId },
-    orderBy: { createdAt: "asc" },
-  });
+export const GET = withErrorHandling(
+  async (_req: NextRequest, ctx: { params: Promise<{ userId: string }> }) => {
+    if (!(await requireAdmin())) return jsonError("Unauthorized", 403);
 
-  return NextResponse.json(messages);
-}
+    const { userId } = await ctx.params;
+    const messages = await prisma.supportMessage.findMany({
+      where: { userId },
+      orderBy: { createdAt: "asc" },
+    });
 
-export async function POST(req: NextRequest, { params }: { params: Promise<{ userId: string }> }) {
-  const isAdmin = await requireAdmin();
-  if (!isAdmin) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-  }
+    return Response.json(messages);
+  },
+);
 
-  const { userId } = await params;
-  let body: { body?: unknown };
-  try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
-  }
+export const POST = withErrorHandling(
+  async (req: NextRequest, ctx: { params: Promise<{ userId: string }> }) => {
+    if (!(await requireAdmin())) return jsonError("Unauthorized", 403);
 
-  if (typeof body.body !== "string" || !body.body.trim()) {
-    return NextResponse.json({ error: "body is required" }, { status: 400 });
-  }
+    const { userId } = await ctx.params;
+    const { body } = await parseJson(req, bodySchema);
 
-  const user = await prisma.user.findUnique({ where: { id: userId } });
-  if (!user) {
-    return NextResponse.json({ error: "User not found" }, { status: 404 });
-  }
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) return jsonError("User not found", 404);
 
-  const message = await prisma.supportMessage.create({
-    data: {
-      userId,
-      body: body.body.trim(),
-      fromAdmin: true,
-      readByAdmin: true,
-    },
-  });
+    const message = await prisma.supportMessage.create({
+      data: {
+        userId,
+        body,
+        fromAdmin: true,
+        readByAdmin: true,
+      },
+    });
 
-  return NextResponse.json(message, { status: 201 });
-}
+    return Response.json(message, { status: 201 });
+  },
+);

@@ -80,7 +80,7 @@ export default function TestEditClient({ test }: { test: TestData }) {
   };
 
   return (
-    <div className="mx-auto max-w-6xl px-5 py-10">
+    <div className="mx-auto max-w-6xl">
       <div className="flex items-center justify-between">
         <div>
           <Link

@@ -11,6 +11,28 @@ import { safeNext } from "@/lib/nextParam";
 
 type Step = "email" | "verify" | "details";
 
+const STEP_ORDER: Record<Step, number> = { email: 0, verify: 1, details: 2 };
+
+// Progress bar across the 3 registration steps. A plain function (not a component
+// declared inside RegisterPage) so it isn't recreated on every render — the latter
+// trips react-hooks' "Cannot create components during render" rule and would remount
+// the subtree on every keystroke.
+function Stepper({ step }: { step: Step }) {
+  return (
+    <div className="mb-1 flex items-center gap-2">
+      {(["email", "verify", "details"] as Step[]).map((s, i) => {
+        const active = STEP_ORDER[step] >= i;
+        return (
+          <span
+            key={s}
+            className={`h-1.5 flex-1 rounded-full ${active ? "bg-brand-600" : "bg-slate-200"}`}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
 export default function RegisterPage() {
   const router = useRouter();
   const [step, setStep] = useState<Step>("email");
@@ -23,9 +45,12 @@ export default function RegisterPage() {
   const [info, setInfo] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Capture an invite code from ?ref=CODE
+  // Capture an invite code from ?ref=CODE. Reading searchParams in an effect avoids
+  // hydration mismatch (window is undefined on the server) — setState in here is the
+  // intended pattern, not a derived value.
   useEffect(() => {
     const ref = new URLSearchParams(window.location.search).get("ref");
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (ref) setReferralCode(ref.trim());
   }, []);
 
@@ -112,22 +137,12 @@ export default function RegisterPage() {
     }
   };
 
-  const Stepper = () => (
-    <div className="mb-1 flex items-center gap-2">
-      {(["email", "verify", "details"] as Step[]).map((s, i) => {
-        const order: Record<Step, number> = { email: 0, verify: 1, details: 2 };
-        const active = order[step] >= i;
-        return <span key={s} className={`h-1.5 flex-1 rounded-full ${active ? "bg-brand-600" : "bg-slate-200"}`} />;
-      })}
-    </div>
-  );
-
   // ── Step 1: email ──
   if (step === "email") {
     return (
       <AuthShell>
         <form onSubmit={sendCode} className="space-y-4">
-          <Stepper />
+          <Stepper step={step} />
           <h1 className="text-2xl font-bold text-slate-900">Create your free account</h1>
           <p className="text-sm text-slate-500">Enter your email — we&rsquo;ll send a 6-digit code to confirm it.</p>
           {error && <div className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
@@ -174,7 +189,7 @@ export default function RegisterPage() {
     return (
       <AuthShell>
         <form onSubmit={verify} className="space-y-4">
-          <Stepper />
+          <Stepper step={step} />
           <h1 className="text-2xl font-bold text-slate-900">Check your email</h1>
           <p className="text-sm text-slate-500">
             We sent a 6-digit code to <strong>{email}</strong>.
@@ -220,7 +235,7 @@ export default function RegisterPage() {
   return (
     <AuthShell>
       <form onSubmit={finish} className="space-y-4">
-        <Stepper />
+        <Stepper step={step} />
         <h1 className="text-2xl font-bold text-slate-900">Almost there</h1>
         <p className="text-sm text-slate-500">
           <strong>{email}</strong> confirmed. Set your name and password.

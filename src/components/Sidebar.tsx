@@ -24,8 +24,10 @@ export default function Sidebar({
 }) {
   const pathname = usePathname() ?? "";
   const [open, setOpen] = useState(false);
-  // Close the mobile drawer on navigation.
+  // Close the mobile drawer on navigation. setState-in-effect is the intended pattern
+  // here — the open state is UI, not derived data.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpen(false);
   }, [pathname]);
 

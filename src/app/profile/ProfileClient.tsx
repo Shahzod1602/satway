@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
-import { Loader2, Mail, Shield, Target, CalendarClock, Bell, Download, Trash2 } from "lucide-react";
+import { Loader2, Target, CalendarClock, Bell, Download, Trash2 } from "lucide-react";
 import AppHeader from "@/components/AppHeader";
 
 interface ProfileUser {

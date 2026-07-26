@@ -58,7 +58,7 @@ export default function AdminPaymentsClient({ initial }: { initial: Payment[] })
   const pendingCount = payments.filter((p) => p.status === "PENDING").length;
 
   return (
-    <div className="mx-auto max-w-5xl px-5 py-10">
+    <div className="mx-auto max-w-5xl">
       <h1 className="text-2xl font-bold text-slate-900">Payments</h1>
       <p className="mt-1 text-sm text-slate-500">
         {pendingCount} pending · {payments.length} total

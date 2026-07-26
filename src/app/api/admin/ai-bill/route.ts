@@ -27,3 +27,32 @@ export const POST = withErrorHandling(async (req: NextRequest) => {
 
   return Response.json({ ok: true, month: row.month, actualUsdCents: row.actualUsdCents });
 });
+
+/** List reconciled invoices (newest first) with the rate-card estimate alongside.
+ *
+ * The board previously only ever showed the single latest row from `getGlance()`'s bill
+ * subquery — there was no way to see the drift trend across months. This returns the last
+ * N months so the board can render a small history table next to the BillForm. */
+export const GET = withErrorHandling(async (req: NextRequest) => {
+  if (!(await requireAdmin())) return jsonError("Unauthorized", 403);
+
+  const limit = Math.min(48, Math.max(1, Number(req.nextUrl.searchParams.get("limit")) || 12));
+  const rows = await prisma.$queryRawUnsafe<
+    { month: string; cents: number; est: bigint }[]
+  >(`
+    SELECT b.month,
+           b."actualUsdCents" AS cents,
+           COALESCE((SELECT SUM(e."usdMicros") FROM "Event" e
+                      WHERE e.name = 'ai_call'
+                        AND to_char(e.ts, 'YYYY-MM') = b.month), 0) AS est
+      FROM "AiBillMonth" b
+     ORDER BY b.month DESC
+     LIMIT ${limit}
+  `);
+  const items = rows.map((r) => ({
+    month: r.month,
+    actualUsd: Number(r.cents ?? 0) / 100,
+    estimatedUsd: Number(r.est ?? 0) / 1e6,
+  }));
+  return Response.json({ ok: true, items });
+});

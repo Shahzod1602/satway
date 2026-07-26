@@ -1,78 +1,66 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/adminGuard";
+import { jsonError, withErrorHandling } from "@/lib/apiError";
+import { parseJson } from "@/lib/validation";
+import { SAT_SKILLS, TEST_TYPES } from "@/lib/testEnums";
+import { TEST_LEVELS } from "@/lib/level";
 
-export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const isAdmin = await requireAdmin();
-  if (!isAdmin) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-  }
-
-  const { id } = await params;
-  const test = await prisma.test.findUnique({ where: { id } });
-  if (!test) {
-    return NextResponse.json({ error: "Test not found" }, { status: 404 });
-  }
-
-  let body: Record<string, unknown>;
-  try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
-  }
-
-  const updateData: Record<string, unknown> = {};
-
-  if (typeof body.title === "string" && body.title.trim()) {
-    updateData.title = body.title.trim();
-  }
-  if (typeof body.slug === "string" && body.slug.trim()) {
-    const existing = await prisma.test.findUnique({ where: { slug: body.slug.trim() } });
-    if (existing && existing.id !== id) {
-      return NextResponse.json({ error: "Slug already in use" }, { status: 409 });
-    }
-    updateData.slug = body.slug.trim();
-  }
-  if (typeof body.skill === "string" && ["READING_WRITING", "MATH"].includes(body.skill)) {
-    updateData.skill = body.skill;
-  }
-  if (typeof body.type === "string" && ["DIGITAL", "PAPER"].includes(body.type)) {
-    updateData.type = body.type;
-  }
-  if (typeof body.description === "string") {
-    updateData.description = body.description;
-  }
-  if (typeof body.durationSec === "number" && body.durationSec > 0) {
-    updateData.durationSec = body.durationSec;
-  }
-  if (typeof body.published === "boolean") {
-    updateData.published = body.published;
-  }
-  if (body.level === "EASY" || body.level === "MEDIUM" || body.level === "HARD") {
-    updateData.level = body.level;
-  }
-
-  const updated = await prisma.test.update({
-    where: { id },
-    data: updateData,
+// Every updatable field is optional. Unlike the old hand-rolled version, invalid enum
+// values now REJECT (400) instead of being silently dropped — `PUT { skill: "SCIENCE" }`
+// used to return 200 OK with the test unchanged, which is worse than an error because the
+// admin UI got a success response for a no-op. POST already rejected these; PUT now matches.
+const updateSchema = z
+  .object({
+    title: z.string().trim().min(1).optional(),
+    slug: z.string().trim().min(1).optional(),
+    skill: z.enum(SAT_SKILLS).optional(),
+    type: z.enum(TEST_TYPES).optional(),
+    description: z.string().optional(),
+    durationSec: z.number().int().positive().optional(),
+    published: z.boolean().optional(),
+    isPremium: z.boolean().optional(),
+    level: z.enum(TEST_LEVELS).optional(),
+  })
+  .refine((b) => Object.keys(b).length > 0, {
+    message: "No updatable fields supplied",
   });
 
-  return NextResponse.json({ id: updated.id, title: updated.title, slug: updated.slug });
-}
+export const PUT = withErrorHandling(
+  async (req: NextRequest, ctx: { params: Promise<{ id: string }> }) => {
+    if (!(await requireAdmin())) return jsonError("Unauthorized", 403);
 
-export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const isAdmin = await requireAdmin();
-  if (!isAdmin) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-  }
+    const { id } = await ctx.params;
+    const test = await prisma.test.findUnique({ where: { id } });
+    if (!test) return jsonError("Test not found", 404);
 
-  const { id } = await params;
-  const test = await prisma.test.findUnique({ where: { id } });
-  if (!test) {
-    return NextResponse.json({ error: "Test not found" }, { status: 404 });
-  }
+    const b = await parseJson(req, updateSchema);
 
-  await prisma.test.delete({ where: { id } });
+    // Slug uniqueness when it changes — TOCTOU window exists but the DB unique constraint
+    // is the real guard; this check turns the common case into a clean 409 instead of a
+    // raw Prisma error leaking through.
+    if (b.slug && b.slug !== test.slug) {
+      const clash = await prisma.test.findUnique({ where: { slug: b.slug } });
+      if (clash) return jsonError("Slug already in use", 409);
+    }
 
-  return NextResponse.json({ deleted: true });
-}
+    const updated = await prisma.test.update({ where: { id }, data: b });
+
+    return Response.json({ id: updated.id, title: updated.title, slug: updated.slug });
+  },
+);
+
+export const DELETE = withErrorHandling(
+  async (_req: NextRequest, ctx: { params: Promise<{ id: string }> }) => {
+    if (!(await requireAdmin())) return jsonError("Unauthorized", 403);
+
+    const { id } = await ctx.params;
+    const test = await prisma.test.findUnique({ where: { id } });
+    if (!test) return jsonError("Test not found", 404);
+
+    await prisma.test.delete({ where: { id } });
+
+    return Response.json({ deleted: true });
+  },
+);

@@ -23,6 +23,8 @@ export default function ScoreGauge({
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
+      // Skip the count-up animation entirely for reduced-motion users — jump to target.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setVal(target);
       return;
     }

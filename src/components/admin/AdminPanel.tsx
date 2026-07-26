@@ -46,7 +46,7 @@ export default function AdminPanel() {
   };
 
   return (
-    <div className="mx-auto max-w-6xl px-5 py-10">
+    <div className="mx-auto max-w-6xl">
       <h1 className="text-2xl font-bold text-slate-900">Admin Panel</h1>
       <p className="mt-1 text-sm text-slate-500">Manage users, support tickets, and tests.</p>
 

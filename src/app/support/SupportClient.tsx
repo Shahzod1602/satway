@@ -36,8 +36,11 @@ export default function SupportClient({
     }
   }, []);
 
+  // Poll the support thread. `load` updates messages state internally via an async fetch
+  // (not a synchronous setState in the effect body), but react-hooks v19 flags the call
+  // site anyway — the state change is the fetch result, not derived from props.
   useEffect(() => {
-    load();
+    load(); // eslint-disable-line react-hooks/set-state-in-effect
     const id = setInterval(load, 5000);
     return () => clearInterval(id);
   }, [load]);
