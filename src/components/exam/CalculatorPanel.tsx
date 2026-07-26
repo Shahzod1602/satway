@@ -4,9 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { Calculator, ChevronRight, Loader2 } from "lucide-react";
 
 // Desmos graphing calculator (same engine the real Digital SAT embeds).
-// The default key is Desmos's public demo key; override in production via
-// NEXT_PUBLIC_DESMOS_API_KEY.
-const DESMOS_KEY = process.env.NEXT_PUBLIC_DESMOS_API_KEY || "dcb31709b452b1cf9dc26972add0fda6";
+// API keys are PUBLIC by design — the script tag is rendered in the browser, so the key
+// is visible there regardless. Override with NEXT_PUBLIC_DESMOS_API_KEY only if you need
+// to rotate without a redeploy; otherwise this default is the production key.
+const DESMOS_KEY = process.env.NEXT_PUBLIC_DESMOS_API_KEY || "7c29e392565549c7b5ebf5727a0133ef";
 const DESMOS_SRC = `https://www.desmos.com/api/v1.11/calculator.js?apiKey=${DESMOS_KEY}`;
 
 declare global {
