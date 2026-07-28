@@ -165,3 +165,34 @@ export function verifyPolarSignature(rawBody: string, headers: Headers): boolean
     return got.length === want.length && crypto.timingSafeEqual(got, want);
   });
 }
+
+/**
+ * Did the buyer actually pay at least the price we locked into the checkout?
+ *
+ * Compare `total_amount` — the charge — and NOT `net_amount`.
+ *
+ * Polar is the merchant of record and its default tax behaviour is location-based:
+ * the US, Canada and India are priced tax-EXCLUSIVE (tax added on top of our price),
+ * the rest of the world tax-INCLUSIVE (tax carved out of it). So an $8.75 checkout paid
+ * under 20% VAT settles as net_amount 729 + tax_amount 146 = total_amount 875 — the
+ * buyer paid in full, and net_amount sits below our price by exactly the local VAT rate.
+ *
+ * Comparing net_amount is what shipped first, and on the sister platform it withheld
+ * Premium from two customers who HAD paid in full (GB 20%, KE 16%) before anyone
+ * noticed: the guard was catching paying customers instead of cheap ones. total_amount
+ * is >= the locked price under both behaviours, so a dashboard-level discount or an API
+ * semantics change still cannot buy cheap Premium.
+ *
+ * Cents of a currency that isn't USD are not the cents our row is denominated in.
+ */
+export function paidEnough(
+  // net_amount and tax_amount are listed to say plainly that they are SEEN and not used.
+  order: { currency?: string; total_amount?: number; net_amount?: number; tax_amount?: number },
+  expectedUsdCents: number | null,
+): { ok: boolean; paid: number | null; currency: string } {
+  const paid = typeof order.total_amount === "number" ? order.total_amount : null;
+  const currency = (order.currency ?? "").toLowerCase();
+  const ok =
+    expectedUsdCents !== null && paid !== null && currency === "usd" && paid >= expectedUsdCents;
+  return { ok, paid, currency };
+}

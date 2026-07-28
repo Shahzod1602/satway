@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { verifyPolarSignature } from "@/lib/polar";
+import { verifyPolarSignature, paidEnough } from "@/lib/polar";
 import { grantPremiumMonths } from "@/lib/grantPremium";
 import { rewardReferrerIfNeeded } from "@/lib/referral";
 import { fmtUSD, fmtUZS } from "@/lib/plans";
@@ -26,9 +26,11 @@ type PolarOrder = {
   status?: string; // "paid" | "refunded" | "partially_refunded" | "pending" | ...
   currency?: string; // "usd"
   // All amounts are integer cents.
-  net_amount?: number; // after discounts, before tax — the analogue of what we priced
+  // after discounts and EXCLUDING tax — under Polar's location-based tax behaviour this
+  // sits BELOW the price we locked for any buyer whose country prices tax-inclusive.
+  net_amount?: number;
   discount_amount?: number;
-  total_amount?: number; // what the card was charged (net + tax)
+  total_amount?: number; // what the card was charged (net + tax) — the price the buyer agreed to
   refunded_amount?: number;
   metadata?: Record<string, unknown>; // copied verbatim from the checkout we created
   customer?: { email?: string; name?: string };
@@ -109,24 +111,17 @@ async function handleOrderPaid(payload: PolarWebhookPayload) {
     return NextResponse.json({ ok: true });
   }
 
-  // Enforce the paid amount BEFORE granting. net_amount is what the buyer paid after
-  // discounts and before Polar's merchant-of-record tax, i.e. exactly the price we
-  // locked into the checkout. Discount codes are disabled on our checkouts, but a
-  // dashboard-level discount or an API semantics change must never turn into silently
-  // cheap Premium — and cents of a currency that isn't USD are not the cents this row
-  // is denominated in.
-  const paidPreTax = typeof order.net_amount === "number" ? order.net_amount : null;
-  const currency = (order.currency ?? "").toLowerCase();
-  if (
-    payment.amountUsd === null ||
-    paidPreTax === null ||
-    currency !== "usd" ||
-    paidPreTax < payment.amountUsd
-  ) {
+  // Enforce the paid amount BEFORE granting — against the CHARGE, not the slice of it
+  // left after Polar's merchant-of-record tax. See paidEnough() for why net_amount is
+  // the wrong field and what it cost the sister platform.
+  const { ok: enough, paid, currency } = paidEnough(order, payment.amountUsd);
+  // A row with no expected USD price is one paidEnough already rejects; naming it again
+  // here is what narrows amountUsd to non-null for the rest of the handler.
+  if (!enough || payment.amountUsd === null) {
     emit("error", { surface: "upgrade", key: "polar_underpaid", userId: payment.userId, ok: false });
     await notifyAdmin(
       `⚠️ Underpaid Polar order ${orderRef}\n${payment.user.name} (${payment.user.email}) paid ${
-        paidPreTax === null ? "an unknown amount" : `${fmtUSD(paidPreTax)} ${currency.toUpperCase()}`
+        paid === null ? "an unknown amount" : `${fmtUSD(paid)} ${currency.toUpperCase()}`
       } but ${fmtUSD(payment.amountUsd ?? 0)} USD was expected.\nPremium NOT granted automatically — check the order in Polar, then grant in /admin/users or refund.`,
     );
     return NextResponse.json({ ok: true }); // leave the row PENDING for review
