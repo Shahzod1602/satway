@@ -24,7 +24,10 @@ export default async function DashboardPage({
     prisma.test.findMany({
       where: { published: true },
       orderBy: { createdAt: "asc" },
-      include: { _count: { select: { sections: true } } },
+      include: {
+        _count: { select: { sections: true } },
+        sections: { select: { _count: { select: { questions: true } } } },
+      },
     }),
     prisma.user.findUnique({
       where: { id: user.id },

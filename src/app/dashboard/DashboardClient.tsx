@@ -20,7 +20,9 @@ interface TestData {
   published: boolean;
   level: string;
   createdAt: string;
+  isPremium?: boolean;
   _count: { sections: number };
+  sections?: { _count: { questions: number } }[];
 }
 
 const LEVEL_ORDER = ["EASY", "MEDIUM", "HARD"] as const;
@@ -132,24 +134,6 @@ export default function DashboardClient({
     router.push(
       `/mock?rw=${encodeURIComponent(rw.slug)}&m=${encodeURIComponent(m.slug)}`,
     );
-  };
-
-  // A "Real Exam" is a single skill run as a full 2-module adaptive test — the same engine
-  // a normal /test/[slug] visit uses (mode="full"), surfaced here as its own practice mode.
-  // Module 1 → adaptive Module 2 (EASY/HARD) → 200–800 scaled score on /results/[id].
-  // Premium-gated like Mock. Only full tests (≥2 sections) are eligible candidates.
-  const startRealExam = (skill: "READING_WRITING" | "MATH") => {
-    if (!isPremium) {
-      router.push("/upgrade");
-      return;
-    }
-    const pool = tests.filter((t) => t.skill === skill && t._count.sections >= 2);
-    if (!pool.length) {
-      alert("No full tests available yet.");
-      return;
-    }
-    const pick = pool[Math.floor(Math.random() * pool.length)];
-    router.push(`/test/${pick.slug}`); // mode=full by default → 2-modulli adaptive
   };
 
   const filteredTests = useMemo(() => {
@@ -302,81 +286,88 @@ export default function DashboardClient({
                 </p>
               </div>
             ) : activeTab === "REAL" ? (
-              <div className="mt-8 rounded-2xl border border-[#EAEAEA] bg-gradient-to-br from-brand-50/40 to-white p-8 sm:p-12">
-                <div className="text-center">
-                  <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-brand-50 text-brand-600">
-                    <ClipboardCheck className="h-8 w-8" />
+              <div className="mt-8">
+                <div className="mb-6 flex items-center gap-3">
+                  <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-600">
+                    <ClipboardCheck className="h-6 w-6" />
+                  </span>
+                  <div>
+                    <h2 className="text-xl font-bold text-slate-900">Real Exams</h2>
+                    <p className="text-sm text-slate-500">
+                      Official Digital SAT practice — 2-module adaptive, real timing, scaled 200–800.
+                    </p>
                   </div>
-                  <h2 className="mt-4 text-xl font-bold text-slate-900">Real Exam</h2>
-                  <p className="mx-auto mt-2 max-w-md text-sm text-slate-500">
-                    Run a single section as a full 2-module adaptive test — real timing, a
-                    scaled <strong>200–800</strong> score, the same as one half of the real
-                    Digital SAT. Pick a section to start a random full test.
-                  </p>
-                  <p className="mt-3 text-xs text-slate-400">
-                    Module 1 → adaptive Module 2{isPremium ? "" : " · Premium feature"}
-                  </p>
                 </div>
 
-                <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                  <button
-                    onClick={() => startRealExam("READING_WRITING")}
-                    className={`group flex items-center justify-between gap-3 rounded-2xl border bg-white px-6 py-6 text-left transition-all hover:shadow-sm ${
-                      isPremium ? "border-[#EAEAEA] hover:border-brand-300" : "border-amber-200"
-                    }`}
-                  >
-                    <span className="min-w-0">
-                      <span className="flex items-center gap-2">
-                        <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand-50 text-brand-600">
-                          <BookOpen className="h-5 w-5" />
-                        </span>
-                        <span className="text-base font-semibold text-slate-900">
-                          Reading &amp; Writing
-                        </span>
-                      </span>
-                      <span className="mt-2 block text-xs text-slate-500">
-                        2 modules · ~64 min · 200–800
-                      </span>
-                    </span>
-                    {isPremium ? (
-                      <span className="shrink-0 inline-flex items-center gap-1 text-sm font-medium text-slate-400 transition-colors group-hover:text-brand-600">
-                        <Shuffle className="w-3.5 h-3.5" /> Start
-                      </span>
-                    ) : (
-                      <span className="shrink-0 inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700">
-                        <Lock className="w-3 h-3" /> Premium
-                      </span>
-                    )}
-                  </button>
-
-                  <button
-                    onClick={() => startRealExam("MATH")}
-                    className={`group flex items-center justify-between gap-3 rounded-2xl border bg-white px-6 py-6 text-left transition-all hover:shadow-sm ${
-                      isPremium ? "border-[#EAEAEA] hover:border-brand-300" : "border-amber-200"
-                    }`}
-                  >
-                    <span className="min-w-0">
-                      <span className="flex items-center gap-2">
-                        <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand-50 text-brand-600">
-                          <Calculator className="h-5 w-5" />
-                        </span>
-                        <span className="text-base font-semibold text-slate-900">Math</span>
-                      </span>
-                      <span className="mt-2 block text-xs text-slate-500">
-                        2 modules · ~70 min · 200–800
-                      </span>
-                    </span>
-                    {isPremium ? (
-                      <span className="shrink-0 inline-flex items-center gap-1 text-sm font-medium text-slate-400 transition-colors group-hover:text-brand-600">
-                        <Shuffle className="w-3.5 h-3.5" /> Start
-                      </span>
-                    ) : (
-                      <span className="shrink-0 inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700">
-                        <Lock className="w-3 h-3" /> Premium
-                      </span>
-                    )}
-                  </button>
-                </div>
+                {/* Exam cards: only tests that look like real exams (the OCR'd set carries
+                    the description string; fall back to any 2-section test). */}
+                {(() => {
+                  const realExams = tests.filter(
+                    (t) =>
+                      (t.description ?? "").includes("Real Digital SAT") ||
+                      (t._count?.sections ?? 0) >= 2,
+                  );
+                  const questionCount = (t: TestData) =>
+                    (t.sections ?? []).reduce((s, sec) => s + sec._count.questions, 0);
+                  if (realExams.length === 0) {
+                    return (
+                      <div className="rounded-xl border border-dashed border-[#EAEAEA] bg-slate-50 p-12 text-center">
+                        <p className="text-sm text-slate-400">No real exams available yet.</p>
+                      </div>
+                    );
+                  }
+                  return (
+                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      {realExams.map((t) => {
+                        const locked = !isPremium;
+                        const href = locked ? "/upgrade" : `/test/${t.slug}`;
+                        const q = questionCount(t);
+                        return (
+                          <Link
+                            key={t.id}
+                            href={href}
+                            className={`group flex flex-col justify-between rounded-2xl border bg-white p-5 transition-all hover:shadow-sm ${
+                              locked
+                                ? "border-amber-200 hover:border-amber-300"
+                                : "border-[#EAEAEA] hover:border-brand-300"
+                            }`}
+                          >
+                            <div>
+                              <div className="flex items-center justify-between">
+                                <span className="grid h-9 w-9 place-items-center rounded-lg bg-brand-50 text-brand-600">
+                                  <Calculator className="h-5 w-5" />
+                                </span>
+                                {locked ? (
+                                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700">
+                                    <Lock className="w-3 h-3" /> Premium
+                                  </span>
+                                ) : (
+                                  <span className="text-xs font-medium uppercase tracking-wide text-slate-400">
+                                    Math
+                                  </span>
+                                )}
+                              </div>
+                              <h3 className="mt-3 line-clamp-2 text-[15px] font-semibold leading-snug text-slate-900">
+                                {t.title}
+                              </h3>
+                            </div>
+                            <div className="mt-4 flex items-center justify-between text-xs text-slate-500">
+                              <span>
+                                {q} questions · 2 modules
+                              </span>
+                              {!locked && (
+                                <span className="inline-flex items-center gap-1 font-medium text-slate-400 transition-colors group-hover:text-brand-600">
+                                  Start
+                                  <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
+                                </span>
+                              )}
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  );
+                })()}
               </div>
             ) : (
               <>
