@@ -1,0 +1,621 @@
+{
+  "title": "October 4th, 2025 INT 2",
+  "module1": [
+    {
+      "order": 1,
+      "type": "MCQ_SINGLE",
+      "prompt": "The length of a rectangle's diagonal is √65, and the length of one of the rectangle's sides is 4. What is the perimeter of the rectangle?",
+      "options": [
+        "11",
+        "22",
+        "28",
+        "65"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 2,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function h is defined by h(x) = 7|x|. What is the value of h(-6)?",
+      "options": [
+        "-42",
+        "1",
+        "13",
+        "42"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 3,
+      "type": "MCQ_SINGLE",
+      "prompt": "If x/y = 52 and cx/4y = 52, what is the value of c?",
+      "options": [
+        "4",
+        "13",
+        "52",
+        "208"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 4,
+      "type": "MCQ_SINGLE",
+      "prompt": "If 5(8 - 4x) + 2 = 4(8 - 4x) + 18, what is the value of 8 - 4x?",
+      "options": [
+        "-16",
+        "-2",
+        "2",
+        "16"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 5,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The function g is defined by g(x) = 16x + 25. For what value of a does g(a) = 29?",
+      "options": null,
+      "correctAnswers": [
+        "0.25 or ¼"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 6,
+      "type": "MCQ_SINGLE",
+      "prompt": "The positive number a is 240% of the number b, and a is 70% of the number c. If c is p% of b, which of the following is closest to the value of p?",
+      "options": [
+        "168",
+        "200",
+        "243",
+        "343"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 7,
+      "type": "MCQ_SINGLE",
+      "prompt": "x + y = 48\nThe given equation relates the total number of marble queen pothos stems, x, and the total number of snow queen pothos stems, y, a plant nursery propagates to create pothos plants. If 18 snow queen pothos stems are propagated, how many marble queen pothos stems are propagated?",
+      "options": [
+        "48",
+        "30",
+        "18",
+        "12"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 8,
+      "type": "MCQ_SINGLE",
+      "prompt": "If 7 + x = 5, what is the value of -14 - 2x?",
+      "options": [
+        "-10",
+        "-2",
+        "4",
+        "18"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 9,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function k is defined by k(x) = x^3 + 20. What is the value of k(x) when x = 2?",
+      "options": [
+        "28",
+        "26",
+        "25",
+        "20"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 10,
+      "type": "MCQ_SINGLE",
+      "prompt": "Which expression is a factor of x^4 + 14ax^2 + 49a^2 - 64, where a is a positive constant?",
+      "options": [
+        "x^2 + 7a + 8",
+        "x^2 - 7a - 8",
+        "x^2 + 14a",
+        "x^2 - 8a"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 11,
+      "type": "MCQ_SINGLE",
+      "prompt": "For the linear function g, g(9) = 11 and g(x+1) - g(x) = 2. Which equation defines g?",
+      "options": [
+        "g(x) = 9x + 2",
+        "g(x) = 9x + 11",
+        "g(x) = 2x - 18",
+        "g(x) = 2x - 7"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 12,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the figure [a diagram of a hollow cylinder is shown, labeling 'outside diameter', 'wall thickness', and 'height'. Note: Figure not drawn to scale.], a hollow steel pipe is in the shape of a right circular cylinder. The steel pipe has an outside diameter of 60 inches, a wall thickness of 5/8 inches, and a height of 132 inches. Which of the following is closest to the volume, in cubic inches, of the wall of this steel pipe?",
+      "options": [
+        "162",
+        "518",
+        "2,475",
+        "15,389"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 13,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function h is defined by h(x) = 7|x|. What is the value of h(-4)?",
+      "options": [
+        "-28",
+        "3",
+        "11",
+        "28"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 14,
+      "type": "MCQ_SINGLE",
+      "prompt": "In triangle ABC, DE is parallel to AC, BD = AD, BE = 9, and AC = 17. What is the length of BC?",
+      "options": [
+        "153",
+        "34",
+        "26",
+        "18"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 15,
+      "type": "MCQ_SINGLE",
+      "prompt": "If 5(8 - 2x) + 3 = 4(8 - 2x) + 15, what is the value of 8 - 2x?",
+      "options": [
+        "-12",
+        "-2",
+        "2",
+        "12"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 16,
+      "type": "MCQ_SINGLE",
+      "prompt": "The positive number a is 270% of the number b, and a is 80% of the number c. If c is p% of b, which of the following is closest to the value of p?",
+      "options": [
+        "213",
+        "216",
+        "238",
+        "338"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 17,
+      "type": "MCQ_SINGLE",
+      "prompt": "x + y = 53\nThe given equation relates the total number of marble queen pothos stems, x, and the total number of snow queen pothos stems, y, a plant nursery propagates to create pothos plants. If 13 snow queen pothos stems are propagated, how many marble queen pothos stems are propagated?",
+      "options": [
+        "53",
+        "40",
+        "27",
+        "13"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 18,
+      "type": "MCQ_SINGLE",
+      "prompt": "If 7 + x = 5, what is the value of -21 - 3x?",
+      "options": [
+        "-15",
+        "-3",
+        "6",
+        "27"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 19,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function k is defined by k(x) = x^3 + 50. What is the value of k(x) when x = 2?",
+      "options": [
+        "50",
+        "55",
+        "56",
+        "58"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 20,
+      "type": "MCQ_SINGLE",
+      "prompt": "2x(x-1)(x+7) = 0\nWhat is one of the solutions to the given equation?",
+      "options": [
+        "-1",
+        "0",
+        "2",
+        "7"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 21,
+      "type": "MCQ_SINGLE",
+      "prompt": "The scatterplot shows the relationship between two variables, x and y. A line of best fit for the data is also shown.\n[A scatterplot with an x-axis labeled 'x' ranging from 0 to 10, with major grid lines and labels at 2, 4, 6, 8, 10. The y-axis is labeled 'y' ranging from 0 to 110, with major grid lines and labels at 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110. There are 9 data points plotted as black dots. A straight line of best fit is drawn through the data. The line of best fit appears to pass through approximately (0, 80) and (10, 100). The 9 data points are approximately located at: (2, 85), (3, 88), (4, 89), (5, 90), (6, 92), (7, 95), (8, 98), (9, 99), (10, 100).]\nFor how many of the 9 data points is the actual y-value greater than the y-value predicted by the line of best fit?",
+      "options": [
+        "2",
+        "5"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 22,
+      "type": "MCQ_SINGLE",
+      "prompt": "For two acute angles X and Y, the measure of angle Y is 24º and sin X / cos Y = 1. What is the measure, in degrees, of angle X?",
+      "options": [
+        "24",
+        "45",
+        "66",
+        "69"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    }
+  ],
+  "module2": [
+    {
+      "order": 1,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the figure, a hollow steel pipe is in the shape of a right circular cylinder. The steel pipe has an outside diameter of 60 inches, a wall thickness of 5/8 inches, and a height of 144 inches. Which of the following is closest to the volume, in cubic inches, of the wall of this steel pipe? [Figure shows a hollow cylinder with labels 'outside diameter', 'wall thickness', and 'height'. Note: Figure not drawn to scale.]",
+      "options": [
+        "177",
+        "565",
+        "2,700",
+        "16,788"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 2,
+      "type": "MCQ_SINGLE",
+      "prompt": "A sum of 9,000 dollars was invested in a certificate of deposit (CD) that earns interest, and no other deposits or withdrawals were made after that. The function f(x) = 9,000 (1+0.03)^x gives the value of the CD, in dollars, x years after the investment was initially made, where x <= 5. Which of the following is the best interpretation of the statement \"f(2) is approximately equal to 9,474.08\" in this context?",
+      "options": [
+        "The value of the CD would be approximately 9,474.08 dollars if invested at 2% interest.",
+        "9,474.08 days after the investment was made, the value of the CD was approximately 2 times greater than its initial value.",
+        "2 years after the investment was made, the value of the CD was approximately 9,474.08 dollars.",
+        "2 years after the investment was made, the value of the CD was approximately 9,474.08 dollars greater than its initial value."
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 3,
+      "type": "MCQ_SINGLE",
+      "prompt": "What is an equation of the graph shown? [A coordinate plane is shown with the x-axis labeled from -6 to 6 and the y-axis labeled from -6 to 6. The origin (0,0) is marked 'O'. A straight line is plotted on the graph. The line passes through the points (-4, -1), (0, 2), and (4, 5).]",
+      "options": [
+        "49x - 35y = -126",
+        "35x - 49y = -126"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 4,
+      "type": "MCQ_SINGLE",
+      "prompt": "The solution to the given system of equations is (x, y). What is the value of 39x?\n5y = 6x + 17\n-5y = 7x - 23",
+      "options": [
+        "-18",
+        "-6",
+        "6",
+        "18"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 5,
+      "type": "MCQ_SINGLE",
+      "prompt": "The shaded region shown represents the solutions to which inequality?\n[Graph showing a coordinate plane. The x-axis ranges from -6 to 4, with tick marks at integer values. The y-axis ranges from 0 to 12, with tick marks at even integer values (2, 4, 6, 8, 10, 12). A dashed line is drawn, passing through approximately (0, 3) and (1, 7). The region to the left of and above this dashed line is shaded in gray.]",
+      "options": [
+        "y > 4x + 3",
+        "y > 4x - 3"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 6,
+      "type": "MCQ_SINGLE",
+      "prompt": "A circle in the xy-plane has its center at (-5, 2) and the point (-9, 5) lies on the circle. Which equation represents this circle?",
+      "options": [
+        "(x-5)² + (y+2)² = 5",
+        "(x+5)² + (y-2)² = 5",
+        "(x-5)² + (y+2)² = 25",
+        "(x+5)² + (y-2)² = 25"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 7,
+      "type": "MCQ_SINGLE",
+      "prompt": "y < -3x + 18\nWhich point (x, y) is a solution to the given inequality in the xy-plane?",
+      "options": [
+        "(0, 19)",
+        "(-1, 22)",
+        "(-3, 0)",
+        "(7, -1)"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 8,
+      "type": "MCQ_SINGLE",
+      "prompt": "18(x+5)= 2(x+c) + 16x\nIn the given equation, c is a constant. The equation has infinitely many solutions. What is the value of c?",
+      "options": [
+        "90",
+        "45",
+        "10",
+        "5"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 9,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The table shows three values of x and their corresponding values of y. There is a quadratic relationship between x and y. An equation that represents this relationship can be written as y = 36x^2 - bx - 120, where b is a constant. What is the value of b?\n[Table: x values are -5/9, 0, 6; corresponding y values are 0, -120, 0.]",
+      "options": null,
+      "correctAnswers": [
+        "196"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 10,
+      "type": "MCQ_SINGLE",
+      "prompt": "Hannah and Wyatt are saving money to purchase a car. Hannah saves 1/10 of her salary each month, and Wyatt saves 7/10 of his salary each month. Together, they save a total of $3, 270 from their monthly salaries each month. If h and w represent Hannah's and Wyatt's monthly salaries, in dollars, respectively, which equation shows the relationship between h and w?",
+      "options": [
+        "h + w = 3,270",
+        "h + 2w = 3,270",
+        "10h + 7w = 114, 450",
+        "7h + 10w = 114, 450"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 11,
+      "type": "MCQ_SINGLE",
+      "prompt": "x - a = (x - a)(x - 24)\nWhich of the following are solutions to the given equation, where a is a constant and a > 25?\nI. a\nII. 24\nIII. 25",
+      "options": [
+        "I and II only",
+        "I and III only",
+        "II and III only",
+        "I, II, and III"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 12,
+      "type": "MCQ_SINGLE",
+      "prompt": "If $\\sqrt{x - 1} = 2$, what is the value of $(x - 1)$?",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "8"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 13,
+      "type": "MCQ_SINGLE",
+      "prompt": "The figure shows a rectangular pool surrounded by a concrete path that is $x$ feet (ft) wide on all sides. The pool is 21 ft long and 11 ft wide. The area of the concrete path is 144 ft$^2$. What is the value of $x$?\n[Diagram shows a rectangular pool (inner rectangle) surrounded by a concrete path (outer rectangle). The inner rectangle is labeled \"pool\". The width of the concrete path is labeled \"x ft\" on the top and left sides. A note states: \"Note: Figure not drawn to scale.\"]",
+      "options": [
+        "2",
+        "4",
+        "18",
+        "36"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 14,
+      "type": "MCQ_SINGLE",
+      "prompt": "At a nature preserve, a wildlife biologist counted bald eagles from an observation deck at the same time each day for 21 days. The table summarizes the resulting data set, data set A.\n[Table with two columns: 'Number of bald eagles' and 'Number of days'.\nRows are:\nNumber of bald eagles | Number of days\n----------------------|---------------\n0                     | 1\n1                     | 3\n2                     | 4\n3                     | 5\n4                     | 4\n5                     | 3\n19                    | 1\n]\nThe data value 19 was recorded in error and is removed from data set A to create data set B, which consists of the remaining 20 data values. Which statement best compares the median of data set A and the median of data set B?",
+      "options": [
+        "(A) The median of data set B is less than the median of data set A.",
+        "(B) The median of data set B is equal to the median of data set A.",
+        "(C) The median of data set B is greater than the median of data set A.",
+        "(D) There is not enough information to compare the medians of the two data sets."
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 15,
+      "type": "MCQ_SINGLE",
+      "prompt": "One gallon of paint will cover 70 square feet of a surface. A room has a total wall area of w square feet. Which equation represents the total amount of paint P, in gallons, needed to paint the walls of the room twice?",
+      "options": [
+        "P = w/70",
+        "P = 70w",
+        "P = 140w",
+        "P = w/35"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 16,
+      "type": "MCQ_SINGLE",
+      "prompt": "f(x) = 4^(-5(x+1))\nWhich of the following equivalent forms of the given function f displays, as the base or the coefficient, the y-coordinate of the y-intercept of the graph of y = f(x) in the xy-plane?",
+      "options": [
+        "f(x) = 1/1,024 (1/4)^5x",
+        "f(x) = (1/4)^(5x+5)",
+        "f(x) = 4^(-5x-5)",
+        "f(x) = 1,024^(-x-1)"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 17,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "For what value of x is the given expression √117n (√117n)^2 equivalent to (117n)^12x, where n > 1?",
+      "options": null,
+      "correctAnswers": [
+        "0.125 or ⅛"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 18,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The table shows the volume of two similar solids, right circular cylinder A and right circular cylinder B.\n| | Volume (cubic units) |\n|---|---|\n| Right circular cylinder A | 392π |\n| Right circular cylinder B | 10,584π |\nThe radius of right circular cylinder A is 7 units. The surface area of right circular cylinder A is kπ square units, and the surface area of right circular cylinder B is nπ square units, where k and n are constants. What is the value of n - k? (The surface area of a right circular cylinder with radius r and height h is 2πr^2 + 2πrh .)",
+      "options": null,
+      "correctAnswers": [
+        "1680"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 20,
+      "type": "MCQ_SINGLE",
+      "prompt": "If 8(5 - 2x) + 3 = 7(5 - 2x) + 18, what is the value of 5 - 2x?",
+      "options": [
+        "-15",
+        "-5",
+        "5",
+        "15"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 21,
+      "type": "MCQ_SINGLE",
+      "prompt": "The measure of angle Z is 45°. What is the measure, in radians, of angle Z?",
+      "options": [
+        "1/2 π",
+        "3/4 π",
+        "1/8 π",
+        "1/4 π"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 22,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "For a certain type of rope, the equation y = 900ax², where a is a constant, gives the estimated breaking strength y, in pounds, of a rope with a circumference of x inches. Based on this equation, if a rope of this type has a circumference of 1.75 inches, it has an estimated breaking strength of 3, 858.75 pounds. What is the estimated breaking strength, in pounds, of a rope of this type that has a circumference of 3.50 inches?",
+      "options": null,
+      "correctAnswers": [
+        "15435"
+      ],
+      "stimulus": null
+    }
+  ]
+}

@@ -1,0 +1,582 @@
+{
+  "title": "October 4th 2025 US 1",
+  "module1": [
+    {
+      "order": 1,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "A quadratic function models the height, in feet, of an object above the ground in terms of the time, in seconds, after the object was launched. The model estimates that the object was launched from an initial height of 0.00 feet above the ground and was at a maximum height of 207.36 feet above the ground 3.6 seconds after it was launched. The model also estimates that the object was at a height of 184.32 feet above the ground x seconds after it was launched. What is a possible value of x?",
+      "options": null,
+      "correctAnswers": [
+        "2.4 or 12/5"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 2,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function h is defined by h(x) = 5(9x - 10). What is the value of h(10)?",
+      "options": [
+        "400",
+        "10",
+        "50",
+        "90"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 3,
+      "type": "MCQ_SINGLE",
+      "prompt": "A pet service that takes care of both cats and dogs can care for at most 43 animals. Which inequality represents this situation, where c is the number of cats and d is the number of dogs?",
+      "options": [
+        "c - d ≤ 43",
+        "c - d ≠ 43",
+        "c + d ≥ 43",
+        "c + d ≤ 43"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 4,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "9x + 17 = 9x + k\nIn the given equation, k is a constant. The equation has infinitely many solutions. What is the value of k?",
+      "options": null,
+      "correctAnswers": [
+        "17"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 5,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The y-intercept of the graph of y = 6(1.85)^x in the xy-plane is (0, y). What is the value of y?",
+      "options": null,
+      "correctAnswers": [
+        "6"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 6,
+      "type": "MCQ_SINGLE",
+      "prompt": "The graph of the linear function f is shown, where y = f(x). What is the slope of the graph of f?\n[The graph shows a coordinate plane. The x-axis ranges from -8 to 8, with tick marks at -8, -6, -4, -2, O (origin), 2, 4, 6, 8. The y-axis ranges from -10 to 2, with tick marks at -10, -8, -6, -4, -2, O (origin), 2. A straight line is drawn on the graph. The line passes through the points (-6, -8) and (0, -7) and (6, -6).]",
+      "options": [
+        "1/6",
+        "-7",
+        "-1/6",
+        "7"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 7,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "A triathlon is a multisport race consisting of three different legs. A triathlon participant completed the cycling leg with an average speed of 17.700 miles per hour. What was the average speed, in yards per hour, of the participant during the cycling leg? (1 mile = 1,760 yards)",
+      "options": null,
+      "correctAnswers": [
+        "31152"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 8,
+      "type": "MCQ_SINGLE",
+      "prompt": "Triangle ABC is similar to triangle DEF, where angle A corresponds to angle D and angle C corresponds to angle F. Angles C and F are right angles. If tan A = 612/613, what is the value of sin D?",
+      "options": [
+        "612/613",
+        "35/613",
+        "613/612",
+        "613/35"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 9,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function A(b) = 7b^2 gives the area of a right triangle, in square centimeters (cm²), if the length of its base is b cm and the length of its height is 14 times the length of its base. Which of the following is the best interpretation of A(18) = 2,268?",
+      "options": [
+        "If the length of the base of the triangle is 2, 268 cm, then the length of the height of the triangle is 18 cm.",
+        "If the length of the base of the triangle is 18 cm, then the length of the height of the triangle is 2,268 cm.",
+        "If the length of the base of the triangle is 18 cm, then the area of the triangle is 2, 268 cm².",
+        "If the length of the base of the triangle is 2, 268 cm, then the area of the triangle is 18 cm²."
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 10,
+      "type": "MCQ_SINGLE",
+      "prompt": "-4(v - 9)(v - 2)(v + 7) = 0\nWhat value of v is a solution to the given equation?",
+      "options": [
+        "-2",
+        "7",
+        "9",
+        "-4"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 11,
+      "type": "MCQ_SINGLE",
+      "prompt": "Circle K has a radius of 8 millimeters (mm). Circle L has an area of 144π mm². What is the total area, in mm², of circles K and L?",
+      "options": [
+        "40π",
+        "20π",
+        "80π",
+        "208π"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 12,
+      "type": "MCQ_SINGLE",
+      "prompt": "x^2 + 49x + 1 = 0\nWhat is one of the solutions to the given equation?",
+      "options": [
+        "-49+sqrt((49)^2-4(1)(1))/(2(1))",
+        "-49+sqrt((49)^2-4(49)(49))/(2(49))",
+        "-1+sqrt((1)^2-4(1)(49))/(2(1))",
+        "-1+sqrt((1)^2-4(49)(1))/(2(49))"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 13,
+      "type": "MCQ_SINGLE",
+      "prompt": "A model estimates that the initial number of photons in an X-ray beam is 800 when the beam reaches the surface of a certain material. The model also estimates that when the beam passes through this material, the number of photons in the beam decreases by 50% for each 7 millimeters of the material the beam passes through. Which equation represents this model, where I is the estimated number of photons in the beam when the beam reaches a point x millimeters from the surface?",
+      "options": [
+        "I = 800(7)^(x/2)",
+        "I = 800(0.5)^x",
+        "I = 800(2)^(x/7)",
+        "I = 800(0.5)^(x/7)"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 14,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the xy-plane, line k passes through the points (3, 0) and (0, 5). Which of the following is an equation of line k?",
+      "options": [
+        "3x - 5y = 15",
+        "5x + 3y = 15",
+        "3x + 5y = 15",
+        "5x - 3y = 15"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 15,
+      "type": "MCQ_SINGLE",
+      "prompt": "In right triangle ABC shown, what is the measure of angle C? [Diagram: A right triangle ABC is shown. Angle B is marked as a right angle (90 degrees). Angle A is labeled 56 degrees. The vertices are A at the top, B at the bottom left, and C at the bottom right. Note: Figure not drawn to scale.]",
+      "options": [
+        "124°",
+        "146°",
+        "56°",
+        "34°"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 16,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "x + 4y = -3\n4x - y = 22\nThe solution to the given system of equations is (x, y). What is the value of 3x - 5y?",
+      "options": null,
+      "correctAnswers": [
+        "25"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 17,
+      "type": "MCQ_SINGLE",
+      "prompt": "A circle in the xy-plane has its center at (-4, 1) and the point (-8, 4) lies on the circle. Which equation represents this circle?",
+      "options": [
+        "(x - 4)^2 + (y + 1)^2 = 5",
+        "(x + 4)^2 + (y - 1)^2 = 25",
+        "(x - 4)^2 + (y + 1)^2 = 25",
+        "(x + 4)^2 + (y - 1)^2 = 5"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 18,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "In the figure, lines r and s are parallel and line t intersects both lines. [The figure shows two vertical parallel lines, r and s. A transversal line t intersects both lines. At the intersection of line t and line r, an angle labeled a° is in the upper-right position. At the intersection of line t and line s, an angle labeled b° is in the upper-right position, and an angle labeled c° is in the lower-right position. Note: Figure not drawn to scale.] If a = 4k + 57 and b = k/4 + 55, what is the value of c?",
+      "options": null,
+      "correctAnswers": [
+        "121"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 19,
+      "type": "MCQ_SINGLE",
+      "prompt": "0.5x + 1.2y = 9\n1.5x + 3.6y = 27\nHow many solutions does the given system of equations have?",
+      "options": [
+        "Infinitely many",
+        "Exactly two",
+        "Exactly one",
+        "Zero"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 20,
+      "type": "MCQ_SINGLE",
+      "prompt": "For a study, a research team measured the heights of 380 king penguins from the Kerquelen Islands and 190 king penguins from the Falkland islands. The research team determined that the mean height of the 380 king penguins from the Kerquelen Islands was 87 centimeters and the mean height of the 190 king penguins from the Falkland Islands was 93 centimeters. What was the mean height, in centimeters, of all 570 king penguins the research team measured for this study?",
+      "options": [
+        "91",
+        "89",
+        "90",
+        "88"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 21,
+      "type": "MCQ_SINGLE",
+      "prompt": "Which of the following equations is the most appropriate model for the data shown in the scatterplot? [The scatterplot shows points on a coordinate plane. The x-axis is labeled from -5 to 5 with integer increments. The y-axis is labeled from 10 to 80 with increments of 10. The plotted points are approximately: (-4, 20), (-3, 20), (-2, 22), (-1, 24), (0, 26), (1, 30), (2, 40), (3, 46), (4, 56).]",
+      "options": [
+        "y = 24(1.55)^x",
+        "y = 24(1.55)^x + 18",
+        "y = 6(1.55)^x + 23",
+        "y = 6(1.55)^x + 18"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 22,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the given equation, q, r, s, and t are positive, and t is greater than 5. Which expression is equivalent to s?\n18qrt - 2qrs + 10rst = 0",
+      "options": [
+        "-9qt / (q-5t)",
+        "9qt / (q-5t)",
+        "18qrt",
+        "2qt / (q-5t)"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    }
+  ],
+  "module2": [
+    {
+      "order": 2,
+      "type": "MCQ_SINGLE",
+      "prompt": "A chemist combines 25 grams of compound A, 35 grams of compound B, and x grams of compound C. The resulting mixture has a mass of 125 grams. What is the value of x?",
+      "options": [
+        "25",
+        "65",
+        "35",
+        "10"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 4,
+      "type": "MCQ_SINGLE",
+      "prompt": "Carmen needs at least 100 signatures to submit a petition. If Carmen already has 51 signatures, what is the minimum number of additional signatures Carmen needs to submit the petition?",
+      "options": [
+        "41",
+        "151",
+        "49",
+        "51"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 5,
+      "type": "MCQ_SINGLE",
+      "prompt": "There are a total of 340 seats in a school auditorium. During an assembly, students occupied 50% of the seats in the auditorium. How many seats did the students occupy during this assembly?",
+      "options": [
+        "290",
+        "25",
+        "170",
+        "50"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 6,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The graph of the polynomial function f, where y = f(x), is shown. [The graph displays a parabola opening upwards. The x-axis is labeled with -1, O (origin), and 1. The y-axis is labeled with integers from 1 to 12. The parabola intersects the y-axis at the point (0, 5). The vertex of the parabola is at (0, 5). The points (-1, 6) and (1, 6) are also on the graph.] The y-intercept of the graph is (0, y). What is the value of y?",
+      "options": null,
+      "correctAnswers": [
+        "5"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 7,
+      "type": "MCQ_SINGLE",
+      "prompt": "If 5c = 15, what is the value of 5c - 8?",
+      "options": [
+        "3",
+        "67",
+        "7",
+        "23"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 8,
+      "type": "MCQ_SINGLE",
+      "prompt": "The ratio of k to p is constant. If k = 7, then p = 6. What is the value of k when p = 336?",
+      "options": [
+        "288",
+        "56",
+        "48",
+        "392"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 9,
+      "type": "MCQ_SINGLE",
+      "prompt": "Each of 185 animals can be classified as one of three species, as shown in the frequency table.\n[Table with two columns: 'Classification' and 'Frequency'. Rows are: 'species X' with '112', 'species Y' with '3', 'species Z' with '70'.]\nIf one of the animals is selected at random, what is the probability of selecting an animal of species Y?",
+      "options": [
+        "70/185",
+        "3/185",
+        "182/185",
+        "112/185"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 10,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "For certain air temperatures, the table gives wind chill temperatures for two different wind speeds.\n[Table with 3 rows of data and 3 columns. Column 1 header: Air temperature. Column 2 header: Wind chill temperature at wind speed 5 mph. Column 3 header: Wind chill temperature at wind speed 15 mph. Data rows: Row 1: 27°F, 21°F, 15°F. Row 2: 29°F, 24°F, 18°F. Row 3: 31°F, 26°F, 20°F.]\nAccording to the table, what is the wind chill temperature, in degrees Fahrenheit (°F), when the air temperature is 29°F and the wind speed is 15 miles per hour (mph)? (Disregard the degree symbol when entering your answer.)",
+      "options": null,
+      "correctAnswers": [
+        "18"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 11,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "In a right triangle, the measure of one of the acute angles is 14°. What is the measure of the other acute angle, in degrees? (Disregard the degree symbol when entering your answer.)",
+      "options": null,
+      "correctAnswers": [
+        "76"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 12,
+      "type": "MCQ_SINGLE",
+      "prompt": "Which expression is a factor of 3x² + 57x + 15?",
+      "options": [
+        "3x^2",
+        "5x",
+        "3",
+        "57x"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 13,
+      "type": "MCQ_SINGLE",
+      "prompt": "A city has an area of x square miles and a population density of 1,035 people per square mile. The suburb adjacent the city has an area of y square miles and a population density of 535 people per square mile. The combined population of the city and the suburb adjacent to the city is 13,165 people. Which equation represents this situation?",
+      "options": [
+        "1,035x + 535y = 13,165",
+        "1,035x + 535 = 13,165y",
+        "1,035x + 535 = 1,570y",
+        "1,035x + 535y = 1,570"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 14,
+      "type": "MCQ_SINGLE",
+      "prompt": "A triangle has a base length of 48 centimeters and a height of 96 centimeters. What is the area, in square centimeters, of the triangle?",
+      "options": [
+        "2,304",
+        "1,152",
+        "4,608",
+        "144"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 15,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function f(x) = -40x + 340 gives the predicted height above the ground f(x), in feet, of a model airplane x minutes after it begins to descend. What is the predicted height above the ground, in feet, of the model airplane 3 minutes after it begins to descend?",
+      "options": [
+        "120",
+        "220",
+        "300",
+        "460"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 16,
+      "type": "MCQ_SINGLE",
+      "prompt": "The given equation relates the positive variables a and b. Which equation correctly expresses a in terms of b?\n5a = 4b^2/a - 20a",
+      "options": [
+        "a = 4b/25",
+        "a = 4b^2/25",
+        "a = 2b/5",
+        "a = 2b^2/5"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 17,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "Charles saves 3/5 of the $225 he earns each week from his summer job. If Charles continues to save at this rate, how much money, in dollars, will Charles save in 3 weeks?",
+      "options": null,
+      "correctAnswers": [
+        "405"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 18,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function f is defined by f(x) = 2x^3 + 1/3 x^2 - x. What is the value of f(1)?",
+      "options": [
+        "4/3",
+        "2",
+        "10/3",
+        "6"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 19,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the xy-plane, what is the slope of the line that passes through the points (0,0) and (13, 14)?",
+      "options": [
+        "13",
+        "14/13",
+        "13/14",
+        "14"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 20,
+      "type": "MCQ_SINGLE",
+      "prompt": "Function f is defined as f(x) = (2x-5)^2, and function g is defined as g(x) = 2(2x + 7). Which of the following is equivalent to f(x) + g(x)?",
+      "options": [
+        "4x^2 - 16x + 11",
+        "4x^2 - 16x + 39",
+        "4x^2 - 6x + 39",
+        "4x^2 - 24x + 11"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 21,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "15x^2 = 15(9)\nWhat is the negative solution to the given equation?",
+      "options": null,
+      "correctAnswers": [
+        "-3"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 22,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function f is defined by f(x) = a(4)^x, where a is a positive constant. In the xy-plane, the graph of y = f(x) passes through the point (0, 13). What is the value of f(0)?",
+      "options": [
+        "4",
+        "1",
+        "13",
+        "9"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    }
+  ]
+}

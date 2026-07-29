@@ -1,0 +1,577 @@
+{
+  "title": "September 13th, 2025 INT 1",
+  "module1": [
+    {
+      "order": 1,
+      "type": "MCQ_SINGLE",
+      "prompt": "The number of muskrat in a 115-acre area is estimated to be 2,070. What is the estimated population density, in muskrat per acre, of this area?",
+      "options": [
+        "18",
+        "2,088",
+        "115",
+        "133"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 2,
+      "type": "MCQ_SINGLE",
+      "prompt": "Note: Figure not drawn to scale.\nThe triangle shown has one side with a length of x inches and two sides each with a length of y inches.\nThe perimeter of the triangle is 63 inches. Which equation represents this situation?\n[A triangle with one side labeled 'x' and the other two sides labeled 'y'.]",
+      "options": [
+        "2x + y = 63",
+        "x + 2y = 63",
+        "2x + 2y = 63",
+        "x + y = 63"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 3,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "A jar has 170 buttons, and 20% of these buttons are green. How many buttons in the jar are green?",
+      "options": null,
+      "correctAnswers": [
+        "34"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 4,
+      "type": "MCQ_SINGLE",
+      "prompt": "There are a total of 3,500 milligrams of phosphorus in a sample of soil. Each kilogram of this sample contains 700 milligrams of phosphorus. Which equation represents this situation, where x is the mass, in kilograms, of the sample of soil?",
+      "options": [
+        "3,500x = 700",
+        "x + 3,500 = 700",
+        "x + 700 = 3,500",
+        "700x = 3,500"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 5,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function f is defined by f(x) = (1/2)(x + 11). What is the value of f(3)?",
+      "options": [
+        "22",
+        "28",
+        "7",
+        "14"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 6,
+      "type": "MCQ_SINGLE",
+      "prompt": "If 7x + 5 = 22, what is the value of 2(7x + 5)?",
+      "options": [
+        "34",
+        "66",
+        "44",
+        "54"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 7,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "Triangles ABC and DEF are congruent, where A corresponds to D, and B and E are right angles. The measure of angle A is 63°. What is the measure, in degrees, of angle F?",
+      "options": null,
+      "correctAnswers": [
+        "27"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 8,
+      "type": "MCQ_SINGLE",
+      "prompt": "A savings account is opened with an initial deposit of 9000. The amount of money in the account t years after the initial deposit is given by the function f(t) = 9000(1.02)^2t. Which of the following is the best interpretation of the statement \"f(9) is approximately equal to 12854.22\" in this context?",
+      "options": [
+        "Every 9 years, the amount of money, in dollars, in the account increases by 12,854.22.",
+        "9 years after the initial deposit, the amount of money, in dollars, in the account is 12,854.22.",
+        "9 years after the initial deposit, the amount of money, in dollars, in the account has increased by 12,854.22.",
+        "Every 9 years, the amount of money, in dollars, in the account decreases by 12,854.22."
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 9,
+      "type": "MCQ_SINGLE",
+      "prompt": "y = (x - 7)(x + 3) Which table gives four values of x and the corresponding values of y for the given quadratic equation?",
+      "options": [
+        "x | -1 | 0 | 1 | 2\ny | 11 | 3 | -3 | -7",
+        "x | -1 | 0 | 1 | 2\ny | -28 | -21 | -14 | -7",
+        "x | -1 | 0 | 1 | 2\ny | -16 | -21 | -24 | -25",
+        "x | -1 | 0 | 1 | 2\ny | 3 | 10 | 17 | 24"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 10,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the linear function f, f(0) = 9 and f(7) = 9. Which equation defines f?",
+      "options": [
+        "f(x) = 9",
+        "f(x) = x + 9",
+        "f(x) = 7",
+        "f(x) = 0"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 11,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "A length of 550 meters is equal to how many decimetres? (1 meter = 10 decimeters)",
+      "options": null,
+      "correctAnswers": [
+        "5500"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 12,
+      "type": "MCQ_SINGLE",
+      "prompt": "An arborist studying forestland in Illinois estimates that there are at least 40 and no more than 70 hickory trees per acre in a certain forest. Which of the following best represents the arborist's estimate of the number of hickory trees, x, that are in a 7-acre section of this forest?",
+      "options": [
+        "490 ≤ x ≤ 980",
+        "280 ≤ x ≤ 490",
+        "47 ≤ x ≤ 77",
+        "40 ≤ x ≤ 70"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 13,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "For the polynomial function p, the graph of y = p(x) in the xy-plane crosses through the points (-6, 0), (0, 12), (7, 0), and (14, 0). What is the value of p(0)?",
+      "options": null,
+      "correctAnswers": [
+        "12"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 14,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The graph of -11x + 2.2y = -605 in the xy-plane has intercepts at (a, 0) and (0, b). What is the value of ab?",
+      "options": null,
+      "correctAnswers": [
+        "-15125"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 15,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The solution to the given system of equations is (x, y). What is the value of y?\nx + 21y = 38\n4x + 3y = 17",
+      "options": null,
+      "correctAnswers": [
+        "5/3 or 1.66"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 16,
+      "type": "MCQ_SINGLE",
+      "prompt": "As part of a study on sedimentary habitats, the water temperature was recorded at different depths below the surface of the water in the northern Alboran Sea. The data shown in the scatterplot give the recorded temperature, in degrees Celsius, for 7 depths, in meters, below the surface of the water.\n[The scatterplot shows 'Depth (meters)' on the x-axis, ranging from 0 to 70, with labels at 10, 20, 30, 40, 50, 60, 70. The y-axis is labeled 'Temperature (°C)', ranging from 10 to 24, with labels at 10, 12, 14, 16, 18, 20, 22, 24. There are 7 data points marked with 'x' and a black line of best fit. The data points are approximately: (10, 23), (20, 21.5), (30, 19.5), (40, 18), (50, 16.5), (60, 15), (70, 13). The line of best fit passes through approximately (10, 23) and (70, 13).]\nWhich of the following is closest to the slope of a line of best fit for the data shown?",
+      "options": [
+        "-8.05",
+        "-0.17",
+        "-6.05",
+        "-2.17"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 17,
+      "type": "MCQ_SINGLE",
+      "prompt": "The given equation relates the positive numbers a and b. Which equation correctly expresses b in terms of a?\n\na = (4/9)b + 8",
+      "options": [
+        "b = (9/4)a - 18",
+        "b = (4/9)a - 18",
+        "b = (9/4)a - 8",
+        "b = (9/4)a + 8"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 18,
+      "type": "MCQ_SINGLE",
+      "prompt": "The measure of an angle, in radians, is (99)(2)π. What is the measure of the angle, in degrees?",
+      "options": [
+        "(99)(2)(360)",
+        "((99)/2)(360)",
+        "(180)(99)(360)",
+        "(99)(360)"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 19,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the given equation, k is a constant. The equation x^2 + (sqrt(k) - 3)x + 26 = 0 has exactly one real solution. What is the value of k?",
+      "options": [
+        "29",
+        "104",
+        "107",
+        "101"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 20,
+      "type": "MCQ_SINGLE",
+      "prompt": "In triangles RST and XYZ shown, XY is parallel to TS and tan R = 180/299. What is the value of sin X in triangle XYZ?\n[Diagram shows a large right-angled triangle RST, with the right angle at T. Point Y is on RT, and point X is on RS. Segment XY is drawn. A right angle symbol is at Y, indicating angle RYX = 90 degrees. Point Z is on RS, between X and S. Segment YZ is drawn. A right angle symbol is at Y, indicating angle XYZ = 90 degrees.]",
+      "options": [
+        "299/349",
+        "180/349",
+        "180/479",
+        "299/180"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    }
+  ],
+  "module2": [
+    {
+      "order": 1,
+      "type": "MCQ_SINGLE",
+      "prompt": "In triangle EFG, the sum of the measures of angles E and F is 22°. What is the measure of angle G?",
+      "options": [
+        "158°",
+        "136°",
+        "68°",
+        "22°"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 2,
+      "type": "MCQ_SINGLE",
+      "prompt": "Which of the following lists represents a data set with the smallest standard deviation?",
+      "options": [
+        "83, 84, 85, 86, 87",
+        "84, 85, 85, 85, 86",
+        "83, 83, 85, 87, 87",
+        "82, 83, 85, 87, 88"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 3,
+      "type": "MCQ_SINGLE",
+      "prompt": "The graphs of the equations in the given system of equations intersect at the point (x, y) in the xy-plane.\ny = (x - 25)(x - 75)\ny = 0\nWhat is a possible value of x?",
+      "options": [
+        "75",
+        "100",
+        "3",
+        "0"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 4,
+      "type": "MCQ_SINGLE",
+      "prompt": "The cost to rent a kayak consists of a fixed fee for the first hour and an hourly fee for each additional hour. The table shows the rental cost for 2 hours and for 4 hours.\n[Table with 2 columns and 2 rows of data: Rental hours, Rental cost (dollars); 2, 65; 4, 125]\nWhich function f gives the rental cost, in dollars, for x hours rental, where x ≥ 1?",
+      "options": [
+        "f(x) = 30x + 5",
+        "f(x) = 35x",
+        "f(x) = 30x + 65",
+        "f(x) = 30x"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 5,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function g is defined by the given equation. For what value of x does g(x) reach its maximum?\ng(x) = (38 - 2x)(32 + 2x)",
+      "options": [
+        "3",
+        "35",
+        "1.5",
+        "17.5"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 6,
+      "type": "MCQ_SINGLE",
+      "prompt": "Rectangle X has a length of 24 millimeters (mm) and a width of 7.5 mm. Right triangle Y has a base of 60 mm. The area of rectangle X is 3 times the area of right triangle Y. What is the height, in mm, of right triangle Y?",
+      "options": [
+        "6",
+        "2",
+        "3",
+        "1"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 7,
+      "type": "MCQ_SINGLE",
+      "prompt": "There is a linear relationship between x and y. The table shows three values of x and their corresponding values of y in terms of a constant n. What is the slope of the line in the xy-plane that represents this relationship? [Table with columns x and y, and rows: (0, n), (4, n + 21), (8, n + 42)]",
+      "options": [
+        "21",
+        "2",
+        "21/4",
+        "1/2"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 8,
+      "type": "MCQ_SINGLE",
+      "prompt": "If a = 5k + 6r and b = 8k - 11r + 3, which expression is equivalent to a - b?",
+      "options": [
+        "-3k + 17r + 3",
+        "-3k - 5r - 3",
+        "-3k + 17r - 3",
+        "-3k - 5r + 3"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 9,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "An exponential function f is defined by f(x) = c^x, where c is a constant greater than 1. If f(6) = 25 * f(4), what is the value of c?",
+      "options": null,
+      "correctAnswers": [
+        "5"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 10,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The function g is defined by g(x) = 18x + 31. For what value of x does g(x) = 34?",
+      "options": null,
+      "correctAnswers": [
+        "⅙ or 0.16"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 11,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The equation h = (9(v-273.15))/5 + 32 gives the corresponding temperature h, in degrees Fahrenheit, of any substance that has a temperature of v kelvins, where v > 0. If a substance has a temperature of 845.33 degrees Fahrenheit, what is the corresponding temperature, in kelvins, of this substance?",
+      "options": null,
+      "correctAnswers": [
+        "725"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 12,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the given equation, p is a constant. The equation has exactly one real solution. What is the value of p?\n25x² + 10√39x + p = 0",
+      "options": [
+        "√39",
+        "2√39",
+        "39/2",
+        "39"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 13,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function f gives the value, in dollars, of a certain piece of equipment after x months of use. If the value of the equipment decreases each year by p% of its value the preceding year, what is the value of p?\nf(x) = 2,570 (0.28)^(x/12)",
+      "options": [
+        "10",
+        "28",
+        "72",
+        "2"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 14,
+      "type": "MCQ_SINGLE",
+      "prompt": "In triangle RST, RS = ST and the length of RT is 48 units. If tan R = 7/24, what is the area, in square units, of triangle RST?",
+      "options": [
+        "168",
+        "288",
+        "84",
+        "336"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 15,
+      "type": "MCQ_SINGLE",
+      "prompt": "An equilateral triangle has a height of 21√3 units. What is the length, in units, of one side of this triangle?",
+      "options": [
+        "42",
+        "21√3",
+        "42√3",
+        "21"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 16,
+      "type": "MCQ_SINGLE",
+      "prompt": "Which expression is NOT a factor of 1,440x^4 - 56,250?",
+      "options": [
+        "90",
+        "4x^2 + 25",
+        "2x^2 - 5",
+        "2x + 5"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 17,
+      "type": "MCQ_SINGLE",
+      "prompt": "2970x = 5940x\nHow many solutions does the given equation have?",
+      "options": [
+        "Infinitely many",
+        "Exactly two",
+        "Zero",
+        "Exactly one"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 18,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "In the xy-plane, line r passes through the points (3, 12) and (7, 13). Line s passes through the point (1, 2) and is perpendicular to line r. An equation of line s is ax + 7y = c, where a and c are constants. What is the value of c?",
+      "options": null,
+      "correctAnswers": [
+        "42"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 19,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "For 100 neurons, the table summarizes the distribution of classification and cell body diameter.\n[Table with 3 rows and 4 columns. Column headers: 'Classification', 'Cell body diameter (micrometers) Less than 20', 'Cell body diameter (micrometers) 20 to 30', 'Cell body diameter (micrometers) Greater than 30'. Row 1 (Sensory neuron): 12, 7, 4. Row 2 (Motor neuron): 0, 17, 18. Row 3 (Interneuron): 10, 32, 0.]\nOne of these neurons will be selected at random. What is the probability of selecting a neuron with a cell body diameter that is less than or equal to 30 micrometers, given that it is not classified as a motor neuron? (Express your answer as a decimal or fraction, not as a percent.)",
+      "options": null,
+      "correctAnswers": [
+        "61/65 or 0.93"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 20,
+      "type": "MCQ_SINGLE",
+      "prompt": "The value of a painting increased by 179% from the end of 2017 to the end of 2018 and then decreased by 27% from the end of 2018 to the end of 2019. What was the net percentage increase in the value of the painting from the end of 2017 to the end of 2019?",
+      "options": [
+        "254.33%",
+        "152.00%",
+        "130.67%",
+        "103.67%"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 21,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "|x + 4| + 4 = |2x - 11| + 4 What is the smallest solution to the given equation?",
+      "options": null,
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 22,
+      "type": "MCQ_SINGLE",
+      "prompt": "y = 3x^2 - 12x + 18\ny + 2 = 0\nHow many solutions are there to the given system of equations?",
+      "options": [
+        "There are exactly 2 solutions.",
+        "There are exactly 3 solutions.",
+        "There are no solutions.",
+        "There is exactly 4 solution."
+      ],
+      "correctAnswers": [
+        "195/2 or 97.5"
+      ],
+      "stimulus": null
+    }
+  ]
+}

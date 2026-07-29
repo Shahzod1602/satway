@@ -1,0 +1,567 @@
+{
+  "title": "November 8th, 2025 INT 2",
+  "module1": [
+    {
+      "order": 1,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "One of the two equations in a system of linear equations is given. The system has infinitely many solutions. If the second equation in this system is y = mx + b, where m and b are constants, what is the value of b?\ny = 9x + 19",
+      "options": null,
+      "correctAnswers": [
+        "19"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 2,
+      "type": "MCQ_SINGLE",
+      "prompt": "If 5x + 2 = 32, what is the value of 50x + 20?",
+      "options": [
+        "6",
+        "60",
+        "70",
+        "320"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 3,
+      "type": "MCQ_SINGLE",
+      "prompt": "In each of the following data sets of 5 values, p is a constant. Which of these data sets has the largest standard deviation?",
+      "options": [
+        "p - 4, p, p, p, p + 4",
+        "p - 1, p - 1, p, p + 1, p + 1",
+        "p, p, p, p, p",
+        "p - 5, p - 4, p, p + 4, p + 5"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 4,
+      "type": "MCQ_SINGLE",
+      "prompt": "A jar has 430 marbles, and 20% of these marbles are blue. How many marbles in the jar are blue?",
+      "options": [
+        "86",
+        "172",
+        "215",
+        "410"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 6,
+      "type": "MCQ_SINGLE",
+      "prompt": "The scatterplot shows the relationship between the square footage of 12 clothing stores and their annual sales, in millions of dollars. According to the trend shown by the data, which of the following is the best prediction for the annual sales, in millions of dollars, of a clothing store that is 4 thousand square feet?\n[The scatterplot has 'Square footage of store (in thousands of square feet)' on the x-axis, ranging from 0 to 7, and 'Annual sales (in millions of dollars)' on the y-axis, ranging from 0 to 14. The data points are approximately: (1, 2.5), (1.5, 3), (2, 3.5), (2.5, 6), (3, 4.5), (3, 7), (3.5, 6.5), (4.5, 8), (5, 10.5), (5.5, 12), (6, 10), (6.5, 12.5). The overall trend is upward.]",
+      "options": [
+        "4.1",
+        "5.4",
+        "7.5",
+        "10.2"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 7,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The solution to the given system of equations is (x, y). What is the value of y?\nx + y = 165\nx + y + y = 185",
+      "options": null,
+      "correctAnswers": [
+        "20"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 8,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function f is defined by f(x) = 6x - 1/7. What is the y-intercept of the graph of y = f(x) in the xy-plane?",
+      "options": [
+        "(0, -1/7)",
+        "(0, -6)",
+        "(0, 6)",
+        "(0, 7)"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 9,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "A total of 50 people attended a conference and were offered a choice of 4 types of entrees. The table shows the number of people who chose each type of entree. [Table with columns 'Type of entree' and 'Number of people'. Rows: Beef, 13; Chicken, 20; Fish, 8; Vegetarian, 9; Total, 50.] If one of these people is selected at random, what is the probability of selecting a person who chose a vegetarian entree? (Express your answer as a decimal or fraction, not as a percent.)",
+      "options": null,
+      "correctAnswers": [
+        "0.18 or 9/50"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 10,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the figure shown, lines ell and k are parallel and line t intersects both lines. If x > 116, which of the following must be true?\n[The figure shows two parallel horizontal lines, labeled 'l' and 'k', intersected by a transversal line, labeled 't'. At the intersection of line t and line l, the upper-right angle is labeled x°. At the intersection of line t and line k, the lower-right angle is labeled y°. A note states: \"Note: Figure not drawn to scale.\"]",
+      "options": [
+        "y < 64",
+        "y > 64",
+        "x + y < 180",
+        "x + y > 180"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 11,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the xy-plane, the graph of y = 2x intersects the graph of y = x^2 - 35 at two points. What is the sum of the x-coordinates of the two points of intersection?",
+      "options": [
+        "-35",
+        "-5",
+        "2",
+        "7"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 12,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The function f is defined by f(x) = 3 (1/4 - x)^2 + 13/4. What is the value of f (1/4)?",
+      "options": null,
+      "correctAnswers": [
+        "13/4 or 3.25"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 13,
+      "type": "MCQ_SINGLE",
+      "prompt": "A marine biologist is studying a habitat that contains shoal bass, a species of freshwater fish. The box plot shown summarizes the lengths, in centimeters (cm), of a sample of 70 shoal bass from this habitat. [The box plot is displayed on a number line ranging from 32 to 50, labeled \"Shoal bass length (cm)\". The minimum value (left whisker) is at 34. The first quartile (left edge of the box) is at 38. The median (line inside the box) is at 40. The third quartile (right edge of the box) is at 44. The maximum value (right whisker) is at 49.] What is the range, in cm, of the lengths of the shoal bass in the sample?",
+      "options": [
+        "10",
+        "15",
+        "29",
+        "41"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 14,
+      "type": "MCQ_SINGLE",
+      "prompt": "The area of triangle ABC is 150 square centimeters. What is the height h, in centimeters, of this triangle? [A triangle ABC is shown. The base AC is horizontal and has a length of 10 cm. A dashed line representing the height h is drawn from vertex B perpendicular to the base AC, with a right angle symbol indicated at the intersection with AC.]",
+      "options": [
+        "10",
+        "15",
+        "30",
+        "60"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 15,
+      "type": "MCQ_SINGLE",
+      "prompt": "x^2 - 2x = 29\nWhat is one of the solutions to the given equation?",
+      "options": [
+        "√29",
+        "1 + √30",
+        "30",
+        "29 + √2"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 16,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "Circle A in the xy-plane has the equation (x + 8)^2 + (y - 8)^2 = 25. Circle B has the same center as circle A. The radius of circle B is two times the radius of circle A. The equation defining circle B in the xy-plane is (x + 8)^2 + (y - 8)^2 = k, where k is a constant. What is the value of k?",
+      "options": null,
+      "correctAnswers": [
+        "100"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 17,
+      "type": "MCQ_SINGLE",
+      "prompt": "The graph of y = f(x) is shown in the xy-plane. For what value of x does f(x) = 0?\n[The image displays a graph of a function y = f(x) on an xy-plane. The x-axis and y-axis both range from -8 to 8, with grid lines at integer intervals. The graph consists of two branches. One branch is in the second quadrant, starting from approximately x=-8, y=8 and curving downwards, approaching the negative x-axis as x goes to negative infinity, and approaching the positive y-axis as x approaches 0 from the left. The other branch passes through the point (1, 0) on the x-axis and the point (0, -1) on the y-axis. This branch extends into the first quadrant, approaching the positive x-axis as x goes to positive infinity, and extends into the third quadrant, approaching the negative y-axis as x approaches 0 from the right.]",
+      "options": [
+        "-4",
+        "0",
+        "1",
+        "4"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 18,
+      "type": "MCQ_SINGLE",
+      "prompt": "What is the sum of the solutions to the given equation? (|3x - 30| + 3) / 6 = 5",
+      "options": [
+        "1",
+        "19",
+        "20",
+        "30"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 19,
+      "type": "MCQ_SINGLE",
+      "prompt": "Line h is defined by 1/2 x + 1/5 y - 40 = 0. Line j is perpendicular to line h in the xy-plane. What is the slope of line j?",
+      "options": [
+        "-5/2",
+        "-2/5",
+        "5/2",
+        "2/5"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 20,
+      "type": "MCQ_SINGLE",
+      "prompt": "The width of a rectangle is 16 inches less than 2 times its length, in inches. The area of the rectangle is 130 square inches. What is the width, in inches, of the rectangle?",
+      "options": [
+        "5",
+        "10",
+        "13",
+        "18"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 21,
+      "type": "MCQ_SINGLE",
+      "prompt": "A machine makes 8-inch, 9-inch, and 3-inch parts. During a certain day, the number of 8-inch parts that the machine makes is 5 times the number n of 9-inch parts, and the number of 3-inch parts is 4. During this day, the machine makes 100 parts total. Which equation represents this situation?",
+      "options": [
+        "8(5n) + 9n+3(4) = 100",
+        "8n+9n+3n = 100",
+        "5n+4=100",
+        "6n+4= 100"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    }
+  ],
+  "module2": [
+    {
+      "order": 2,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "A line passes through the points (4, 7) and (18, 28) in the xy-plane. What is the slope of the line?",
+      "options": null,
+      "correctAnswers": [
+        "3/2 or 1.5"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 3,
+      "type": "MCQ_SINGLE",
+      "prompt": "The length of a rectangle's diagonal is √106, and the length of one of the rectangle's sides is 9. What is the perimeter of the rectangle?",
+      "options": [
+        "106",
+        "45",
+        "28",
+        "14"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 4,
+      "type": "MCQ_SINGLE",
+      "prompt": "(5x+6)(8x-5) = 0\nWhich of the following is a solution to the given equation?",
+      "options": [
+        "-8/5",
+        "-6/5",
+        "-5/6",
+        "-5/8"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 5,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The graph of 9x + y = 16 in the xy-plane is a line. What is the slope of the line?",
+      "options": null,
+      "correctAnswers": [
+        "-9"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 6,
+      "type": "MCQ_SINGLE",
+      "prompt": "A solution to the given system of equations is (x, y), where x < 0. What is the value of y?\nx² + y² = 3,185\ny - 8x = 0",
+      "options": [
+        "-392",
+        "-56",
+        "-8",
+        "-7"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 7,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function f is defined by f(x) = (x+11)/5, and f(a) = -15, where a is a constant. What is the value of a?",
+      "options": [
+        "-86",
+        "-64",
+        "64/5",
+        "-4/5"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 8,
+      "type": "MCQ_SINGLE",
+      "prompt": "The equation y = -4.9(x - 8.9)² + 12,400 gives the estimated height above ground, y, in meters, of a plane, where x is the number of seconds since it started a parabolic maneuver. If this equation is graphed in the xy-plane, which of the following is the best interpretation of the vertex of the graph?",
+      "options": [
+        "The plane reached an estimated maximum height of 12,400 meters 4.9 seconds after it started the parabolic maneuver.",
+        "The plane reached an estimated maximum height of 12,400 meters 8.9 seconds after it started the parabolic maneuver.",
+        "The plane reached an estimated maximum height of 4.9 meters 12,400 seconds after it started the parabolic maneuver.",
+        "The plane reached an estimated maximum height of 8.9 meters 12,400 seconds after it started the parabolic maneuver."
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 9,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the given equation, a(4 - x) = 28 - 7x, a is a constant. The equation has exactly one solution. Which of the following CANNOT be the value of a?",
+      "options": [
+        "1",
+        "4",
+        "7",
+        "28"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 10,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The function g is defined by g(x) = (x+13)(t-x), where t is a constant. In the xy-plane, the graph of y = g(x) passes through the point (24, 0). What is the value of g(0)?",
+      "options": null,
+      "correctAnswers": [
+        "312"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 11,
+      "type": "MCQ_SINGLE",
+      "prompt": "In triangle QRS shown, QR < RS. Which expression represents the length of QS? [Right-angled triangle QRS with a right angle at R. The side RS has a length of 23. The angle at vertex Q is labeled as Q. Note: Figure not drawn to scale.]",
+      "options": [
+        "23 cos Q",
+        "23 sin Q",
+        "23/cos Q",
+        "23/sin Q"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 12,
+      "type": "MCQ_SINGLE",
+      "prompt": "The graph of the equation y = 5^x + k is shown, where k is a constant. What is the value of k? [The graph shows an exponential curve on a Cartesian coordinate system. The x-axis ranges from -10 to 10, labeled with even numbers. The y-axis ranges from -10 to 10, labeled with even numbers. The curve approaches a horizontal line at y = -8 as x approaches negative infinity. The curve passes through the point (0, -7).]",
+      "options": [
+        "-8",
+        "-7",
+        "7",
+        "8"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 13,
+      "type": "MCQ_SINGLE",
+      "prompt": "A beekeeper's initial observation of the population of a certain bee colony was 1, 800 bees. The beekeeper set a goal to increase the population to 3, 300 bees. The beekeeper uses a model that predicts the population of this bee colony begins at 1, 800 and increases by 120 bees per week in the first two weeks after the initial observation, and then increases by 180 bees per week until the beekeeper's goal is reached. According to this model, at the end of week w after the initial observation, where w > 2, which of the following functions gives the predicted number of bees still needed to reach the beekeeper's goal?",
+      "options": [
+        "p(w) = 3,300 – 180w",
+        "p(w) = 3,180 + 180w",
+        "p(w) = 1,620 - 180w",
+        "p(w) = -120 + 180w"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 14,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function f is defined by f(x) = 55(0.19)^x. For any positive integer n, the value of f (n) is p% less than the value of f (n - 1). What is the value of p?",
+      "options": [
+        "19",
+        "45",
+        "55",
+        "81"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 15,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "For the given functions r and s, n is a constant. If r(x)s(x) = 13(x^4 - 16), what is the value of n?\nr(x) = 13(x - 2)\ns(x) = x^3 + nx^2 + 2nx + 8",
+      "options": null,
+      "correctAnswers": [
+        "2"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 16,
+      "type": "MCQ_SINGLE",
+      "prompt": "The triangle inequality theorem states that the sum of any two sides of a triangle must be greater than the length of the third side. If a triangle has side lengths of 10 and 11, which inequality represents the possible lengths, x, of the third side of the triangle?",
+      "options": [
+        "x < 21",
+        "x > 21",
+        "1 < x < 21",
+        "x < 1 or x > 21"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 17,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "An area of 58.00 square nautical miles is equivalent to k square kilometers. To the nearest tenth, what is the value of k? (1 nautical mile = 1.852 kilometers)",
+      "options": null,
+      "correctAnswers": [
+        "198.9 or 1989/10"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 18,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "A line in the xy-plane passes through the points (9, 1), (0,8), and (c, 0). What is the value of c?",
+      "options": null,
+      "correctAnswers": [
+        "10.28 or 72/7"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 19,
+      "type": "MCQ_SINGLE",
+      "prompt": "x/7 + y/9 = 41/63\nAn engineer connects resistors in series, where the resistors in the series have a total resistance of 41/63 ohms. In this series, there are x resistors of type A, which each have a resistance of a ohms, and y resistors of type B, which each have a resistance of b ohms. The given equation represents this situation. According to this equation, what is the positive difference between the value of a and the value of b?",
+      "options": [
+        "41",
+        "2",
+        "41/63",
+        "2/63"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 20,
+      "type": "MCQ_SINGLE",
+      "prompt": "The table gives the areas and perimeters of two similar rectangles, where n is a constant.\n\n| | Area (square inches) | Perimeter (inches) |\n|---|---|---|\n| Rectangle A | 660 | 220 |\n| Rectangle B | 2,640 | n |\n\nWhat is the value of n?",
+      "options": [
+        "2,200",
+        "1,760",
+        "880",
+        "440"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 21,
+      "type": "MCQ_SINGLE",
+      "prompt": "In 2005, Aster earned 12% more than in 2004, and in 2006 Aster earned 6% more than in 2005. If Aster earned y times as much in 2004 as in 2006, which of the following is closest to the value of y?",
+      "options": [
+        "0.5000",
+        "0.7200",
+        "0.8423",
+        "1.1872"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 22,
+      "type": "MCQ_SINGLE",
+      "prompt": "An exponential model for the number of squirrels in a certain area estimates that there were 200 squirrels in the area in the year 2003, and that at the end of each 4-year period for the next 20 years, the number of squirrels in the area was 120% more than the number at the end of the previous 4-year period. Which of the following equations represents this model, where N is the estimated number of squirrels in this area t years after 2003, and 0 ≤ t ≤ 20?",
+      "options": [
+        "N = 200(2.20)^4t",
+        "N = 200(1.20)^4t",
+        "N = 200(1.20)^(t/4)",
+        "N = 200(2.20)^(t/4)"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    }
+  ]
+}

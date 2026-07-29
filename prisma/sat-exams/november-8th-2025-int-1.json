@@ -1,0 +1,587 @@
+{
+  "title": "November 8th, 2025 INT 1",
+  "module1": [
+    {
+      "order": 1,
+      "type": "MCQ_SINGLE",
+      "prompt": "If 9x + 4 = 67, what is the value of 90x + 40?",
+      "options": [
+        "7",
+        "70",
+        "130",
+        "670"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 2,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the figure, line p is parallel to line r, and line t intersects both lines. What is the value of x? [Diagram shows two parallel horizontal lines, p (top) and r (bottom). A transversal line t intersects both. At the intersection of line t and line p, the angle in the upper-left position is labeled x°, and the angle in the lower-right position is labeled 72°.]",
+      "options": [
+        "36",
+        "72",
+        "180",
+        "252"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 3,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "A length of 450 meters is equal to how many decimeters? (1 meter = 10 decimeters)",
+      "options": null,
+      "correctAnswers": [
+        "4500"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 4,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The equation 58 = 2x + 2y gives the perimeter of a rectangular garden that has length x, in feet, and width y, in feet. The width of the garden is 14 feet. What is the length, in feet, of the garden?",
+      "options": null,
+      "correctAnswers": [
+        "15"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 5,
+      "type": "MCQ_SINGLE",
+      "prompt": "The relationship between the variables x and y is defined by an exponential equation. When x = 0, the value of y is 40, and for every increase in the value of x by 1, the corresponding value of y increases by 50% of its previous value. Which equation represents this relationship?",
+      "options": [
+        "y = 40(1.50)^x",
+        "y = 40(1.05)^x",
+        "y = 50(1.40)^x",
+        "y = 50(1.04)^x"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 6,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The function f is defined by f(x) = 1/(8x). What is the value of f(x) when x = 9?",
+      "options": null,
+      "correctAnswers": [
+        "13/942 or 0.01"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 7,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function f is defined by f(x) = 3x - 1/4. What is the y-intercept of the graph of y = f(x) in the xy-plane?",
+      "options": [
+        "(0, -1/4)",
+        "(0, -3)",
+        "(0, 3)",
+        "(0, 4)"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 8,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "x + 6y = 28\n6y = 14\nThe solution to the given system of equations is (x, y). What is the value of x?",
+      "options": null,
+      "correctAnswers": [
+        "14"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 9,
+      "type": "MCQ_SINGLE",
+      "prompt": "The length of a side of square X is 9 centimeters. The area of rectangle Y is 32 square centimeters. What is the total area, in square centimeters, of square X and rectangle Y?",
+      "options": [
+        "145",
+        "113",
+        "82",
+        "81"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 10,
+      "type": "MCQ_SINGLE",
+      "prompt": "During hibernation, American black bears do not eat or replenish calories. A certain black bear weighed 293 pounds when entering hibernation and lost weight at a mean rate of 0.9 pounds per day. At this rate, how many days after entering hibernation would the black bear weigh 230 pounds?",
+      "options": [
+        "57",
+        "63",
+        "70",
+        "207"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 11,
+      "type": "MCQ_SINGLE",
+      "prompt": "The complete graph of y = f(x) is shown. For how many values of x does f(x) = 0?\n[The graph shows a coordinate plane with x-axis labeled from -6 to 6 and y-axis labeled from -8 to 8. A curve, representing y = f(x), is plotted. The curve starts from the top left, decreases, crosses the x-axis at approximately x = -4, continues to decrease to a local minimum, then increases, crosses the x-axis at x = 0, increases to a local maximum at approximately x = 1.5, then decreases, crosses the x-axis at approximately x = 3.5, and continues to decrease towards the bottom right.]",
+      "options": [
+        "One",
+        "Two",
+        "Three",
+        "Four"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 12,
+      "type": "MCQ_SINGLE",
+      "prompt": "b^2 - 4c = 7d. The given equation relates the real numbers b, c, and d, where d > 4/7c. Which equation correctly expresses b in terms of c and d?",
+      "options": [
+        "b = (7d+4c)/2",
+        "b = (7d-4c)/2",
+        "b = ±√(7d+4c)",
+        "b = ±√(7d-4c)"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 13,
+      "type": "MCQ_SINGLE",
+      "prompt": "How many distinct real solutions does the given equation have? x^2 - 81/16 = 0",
+      "options": [
+        "Zero",
+        "Exactly one",
+        "Exactly two",
+        "Infinitely many"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 14,
+      "type": "MCQ_SINGLE",
+      "prompt": "Triangles ABC and A'B'C' are shown. Triangle ABC is dilated by a scale factor of 6 to form triangle A'B'C'. If the length of ar AB is 18, what is the length of ar A'B'?\n[Diagram shows two triangles. The first triangle is labeled ABC, with B at the top vertex, A on the left base, and C on the right base. The second triangle is labeled A'B'C', with B' at the top vertex, A' on the left base, and C' on the right base. Triangle A'B'C' appears larger than triangle ABC. A note states: \"Note: Figures not drawn to scale.\"]",
+      "options": [
+        "3",
+        "6",
+        "24",
+        "108"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 15,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "What is the radius of the circle in the xy-plane defined by (x+3)^2 + (y + 9)^2 = 361?",
+      "options": null,
+      "correctAnswers": [
+        "19"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 16,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the xy-plane, which of the following does NOT contain any points that are part of the solution set to 5x - 7y > 35?",
+      "options": [
+        "The x-axis",
+        "The region where x > 0 and y > 0",
+        "The region where x < 0 and y < 0",
+        "The region where x < 0 and y > 0"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 17,
+      "type": "MCQ_SINGLE",
+      "prompt": "The table shows the distribution of people in a certain city by age group.\nAge group | Proportion\nLess than 18 years old | 26%\n18-40 years old | 21%\n41-65 years old | 29%\nGreater than 65 years old | 24%\nIf a person in this city is selected at random, which of the following is closest to the probability of selecting a person who is greater than 65 years old, given that the person is at least 18 years old?",
+      "options": [
+        "0.24",
+        "0.32",
+        "0.50",
+        "0.92"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 18,
+      "type": "MCQ_SINGLE",
+      "prompt": "Line h is defined by 1/2 x + 1/9 y - 54 = 0. Line j is perpendicular to line h in the xy-plane. What is the slope of line j?",
+      "options": [
+        "-9/2",
+        "-2/9",
+        "9/2",
+        "2/9"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 19,
+      "type": "MCQ_SINGLE",
+      "prompt": "For the given data set, the data values are listed in ascending order, where a, b, and c are constants. The data set is: a, 26, 29, b, 31, 47, c. For this data set, the mean is 36, the median is 29, and the range is 72. What is the value of c?",
+      "options": [
+        "54",
+        "72",
+        "81",
+        "98"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 21,
+      "type": "MCQ_SINGLE",
+      "prompt": "How many times does the graph of the given equation in the xy-plane cross the x-axis, where a, b, and c are positive constants such that a > 7 and b > c? The equation is y = 9(a/7)^(x-c) - b",
+      "options": [
+        "Zero",
+        "One",
+        "Two",
+        "Three"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 22,
+      "type": "MCQ_SINGLE",
+      "prompt": "A certain town has an area of 4.29 square miles. What is the area, in square yards, of this town? (1 mile = 1,760 yards)",
+      "options": [
+        "410",
+        "7,550",
+        "722,051",
+        "13,288,704"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    }
+  ],
+  "module2": [
+    {
+      "order": 2,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the figure shown, line k intersects lines r and s. If w = 147, which additional piece of information is sufficient to prove that lines r and s are parallel?\n[The figure shows three lines: k, r, and s. Line k is a transversal intersecting lines r and s. At the intersection of line k and line r, an angle w° is in the upper-right position, and an angle x° is in the lower-left position. At the intersection of line k and line s, an angle y° is in the upper-right position, and an angle z° is in the lower-right position. A note states: \"Figure not drawn to scale.\"]",
+      "options": [
+        "x = 33",
+        "y = 147",
+        "w + y = 180",
+        "y + z = 180"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 3,
+      "type": "MCQ_SINGLE",
+      "prompt": "At a fundraiser, a family pays a fixed entrance fee. They then purchase food tickets, which each have the same cost. The table shows the relationship between the number of food tickets, x, that are purchased and the total amount paid y, in dollars, for both the entrance fee and the food tickets. Which equation represents the relationship between x and y? [Table with two columns: 'Number of food tickets' and 'Total amount paid'. Rows are: (10, $44.00), (15, $51.50), (25, $66.50)]",
+      "options": [
+        "y = (3/2)x + 29",
+        "y = (3/2)x - 56",
+        "y = (3/2)x + 112/3",
+        "y = (3/2)x + 58/3"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 4,
+      "type": "MCQ_SINGLE",
+      "prompt": "A group of 10 gardeners recorded data on the germination rates of their tomato crop for one growing season. The scatterplot shows the relationship between the number of tomato seeds planted, x, and the number of tomato seeds that germinated, y, for each of the gardeners. A line of best fit is also shown. Which of the following is the best interpretation of the slope of the line of best fit in this context?\n[The scatterplot shows data points and a line of best fit. The x-axis is labeled 'x' and represents the number of tomato seeds planted, ranging from 0 to 500 in increments of 100. The y-axis is labeled 'y' and represents the number of tomato seeds that germinated, ranging from 0 to 500 in increments of 100. The line of best fit passes through approximately (0,0), (100,60), (200,120), (300,180), (400,240), and (500,300).]",
+      "options": [
+        "The number of tomato seeds planted is predicted to increase by 60 seeds every 100 days.",
+        "The number of tomato seeds planted is predicted to increase by 300 seeds every 100 days.",
+        "The number of tomato seeds that germinate is predicted to increase by 60 seeds for every additional 100 tomato seeds that are planted.",
+        "The number of tomato seeds that germinate is predicted to increase by 300 seeds for every additional 100 tomato seeds that are planted."
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 5,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The graph of 2x + y = 11 in the xy-plane is a line. What is the slope of the line?",
+      "options": null,
+      "correctAnswers": [
+        "-2"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 6,
+      "type": "MCQ_SINGLE",
+      "prompt": "The functions f, g, and h are defined as shown.\nf(x) = 2x + 3\ng(x) = 7x - 2\nh(x) = 5x - 6\nIf f(x) · g(x) - h(x) = ax^2 + bx + c, where a, b, and c are constants, what is the value of b?",
+      "options": [
+        "-5",
+        "12",
+        "20",
+        "22"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 7,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function f is defined by f(x) = (x - 11)/5, and f(a) = -18, where a is a constant. What is the value of a?",
+      "options": [
+        "-101",
+        "-79",
+        "-79/5",
+        "-7/5"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 8,
+      "type": "MCQ_SINGLE",
+      "prompt": "The table shows values of x and their corresponding values of y for three points on line j in the xy-plane.\n[Table with two columns, x and y, and three rows of data: (x=0, y=-10), (x=1, y=-4), (x=2, y=2)]\nLine k also lies in the xy-plane and is defined by the equation y = 4x. At what point (x, y) do lines j and k intersect?",
+      "options": [
+        "(5, 20)",
+        "(5, 44)",
+        "(6, 24)",
+        "(6, 26)"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 9,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The function h estimates an object's height, in feet, above the ground t seconds after the object is dropped, where b is a constant. The function estimates that the object is 19.36 feet above the ground when it is dropped at t = 0. How many seconds after being dropped does the function estimate the object will hit the ground?\nh(t) = -16t^2 + b",
+      "options": null,
+      "correctAnswers": [
+        "1.1 or 11/10"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 10,
+      "type": "MCQ_SINGLE",
+      "prompt": "How many solutions does the given equation have?\n|4x - 3| = -9",
+      "options": [
+        "Zero",
+        "One",
+        "Two",
+        "Infinitely many"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 11,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function h is defined by h(x) = a^x + b, where a and b are positive constants. The graph of y = h(x) in the xy-plane passes through the points (0, 10) and (2, 13). What is the value of ab?",
+      "options": [
+        "13",
+        "18",
+        "20",
+        "26"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 12,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "A circle has center P, and points A and B lie on the circle. The measure of arc AB is 45° and the length of arc AB is 4π units. What is the length, in units, of the radius of the circle?",
+      "options": null,
+      "correctAnswers": [
+        "16"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 13,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function f is defined by f(x) = 56(0.19)^x. For any positive integer n, the value of f(n) is p% less than the value of f(n-1). What is the value of p?",
+      "options": [
+        "19",
+        "44",
+        "56",
+        "81"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 14,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the given equation, k is a constant. The equation has exactly one real solution. What is the value of k\nx^2 + (√k-3)x + 42 = 0",
+      "options": [
+        "171",
+        "168",
+        "165",
+        "45"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 15,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the given system of equations,\nx² + y² = 36\ny = mx - b/4\nm and b are negative constants. In the xy-plane, the graphs of the equations in the given system intersect at the point (-5, y), where y < 0. Which expression represents the value of b?",
+      "options": [
+        "(5m + √11)/4",
+        "(5m - √11)/4",
+        "-20m + 4√11",
+        "20m - 4√11"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 16,
+      "type": "MCQ_SINGLE",
+      "prompt": "A biologist mixed a solution that is 0.3% sodium chloride by mass with a solution that is 0.15% sodium chloride by mass to obtain a new solution, which has a mass of 80 grams and contains 0.21 grams of sodium chloride. How many grams of 0.3% sodium chloride solution did the biologist use?",
+      "options": [
+        "0.14",
+        "20",
+        "60",
+        "79.86"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 17,
+      "type": "MCQ_SINGLE",
+      "prompt": "For data set A, the table summarizes the distribution of the number of pieces of mail received by a business each day during a period of 11 days.\n[Table with two columns: 'Pieces of mail' and 'Days'. Rows are: (0, 2), (3, 2), (4, 2), (5, 2), (6, 1), (7, 1), (13, 1).]\nThe data value 13 is removed from data set A to create data set B, which consists of the remaining 10 data values. Which statement best compares the median of data set A and the median of data set B?",
+      "options": [
+        "The median of data set B is less than the median of data set A.",
+        "The median of data set B is greater than the median of data set A.",
+        "The median of data set B is equal to the median of data set A.",
+        "There is not enough information to compare the medians of the two data sets."
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 18,
+      "type": "MCQ_SINGLE",
+      "prompt": "An engineer connects resistors in series, where the resistors in the series have a total resistance of 47/45 ohms. In this series, there are x resistors of type A, which each have a resistance of a ohms, and y resistors of type B, which each have a resistance of b ohms. The given equation represents this situation:\nx/5 + y/9 = 47/45\nAccording to this equation, what is the positive difference between the value of a and the value of b?",
+      "options": [
+        "47",
+        "4",
+        "47/15",
+        "4/45"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 19,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "In the given equation, n is a constant. The equation has exactly one solution. What is the value of n^2/8?\n9x^2 + 8 = nx",
+      "options": null,
+      "correctAnswers": [
+        "36"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 20,
+      "type": "MCQ_SINGLE",
+      "prompt": "The table gives the areas and perimeters of two similar rectangles, where n is a constant.\nRectangles A and B\nRectangle A: Area (square inches) 630, Perimeter (inches) 210.\nRectangle B: Area (square inches) 2,520, Perimeter (inches) n.\nWhat is the value of n?",
+      "options": [
+        "2,100",
+        "1,680",
+        "840",
+        "420"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 21,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The mass of object A is 444% of the mass of object B, and the mass of object A is 0.740% of the mass of object C. If the mass of object C is p% of the mass of object B, what is the value of p?",
+      "options": null,
+      "correctAnswers": [
+        "60000"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 22,
+      "type": "MCQ_SINGLE",
+      "prompt": "Which expression is a factor of y² (x-3)-25(x-3)³?",
+      "options": [
+        "y(x-3)",
+        "(x-5)(x-3)",
+        "y-x-3",
+        "y+5x-15"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    }
+  ]
+}

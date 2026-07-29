@@ -1,0 +1,607 @@
+{
+  "title": "September 13th, 2025 US 1",
+  "module1": [
+    {
+      "order": 1,
+      "type": "MCQ_SINGLE",
+      "prompt": "A certain goose species can fly at an average speed of 16 meters per second when in continuous flight. At this rate, how many meters would this goose species fly in 6 seconds?",
+      "options": [
+        "96",
+        "16",
+        "10",
+        "22"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 2,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the figure shown, lines r and s are parallel, and line t intersects both lines. What is the value of a? [A figure shows two parallel horizontal lines, labeled 'r' (top) and 's' (bottom). A transversal line, labeled 't', intersects both parallel lines. At the intersection of line t and line r, the angle to the left of t and above r is 103°, and the angle to the right of t and above r is 77°. At the intersection of line t and line s, the angle to the left of t and above s is 77°, and the angle to the right of t and below s is labeled a°.]",
+      "options": [
+        "77",
+        "90",
+        "167",
+        "180"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 3,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The scatterplot shows 5 measurements of the body length, in centimeters (cm), of a New Zealand fur seal from an age of 1 year to 6 years old. A line of best fit is also shown. For a New Zealand fur seal at an age of 3 years old, what is the body length predicted by the line of best fit, to the nearest 10 (cm)? [The image displays a scatterplot with 5 data points and a line of best fit. The x-axis represents age in years, with labeled tick marks from 1 to 6. The y-axis represents body length in centimeters, labeled from 10 to 140 in increments of 10. The line of best fit passes through approximately (1, 75), (2, 85), (3, 95), (4, 105), (5, 115), (6, 125).]",
+      "options": null,
+      "correctAnswers": [
+        "100"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 4,
+      "type": "MCQ_SINGLE",
+      "prompt": "There is a linear relationship between the mass of an object attached to a vertical spring and the length of the spring extension. The table shows data collected after certain objects were each attached to the spring.\nMass of object | Length of spring extension\n---|---\n20 grams | 7 centimeters\n60 grams | 21 centimeters\nWhat is the length of the spring extension, in centimeters, when a 50-gram object is attached to the spring?",
+      "options": [
+        "24.5",
+        "35",
+        "14",
+        "17.5"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 5,
+      "type": "MCQ_SINGLE",
+      "prompt": "The equation shown gives the estimated amount of gas g, in gallons, that remains in the gas tank of a car after being driven x miles, where 0 <= x <= 377. What is the estimated amount of gas, in gallons, that remains in the gas tank of the car when x = 290?\ng = 13 - x/29",
+      "options": [
+        "13",
+        "0",
+        "3",
+        "16"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 6,
+      "type": "MCQ_SINGLE",
+      "prompt": "What is the solution to the given equation?\n$\\sqrt{x^2} = 80 - 9x$",
+      "options": [
+        "4",
+        "71",
+        "90",
+        "8"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 7,
+      "type": "MCQ_SINGLE",
+      "prompt": "A right square pyramid has a height of 6 units and a volume of 128 cubic units. What is the length, in units, of one side of the base of the pyramid?",
+      "options": [
+        "256",
+        "8",
+        "$\\frac{64}{3}$",
+        "$\\frac{8\\sqrt{3}}{3}$"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 8,
+      "type": "MCQ_SINGLE",
+      "prompt": "A rectangle has an area of 66 square meters and a length of 11 meters. What is the width, in meters, of the rectangle?",
+      "options": [
+        "6",
+        "55",
+        "726",
+        "121"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 9,
+      "type": "MCQ_SINGLE",
+      "prompt": "The given equation relates the positive numbers a, b, and c. Which equation correctly expresses a in terms of b and c?\na/(b+c) = 64",
+      "options": [
+        "a = (b+c)",
+        "a = 64 - (b+c)",
+        "a = 64(b+c)",
+        "a = 64/(b+c)"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 10,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "For the linear function f, the graph of y = f(x) in the xy-plane passes through the points (0, 6) and (7, 7). What is the slope of y = f(x)?",
+      "options": null,
+      "correctAnswers": [
+        "1/7 or 0.15"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 11,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "If x + 3y = 29 and 7x - 12y = -61, what is the value of y?",
+      "options": null,
+      "correctAnswers": [
+        "8"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 12,
+      "type": "MCQ_SINGLE",
+      "prompt": "For the polynomial function f, the graph of y = f(x) in the xy-plane passes through the points (-4, 0), (1,0), and (9,0). Which of the following must be a factor of f(x)?",
+      "options": [
+        "x - 1",
+        "x + 9",
+        "x - 4",
+        "x + 1"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 13,
+      "type": "MCQ_SINGLE",
+      "prompt": "In triangle QRS, what is the value of tan y°? [Figure: A right-angled triangle QRS with angle R being 90 degrees. Side QR has length 4. Side RS has length 9. Side QS has length c. Angle S is y degrees. Note: Figure not drawn to scale.]",
+      "options": [
+        "c/9",
+        "4/9",
+        "c/4",
+        "9/4"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 14,
+      "type": "MCQ_SINGLE",
+      "prompt": "8x + 32y = 30\n12x + 48y = 45\nAt how many points do the graphs of the given equations intersect in the xy-plane?",
+      "options": [
+        "Zero",
+        "Exactly one",
+        "Infinitely many",
+        "Exactly two"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 15,
+      "type": "MCQ_SINGLE",
+      "prompt": "The table shows the linear relationship between the number of cars, c, on a commuter train and the maximum number of passengers and crew, p, that the train can carry. Which equation represents the linear relationship between c and p?\n\n[Table with two columns: 'Number of cars' and 'Maximum number of passengers and crew'.\nRow 1: Number of cars = 2, Maximum number of passengers and crew = 102\nRow 2: Number of cars = 6, Maximum number of passengers and crew = 294\nRow 3: Number of cars = 10, Maximum number of passengers and crew = 486]",
+      "options": [
+        "48p - c = -6",
+        "48c - p = 6",
+        "48p - c = 6",
+        "48c - p = -6"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 16,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "In the xy-plane, the graph of the equation (x - 4)^2 + (y - 9)^2 = 16 is a circle. The point (8, c), where c is a constant, lies on this circle. What is the value of c?",
+      "options": null,
+      "correctAnswers": [
+        "9"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 17,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the given inequality, b is a positive constant. Which of the following does NOT contain any points (x, y) in the xy-plane that are solutions to this inequality?\ny > (9/7)x + b",
+      "options": [
+        "The region where x < 0 and y < 0",
+        "The region where x < 0 and y > 0",
+        "The region where x > 0 and y > 0",
+        "The region where x > 0 and y < 0"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 18,
+      "type": "MCQ_SINGLE",
+      "prompt": "The expression x^2 + kx + 55, where k is a constant, can be rewritten as (x + n)(x + 11), where n is a constant. What is the value of k?",
+      "options": [
+        "16",
+        "6",
+        "11",
+        "5"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 19,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "A dog's mass is 24 kilograms. What is the dog's mass, in grams? (1 kilogram = 1000 grams)",
+      "options": null,
+      "correctAnswers": [
+        "24000"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 20,
+      "type": "MCQ_SINGLE",
+      "prompt": "What is the greatest solution to the given equation?\n$-3x^2 - 5x + 6 = 0$",
+      "options": [
+        "$5/6 - \\sqrt{97}/6$",
+        "$-5/3 + \\sqrt{97}/3$",
+        "$-5/6 + \\sqrt{97}/6$",
+        "$-5/3 - \\sqrt{97}/3$"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 21,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "A beaker containing a liquid is placed on a table. The function g(t) = 297 + (363 - 297)(2.72)^(-0.103t) gives the approximate temperature, in kelvins, of the liquid t minutes after the beaker was placed on the table. According to this function, what was the approximate temperature, in kelvins, of the liquid when the beaker was placed on the table?",
+      "options": null,
+      "correctAnswers": [
+        "363"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 22,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The function f is defined by f(x) = a^x + b, where a and b are constants and a > 0. In the xy-plane, the graph of y = f(x) has a y-intercept at (0, -22) and passes through the point (2, 26). What is the value of a + b?",
+      "options": null,
+      "correctAnswers": [
+        "-16"
+      ],
+      "stimulus": null
+    }
+  ],
+  "module2": [
+    {
+      "order": 1,
+      "type": "MCQ_SINGLE",
+      "prompt": "Which expression is equivalent to (3x^3 - 8x + 5) - (4x^6 + 9x - 2)?",
+      "options": [
+        "-4x^6 + 3x^3 - 17x + 7",
+        "-x^9 - 17x - 7",
+        "-x^9 - x + 3",
+        "-4x^6 + 3x^3 + x + 3"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 2,
+      "type": "MCQ_SINGLE",
+      "prompt": "What is the slope of the graph of y = (7/12)x in the xy-plane?",
+      "options": [
+        "0",
+        "7/12",
+        "-7/12",
+        "12/7"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 3,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The given equation represents the volume of mulch x, in cubic feet, and the volume of soil y, in cubic feet, in a mixture of mulch and soil that weighs 260 pounds. If the volume of soil in the mixture is 2 cubic feet, what is the volume of mulch in the mixture, in cubic feet?\n\n34x + 79y = 260",
+      "options": null,
+      "correctAnswers": [
+        "3"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 4,
+      "type": "MCQ_SINGLE",
+      "prompt": "For which of the following tables are all the values of x and their corresponding values of y solutions to the given system of inequalities?\ny < x\ny > -4x - 9",
+      "options": [
+        "x | y\n--|--\n5 | 4\n6 | 5\n7 | 6",
+        "x | y\n--|--\n-12 | -5\n-11 | -6\n-10 | -7",
+        "x | y\n--|--\n-12 | -13\n-11 | -12\n-10 | -11",
+        "x | y\n--|--\n5 | 10\n6 | 9\n7 | 8"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 5,
+      "type": "MCQ_SINGLE",
+      "prompt": "The functions f and g are defined by the given equations. What is the value of f(-10)?\nf(x) = 5(g(x)) – 3\ng(x) = |3x – 9|",
+      "options": [
+        "692",
+        "139",
+        "698",
+        "-53"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 6,
+      "type": "MCQ_SINGLE",
+      "prompt": "What are all possible solutions to the given equation?\n√(x^2 - 95x + 300) = x√11",
+      "options": [
+        "5/2",
+        "-5/2 and 12",
+        "12",
+        "5/2 and -12"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 7,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The population of a certain city doubled every 75 years from 1657 to 1957. The population of this city was 240,000 in 1957. What was the population of this city in 1657?",
+      "options": null,
+      "correctAnswers": [
+        "15000"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 8,
+      "type": "MCQ_SINGLE",
+      "prompt": "Line k is defined by 4x + 13y - 5 = 0. Line j is perpendicular to line k in the xy-plane. What is the slope of line j?",
+      "options": [
+        "5/13",
+        "13/4",
+        "-4/13",
+        "-13/5"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 9,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the xy-plane, an equation of circle A is (x - 2)^2 + (y - 4)^2 = 9. Circle B has the same center as circle A but has a radius that is twice the radius of circle A. Which equation represents circle B?",
+      "options": [
+        "(x - 2)^2 + (y - 4)^2 = 81",
+        "(x - 2)^2 + (y - 4)^2 = 36",
+        "(x - 2)^2 + (y - 4)^2 = 18",
+        "(x - 2)^2 + (y - 4)^2 = 54"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 10,
+      "type": "MCQ_SINGLE",
+      "prompt": "The length of the diagonal of a square is 186√2/2 units. What is the area, in square units, of the square?",
+      "options": [
+        "8,649",
+        "17,298",
+        "93",
+        "372"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 11,
+      "type": "MCQ_SINGLE",
+      "prompt": "Each of the following frequency tables represents a data set. Which data set has the greatest mean?",
+      "options": [
+        "Value 60, Frequency 3; Value 70, Frequency 3; Value 80, Frequency 3; Value 90, Frequency 3",
+        "Value 60, Frequency 4; Value 70, Frequency 3; Value 80, Frequency 3; Value 90, Frequency 4",
+        "Value 60, Frequency 1; Value 70, Frequency 2; Value 80, Frequency 3; Value 90, Frequency 4",
+        "Value 60, Frequency 5; Value 70, Frequency 2; Value 80, Frequency 2; Value 90, Frequency 5"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 12,
+      "type": "MCQ_SINGLE",
+      "prompt": "A partially filled container containing 26 milliliters of water is placed under a leaky faucet that produces one 0.03-milliliter drop of water every 3 seconds. Until the container is full, which of the following can be used to represent the volume v, in milliliters, of water in the container t seconds after it is placed under the faucet, where t is a multiple of 3?",
+      "options": [
+        "v = 0.01t + 26",
+        "v = 0.09t + 26",
+        "v = 3t",
+        "v = 0.03t + 26"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 13,
+      "type": "MCQ_SINGLE",
+      "prompt": "At the beginning of an experiment, the temperature of a liquid is 23 degrees Celsius (°C). During the first 4.0 minutes of the experiment, the temperature of the liquid increases at an average rate of 6.5°C per minute. Then, the temperature of the liquid increases at a constant rate of 2.2°C per minute. If the temperature of the liquid reaches 61°C x minutes after the beginning of the experiment, where x > 4.0, which equation represents this situation?",
+      "options": [
+        "61 = 2.2x + 49",
+        "61 = 2.2(x - 4.0) + 49",
+        "61 = 2.2(x - 4.0) + 26",
+        "61 = 2.2x + 23"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 14,
+      "type": "MCQ_SINGLE",
+      "prompt": "A science club from a certain high school in Ohio conducted an experiment to study the effects of smell on taste. A sample of 100 students was selected at random from the high school to participate in the experiment. First, the students tasted a pureed food sample while wearing covered goggles and nose plugs. Then, the students tasted the same pureed food sample without nose plugs. 35 students were able to correctly identify the pureed food sample while wearing nose plugs. Which of the following is the largest population to which the results of the experiment can be generalized?",
+      "options": [
+        "All students from the high school",
+        "The 100 students who participated in the experiment",
+        "The 35 students who were able to correctly identify the pureed food sample while wearing nose plugs",
+        "All students from high schools in Ohio"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 15,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "For the positive quantities h, j, and k, 13% of h is equivalent to 19% of j, and j is equivalent to 91% of k. What percentage of k is h? (Disregard the % sign when entering your answer. For example, if your answer is 39%, enter 39)",
+      "options": null,
+      "correctAnswers": [
+        "133"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 16,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function f is defined by f(x) = 11x^3. The graph of y = f(-x) + c in the xy-plane, where c is a positive integer constant, has an x-intercept at (r, 0) and a y-intercept at (0, t), where r and t are constants. Which of the following must be true about r and t?",
+      "options": [
+        "r < 0 and t < 0",
+        "r < 0 and t > 0",
+        "r > 0 and t > 0",
+        "r > 0 and t < 0"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 17,
+      "type": "MCQ_SINGLE",
+      "prompt": "A certain investment account offers a special interest rate for the first 6 months the account is open followed by a lower interest rate for the remainder of the time the account is open. Bennett opened one of these accounts with an original account balance of 600 USD and did not make any other deposits or withdrawals. 6 months after Bennett opened the account, the balance had increased by 0.4% of the original balance. 8 months after Bennett opened the account, the balance had increased by an additional 0.3% of the balance at the end of the first 6 months. Every 2 months after the first 8 months, the balance had increased by an additional 0.3% of the balance 2 months before. Which of the following equations could represent the account balance B(x), in dollars, x months after the account was opened, where x ≥ 6?",
+      "options": [
+        "B(x) = 602.40(1.003)^(x-6)",
+        "B(x) = 602.40(1.003)^((x-6)/2)",
+        "B(x) = 602.40(1.003)^(2x-12)",
+        "B(x) = 602.40(1.003)^(2x-6)"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 18,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the xy-plane, the graph of the equation y = -x^2 + 7x - 104 intersects the line y = c at exactly one point. What is the value of c?",
+      "options": [
+        "367/4",
+        "-7/2",
+        "-104",
+        "-465/4"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 19,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "In the given equation, s and t are positive constants. The product of the solutions to the given equation is -2kst, where k is a constant. What is the value of k?\n1/24 x^2 + (s - 1/24 t) x - st = 0",
+      "options": null,
+      "correctAnswers": [
+        "12"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 20,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "In triangle RST, angle T is a right angle, point L lies on RS, point K lies on ST, and LK is parallel to RT. If the length of RT is 72 units, the length of LK is 24 units, and the area of triangle RST is 396 square units, what is the length of KT, in units?",
+      "options": null,
+      "correctAnswers": [
+        "7.34"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 21,
+      "type": "MCQ_SINGLE",
+      "prompt": "The area of a rectangular region is increasing at a rate of 210 square feet per hour. Which of the following is closest to this rate in square meters per minute? (Use 1 meter = 3.28 feet.)",
+      "options": [
+        "0.33",
+        "1.07",
+        "11.48",
+        "19.52"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 22,
+      "type": "MCQ_SINGLE",
+      "prompt": "If (x+5)/3 = (x+5)/13, the value of x + 5 is between which of the following pairs of values?",
+      "options": [
+        "7 and 13",
+        "4 and 6",
+        "-4 and 4",
+        "-6 and -3"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    }
+  ]
+}

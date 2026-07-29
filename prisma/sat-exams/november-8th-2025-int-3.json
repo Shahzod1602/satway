@@ -1,0 +1,597 @@
+{
+  "title": "November 8th, 2025 INT 3",
+  "module1": [
+    {
+      "order": 1,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "An event planner is planning an ice-skating event. It costs the event planner a onetime fee of $35 to rent the skating rink and $15.25 per attendee. The event planner has a budget of $225. What is the greatest number of attendees possible without exceeding the budget?",
+      "options": null,
+      "correctAnswers": [
+        "12"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 2,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function g is defined by g(x) = 4x + 2. What is the value of g(x) when x = 2?",
+      "options": [
+        "0",
+        "2",
+        "4",
+        "10"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 3,
+      "type": "MCQ_SINGLE",
+      "prompt": "Which expression is equivalent to 42x^3 + 7x?",
+      "options": [
+        "7x(6+7x)",
+        "7x(6x^2+1)",
+        "7x^2(6+7x)",
+        "7x^2(6x+1)"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 4,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "For a certain rectangle, the ratio of the width to the length is 1 to 2. If the width of the rectangle is 67 centimeters, what is the length, in centimeters, of the rectangle?",
+      "options": null,
+      "correctAnswers": [
+        "134"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 5,
+      "type": "MCQ_SINGLE",
+      "prompt": "The scatterplot shows the relationship between the square footage of 12 clothing stores and their annual sales, in millions of dollars. [The scatterplot has 'Square footage of store (in thousands of square feet)' on the x-axis, ranging from 0 to 7, with major ticks at 1, 2, 3, 4, 5, 6. The y-axis is labeled 'Annual sales (in millions of dollars)', ranging from 0 to 14, with major ticks at 2, 4, 6, 8, 10, 12, 14. There are 12 data points showing a general positive trend. The approximate coordinates of the points are: (1, 2.5), (1.5, 3), (2, 2.5), (2.5, 4), (2.5, 6), (3, 5), (3, 7), (4.5, 8), (5, 9), (5.5, 11), (6, 10), (6.5, 12).] According to the trend shown by the data, which of the following is the best prediction for the annual sales, in millions of dollars, of a clothing store that is 4 thousand square feet?",
+      "options": [
+        "4.1",
+        "5.4",
+        "7.5",
+        "10.2"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 6,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The given equation, where a is a positive constant, gives the predicted number of bacteria, y, in a growth medium x hours after the number of bacteria was initially measured. According to the equation, what was the predicted number of bacteria initially measured in the growth medium?\ny = 2,600(a)^x",
+      "options": null,
+      "correctAnswers": [
+        "2600"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 7,
+      "type": "MCQ_SINGLE",
+      "prompt": "If 6x - 8 = 4, what is the value of 6x + 8?",
+      "options": [
+        "-4",
+        "2",
+        "10",
+        "20"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 8,
+      "type": "MCQ_SINGLE",
+      "prompt": "A number f is 120% greater than a positive number g. A number h is 90% less than the number f. The number h is how many times the number g?",
+      "options": [
+        "0.12",
+        "0.22",
+        "1.08",
+        "1.98"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 9,
+      "type": "MCQ_SINGLE",
+      "prompt": "A certain university's research farm is 1,000 acres, of which 71 acres contain rice. What percentage of the acres of this research farm contain rice?",
+      "options": [
+        "0.71%",
+        "7.1%",
+        "71%",
+        "710%"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 10,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "In the right triangle shown [a right triangle with hypotenuse labeled 'c', the side opposite the 58° angle labeled 'b', and the side adjacent to the 58° angle labeled 'a'. The angle at the top vertex is 58°, and the angle at the bottom right vertex is a right angle], a, b, and c are positive constants. For an acute angle D, sin D = b/c. What is the measure of angle D, in degrees?",
+      "options": null,
+      "correctAnswers": [
+        "32"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 12,
+      "type": "MCQ_SINGLE",
+      "prompt": "Line t in the xy-plane has a slope of 1/8 and passes through the point (32, -7). Which equation defines line t?",
+      "options": [
+        "y = -11x + 1/8",
+        "y = x/8 - 11",
+        "y = x/8 - 7",
+        "y = 32x - 7"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 13,
+      "type": "MCQ_SINGLE",
+      "prompt": "The graph of the function f, where y = f(x), gives the total cost y, in dollars, for a certain video game system and x games. What is the best interpretation of the slope of the graph in this context?\n[A coordinate plane shows a line graph. The x-axis is labeled 'x' and ranges from 0 to 10, with tick marks at each integer. The y-axis is labeled 'y' and ranges from 0 to 500, with tick marks at 50, 100, 150, 200, 250, 300, 350, 400, 450, 500. The line starts at (0, 50) and passes through (1, 70), (2, 90), (3, 110), (4, 130), (5, 150), (6, 170), (7, 190), (8, 210), (9, 230), and (10, 250).]",
+      "options": [
+        "Each game costs $16.",
+        "The video game system costs $16.",
+        "Each game costs $50.",
+        "The video game system costs $50."
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 14,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "What is the radius of the circle in the xy-plane defined by (x + 2)^2 + (y + 6)^2 = 361?",
+      "options": null,
+      "correctAnswers": [
+        "19"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 15,
+      "type": "MCQ_SINGLE",
+      "prompt": "A solution to the given system of equations is (x, y), where x < 0. What is the value of y?\nx² + y² = 1,088\ny - 4x = 0",
+      "options": [
+        "-256",
+        "-32",
+        "-8",
+        "-4"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 16,
+      "type": "MCQ_SINGLE",
+      "prompt": "f(x) = 10(x² + 47)\nWhat is the minimum value of the given function?",
+      "options": [
+        "0.1",
+        "4.7",
+        "10",
+        "470"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 17,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function j is defined by j(x) = (10x+5)/(3p), and the function k is defined by k(x) = (j(x)⋅p)/(x+1), where p is a positive constant. What is the value of k(9)?",
+      "options": [
+        "19/6",
+        "10/3",
+        "95/13",
+        "85/3"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 18,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the xy-plane, which of the following does NOT contain any points that are part of the solution set to 7x - 6y > 42?",
+      "options": [
+        "The x-axis",
+        "The region where x > 0 and y > 0",
+        "The region where x < 0 and y < 0",
+        "The region where x < 0 and y > 0"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 19,
+      "type": "MCQ_SINGLE",
+      "prompt": "3x + 2y = 10\n18x + 12y = 60\nHow many solutions does the given system of equations have?",
+      "options": [
+        "Exactly one",
+        "Exactly two",
+        "Infinitely many",
+        "Zero"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 20,
+      "type": "MCQ_SINGLE",
+      "prompt": "(|4x - 48| + 4) / 8 = 6\nWhat is the sum of the solutions to the given equation?",
+      "options": [
+        "1",
+        "23",
+        "24",
+        "48"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 21,
+      "type": "MCQ_SINGLE",
+      "prompt": "A beekeeper's initial observation of the population of a certain bee colony was 1, 600 bees. The beekeeper set a goal to increase the population to 2, 975 bees. The beekeeper uses a model that predicts the population of this bee colony begins at 1, 600 and increases by 110 bees per week in the first two weeks after the initial observation, and then increases by 165 bees per week until the beekeeper's goal is reached. According to this model, at the end of week w after the initial observation, where w > 2, which of the following functions gives the predicted number of bees still needed to reach the beekeeper's goal?",
+      "options": [
+        "p(w) = -110 + 165w",
+        "p(w) = 1,485 – 165w",
+        "p(w) = 2,865 + 165w",
+        "p(w) = 2,975 - 165w"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 22,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The quadratic equation (2x - 64)^2 = a, where a is a constant, has exactly one real solution. What is the value of a?",
+      "options": null,
+      "correctAnswers": [
+        "0"
+      ],
+      "stimulus": null
+    }
+  ],
+  "module2": [
+    {
+      "order": 1,
+      "type": "MCQ_SINGLE",
+      "prompt": "The equation d = 20w + 100 gives the total amount of money d, in dollars, that Janna plans to save w weeks after she starts to save. What is the total amount of money, in dollars, she plans to save in 10 weeks?",
+      "options": [
+        "250",
+        "300",
+        "350",
+        "400"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 2,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "x + 2y = 28\n2y = 15\nThe solution to the given system of equations is (x, y). What is the value of x?",
+      "options": null,
+      "correctAnswers": [
+        "13"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 3,
+      "type": "MCQ_SINGLE",
+      "prompt": "The given equation relates the real numbers b, c, and d, where d > 5/6 c. Which equation correctly expresses b in terms of c and d? b^2 + 5c = 6d",
+      "options": [
+        "b = (6d-5c)/2",
+        "b = (6d+5c)/2",
+        "b = ±√(6d - 5c)",
+        "b = ±√(6d + 5c)"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 4,
+      "type": "MCQ_SINGLE",
+      "prompt": "The area of triangle ABC is 210 square centimeters. What is the height h, in centimeters, of this triangle? [Diagram shows a triangle labeled ABC. The base AC is horizontal and measures 10 cm. A dashed line from vertex B is drawn perpendicular to the base AC, representing the height h.]",
+      "options": [
+        "10",
+        "21",
+        "42",
+        "84"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 5,
+      "type": "MCQ_SINGLE",
+      "prompt": "g(x) = 2(14x - 15)\nWhat is the y-coordinate of the y-intercept of the graph of y = g(x) - 5 in the xy-plane?",
+      "options": [
+        "-35",
+        "-30",
+        "-20",
+        "-15"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 6,
+      "type": "MCQ_SINGLE",
+      "prompt": "The table shows the distribution of people in a certain city by age group. [Table with two columns: 'Age group' and 'Proportion'. Rows are: 'Less than 18 years old', '28%'; '18-40 years old', '24%'; '41-65 years old', '22%'; 'Greater than 65 years old', '26%'.] If a person in this city is selected at random, which of the following is closest to the probability of selecting a person who is greater than 65 years old, given that the person is at least 18 years old?",
+      "options": [
+        "0.26",
+        "0.36",
+        "0.46",
+        "0.93"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 7,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The function h estimates an object's height, in feet, above the ground t seconds after the object is dropped, where b is a constant. The function estimates that the object is 23.04 feet above the ground when it is dropped at t = 0. How many seconds after being dropped does the function estimate the object will hit the ground? h(t) = -16t^2 + b",
+      "options": null,
+      "correctAnswers": [
+        "1.2 or 6/5"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 8,
+      "type": "MCQ_SINGLE",
+      "prompt": "The length of a rectangle's diagonal is √106, and the length of one of the rectangle's sides is 9. What is the perimeter of the rectangle?",
+      "options": [
+        "106",
+        "45",
+        "28",
+        "14"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 9,
+      "type": "MCQ_SINGLE",
+      "prompt": "Circle A:\n$(x - 7)^2 + (y - p)^2 = 21$\nCircle B:\n$(x + 7)^2 + (y - p)^2 = 21$\nIn the given equations, $p$ is a positive constant. Which statement correctly compares the graphs of circles A and B in the $xy$-plane?",
+      "options": [
+        "Circle B is the reflection of circle A across the $x$-axis.",
+        "Circle B is the reflection of circle A across the $y$-axis.",
+        "Circle B is the translation of circle A 14 units up.",
+        "Circle B is the translation of circle A 14 units to the right."
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 10,
+      "type": "MCQ_SINGLE",
+      "prompt": "$a(9 - x) = 36 - 4x$\nIn the given equation, $a$ is a constant. The equation has exactly one solution. Which of the following CANNOT be the value of $a$?",
+      "options": [
+        "1",
+        "4",
+        "9",
+        "36"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 11,
+      "type": "MCQ_SINGLE",
+      "prompt": "For the given data set, the data values are listed in ascending order, where a, b, and c are constants. For this data set, the mean is 36, the median is 29, and the range is 72. What is the value of c?\nThe data set is: a, 26, 29, b, 33, 49, c",
+      "options": [
+        "53",
+        "72",
+        "79",
+        "98"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 12,
+      "type": "MCQ_SINGLE",
+      "prompt": "How many times does the graph of the given equation in the xy-plane cross the x-axis, where a, b, and c are positive constants such that a > 6 and b > c?\nThe equation is: y = 3(a/6)^(x+c) - b",
+      "options": [
+        "Zero",
+        "One",
+        "Two",
+        "Three"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 13,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "A linear function g is defined by g(x) = ax + b, where a and b are constants. If g(-2) = -7 and g(1) = 5, what is the value of a?",
+      "options": null,
+      "correctAnswers": [
+        "4"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 14,
+      "type": "MCQ_SINGLE",
+      "prompt": "2x^2 - 8x - 21 = 0\nOne solution to the given equation can be written as x = h - (1/2)√k, where h and k are integer constants. What is the value of h + k?",
+      "options": [
+        "-24",
+        "10",
+        "29",
+        "60"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 15,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "r(x) = 9(x - 3)\ns(x) = x^3 + nx^2 + 3nx + 27\nFor the given functions r and s, n is a constant. If r(x) * s(x) = 9(x^4 - 81), what is the value of n?",
+      "options": null,
+      "correctAnswers": [
+        "3"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 16,
+      "type": "MCQ_SINGLE",
+      "prompt": "At different times on a certain day, a manager at a theme park recorded the number of visitors. An exponential model gives the estimated number of visitors, V, at the theme park t hours after the theme park opened, where t ≤ 3. Based on the model, 85 visitors were estimated to be at the theme park when it opened, and every 30 minutes the estimated number of visitors increased by 140% of the estimated number of visitors 30 minutes earlier. Which of the following equations best represents this model?",
+      "options": [
+        "V = 85(1.40)^(t/30)",
+        "V = 85(1.40)^(2t)",
+        "V = 85(2.40)^(t/30)",
+        "V = 85(2.40)^(2t)"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 17,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function v is defined by the equation v(x) = (x^2+bx+c)/((x+5)(x-19)), where b and c are constants. In the xy-plane, the graph of y = v(x) passes through the points (0, 66/95) and (11,0). If v(q) = 0, which of the following could be the value of q?",
+      "options": [
+        "-6",
+        "-5",
+        "5",
+        "6"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 18,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "Line s is defined by x - 4y = 24. Line t is perpendicular to line s in the xy-plane and passes through the points (k, 0) and (60, -k). What is the value of k?",
+      "options": null,
+      "correctAnswers": [
+        "48"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 19,
+      "type": "MCQ_SINGLE",
+      "prompt": "An engineer connects resistors in series, where the resistors in the series have a total resistance of 41/35 ohms. In this series, there are x resistors of type A, which each have a resistance of a ohms, and y resistors of type B, which each have a resistance of b ohms. The given equation represents this situation. According to this equation, what is the positive difference between the value of a and the value of b?\nx/7 + y/5 = 41/35",
+      "options": [
+        "41",
+        "2",
+        "41/35",
+        "2/35"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 20,
+      "type": "MCQ_SINGLE",
+      "prompt": "The functions f and g are defined by the given equations, where x ≥ 0, a and b are integer constants, a < b, and a > 1. If y = f(x) and y = g(x) are graphed in the xy-plane, which of the following equations displays, as a constant or coefficient, the minimum value of the function it defines, where x ≥ 0?\nI. f(x) = a(0.63)^(-bx)\nII. g(x) = a(1.37)^(x+2) + b",
+      "options": [
+        "I only",
+        "II only",
+        "I and II",
+        "Neither I nor II"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 21,
+      "type": "MCQ_SINGLE",
+      "prompt": "In triangle XYZ, the measure of angle X is x°, the measure of angle Y is y°, and the measure of angle Z is 31°. If x > y > 31, which of the following additional pieces of information is NOT sufficient to determine the values of x and y?",
+      "options": [
+        "The value of 31 - x - 3y",
+        "The value of 31 + 3x + y",
+        "The value of 31 - 3x + 3y",
+        "The value of 31 - 3x - 3y"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 22,
+      "type": "MCQ_SINGLE",
+      "prompt": "In 2013, Chloe earned 11% more than in 2012, and in 2014 Chloe earned 6% more than in 2013. If Chloe earned y times as much in 2012 as in 2014, which of the following is closest to the value of y?",
+      "options": [
+        "0.5455",
+        "0.6600",
+        "0.8499",
+        "1.1766"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    }
+  ]
+}

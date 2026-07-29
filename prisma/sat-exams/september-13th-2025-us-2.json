@@ -1,0 +1,545 @@
+{
+  "title": "September 13th, 2025 US 2",
+  "module1": [
+    {
+      "order": 1,
+      "type": "MCQ_SINGLE",
+      "prompt": "Which expression is equivalent to v^4 – 590v^3?",
+      "options": [
+        "v^3 (v + 590)",
+        "(v^2 + 59) (v^2 – 10)",
+        "(v^2 – 59) (v^2 – 10)",
+        "v^3 (v – 590)"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 2,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the figure shown, line r is parallel to line s, and line t intersects both lines. What is the value of x?\n[The figure shows two parallel lines, r (top) and s (bottom), intersected by a transversal line t. At the intersection of line t and line r, the upper-left angle is labeled 107° and the upper-right angle is labeled 73°. At the intersection of line t and line s, the lower-left angle is labeled x°. A note states: \"Figure not drawn to scale.\"]",
+      "options": [
+        "90",
+        "180",
+        "17",
+        "107"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 3,
+      "type": "MCQ_SINGLE",
+      "prompt": "The width of a rectangle is 9 centimeters. The length of the rectangle is 50 centimeters longer than the width. What is the area, in square centimeters, of this rectangle?",
+      "options": [
+        "18",
+        "531",
+        "9",
+        "68"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 4,
+      "type": "MCQ_SINGLE",
+      "prompt": "For the first 10 hours of an experiment, the scatterplot shows the temperature y, in degrees Fahrenheit (°F), of an object at various times x, in hours, since the start of the experiment. A line of best fit is also shown. Which of the following is the best interpretation of the slope of the line of best fit?\n[The scatterplot shows 'Time (hours)' on the x-axis, ranging from 0 to 10 with major ticks at 2, 4, 6, 8, 10. The y-axis is labeled 'Temperature (°F)', ranging from 0 to 600 with major ticks at 75, 150, 225, 300, 375, 450, 525, 600. A line of best fit is drawn, passing approximately through the points (0, 75) and (10, 475).]",
+      "options": [
+        "The predicted temperature increases at a constant rate of approximately 170° F per hour over the 10-hour period.",
+        "The predicted temperature decreases at a constant rate of approximately 170° F per hour over the 10-hour period.",
+        "The predicted temperature increases at a constant rate of approximately 40° F per hour over the 10-hour period.",
+        "The predicted temperature decreases at a constant rate of approximately 40° F per hour over the 10-hour period."
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 5,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "A bank account was opened with an initial deposit. Over the next several months, regular deposits were made into this account, and there were no withdrawals made during this time. The graph of the function f shown, where y = f(x), estimates the account balance, in dollars, in this bank account x months since the initial deposit. To the nearest whole dollar, what is the amount of the initial deposit estimated by the graph?\n[The image displays a coordinate plane with a linear graph. The x-axis is labeled \"Time since initial deposit (months)\" and ranges from 0 to 10, with major tick marks at 2, 4, 6, 8, 10. The y-axis is labeled \"Bank account balance (dollars)\" and ranges from 0 to 80, with major tick marks at 10, 20, 30, 40, 50, 60, 70, 80. A straight line is plotted on the graph. The line passes through the points (0, 25), (2, 35), (4, 45), (6, 55), (8, 65), and (10, 75).]",
+      "options": null,
+      "correctAnswers": [
+        "40"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 6,
+      "type": "MCQ_SINGLE",
+      "prompt": "What is the solution (x, y) to the given system of equations?\ny = -10x + 13\ny = -12x + 15",
+      "options": [
+        "(13, 15)",
+        "(15, 13)",
+        "(3, 1)",
+        "(1, 3)"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 7,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The function f gives the estimated height, in feet, of an acorn x seconds after the acorn fell from a tree. Based on the function, what is the estimated height, in feet, of the acorn before it fell from the tree?\nf(x) = -16x^2 + 76",
+      "options": null,
+      "correctAnswers": [
+        "76"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 8,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "During hibernation, American black bears do not eat or replenish calories. A certain black bear weighed 515 pounds when entering hibernation and lost weight at a rate of 0.5 pound per day. At this rate, how many days after entering hibernation did the black bear weigh 490 pounds?",
+      "options": null,
+      "correctAnswers": [
+        "50"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 9,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "If x + 1 = 3, what is the value of 2(x + 1)?",
+      "options": null,
+      "correctAnswers": [
+        "6"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 10,
+      "type": "MCQ_SINGLE",
+      "prompt": "The graph of the polynomial function f is shown, where y = f(x). What is the value of f(5)? [The graph displays a coordinate plane with the x-axis ranging from -8 to 8 and the y-axis ranging from -8 to 8. Both axes have tick marks and labels every 2 units. A continuous curve, representing the polynomial function, is plotted. The curve passes through approximately (-4,0), reaches a local maximum around (-1,4), passes through (0,2), reaches a local minimum around (2.5,-3), and passes through (4,0). The curve continues upwards for x > 4 and downwards for x < -4.]",
+      "options": [
+        "2",
+        "5",
+        "-3",
+        "0"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 11,
+      "type": "MCQ_SINGLE",
+      "prompt": "A freight elevator can hold a maximum weight of 5,450 pounds during one trip. A 190-pound person needs to deliver several boxes using the freight elevator. Some of these boxes weigh 23 pounds each and the others weigh 60 pounds each. Which inequality represents the possible combinations of the number of 23-pound boxes, x, and the number of 60-pound boxes, y, the person can deliver during one trip if only the person and the boxes are on the freight elevator?",
+      "options": [
+        "60x + 23y ≥ 5,450",
+        "23x + 60y ≥ 5,260",
+        "60x + 23y ≤ 5,450",
+        "23x + 60y ≤ 5,260"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 12,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "In triangle JKL, shown in the figure, angle K is a right angle. The length of side JL is 59. Angle L is labeled as y°. Note: Figure not drawn to scale. In triangle JKL, cos y° = 58/59. What is the length of KL?",
+      "options": null,
+      "correctAnswers": [
+        "58"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 13,
+      "type": "MCQ_SINGLE",
+      "prompt": "The given equation relates the positive numbers b, x, and y. Which equation correctly expresses x in terms of b and y? b - 19 = x/y",
+      "options": [
+        "x = (b-19)/y",
+        "x = by - 19y",
+        "x = (by-19)/y",
+        "x = by - 19"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 14,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the xy-plane, the graph of the linear function h contains the points (0, 0) and (1, 10). Which equation defines h, where y = h(x)?",
+      "options": [
+        "h(x) = 10x",
+        "h(x) = 10x + 10",
+        "h(x) = (1/10)x + 10",
+        "h(x) = x + 10"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 15,
+      "type": "MCQ_SINGLE",
+      "prompt": "3x + y = 21\n9x - y = 3\nHow many solutions does the given system of equations have?",
+      "options": [
+        "Infinitely many",
+        "Zero",
+        "Exactly two",
+        "Exactly one"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 16,
+      "type": "MCQ_SINGLE",
+      "prompt": "The length of a rectangle is 35 centimeters greater than its width. Which equation gives the area A, in square centimeters, of the rectangle in terms of the width w, in centimeters, of the rectangle?",
+      "options": [
+        "A = (w)(w + 35)",
+        "A = (w)(35w)",
+        "A = (w)(w/35)",
+        "A = (w)(w - 35)"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 17,
+      "type": "MCQ_SINGLE",
+      "prompt": "The measure of angle K is π/(2(12)) radians. The measure of angle L is 12 times the measure of angle K. What is the measure, in degrees, of angle L?",
+      "options": [
+        "102",
+        "12",
+        "78",
+        "90"
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 18,
+      "type": "MCQ_SINGLE",
+      "prompt": "What is the sum of the solutions to the given equation?\n(x - 7)(x - 8) / (x - 3) = 0",
+      "options": [
+        "8",
+        "18",
+        "15",
+        "3"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    }
+  ],
+  "module2": [
+    {
+      "order": 1,
+      "type": "MCQ_SINGLE",
+      "prompt": "The given equation describes the relationship between the number of cats, c, and the number of dogs, d, that can be cared for at a pet care business during a week. If the business cares for 36 dogs during a week, how many cats can it care for during this week?\n1.5c + 3d = 108",
+      "options": [
+        "3",
+        "54",
+        "0",
+        "108"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 2,
+      "type": "MCQ_SINGLE",
+      "prompt": "Stefan purchased 500 feet of fencing. He used 80% of this fencing to surround a vegetable garden. How many feet of fencing did Stefan use to surround the vegetable garden?",
+      "options": [
+        "16",
+        "420",
+        "400",
+        "40"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 3,
+      "type": "MCQ_SINGLE",
+      "prompt": "At what point (x, y) do the graphs of the equations in the given system intersect?\nx + 5 = 14\ny = 3x^2 + 3",
+      "options": [
+        "(9, 243)",
+        "(14, 591)",
+        "(9, 246)",
+        "(14, 3)"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 4,
+      "type": "MCQ_SINGLE",
+      "prompt": "If (x + 2)^2 = 18, what is the value of x^2 + 4x?",
+      "options": [
+        "14",
+        "22",
+        "36",
+        "18"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 5,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "What value of t is the solution to the given equation?\n6(t + 7) - 8(t + 7) = 38",
+      "options": null,
+      "correctAnswers": [
+        "-26"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 6,
+      "type": "MCQ_SINGLE",
+      "prompt": "Which expression represents the product of (x^-9y^6z^5) and (x^4z^5 + y^8z^-7)?",
+      "options": [
+        "x^-5y^6z^10 + y^8z^-7",
+        "x^-5y^6z^10 + x^-9y^14z^-2",
+        "x^-5z^10 + x^-9z^-2",
+        "x^-5z^10 + y^14z^-2"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 7,
+      "type": "MCQ_SINGLE",
+      "prompt": "On January 1, 2000, the population of a town was 26,255 and on January 1, 2010, the population was 26,956. The equation 10x + 26,255 = 26,956 describes this situation. Which of the following is the best interpretation of x in this context?",
+      "options": [
+        "The total increase in population between 2000 and 2010",
+        "The average increase per year of the population between 2000 and 2010",
+        "The percentage by which the population of the town increased each year between 2000 and 2010",
+        "The projected population of the town 10 years after 2010"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 8,
+      "type": "MCQ_SINGLE",
+      "prompt": "Cube B has a volume of 125 cubic inches. The length of each edge of cube A is k times the length of each edge of cube B. If cube A has a volume of 3,375 cubic inches, what is the value of k?",
+      "options": [
+        "27",
+        "3",
+        "25",
+        "5"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 9,
+      "type": "MCQ_SINGLE",
+      "prompt": "A right square pyramid has a height of 6 units and a volume of 128 cubic units. What is the length, in units, of one side of the base of the pyramid?",
+      "options": [
+        "8",
+        "256",
+        "64/3",
+        "8√3/3"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 10,
+      "type": "MCQ_SINGLE",
+      "prompt": "A researcher observes a sample of a nuclide. An exponential model estimates that the mass, in grams, of the sample decreases by 27% every 14.07 minutes. Which of the following equations could represent this model, where M is the estimated mass, in grams, of the sample t minutes after the researcher began observing the sample?",
+      "options": [
+        "M = 100(0.27)^(t/14.07)",
+        "M = 100(0.27)^(t+14.07)",
+        "M = 100(0.73)^(t/14.07)",
+        "M = 100(0.73)^(t+14.07)"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 11,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "A department store sells pants in three lengths: short, regular, and long. The table summarizes the distribution of pant length, by color, for all the pants in the store.\n[Table with rows: Short, Regular, Long, Total; and columns: Black, Brown, Blue, Total. Data: Short: Black 25, Brown 14, Blue 24, Total 63. Regular: Black 23, Brown 15, Blue 22, Total 60. Long: Black 20, Brown 19, Blue 19, Total 58. Total: Black 68, Brown 48, Blue 65, Total 181.]\nA pair of pants is selected at random. What is the probability of selecting a pair of pants that is brown, given that the pair of pants is regular length? (Express your answer as a decimal or fraction, not as a percent.)",
+      "options": null,
+      "correctAnswers": [
+        "0.25"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 12,
+      "type": "MCQ_SINGLE",
+      "prompt": "An equation of the line in the xy-plane that contains the points (0, -8) and (-2, 0) is Ax + By = 9, where A and B are constants. What is the value of B?",
+      "options": [
+        "-2/9",
+        "-9/8",
+        "-9/2",
+        "-8/9"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 13,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the given system of equations, k and t are constants. The solution to this system is (x, y). What is the value of 18(y + t)?\n(x + k) + (9/2)(y + t) + 19 = 0\n(x + k) - (9/2)(y + t) - 19 = 0",
+      "options": [
+        "-76",
+        "0",
+        "38",
+        "9"
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 14,
+      "type": "MCQ_SINGLE",
+      "prompt": "For which of the following tables are all the values of x and their corresponding values of y solutions to the given system of inequalities?\ny > 2x - 72\ny < (1/6)x - 9",
+      "options": [
+        "x y | 12 -11 | 18 -12 | 24 -13",
+        "x y | 12 -14 | 18 -15 | 24 -16"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 15,
+      "type": "MCQ_SINGLE",
+      "prompt": "The function g is defined by the given equation. For all values of x, the value of g(x) is greater than k, where k is a constant. What is the greatest possible value of k?\ng(x) = (1/11)(6(2)^x + 7)",
+      "options": [
+        "0",
+        "13/11",
+        "7/11",
+        "7"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 17,
+      "type": "MCQ_SINGLE",
+      "prompt": "Each 3.0-ounce serving of cheddar cheese and each 1.2-ounce serving of tuna provides about 1 microgram of vitamin B12. If a total of 1.7 micrograms of vitamin B12 are consumed from eating x ounces of cheese and y ounces of tuna, which equation best represents this situation?",
+      "options": [
+        "3.0x + 1.2y = 1.7",
+        "0.33x + 0.83y = 1.7",
+        "0.83x + 0.33y = 1.7",
+        "1.2x + 3.0y = 1.7"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 18,
+      "type": "MCQ_SINGLE",
+      "prompt": "A certain town has an area of 12,669,184 square yards. What is the area, in square miles, of this town? (1 mile = 1,760 yards)",
+      "options": [
+        "2.02",
+        "7,198.4",
+        "4.09",
+        "3,559.38"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 19,
+      "type": "MCQ_SINGLE",
+      "prompt": "What is the y-intercept of the graph of y = 6^x + 12 in the xy-plane?",
+      "options": [
+        "(0, 6)",
+        "(0, 12)",
+        "(0, 18)",
+        "(0, 13)"
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 20,
+      "type": "MCQ_SINGLE",
+      "prompt": "In the given equation, p is a constant. The equation has no solution. What is the value of p?\n-6x + 42px = 84",
+      "options": [
+        "1/3",
+        "0",
+        "2",
+        "1/7"
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 21,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The density of a certain type of marble stone is 2.6000 grams per cubic centimeter. If a sample of this type of stone is in the shape of a sphere with a diameter of 31.000 centimeters, what is the mass of this sample, in grams, to the nearest whole number? (Use 3.14159 for π.)",
+      "options": null,
+      "correctAnswers": [
+        "573/50 or 11.46"
+      ],
+      "stimulus": null
+    },
+    {
+      "order": 22,
+      "type": "STUDENT_PRODUCED_RESPONSE",
+      "prompt": "The function w is defined by w(r) = 1/(r-8) - (r-5)/(r+4.25). What is the greatest possible value of r such that w(r) = 0?",
+      "options": null,
+      "correctAnswers": [
+        "33"
+      ],
+      "stimulus": null
+    }
+  ]
+}
