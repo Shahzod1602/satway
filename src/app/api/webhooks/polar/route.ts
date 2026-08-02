@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { randomBytes } from "crypto";
+import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { verifyPolarSignature, paidEnough } from "@/lib/polar";
 import { grantPremiumMonths } from "@/lib/grantPremium";
@@ -7,6 +9,32 @@ import { fmtUSD, fmtUZS } from "@/lib/plans";
 import { formatOrderNo } from "@/lib/checkout";
 import { notifyAdmin } from "@/lib/telegram";
 import { emit } from "@/lib/events";
+
+/** Random password for a stub account created during payment recovery. */
+function cryptoRandom(): string {
+  return randomBytes(24).toString("base64url");
+}
+
+/** Map a Polar product id → months of Premium, based on the env product map. */
+function monthsFromProduct(productId: unknown): number {
+  if (typeof productId !== "string") return 1;
+  try {
+    const map = JSON.parse(process.env.POLAR_PRODUCTS || "{}") as Record<string, string>;
+    for (const [planId, id] of Object.entries(map)) {
+      if (id === productId) {
+        const m = parseInt(planId, 10);
+        return Number.isFinite(m) ? m : 1;
+      }
+    }
+  } catch {
+    /* ignore */
+  }
+  return 1;
+}
+
+/** True if the order looks like it actually carries a paid amount (recovery guard). */
+const enoughFallback = (d: { net_amount?: number }) =>
+  typeof d.net_amount === "number" && d.net_amount > 0;
 
 // Polar webhook (created by scripts/_polar-setup.mts; visible in the Polar dashboard):
 //   URL:    https://satway.online/api/webhooks/polar
@@ -25,6 +53,7 @@ type PolarOrder = {
   id?: string;
   status?: string; // "paid" | "refunded" | "partially_refunded" | "pending" | ...
   currency?: string; // "usd"
+  product_id?: string; // the Polar product that was purchased (for recovery)
   // All amounts are integer cents.
   // after discounts and EXCLUDING tax — under Polar's location-based tax behaviour this
   // sits BELOW the price we locked for any buyer whose country prices tax-inclusive.
@@ -86,8 +115,53 @@ async function handleOrderPaid(payload: PolarWebhookPayload) {
   });
 
   if (!payment || payment.provider !== "polar") {
-    // Paid order pointing at a payment row we don't have (e.g. a sandbox checkout
-    // replayed at prod) — never silent, money changed hands.
+    // Paid order pointing at a payment row we don't have. This happens when the DB was
+    // reset/migrated after the checkout was created — the Polar side still holds the
+    // order and the money. Fall back to recovering by buyer email: find the account (or
+    // create a stub one for a brand-new email) and grant Premium from the order itself,
+    // rather than dropping the sale on the floor.
+    const buyerEmail = order.customer?.email ?? "";
+    if (buyerEmail && enoughFallback(order)) {
+      const months = monthsFromProduct(order.product_id);
+      const user = await prisma.user.upsert({
+        where: { email: buyerEmail },
+        update: {},
+        create: {
+          email: buyerEmail,
+          name: order.customer?.name || buyerEmail.split("@")[0],
+          password: await bcrypt.hash(cryptoRandom(), 10),
+          role: "STUDENT",
+          emailVerified: true,
+        },
+      });
+      // Record the recovered payment so the ledger is honest about what happened.
+      const recovered = await prisma.payment.create({
+        data: {
+          userId: user.id,
+          provider: "polar",
+          planLabel: `${months}m`,
+          months,
+          amount: 0, // UZS unknown for a recovered order
+          baseAmount: 0,
+          amountUsd: order.net_amount ?? null,
+          status: "APPROVED",
+          providerRef: polarRef(orderId),
+          paidAt: new Date(),
+        },
+      });
+      const granted = await grantPremiumMonths(prisma, user.id, months);
+      await rewardReferrerIfNeeded(user.id).catch(() => {});
+      await notifyAdmin(
+        [
+          `♻️ Polar payment RECOVERED (no matching row)`,
+          `Order ${orderId} (${buyerEmail}) paid ${fmtUSD(order.net_amount ?? 0)} but payment ${paymentId} was missing.`,
+          `Granted ${months} month(s) to ${user.email}. Payment logged as #${recovered.orderNo}.`,
+        ].join("\n"),
+      );
+      console.log(`[polar] recovered order ${orderId} for ${buyerEmail}: ${months} months`);
+      void granted; // premium granted above; user object is the side effect we care about
+      return NextResponse.json({ ok: true });
+    }
     await notifyAdmin(
       `⚠️ Polar order ${orderId} (${buyer}) is paid but references unknown payment ${paymentId} — check the Polar dashboard and refund or activate manually.`,
     );
