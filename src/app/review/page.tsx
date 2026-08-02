@@ -74,7 +74,7 @@ export default async function ReviewPage() {
   const isPremium = effectivePlan(dbUser?.plan, dbUser?.premiumUntil) === "PREMIUM";
 
   return (
-    <div className="flex min-h-screen bg-[#FFFDFB]">
+    <div className="flex min-h-screen bg-[var(--background)]">
       <Sidebar name={user.name} role={user.role} plan={isPremium ? "PREMIUM" : "FREE"} />
       <div className="min-w-0 flex-1">
         <ReviewClient questions={missed} topics={topics} isPremium={isPremium} />

@@ -24,7 +24,7 @@ export default function AuthShell({ children }: { children: React.ReactNode }) {
   const ease = [0.16, 1, 0.3, 1] as const;
 
   return (
-    <div className="min-h-screen bg-[#FBFAF7] lg:grid lg:grid-cols-2">
+    <div className="min-h-screen bg-[var(--background)] lg:grid lg:grid-cols-2">
       {/* ───────── Left: branded showcase (desktop) ───────── */}
       <aside className="relative hidden overflow-hidden bg-slate-900 p-12 lg:flex lg:flex-col lg:justify-between">
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-dotgrid opacity-[0.12]" />

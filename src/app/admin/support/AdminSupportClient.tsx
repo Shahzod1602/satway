@@ -79,13 +79,13 @@ export default function AdminSupportClient({
         {users.length} user{users.length !== 1 ? "s" : ""} with messages
       </p>
 
-      <div className="mt-6 grid gap-0 rounded-2xl border border-[#EAEAEA] bg-white overflow-hidden lg:grid-cols-[320px_1fr]">
+      <div className="mt-6 grid gap-0 rounded-2xl border border-[var(--border)] bg-white overflow-hidden lg:grid-cols-[320px_1fr]">
         {/* User list */}
-        <div className="border-b lg:border-b-0 lg:border-r border-[#EAEAEA]">
-          <div className="p-4 font-semibold text-sm text-slate-500 border-b border-[#EAEAEA]">
+        <div className="border-b lg:border-b-0 lg:border-r border-[var(--border)]">
+          <div className="p-4 font-semibold text-sm text-slate-500 border-b border-[var(--border)]">
             Users with messages
           </div>
-          <div className="divide-y divide-[#EAEAEA]">
+          <div className="divide-y divide-[var(--border)]">
             {users.map((u) => (
               <button
                 key={u.id}
@@ -127,7 +127,7 @@ export default function AdminSupportClient({
             </div>
           ) : (
             <>
-              <div className="p-4 font-semibold text-sm text-slate-900 border-b border-[#EAEAEA]">
+              <div className="p-4 font-semibold text-sm text-slate-900 border-b border-[var(--border)]">
                 Chat with {selectedUser?.name ?? selectedId}
               </div>
 
@@ -166,7 +166,7 @@ export default function AdminSupportClient({
                 <div ref={bottomRef} />
               </div>
 
-              <div className="border-t border-[#EAEAEA] p-4">
+              <div className="border-t border-[var(--border)] p-4">
                 <div className="flex items-center gap-2">
                   <input
                     type="text"
@@ -174,7 +174,7 @@ export default function AdminSupportClient({
                     onChange={(e) => setReply(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleReply()}
                     placeholder="Reply as admin..."
-                    className="flex-1 rounded-xl border border-[#EAEAEA] px-4 py-2.5 text-sm bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                    className="flex-1 rounded-xl border border-[var(--border)] px-4 py-2.5 text-sm bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-500"
                   />
                   <button
                     onClick={handleReply}

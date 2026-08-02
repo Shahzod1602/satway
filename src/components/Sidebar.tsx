@@ -107,7 +107,8 @@ export default function Sidebar({
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Open menu"
-        className="fixed left-2 top-2 z-40 grid h-10 w-10 place-items-center rounded-lg border border-[#EAEAEA] bg-white/90 text-slate-700 shadow-sm backdrop-blur md:hidden"
+        className="fixed left-2 top-2 z-40 grid h-10 w-10 place-items-center rounded-lg border bg-white/90 text-slate-700 shadow-sm backdrop-blur md:hidden"
+        style={{ borderColor: "var(--border)" }}
       >
         <Menu className="h-5 w-5" />
       </button>
@@ -120,7 +121,8 @@ export default function Sidebar({
         />
       )}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex h-screen w-64 shrink-0 flex-col border-r border-[#EAEAEA] bg-[#FFFDFB] px-4 py-6 transition-transform duration-200 md:sticky md:top-0 md:z-auto md:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed inset-y-0 left-0 z-50 flex h-screen w-64 shrink-0 flex-col border-r bg-white px-4 py-6 transition-transform duration-200 md:sticky md:top-0 md:z-auto md:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}
+        style={{ borderColor: "var(--border)" }}
       >
       <button
         type="button"

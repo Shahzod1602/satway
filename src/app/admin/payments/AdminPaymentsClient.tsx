@@ -72,7 +72,7 @@ export default function AdminPaymentsClient({ initial }: { initial: Payment[] })
         {payments.map((p) => (
           <div
             key={p.id}
-            className="flex flex-wrap items-center gap-4 rounded-2xl border border-[#EAEAEA] bg-white p-5"
+            className="flex flex-wrap items-center gap-4 rounded-2xl border border-[var(--border)] bg-white p-5"
           >
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
@@ -132,7 +132,7 @@ export default function AdminPaymentsClient({ initial }: { initial: Payment[] })
         ))}
 
         {payments.length === 0 && (
-          <div className="rounded-2xl border border-[#EAEAEA] bg-white px-6 py-12 text-center text-slate-400">
+          <div className="rounded-2xl border border-[var(--border)] bg-white px-6 py-12 text-center text-slate-400">
             No payments yet.
           </div>
         )}

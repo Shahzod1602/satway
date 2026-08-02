@@ -53,7 +53,7 @@ export default function AdminPanel() {
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Link
           href="/admin/analytics"
-          className="rounded-2xl border border-[#EAEAEA] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
+          className="rounded-2xl border border-[var(--border)] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
         >
           <div className="grid h-10 w-10 place-items-center rounded-xl bg-sky-50 text-sky-600">
             <BarChart3 className="h-5 w-5" />
@@ -64,7 +64,7 @@ export default function AdminPanel() {
 
         <Link
           href="/admin/broadcast"
-          className="rounded-2xl border border-[#EAEAEA] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
+          className="rounded-2xl border border-[var(--border)] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
         >
           <div className="grid h-10 w-10 place-items-center rounded-xl bg-amber-50 text-amber-600">
             <Megaphone className="h-5 w-5" />
@@ -75,7 +75,7 @@ export default function AdminPanel() {
 
         <Link
           href="/admin/tests"
-          className="rounded-2xl border border-[#EAEAEA] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
+          className="rounded-2xl border border-[var(--border)] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
         >
           <div className="grid h-10 w-10 place-items-center rounded-xl bg-blue-50 text-blue-600">
             <ListChecks className="h-5 w-5" />
@@ -86,7 +86,7 @@ export default function AdminPanel() {
 
         <Link
           href="/admin/generate"
-          className="rounded-2xl border border-[#EAEAEA] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
+          className="rounded-2xl border border-[var(--border)] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
         >
           <div className="grid h-10 w-10 place-items-center rounded-xl bg-fuchsia-50 text-fuchsia-600">
             <Sparkles className="h-5 w-5" />
@@ -97,7 +97,7 @@ export default function AdminPanel() {
 
         <Link
           href="/admin/promo"
-          className="rounded-2xl border border-[#EAEAEA] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
+          className="rounded-2xl border border-[var(--border)] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
         >
           <div className="grid h-10 w-10 place-items-center rounded-xl bg-violet-50 text-violet-600">
             <Ticket className="h-5 w-5" />
@@ -108,7 +108,7 @@ export default function AdminPanel() {
 
         <Link
           href="/admin/payments"
-          className="rounded-2xl border border-[#EAEAEA] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
+          className="rounded-2xl border border-[var(--border)] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
         >
           <div className="grid h-10 w-10 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
             <CreditCard className="h-5 w-5" />
@@ -119,7 +119,7 @@ export default function AdminPanel() {
 
         <Link
           href="/admin/users"
-          className="rounded-2xl border border-[#EAEAEA] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
+          className="rounded-2xl border border-[var(--border)] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
         >
           <div className="grid h-10 w-10 place-items-center rounded-xl bg-brand-50 text-brand-600">
             <Users className="h-5 w-5" />
@@ -130,7 +130,7 @@ export default function AdminPanel() {
 
         <Link
           href="/admin/support"
-          className="rounded-2xl border border-[#EAEAEA] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
+          className="rounded-2xl border border-[var(--border)] bg-white p-6 transition-all hover:border-brand-300 hover:shadow-sm"
         >
           <div className="grid h-10 w-10 place-items-center rounded-xl bg-brand-50 text-brand-600">
             <LifeBuoy className="h-5 w-5" />
@@ -139,7 +139,7 @@ export default function AdminPanel() {
           <p className="mt-1 text-sm text-slate-500">Reply to student messages</p>
         </Link>
 
-        <div className="rounded-2xl border border-[#EAEAEA] bg-white p-6">
+        <div className="rounded-2xl border border-[var(--border)] bg-white p-6">
           <div className="grid h-10 w-10 place-items-center rounded-xl bg-accent-50 text-accent-600">
             <FilePlus className="h-5 w-5" />
           </div>
@@ -148,7 +148,7 @@ export default function AdminPanel() {
         </div>
       </div>
 
-      <div className="mt-10 rounded-2xl border border-[#EAEAEA] bg-white p-6">
+      <div className="mt-10 rounded-2xl border border-[var(--border)] bg-white p-6">
         <h2 className="text-lg font-semibold text-slate-900">Test Builder</h2>
         <p className="mt-1 text-sm text-slate-500">
           Paste a JSON test definition. The JSON must include <code>title</code>, <code>slug</code>,{" "}
@@ -182,7 +182,7 @@ export default function AdminPanel() {
     }
   ]
 }`}
-          className="mt-4 w-full rounded-xl border border-[#EAEAEA] bg-slate-50 p-4 font-mono text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500"
+          className="mt-4 w-full rounded-xl border border-[var(--border)] bg-slate-50 p-4 font-mono text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500"
         />
 
         <div className="mt-4 flex items-center gap-4">

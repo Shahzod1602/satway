@@ -75,7 +75,7 @@ export default function ReviewClient({
     return (
       <main className="px-6 pt-6 pb-10">
         {header}
-        <div className="mt-8 rounded-2xl border border-dashed border-[#EAEAEA] bg-white p-12 text-center">
+        <div className="mt-8 rounded-2xl border border-dashed border-[var(--border)] bg-white p-12 text-center">
           <CheckCircle2 className="mx-auto h-10 w-10 text-emerald-500" />
           <p className="mt-3 text-sm text-slate-600">
             Nothing to review — you haven&apos;t missed any questions yet. Take a test to build your review set.
@@ -93,7 +93,7 @@ export default function ReviewClient({
     return (
       <main className="px-6 pt-6 pb-10">
         {header}
-        <div className="mt-6 rounded-2xl border border-[#EAEAEA] bg-white p-6">
+        <div className="mt-6 rounded-2xl border border-[var(--border)] bg-white p-6">
           <div className="flex items-center gap-3">
             <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-600">
               <Target className="h-5 w-5" />
@@ -132,7 +132,7 @@ export default function ReviewClient({
     return (
       <main className="px-6 pt-6 pb-10">
         {header}
-        <div className="mt-6 rounded-2xl border border-[#EAEAEA] bg-white p-8 text-center">
+        <div className="mt-6 rounded-2xl border border-[var(--border)] bg-white p-8 text-center">
           <p className="text-5xl font-extrabold text-brand-600">{correctCount}<span className="text-2xl text-slate-400">/{questions.length}</span></p>
           <p className="mt-2 text-sm text-slate-500">correct this time ({pct}%)</p>
           <p className="mx-auto mt-3 max-w-sm text-sm text-slate-600">
@@ -178,7 +178,7 @@ export default function ReviewClient({
           <div className="h-full rounded-full bg-brand-500 transition-all" style={{ width: `${((idx) / questions.length) * 100}%` }} />
         </div>
 
-        <div className="mt-5 rounded-2xl border border-[#EAEAEA] bg-white p-6">
+        <div className="mt-5 rounded-2xl border border-[var(--border)] bg-white p-6">
           {q.imageUrl && (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={q.imageUrl} alt="" className="mb-4 w-full max-w-md rounded-lg border border-slate-200" />

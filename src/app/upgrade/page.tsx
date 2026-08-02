@@ -22,7 +22,7 @@ export default async function UpgradePage() {
   const isPremium = plan === "PREMIUM";
 
   return (
-    <div className="flex min-h-screen bg-[#FFFDFB]">
+    <div className="flex min-h-screen bg-[var(--background)]">
       <Sidebar name={user.name} role={user.role} plan={plan} />
       <div className="min-w-0 flex-1">
         <main className="mx-auto max-w-lg px-6 pt-6 pb-10">

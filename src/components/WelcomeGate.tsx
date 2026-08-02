@@ -90,7 +90,7 @@ export default function WelcomeGate({
 
   return (
     <div className="mx-auto w-full max-w-md">
-      <div className="rounded-3xl border border-[#EAEAEA] bg-white p-6 shadow-sm sm:p-8">
+      <div className="rounded-3xl border border-[var(--border)] bg-white p-6 shadow-sm sm:p-8">
         <div className="mb-6 text-center">
           <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-50 text-brand-600">
             <Lock className="h-6 w-6" />
@@ -223,7 +223,7 @@ function Step({
   return (
     <div
       className={`rounded-2xl border p-4 transition ${
-        done ? "border-emerald-200 bg-emerald-50/40" : "border-[#EAEAEA] bg-white"
+        done ? "border-emerald-200 bg-emerald-50/40" : "border-[var(--border)] bg-white"
       }`}
     >
       <div className="flex items-center gap-3">

@@ -29,7 +29,7 @@ export default function ReferralCard({ referralCode }: { referralCode: string })
   };
 
   return (
-    <div className="rounded-2xl border border-[#EAEAEA] bg-white p-6">
+    <div className="rounded-2xl border border-[var(--border)] bg-white p-6">
       <div className="flex items-center gap-3 mb-4">
         <span className="grid h-10 w-10 place-items-center rounded-xl bg-accent-50 text-accent-600">
           <Gift className="h-5 w-5" />

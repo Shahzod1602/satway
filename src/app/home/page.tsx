@@ -26,7 +26,7 @@ const skillLabel = (s: string) => (s === "MATH" ? "Math" : "Reading & Writing");
 
 function StatCard({ label, value, hint }: { label: string; value: React.ReactNode; hint?: string }) {
   return (
-    <div className="rounded-2xl border border-[#EAEAEA] bg-white p-4">
+    <div className="rounded-2xl border bg-white p-4 shadow-card" style={{ borderColor: "var(--border)" }}>
       <p className="text-xs font-medium uppercase tracking-wide text-slate-400">{label}</p>
       <p className="mt-1.5 text-2xl font-bold text-slate-900">{value}</p>
       {hint && <p className="mt-0.5 text-xs text-slate-500">{hint}</p>}
@@ -38,7 +38,8 @@ function ActionTile({ href, icon: Icon, label }: { href: string; icon: LucideIco
   return (
     <Link
       href={href}
-      className="group flex flex-col gap-2 rounded-2xl border border-[#EAEAEA] bg-white p-4 transition-colors hover:border-brand-600/40 hover:bg-brand-50/40"
+      className="group flex flex-col gap-2 rounded-2xl border bg-white p-4 shadow-card transition-all hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-hover"
+      style={{ borderColor: "var(--border)" }}
     >
       <Icon className="h-5 w-5 text-brand-600" />
       <span className="text-sm font-semibold text-slate-800">{label}</span>
@@ -131,7 +132,7 @@ export default async function HomePage() {
   const firstName = (user.name ?? "there").trim().split(/\s+/)[0];
 
   return (
-    <div className="flex min-h-screen bg-[#FFFDFB]">
+    <div className="flex min-h-screen" style={{ backgroundColor: "var(--background)" }}>
       <Sidebar name={user.name} role={user.role} plan={plan} />
       <div className="min-w-0 flex-1">
         <main className="mx-auto max-w-4xl px-6 pt-6 pb-14">

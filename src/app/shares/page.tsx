@@ -27,12 +27,12 @@ export default async function SharesPage() {
 
   if (!isPremium) {
     return (
-      <div className="flex min-h-screen bg-[#FFFDFB]">
+      <div className="flex min-h-screen bg-[var(--background)]">
         <Sidebar name={user.name} role={user.role} plan="FREE" />
         <div className="min-w-0 flex-1">
           <main className="px-6 pt-6 pb-10">
             <h1 className="text-2xl font-bold text-slate-900">Share tests</h1>
-            <div className="mt-8 rounded-2xl border border-dashed border-[#EAEAEA] bg-white p-12 text-center">
+            <div className="mt-8 rounded-2xl border border-dashed border-[var(--border)] bg-white p-12 text-center">
               <Share2 className="mx-auto h-10 w-10 text-brand-400" />
               <p className="mt-3 text-sm text-slate-600">
                 Sharing is a Premium feature. Go Premium to invite friends to a test (up to 3 each) or
@@ -103,7 +103,7 @@ export default async function SharesPage() {
   }));
 
   return (
-    <div className="flex min-h-screen bg-[#FFFDFB]">
+    <div className="flex min-h-screen bg-[var(--background)]">
       <Sidebar name={user.name} role={user.role} plan="PREMIUM" />
       <div className="min-w-0 flex-1">
         <SharesClient tests={tests} initialLinks={data} />

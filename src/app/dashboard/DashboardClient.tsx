@@ -159,7 +159,7 @@ export default function DashboardClient({
   const pagedTests = filteredTests.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
 
   return (
-    <div className="flex min-h-screen bg-[#FFFDFB]">
+    <div className="flex min-h-screen" style={{ backgroundColor: "var(--background)" }}>
       <Sidebar name={user.name} role={user.role} plan={plan} />
 
       <div className="min-w-0 flex-1">
@@ -191,9 +191,9 @@ export default function DashboardClient({
                 </span>
               </Link>
             ))}
-          <div className="rounded-3xl border border-[#EAEAEA] bg-white p-6 sm:p-8">
+          <div className="rounded-3xl border bg-white p-6 sm:p-8 shadow-card" style={{ borderColor: "var(--border)" }}>
             {/* Tabs */}
-            <div className="flex items-center gap-1 border-b border-[#EAEAEA]">
+            <div className="flex items-center gap-1 border-b" style={{ borderColor: "var(--border)" }}>
               <button
                 onClick={() => setActiveTab("READING_WRITING")}
                 className={`relative px-6 py-3 text-sm font-medium transition-colors ${
@@ -261,7 +261,7 @@ export default function DashboardClient({
             </div>
 
             {activeTab === "MOCK" ? (
-              <div className="mt-8 rounded-2xl border border-[#EAEAEA] bg-gradient-to-br from-accent-50/50 to-white p-8 sm:p-12 text-center">
+              <div className="mt-8 rounded-2xl border border-[var(--border)] bg-gradient-to-br from-accent-50/50 to-white p-8 sm:p-12 text-center">
                 <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-accent-50 text-accent-600">
                   <Trophy className="h-8 w-8" />
                 </div>
@@ -311,7 +311,7 @@ export default function DashboardClient({
                     (t.sections ?? []).reduce((s, sec) => s + sec._count.questions, 0);
                   if (realExams.length === 0) {
                     return (
-                      <div className="rounded-xl border border-dashed border-[#EAEAEA] bg-slate-50 p-12 text-center">
+                      <div className="rounded-xl border border-dashed border-[var(--border)] bg-slate-50 p-12 text-center">
                         <p className="text-sm text-slate-400">No real exams available yet.</p>
                       </div>
                     );
@@ -326,11 +326,12 @@ export default function DashboardClient({
                           <Link
                             key={t.id}
                             href={href}
-                            className={`group flex flex-col justify-between rounded-2xl border bg-white p-5 transition-all hover:shadow-sm ${
+                            className={`group flex flex-col justify-between rounded-2xl border bg-white p-5 shadow-card transition-all hover:-translate-y-0.5 hover:shadow-hover ${
                               locked
                                 ? "border-amber-200 hover:border-amber-300"
-                                : "border-[#EAEAEA] hover:border-brand-300"
+                                : "hover:border-brand-300"
                             }`}
+                            style={locked ? undefined : { borderColor: "var(--border)" }}
                           >
                             <div>
                               <div className="flex items-center justify-between">
@@ -372,7 +373,7 @@ export default function DashboardClient({
             ) : (
               <>
                 {/* Level matcher — tests shown are matched to the student's level */}
-                <div className="mt-8 rounded-2xl border border-[#EAEAEA] bg-slate-50/60 p-4">
+                <div className="mt-8 rounded-2xl border bg-slate-50/60 p-4" style={{ borderColor: "var(--border)" }}>
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                     <span className="text-sm font-semibold text-slate-700">Your level</span>
                     <div className="flex flex-wrap gap-2">
@@ -383,11 +384,12 @@ export default function DashboardClient({
                           <button
                             key={lv}
                             onClick={() => pickLevel(lv)}
-                            className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
+                            className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-all ${
                               active
                                 ? `${LEVEL_BADGE[lv]} ring-2 ring-slate-300 ring-offset-1`
-                                : "border-[#EAEAEA] bg-white text-slate-600 hover:bg-slate-50"
+                                : "bg-white text-slate-600 hover:bg-slate-50"
                             }`}
+                            style={active ? undefined : { borderColor: "var(--border)" }}
                           >
                             {LEVEL_LABEL[lv]}
                             {suggested && <span className="ml-1 text-xs opacity-70">· suggested</span>}
@@ -396,11 +398,12 @@ export default function DashboardClient({
                       })}
                       <button
                         onClick={() => pickLevel("ALL")}
-                        className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
+                        className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-all ${
                           levelFilter === "ALL"
                             ? "border-brand-600 bg-brand-50 text-brand-600"
-                            : "border-[#EAEAEA] bg-white text-slate-600 hover:bg-slate-50"
+                            : "bg-white text-slate-600 hover:bg-slate-50"
                         }`}
+                        style={levelFilter === "ALL" ? undefined : { borderColor: "var(--border)" }}
                       >
                         All levels
                       </button>
@@ -421,11 +424,12 @@ export default function DashboardClient({
                     <button
                       key={c}
                       onClick={() => setCategory((prev) => (prev === c ? "All" : c))}
-                      className={`rounded-full border px-6 py-2 text-sm font-medium transition-colors ${
+                      className={`rounded-full border px-6 py-2 text-sm font-medium transition-all ${
                         category === c
                           ? "border-brand-600 bg-brand-50 text-brand-600"
-                          : "border-[#EAEAEA] text-slate-600 hover:bg-slate-50"
+                          : "text-slate-600 hover:bg-slate-50"
                       }`}
+                      style={category === c ? undefined : { borderColor: "var(--border)" }}
                     >
                       {c}
                     </button>
@@ -444,12 +448,13 @@ export default function DashboardClient({
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search tests…"
-                    className="w-full max-w-xs rounded-lg border border-[#EAEAEA] px-3.5 py-2 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
+                    className="w-full max-w-xs rounded-lg border bg-white px-3.5 py-2 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
+                    style={{ borderColor: "var(--border)" }}
                   />
                 </div>
 
                 {filteredTests.length === 0 ? (
-                  <div className="mt-6 rounded-xl border border-dashed border-[#EAEAEA] bg-slate-50 p-12 text-center">
+                  <div className="mt-6 rounded-xl border border-dashed bg-slate-50 p-12 text-center" style={{ borderColor: "var(--border)" }}>
                     <p className="text-slate-400 text-sm">
                       {levelFilter === "ALL"
                         ? "No tests yet."
@@ -477,11 +482,12 @@ export default function DashboardClient({
                         <Link
                           key={t.id}
                           href={href}
-                          className={`group flex items-center justify-between gap-3 rounded-2xl border bg-white px-5 py-6 transition-all hover:shadow-sm ${
+                          className={`group flex items-center justify-between gap-3 rounded-2xl border bg-white px-5 py-6 shadow-card transition-all hover:-translate-y-0.5 hover:shadow-hover ${
                             locked
                               ? "border-amber-200 hover:border-amber-300"
-                              : "border-[#EAEAEA] hover:border-slate-300"
+                              : "hover:border-brand-300"
                           }`}
+                          style={locked ? undefined : { borderColor: "var(--border)" }}
                         >
                           <div className="min-w-0">
                             <h3 className="text-[15px] font-semibold text-slate-900 leading-snug line-clamp-2">
@@ -521,7 +527,7 @@ export default function DashboardClient({
                     <button
                       onClick={() => setPage((p) => Math.max(1, p - 1))}
                       disabled={safePage <= 1}
-                      className="rounded-lg border border-[#EAEAEA] px-4 py-2 text-sm font-medium text-slate-600 disabled:opacity-40 hover:bg-slate-50"
+                      className="rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-medium text-slate-600 disabled:opacity-40 hover:bg-slate-50"
                     >
                       Previous
                     </button>
@@ -531,7 +537,7 @@ export default function DashboardClient({
                     <button
                       onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
                       disabled={safePage >= pageCount}
-                      className="rounded-lg border border-[#EAEAEA] px-4 py-2 text-sm font-medium text-slate-600 disabled:opacity-40 hover:bg-slate-50"
+                      className="rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-medium text-slate-600 disabled:opacity-40 hover:bg-slate-50"
                     >
                       Next
                     </button>

@@ -63,7 +63,7 @@ function Ended() {
 }
 function Shell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="grid min-h-screen place-items-center bg-[#FBFAF7] px-6">
+    <div className="grid min-h-screen place-items-center bg-[var(--background)] px-6">
       <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-xl shadow-slate-900/5">
         <span className="mb-4 inline-flex items-center gap-1.5 text-lg font-extrabold tracking-tight text-slate-900">
           <GraduationCap className="h-5 w-5 text-brand-600" /> SAT<span className="rounded bg-brand-600 px-1 text-white">way</span>

@@ -52,7 +52,7 @@ export default async function LeaderboardPage() {
     i === 0 ? "text-amber-500" : i === 1 ? "text-slate-400" : i === 2 ? "text-amber-700" : "";
 
   return (
-    <div className="flex min-h-screen bg-[#FFFDFB]">
+    <div className="flex min-h-screen bg-[var(--background)]">
       <Sidebar name={user.name} role={user.role} plan={plan} />
       <div className="min-w-0 flex-1">
         <main className="mx-auto max-w-3xl px-6 pt-6 pb-10">
@@ -67,14 +67,14 @@ export default async function LeaderboardPage() {
           </div>
 
           {top.length === 0 ? (
-            <div className="mt-8 rounded-2xl border border-dashed border-[#EAEAEA] bg-white p-12 text-center text-sm text-slate-400">
+            <div className="mt-8 rounded-2xl border border-dashed border-[var(--border)] bg-white p-12 text-center text-sm text-slate-400">
               No full-test scores yet. Be the first on the board!
             </div>
           ) : (
-            <div className="mt-6 overflow-hidden rounded-2xl border border-[#EAEAEA] bg-white">
+            <div className="mt-6 overflow-hidden rounded-2xl border border-[var(--border)] bg-white">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-[#EAEAEA] bg-slate-50 text-left text-xs font-medium uppercase tracking-wide text-slate-500">
+                  <tr className="border-b border-[var(--border)] bg-slate-50 text-left text-xs font-medium uppercase tracking-wide text-slate-500">
                     <th className="px-4 py-3 w-14">#</th>
                     <th className="px-4 py-3">Student</th>
                     <th className="px-4 py-3 text-right">R&amp;W</th>
@@ -82,7 +82,7 @@ export default async function LeaderboardPage() {
                     <th className="px-4 py-3 text-right">Total</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#EAEAEA]">
+                <tbody className="divide-y divide-[var(--border)]">
                   {top.map((e, i) => {
                     const me = e.userId === user.id;
                     return (

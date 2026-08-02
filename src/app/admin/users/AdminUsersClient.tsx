@@ -73,7 +73,7 @@ export default function AdminUsersClient({ initialUsers }: { initialUsers: UserR
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search by name or email…"
-          className="w-full max-w-xs rounded-lg border border-[#EAEAEA] px-3.5 py-2 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
+          className="w-full max-w-xs rounded-lg border border-[var(--border)] px-3.5 py-2 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
         />
       </div>
 
@@ -83,9 +83,9 @@ export default function AdminUsersClient({ initialUsers }: { initialUsers: UserR
         </div>
       )}
 
-      <div className="mt-4 overflow-x-auto rounded-2xl border border-[#EAEAEA] bg-white">
+      <div className="mt-4 overflow-x-auto rounded-2xl border border-[var(--border)] bg-white">
         <table className="w-full text-left text-sm">
-          <thead className="border-b border-[#EAEAEA] bg-slate-50 text-xs font-semibold uppercase tracking-wider text-slate-500">
+          <thead className="border-b border-[var(--border)] bg-slate-50 text-xs font-semibold uppercase tracking-wider text-slate-500">
             <tr>
               <th className="px-6 py-3">Name</th>
               <th className="px-6 py-3">Email</th>
@@ -94,7 +94,7 @@ export default function AdminUsersClient({ initialUsers }: { initialUsers: UserR
               <th className="px-6 py-3">Premium actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#EAEAEA]">
+          <tbody className="divide-y divide-[var(--border)]">
             {filtered.map((u) => {
               const active = isPremiumActive(u.plan, u.premiumUntil);
               const rowBusy = busy === u.id;

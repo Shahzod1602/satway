@@ -59,7 +59,7 @@ export default function HostClient({
   const live = status === "LIVE";
 
   return (
-    <div className="min-h-screen bg-[#FBFAF7] px-6 py-10">
+    <div className="min-h-screen bg-[var(--background)] px-6 py-10">
       <div className="mx-auto max-w-2xl">
         <div className="flex items-center gap-2 text-brand-600">
           <Radio className="h-4 w-4" />

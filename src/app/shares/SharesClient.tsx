@@ -88,7 +88,7 @@ export default function SharesClient({ tests, initialLinks }: { tests: TestOpt[]
       </div>
 
       {/* Create panel */}
-      <div className="mt-6 max-w-2xl rounded-2xl border border-[#EAEAEA] bg-white p-5">
+      <div className="mt-6 max-w-2xl rounded-2xl border border-[var(--border)] bg-white p-5">
         <label className="text-xs font-medium uppercase tracking-wide text-slate-400">Test</label>
         <select
           value={testId}
@@ -141,7 +141,7 @@ export default function SharesClient({ tests, initialLinks }: { tests: TestOpt[]
       ) : (
         <div className="mt-3 max-w-2xl space-y-3">
           {links.map((l) => (
-            <div key={l.id} className={`rounded-2xl border bg-white p-4 ${l.active ? "border-[#EAEAEA]" : "border-slate-200 opacity-60"}`}>
+            <div key={l.id} className={`rounded-2xl border bg-white p-4 ${l.active ? "border-[var(--border)]" : "border-slate-200 opacity-60"}`}>
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <p className="truncate text-sm font-semibold text-slate-900">{l.test.title}</p>

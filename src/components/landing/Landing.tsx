@@ -64,7 +64,7 @@ export default function Landing({ stats }: { stats?: { students: number; tests: 
   const hover = reduce ? {} : { whileHover: { y: -5 }, transition: { type: "spring" as const, stiffness: 300, damping: 22 } };
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[#FBFAF7] text-slate-900">
+    <div className="relative min-h-screen overflow-x-hidden bg-[var(--background)] text-slate-900">
       {/* atmosphere */}
       <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 bg-dotgrid" />
       <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
@@ -77,7 +77,7 @@ export default function Landing({ stats }: { stats?: { students: number; tests: 
       <motion.header
         initial={{ y: reduce ? 0 : -100, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: EASE }}
-        className="sticky top-0 z-40 border-b border-slate-200/60 bg-[#FBFAF7]/80 backdrop-blur-md"
+        className="sticky top-0 z-40 border-b border-slate-200/60 bg-[var(--background)]/80 backdrop-blur-md"
       >
         <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
           <Link href="/"><Wordmark className="text-xl text-slate-900" /></Link>

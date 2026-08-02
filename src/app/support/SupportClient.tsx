@@ -89,7 +89,7 @@ export default function SupportClient({
     });
 
   return (
-    <div className="flex min-h-screen bg-[#FFFDFB]">
+    <div className="flex min-h-screen bg-[var(--background)]">
       <Sidebar name={user.name} role={user.role} plan={plan} />
 
       <div className="flex min-w-0 flex-1 flex-col">
@@ -107,7 +107,7 @@ export default function SupportClient({
           </div>
 
           <div
-            className="exam-scroll mt-5 flex-1 space-y-1.5 overflow-y-auto rounded-2xl border border-[#EAEAEA] p-4"
+            className="exam-scroll mt-5 flex-1 space-y-1.5 overflow-y-auto rounded-2xl border border-[var(--border)] p-4"
             style={{
               backgroundColor: "#cdd9e6",
               backgroundImage:

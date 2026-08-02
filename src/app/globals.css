@@ -1,25 +1,66 @@
 @import "tailwindcss";
 
+/*
+ * SATway design system — warm, friendly, pastel.
+ * One background, soft shadows, rounded cards, category-tinted surfaces.
+ */
+
 @theme {
+  /* Brand — the primary blue, used for actions/links */
   --color-brand-50: #eff6ff;
   --color-brand-100: #dbeafe;
   --color-brand-200: #bfdbfe;
+  --color-brand-300: #93c5fd;
+  --color-brand-400: #60a5fa;
   --color-brand-500: #3b82f6;
   --color-brand-600: #2563eb;
   --color-brand-700: #1d4ed8;
+
+  /* Accent — warm amber/gold, used sparingly for highlights */
   --color-accent-50: #fef3c7;
   --color-accent-100: #fde68a;
   --color-accent-500: #f59e0b;
   --color-accent-600: #d97706;
   --color-accent-700: #b45309;
+
+  /* Category tints — pastel surfaces for content-type cards (Reading, Math, etc.) */
+  --color-rose-50: #fff1f2;
+  --color-rose-100: #ffe4e6;
+  --color-rose-500: #f43f5e;
+  --color-rose-600: #e11d48;
+  --color-amber-50: #fffbeb;
+  --color-amber-100: #fef3c7;
+  --color-amber-500: #f59e0b;
+  --color-amber-600: #d97706;
+  --color-violet-50: #f5f3ff;
+  --color-violet-100: #ede9fe;
+  --color-violet-500: #8b5cf6;
+  --color-violet-600: #7c3aed;
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  --color-sky-50: #f0f9ff;
+  --color-sky-100: #e0f2fe;
+  --color-sky-500: #0ea5e9;
+  --color-sky-600: #0284c7;
+
+  /* Soft shadows — the "friendly" depth */
+  --shadow-soft: 0 1px 2px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+  --shadow-hover: 0 4px 12px rgba(0,0,0,0.06), 0 8px 28px rgba(0,0,0,0.06);
+
   --font-sans: var(--font-geist-sans), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
   --font-display: var(--font-display), Georgia, serif;
 }
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  /* Warm beige background — softer than cold slate-50, more inviting */
+  --background: #f8f4f2;
+  --foreground: #1a1a1a;
+  --surface: #ffffff;
+  --border: #ece7e3;
 }
 
 html {

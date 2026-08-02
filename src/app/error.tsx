@@ -15,7 +15,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#FFFDFB] px-6 text-center">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-[var(--background)] px-6 text-center">
       <h1 className="text-3xl font-bold text-slate-900">Something went wrong</h1>
       <p className="mt-2 max-w-md text-slate-500">
         An unexpected error occurred. Please try again — if it keeps happening, contact support.

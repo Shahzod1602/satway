@@ -125,7 +125,7 @@ export default function TestEditClient({ test }: { test: TestData }) {
         </div>
       )}
 
-      <div className="mt-6 rounded-2xl border border-[#EAEAEA] bg-white p-6">
+      <div className="mt-6 rounded-2xl border border-[var(--border)] bg-white p-6">
         <p className="mb-3 text-sm text-slate-500">
           Edit the test JSON below. Changes to fields like <code>title</code>, <code>slug</code>,{" "}
           <code>skill</code>, <code>published</code>, and <code>description</code> will be applied.
@@ -134,7 +134,7 @@ export default function TestEditClient({ test }: { test: TestData }) {
           value={json}
           onChange={(e) => setJson(e.target.value)}
           rows={30}
-          className="w-full rounded-xl border border-[#EAEAEA] bg-slate-50 p-4 font-mono text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500"
+          className="w-full rounded-xl border border-[var(--border)] bg-slate-50 p-4 font-mono text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500"
         />
       </div>
     </div>

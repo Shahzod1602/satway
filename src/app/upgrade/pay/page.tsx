@@ -45,7 +45,7 @@ export default async function UpgradePayPage({
   const telegramUrl = process.env.PAYMENT_TELEGRAM || "https://t.me/satway_admin";
 
   return (
-    <div className="flex min-h-screen bg-[#FFFDFB]">
+    <div className="flex min-h-screen bg-[var(--background)]">
       <Sidebar name={user.name} role={user.role} plan={uiPlan} />
       <div className="min-w-0 flex-1">
         <main className="mx-auto max-w-lg px-6 pt-6 pb-10">

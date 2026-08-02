@@ -55,7 +55,7 @@ export default function ProfileClient({ user }: { user: ProfileUser }) {
     "rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-900 outline-none focus:border-brand-600 focus:ring-1 focus:ring-brand-600/20";
   const btn =
     "inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-700 disabled:opacity-60";
-  const card = "rounded-2xl border border-[#EAEAEA] bg-white p-6";
+  const card = "rounded-2xl border border-[var(--border)] bg-white p-6";
 
   async function save(e: React.FormEvent) {
     e.preventDefault();
@@ -106,7 +106,7 @@ export default function ProfileClient({ user }: { user: ProfileUser }) {
   }
 
   return (
-    <div className="min-h-screen bg-[#FFFDFB]">
+    <div className="min-h-screen bg-[var(--background)]">
       <AppHeader name={user.name} role={user.role} />
 
       <main className="mx-auto max-w-xl px-6 pt-6 pb-10">

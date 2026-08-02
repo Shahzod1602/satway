@@ -23,7 +23,7 @@ export default async function ReferralPage() {
   const plan = effectivePlan(dbUser?.plan, dbUser?.premiumUntil);
 
   return (
-    <div className="flex min-h-screen bg-[#FFFDFB]">
+    <div className="flex min-h-screen bg-[var(--background)]">
       <Sidebar name={user.name} role={user.role} plan={plan} />
 
       <div className="min-w-0 flex-1">

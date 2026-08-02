@@ -171,7 +171,7 @@ export default function VocabularyClient({ decks }: { decks: VocabDeck[] }) {
       </div>
 
       {hydrated && total > 0 && (
-        <div className="mt-6 rounded-2xl border border-[#EAEAEA] bg-white p-5">
+        <div className="mt-6 rounded-2xl border border-[var(--border)] bg-white p-5">
           <div className="flex items-center justify-between text-sm">
             <span className="font-medium text-slate-700">Words mastered</span>
             <span className="font-bold text-brand-600">
@@ -194,7 +194,7 @@ export default function VocabularyClient({ decks }: { decks: VocabDeck[] }) {
           return (
             <div
               key={deck.id}
-              className="flex flex-col rounded-2xl border border-[#EAEAEA] bg-white p-5"
+              className="flex flex-col rounded-2xl border border-[var(--border)] bg-white p-5"
             >
               <div className="flex items-start justify-between gap-2">
                 <h2 className="font-semibold text-slate-900">{deck.title}</h2>
@@ -288,7 +288,7 @@ function StudyMode({
 
       <button
         onClick={() => setFlipped((f) => !f)}
-        className="mt-5 flex min-h-[15rem] w-full flex-col items-center justify-center rounded-3xl border border-[#EAEAEA] bg-white p-8 text-center shadow-sm transition-colors hover:border-brand-200"
+        className="mt-5 flex min-h-[15rem] w-full flex-col items-center justify-center rounded-3xl border border-[var(--border)] bg-white p-8 text-center shadow-sm transition-colors hover:border-brand-200"
       >
         {!flipped ? (
           <>
@@ -418,7 +418,7 @@ function QuizMode({
         >
           <ArrowLeft className="h-4 w-4" /> All decks
         </button>
-        <div className="mt-8 rounded-3xl border border-[#EAEAEA] bg-white p-10 text-center">
+        <div className="mt-8 rounded-3xl border border-[var(--border)] bg-white p-10 text-center">
           <span className="grid mx-auto h-16 w-16 place-items-center rounded-full bg-brand-50 text-brand-600">
             <GraduationCap className="h-8 w-8" />
           </span>

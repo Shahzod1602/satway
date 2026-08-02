@@ -254,7 +254,7 @@ export default function PaymentForm({
       {/* Promo code — applies to every method (student Premium only; team plans, which
           satway doesn't sell, would hide this box via allowPromo). */}
       {allowPromo && (
-        <div className="rounded-2xl border border-[#EAEAEA] bg-white p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-white p-5">
           <h2 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
             <Tag className="h-4 w-4 text-brand-600" /> Promo code
           </h2>
@@ -296,7 +296,7 @@ export default function PaymentForm({
       {/* Payment method tabs. Dormant providers (Payme, Click — built but awaiting a
           separate satway kassa) show a "Soon" badge and unlock automatically once their
           env lands. */}
-      <div className="grid grid-cols-2 gap-2 rounded-2xl border border-[#EAEAEA] bg-white p-2 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2 rounded-2xl border border-[var(--border)] bg-white p-2 sm:grid-cols-4">
         {(
           [
             { id: "payme", label: "Payme", sub: "Uzcard/Humo", icon: PaymeLogo, enabled: paymeEnabled },
@@ -358,7 +358,7 @@ export default function PaymentForm({
       </div>
 
       {paymeEnabled && method === "payme" && (
-        <div className="rounded-2xl border border-[#EAEAEA] bg-white p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-white p-5">
           <h2 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
             <PaymeLogo className="h-7 w-auto" /> <span className="sr-only">Pay with Payme</span>
           </h2>
@@ -395,7 +395,7 @@ export default function PaymentForm({
       )}
 
       {clickEnabled && method === "click" && (
-        <div className="rounded-2xl border border-[#EAEAEA] bg-white p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-white p-5">
           <h2 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
             <ClickLogo className="h-4 w-4 text-[#0072FF]" /> Pay with Click
           </h2>
@@ -432,7 +432,7 @@ export default function PaymentForm({
       )}
 
       {visaEnabled && method === "visa" && (
-        <div className="rounded-2xl border border-[#EAEAEA] bg-white p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-white p-5">
           <h2 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
             <Globe className="h-4 w-4 text-brand-600" /> Pay with Visa / Mastercard
           </h2>
@@ -480,7 +480,7 @@ export default function PaymentForm({
       {method === "transfer" && (
         <>
           {/* Card */}
-          <div className="rounded-2xl border border-[#EAEAEA] bg-white p-5">
+          <div className="rounded-2xl border border-[var(--border)] bg-white p-5">
             <h2 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
               <CreditCard className="h-4 w-4 text-brand-600" /> Transfer to this card
             </h2>
@@ -488,7 +488,7 @@ export default function PaymentForm({
               <span className="font-mono text-lg font-bold tracking-wider text-slate-900">{groupCard(card)}</span>
               <button
                 onClick={copyCard}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-[#EAEAEA] bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50"
               >
                 {copied ? (
                   <>
@@ -517,7 +517,7 @@ export default function PaymentForm({
 
           {/* Steps + submit + Telegram. Manual transfer is the one flow with a human in
               the loop: it records a PENDING order the admin matches to the receipt. */}
-          <div className="rounded-2xl border border-[#EAEAEA] bg-white p-5">
+          <div className="rounded-2xl border border-[var(--border)] bg-white p-5">
             {manualOrder ? (
               <div className="text-center">
                 <div className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-emerald-50 text-emerald-600">

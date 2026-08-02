@@ -76,7 +76,7 @@ export default function ProgressClient({
     }));
 
   return (
-    <div className="flex min-h-screen bg-[#FFFDFB]">
+    <div className="flex min-h-screen bg-[var(--background)]">
       <Sidebar name={user.name} role={user.role} plan={plan} />
 
       <div className="min-w-0 flex-1">
@@ -89,7 +89,7 @@ export default function ProgressClient({
           {goals.targetScore != null || goals.examDate != null ? (
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               {goals.targetScore != null && (
-                <div className="rounded-2xl border border-[#EAEAEA] bg-white p-5">
+                <div className="rounded-2xl border border-[var(--border)] bg-white p-5">
                   <div className="flex items-center justify-between">
                     <span className="inline-flex items-center gap-2 text-sm font-medium text-slate-600">
                       <Target className="h-4 w-4 text-brand-600" /> Target score
@@ -114,7 +114,7 @@ export default function ProgressClient({
                 </div>
               )}
               {goals.examDate != null && (
-                <div className="rounded-2xl border border-[#EAEAEA] bg-white p-5">
+                <div className="rounded-2xl border border-[var(--border)] bg-white p-5">
                   <span className="inline-flex items-center gap-2 text-sm font-medium text-slate-600">
                     <CalendarClock className="h-4 w-4 text-accent-600" /> Exam date
                   </span>
@@ -135,7 +135,7 @@ export default function ProgressClient({
               )}
             </div>
           ) : (
-            <div className="mt-6 flex items-center justify-between gap-4 rounded-2xl border border-dashed border-[#EAEAEA] bg-white p-5">
+            <div className="mt-6 flex items-center justify-between gap-4 rounded-2xl border border-dashed border-[var(--border)] bg-white p-5">
               <p className="text-sm text-slate-500">
                 Set a target score and exam date to track your goal.
               </p>
@@ -149,7 +149,7 @@ export default function ProgressClient({
           )}
 
           {attempts.length === 0 ? (
-            <div className="mt-8 rounded-2xl border border-dashed border-[#EAEAEA] bg-white p-12 text-center">
+            <div className="mt-8 rounded-2xl border border-dashed border-[var(--border)] bg-white p-12 text-center">
               <p className="text-sm text-slate-400">
                 You haven&apos;t taken any tests yet.{" "}
                 <Link href="/dashboard" className="font-medium text-brand-600 hover:underline">
@@ -161,7 +161,7 @@ export default function ProgressClient({
           ) : (
             <>
               <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                <div className="rounded-2xl border border-[#EAEAEA] bg-white p-5">
+                <div className="rounded-2xl border border-[var(--border)] bg-white p-5">
                   <div className="flex items-center gap-3">
                     <div className="grid h-10 w-10 place-items-center rounded-lg bg-brand-50 text-brand-600">
                       <Award className="h-5 w-5" />
@@ -172,7 +172,7 @@ export default function ProgressClient({
                     </div>
                   </div>
                 </div>
-                <div className="rounded-2xl border border-[#EAEAEA] bg-white p-5">
+                <div className="rounded-2xl border border-[var(--border)] bg-white p-5">
                   <div className="flex items-center gap-3">
                     <div className="grid h-10 w-10 place-items-center rounded-lg bg-brand-50 text-brand-600">
                       <TrendingUp className="h-5 w-5" />
@@ -183,7 +183,7 @@ export default function ProgressClient({
                     </div>
                   </div>
                 </div>
-                <div className="rounded-2xl border border-[#EAEAEA] bg-white p-5">
+                <div className="rounded-2xl border border-[var(--border)] bg-white p-5">
                   <div className="flex items-center gap-3">
                     <div className="grid h-10 w-10 place-items-center rounded-lg bg-accent-50 text-accent-600">
                       <Sparkles className="h-5 w-5" />
@@ -196,13 +196,13 @@ export default function ProgressClient({
                 </div>
               </div>
 
-              <div className="mt-4 rounded-2xl border border-[#EAEAEA] bg-white p-5">
+              <div className="mt-4 rounded-2xl border border-[var(--border)] bg-white p-5">
                 <h2 className="mb-3 text-sm font-semibold text-slate-900">Score history</h2>
                 <BandChart data={chartData} />
               </div>
 
               {topics.length > 0 && (
-                <div className="mt-4 rounded-2xl border border-[#EAEAEA] bg-white p-5">
+                <div className="mt-4 rounded-2xl border border-[var(--border)] bg-white p-5">
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <h2 className="text-sm font-semibold text-slate-900">Strengths &amp; weaknesses</h2>
@@ -240,10 +240,10 @@ export default function ProgressClient({
               )}
 
               <h2 className="mt-10 text-lg font-semibold text-slate-900">Recent attempts</h2>
-              <div className="mt-4 overflow-hidden rounded-2xl border border-[#EAEAEA] bg-white">
+              <div className="mt-4 overflow-hidden rounded-2xl border border-[var(--border)] bg-white">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-[#EAEAEA] bg-slate-50 text-left text-xs font-medium uppercase tracking-wide text-slate-500">
+                    <tr className="border-b border-[var(--border)] bg-slate-50 text-left text-xs font-medium uppercase tracking-wide text-slate-500">
                       <th className="px-4 py-3">Test</th>
                       <th className="px-4 py-3">Skill</th>
                       <th className="px-4 py-3">Correct</th>
@@ -251,7 +251,7 @@ export default function ProgressClient({
                       <th className="px-4 py-3"></th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#EAEAEA]">
+                  <tbody className="divide-y divide-[var(--border)]">
                     {[...attempts].reverse().map((a) => (
                       <tr key={a.id} className="transition-colors hover:bg-slate-50">
                         <td className="px-4 py-3 text-sm text-slate-900">{a.test.title}</td>
