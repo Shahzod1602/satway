@@ -299,16 +299,28 @@ export default function DashboardClient({
                   </div>
                 </div>
 
-                {/* Exam cards: only tests that look like real exams (the OCR'd set carries
-                    the description string; fall back to any 2-section test). */}
+                {/* Real Exam cards grouped by year — real SAT papers, not practice sets */}
                 {(() => {
-                  const realExams = tests.filter(
-                    (t) =>
-                      (t.description ?? "").includes("Real Digital SAT") ||
-                      (t._count?.sections ?? 0) >= 2,
-                  );
+                  // A "real exam" is one whose title starts with a month name + year
+                  // (e.g. "November 8th, 2025 INT 1", "October 2024 · US 1"). The seeded
+                  // "SAT Math — Test N" practice sets are excluded — they belong in the
+                  // Math tab, not here.
+                  const monthRe = /^(january|february|march|april|may|june|july|august|september|october|november|december)/i;
+                  const yearRe = /\b(20\d{2})\b/;
+                  const realExams = tests.filter((t) => monthRe.test(t.title));
                   const questionCount = (t: TestData) =>
                     (t.sections ?? []).reduce((s, sec) => s + sec._count.questions, 0);
+
+                  // Group by year (descending), then sort by title within the year.
+                  const byYear: Record<string, TestData[]> = {};
+                  for (const t of realExams) {
+                    const ym = t.title.match(yearRe);
+                    const y = ym ? ym[1] : "Other";
+                    (byYear[y] ??= []).push(t);
+                  }
+                  const years = Object.keys(byYear).sort((a, b) => (a < b ? 1 : -1));
+                  for (const y of years) byYear[y].sort((a, b) => a.title.localeCompare(b.title));
+
                   if (realExams.length === 0) {
                     return (
                       <div className="rounded-xl border border-dashed border-[var(--border)] bg-slate-50 p-12 text-center">
@@ -316,56 +328,68 @@ export default function DashboardClient({
                       </div>
                     );
                   }
-                  return (
-                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                      {realExams.map((t) => {
-                        const locked = !isPremium;
-                        const href = locked ? "/upgrade" : `/test/${t.slug}`;
-                        const q = questionCount(t);
-                        return (
-                          <Link
-                            key={t.id}
-                            href={href}
-                            className={`group flex flex-col justify-between rounded-2xl border bg-white p-5 shadow-card transition-all hover:-translate-y-0.5 hover:shadow-hover ${
-                              locked
-                                ? "border-amber-200 hover:border-amber-300"
-                                : "hover:border-brand-300"
-                            }`}
-                            style={locked ? undefined : { borderColor: "var(--border)" }}
-                          >
-                            <div>
-                              <div className="flex items-center justify-between">
-                                <span className="grid h-9 w-9 place-items-center rounded-lg bg-brand-50 text-brand-600">
-                                  <Calculator className="h-5 w-5" />
-                                </span>
-                                {locked ? (
-                                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700">
-                                    <Lock className="w-3 h-3" /> Premium
-                                  </span>
-                                ) : (
-                                  <span className="text-xs font-medium uppercase tracking-wide text-slate-400">
-                                    Math
-                                  </span>
-                                )}
-                              </div>
-                              <h3 className="mt-3 line-clamp-2 text-[15px] font-semibold leading-snug text-slate-900">
-                                {t.title}
-                              </h3>
-                            </div>
-                            <div className="mt-4 flex items-center justify-between text-xs text-slate-500">
-                              <span>
-                                {q} questions · 2 modules
+
+                  const ExamCard = ({ t }: { t: TestData }) => {
+                    const locked = !isPremium;
+                    const href = locked ? "/upgrade" : `/test/${t.slug}`;
+                    const q = questionCount(t);
+                    return (
+                      <Link
+                        href={href}
+                        className={`group flex flex-col justify-between rounded-2xl border bg-white p-5 shadow-card transition-all hover:-translate-y-0.5 hover:shadow-hover ${
+                          locked ? "border-amber-200 hover:border-amber-300" : "hover:border-brand-300"
+                        }`}
+                        style={locked ? undefined : { borderColor: "var(--border)" }}
+                      >
+                        <div>
+                          <div className="flex items-center justify-between">
+                            <span className="grid h-9 w-9 place-items-center rounded-lg bg-brand-50 text-brand-600">
+                              <Calculator className="h-5 w-5" />
+                            </span>
+                            {locked ? (
+                              <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700">
+                                <Lock className="w-3 h-3" /> Premium
                               </span>
-                              {!locked && (
-                                <span className="inline-flex items-center gap-1 font-medium text-slate-400 transition-colors group-hover:text-brand-600">
-                                  Start
-                                  <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
-                                </span>
-                              )}
-                            </div>
-                          </Link>
-                        );
-                      })}
+                            ) : (
+                              <span className="text-xs font-medium uppercase tracking-wide text-slate-400">
+                                Math
+                              </span>
+                            )}
+                          </div>
+                          <h3 className="mt-3 line-clamp-2 text-[15px] font-semibold leading-snug text-slate-900">
+                            {t.title}
+                          </h3>
+                        </div>
+                        <div className="mt-4 flex items-center justify-between text-xs text-slate-500">
+                          <span>{q} questions · 2 modules</span>
+                          {!locked && (
+                            <span className="inline-flex items-center gap-1 font-medium text-slate-400 transition-colors group-hover:text-brand-600">
+                              Start
+                              <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
+                            </span>
+                          )}
+                        </div>
+                      </Link>
+                    );
+                  };
+
+                  return (
+                    <div className="space-y-8">
+                      {years.map((y) => (
+                        <div key={y}>
+                          <div className="mb-3 flex items-center gap-3">
+                            <h3 className="text-lg font-bold text-slate-900">{y}</h3>
+                            <span className="rounded-full bg-brand-50 px-2.5 py-0.5 text-xs font-semibold text-brand-600">
+                              {byYear[y].length} exam{byYear[y].length === 1 ? "" : "s"}
+                            </span>
+                          </div>
+                          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                            {byYear[y].map((t) => (
+                              <ExamCard key={t.id} t={t} />
+                            ))}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   );
                 })()}
