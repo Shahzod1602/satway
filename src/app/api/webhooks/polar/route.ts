@@ -36,6 +36,16 @@ function monthsFromProduct(productId: unknown): number {
 const enoughFallback = (d: { net_amount?: number }) =>
   typeof d.net_amount === "number" && d.net_amount > 0;
 
+/** Raw set of our Polar product IDs (from POLAR_PRODUCTS env), for cross-project filtering. */
+function productMapRaw(): string[] {
+  try {
+    const parsed = JSON.parse(process.env.POLAR_PRODUCTS || "{}");
+    return Object.values(parsed).filter((v): v is string => typeof v === "string");
+  } catch {
+    return [];
+  }
+}
+
 // Polar webhook (created by scripts/_polar-setup.mts; visible in the Polar dashboard):
 //   URL:    https://satway.online/api/webhooks/polar
 //   Format: Raw
@@ -90,6 +100,17 @@ export async function POST(req: NextRequest) {
 
 async function handleOrderPaid(payload: PolarWebhookPayload) {
   const order = payload.data ?? {};
+
+  // This Polar organization is shared with IELTSway (same token, separate webhooks).
+  // Every order.paid fires on ALL webhook endpoints, so an IELTSway sale lands here too.
+  // Reject any order whose product is NOT one of ours — otherwise we'd grant SATway
+  // Premium to someone who bought IELTS prep (and vice versa on the other endpoint).
+  const ourProducts = new Set(Object.values(productMapRaw()));
+  if (order.product_id && ourProducts.size > 0 && !ourProducts.has(order.product_id)) {
+    console.log(`[polar] ignoring order ${order.id}: product ${order.product_id} is not ours`);
+    return NextResponse.json({ ok: true });
+  }
+
   const orderId = String(order.id ?? "");
   const meta = order.metadata ?? {};
   const paymentId = typeof meta.payment_id === "string" ? meta.payment_id : "";
